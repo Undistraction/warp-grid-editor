@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      bezier-js:
+        specifier: ^6.1.4
+        version: 6.1.4
     devDependencies:
       '@commitlint/config-conventional':
         specifier: ^19.2.2
@@ -474,6 +478,9 @@ packages:
 
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
+
+  bezier-js@6.1.4:
+    resolution: {integrity: sha512-PA0FW9ZpcHbojUCMu28z9Vg/fNkwTj5YhusSAjHHDfHDGLxJ6YUKrAN2vk1fP2MMOxVw4Oko16FMlRGVBGqLKg==}
 
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
@@ -1696,6 +1703,8 @@ snapshots:
   array-ify@1.0.0: {}
 
   balanced-match@1.0.2: {}
+
+  bezier-js@6.1.4: {}
 
   binary-extensions@2.3.0: {}
 
