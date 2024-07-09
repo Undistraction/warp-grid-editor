@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      bezier-easing:
+        specifier: ^2.1.0
+        version: 2.1.0
       bezier-js:
         specifier: ^6.1.4
         version: 6.1.4
@@ -478,6 +481,9 @@ packages:
 
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
+
+  bezier-easing@2.1.0:
+    resolution: {integrity: sha512-gbIqZ/eslnUFC1tjEvtz0sgx+xTK20wDnYMIA27VA04R7w6xxXQPZDbibjA9DTWZRA2CXtwHykkVzlCaAJAZig==}
 
   bezier-js@6.1.4:
     resolution: {integrity: sha512-PA0FW9ZpcHbojUCMu28z9Vg/fNkwTj5YhusSAjHHDfHDGLxJ6YUKrAN2vk1fP2MMOxVw4Oko16FMlRGVBGqLKg==}
@@ -1703,6 +1709,8 @@ snapshots:
   array-ify@1.0.0: {}
 
   balanced-match@1.0.2: {}
+
+  bezier-easing@2.1.0: {}
 
   bezier-js@6.1.4: {}
 
