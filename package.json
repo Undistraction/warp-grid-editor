@@ -1,0 +1,36 @@
+{
+  "name": "htmx-express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "prepare": "husky",
+    "test": "ACTIVE_ENV=test playwright test",
+    "test-ui": "ACTIVE_ENV=test playwright test --ui",
+    "lint-prettier": "prettier . --write",
+    "lint-eslint": "eslint .",
+    "dev": "vite"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@commitlint/config-conventional": "^19.2.2",
+    "@eslint/js": "^9.6.0",
+    "@playwright/test": "^1.45.1",
+    "@types/node": "^20.14.9",
+    "commitlint": "^19.3.0",
+    "dotenv": "^16.4.5",
+    "eslint": "^9.6.0",
+    "eslint-plugin-playwright": "^1.6.2",
+    "globals": "^15.8.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.7",
+    "nodemon": "^3.1.4",
+    "prettier": "3.3.2",
+    "prettier-plugin-ejs": "^1.0.3",
+    "typescript": "^5.5.3",
+    "vite": "^5.3.3"
+  }
+}

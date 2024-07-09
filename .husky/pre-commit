@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+# Run lint-staged before every commit
+pnpm exec lint-staged
+
+# Run e2e tests before every commit
+# pnpm run test

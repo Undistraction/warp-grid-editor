@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+# Run commitlint against the commit message
+pnpm exec commitlint --edit $1

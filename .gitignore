@@ -1,0 +1,23 @@
+# Logs
+logs
+*.log
+.pnpm-debug.log*
+
+# Dependency directories
+node_modules/
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# Mac
+.DS_Store
+
+# ------------------------------------------------------------------------------
+# App-specific
+# ------------------------------------------------------------------------------
