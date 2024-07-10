@@ -1,5 +1,5 @@
 const getCanvasApi = (context) => {
-  function drawDot({ x, y }, color = 'red', size = 2) {
+  function drawDot({ x, y }, { color = 'red', size = 2 } = {}) {
     context.fillStyle = color
     context.beginPath()
     context.arc(x, y, size, 0, Math.PI * 2)
@@ -78,12 +78,12 @@ const getCanvasApi = (context) => {
     context.stroke()
   }
 
-  const drawBounds = (lines, { color, size = 8 } = {}) => {
+  const drawBounds = (lines, { color = 'puple', size = 8 } = {}) => {
     drawQuad(lines)
-    drawDot(lines.top.startPoint, color, size)
-    drawDot(lines.right.startPoint, color, size)
-    drawDot(lines.left.endPoint, color, size)
-    drawDot(lines.bottom.endPoint, color, size)
+    drawDot(lines.top.startPoint, { color, size })
+    drawDot(lines.right.startPoint, { color, size })
+    drawDot(lines.left.endPoint, { color, size })
+    drawDot(lines.bottom.endPoint, { color, size })
   }
 
   const drawLine = (startPoint, endPoint, { color = 'grey' } = {}) => {
@@ -102,11 +102,11 @@ const getCanvasApi = (context) => {
     curve,
     { pointColor = 'red', lineColor = 'blue', controlPointColor = 'green' }
   ) => {
-    drawDot(curve.startPoint, pointColor)
-    drawDot(curve.endPoint, pointColor)
-    drawDot(curve.controlPoint1, controlPointColor)
-    drawDot(curve.controlPoint2, controlPointColor)
-    drawCurve(curve, lineColor)
+    drawDot(curve.startPoint, { color: pointColor })
+    drawDot(curve.endPoint, { color: pointColor })
+    drawDot(curve.controlPoint1, { color: controlPointColor })
+    drawDot(curve.controlPoint2, { color: controlPointColor })
+    drawCurve(curve, { color: lineColor })
     drawLine(curve.startPoint, curve.controlPoint1)
     drawLine(curve.endPoint, curve.controlPoint2)
   }

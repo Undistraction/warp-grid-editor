@@ -36,9 +36,14 @@ export const getRandomBounds = (
   const maxHeight = availableHeight - minDistanceFromEdge * 2
   const width = getRandomValueBetween(minWidth, maxWidth)
   const height = getRandomValueBetween(minHeight, maxHeight)
-  const x = getRandomValueBetween(minDistanceFromEdge, maxWidth - width)
-  const y = getRandomValueBetween(minDistanceFromEdge, maxHeight - height)
-
+  const x = getRandomValueBetween(
+    minDistanceFromEdge,
+    availableWidth - width - minDistanceFromEdge
+  )
+  const y = getRandomValueBetween(
+    minDistanceFromEdge,
+    availableHeight - height - minDistanceFromEdge
+  )
   return { width, height, x, y }
 }
 
@@ -46,59 +51,59 @@ export const addRandomControlPointsToCurves = (boundingCurves, maxDistance) => {
   const { top, right, bottom, left } = boundingCurves
 
   top.controlPoint1 = getControlPoint(top.startPoint, {
-    minDistanceX: 0,
+    minDistanceX: -maxDistance, // left
     maxDistanceX: 0,
-    minDistanceY: -maxDistance,
+    minDistanceY: -maxDistance, // up
     maxDistanceY: 0,
   })
 
   top.controlPoint2 = getControlPoint(top.endPoint, {
-    minDistanceX: -maxDistance,
-    maxDistanceX: 0,
-    minDistanceY: -maxDistance,
+    minDistanceX: 0,
+    maxDistanceX: maxDistance, // right
+    minDistanceY: -maxDistance, // up
     maxDistanceY: 0,
   })
 
   right.controlPoint1 = getControlPoint(right.startPoint, {
     minDistanceX: 0,
-    maxDistanceX: maxDistance,
-    minDistanceY: 0,
-    maxDistanceY: maxDistance,
+    maxDistanceX: maxDistance, // right
+    minDistanceY: -maxDistance, //up
+    maxDistanceY: 0,
   })
 
   right.controlPoint2 = getControlPoint(right.endPoint, {
     minDistanceX: 0,
-    maxDistanceX: maxDistance,
-    minDistanceY: -maxDistance,
-    maxDistanceY: 0,
+    maxDistanceX: maxDistance, // right
+    minDistanceY: 0,
+    maxDistanceY: maxDistance, // down
   })
 
   left.controlPoint1 = getControlPoint(left.startPoint, {
-    minDistanceX: -maxDistance,
+    minDistanceX: -maxDistance, // left
     maxDistanceX: 0,
-    minDistanceY: 0,
-    maxDistanceY: maxDistance,
+    minDistanceY: -maxDistance, // up
+    maxDistanceY: 0,
   })
 
   left.controlPoint2 = getControlPoint(left.endPoint, {
-    minDistanceX: -maxDistance,
+    minDistanceX: -maxDistance, // left
     maxDistanceX: 0,
-    minDistanceY: -maxDistance,
+    minDistanceY: maxDistance, // down
     maxDistanceY: 0,
   })
 
   bottom.controlPoint1 = getControlPoint(bottom.startPoint, {
     minDistanceX: 0,
-    maxDistanceX: maxDistance,
+    maxDistanceX: -maxDistance, // left
     minDistanceY: 0,
-    maxDistanceY: maxDistance,
+    maxDistanceY: maxDistance, //down
   })
 
   bottom.controlPoint2 = getControlPoint(bottom.endPoint, {
     minDistanceX: 0,
-    maxDistanceX: -maxDistance,
+    maxDistanceX: maxDistance, // right
     minDistanceY: 0,
-    maxDistanceY: maxDistance,
+    maxDistanceY: maxDistance, // down
   })
 
   return boundingCurves

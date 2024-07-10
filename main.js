@@ -9,8 +9,8 @@ import { getBoundingCurves } from './src/utils'
 
 const CONTROL_POINT_MIN_DISTANCE_FROM_POINT = 60
 const SHAPE_MIN_DISTANCE_FROM_EDGE = 100
-const COLUMN_COUNT = 8
-const ROW_COUNT = 8
+const COLUMN_COUNT = 7
+const ROW_COUNT = 7
 
 // -----------------------------------------------------------------------
 // UI
@@ -44,10 +44,14 @@ function render() {
     CONTROL_POINT_MIN_DISTANCE_FROM_POINT
   )
 
-  const coonsPatch = getCoonsPatch(boundingCurvesWithControlPoints, {
-    width: COLUMN_COUNT,
-    height: ROW_COUNT,
-  })
+  const grid = {
+    columns: COLUMN_COUNT,
+    rows: ROW_COUNT,
+    // columns: [1, 0.2, 1, 0.2, 1, 0.2, 1],
+    // rows: [1, 0.2, 1, 0.2, 1, 0.2, 1],
+  }
+
+  const coonsPatch = getCoonsPatch(boundingCurvesWithControlPoints, grid)
 
   canvasApi.drawCoonsPatch(coonsPatch)
 }
