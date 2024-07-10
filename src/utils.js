@@ -111,7 +111,7 @@ const getIntersectionBetweenCurves = (curve1, curve2) => {
   const curve1Bezier = getBezier(curve1)
   const curve2Bezier = getBezier(curve2)
 
-  return curve1Bezier.intersects(curve2Bezier).map((pair) => {
+  return curve1Bezier.intersects(curve2Bezier, 10).map((pair) => {
     var t = pair.split('/').map((v) => parseFloat(v))
     const point = curve1Bezier.get(t[0])
     return point

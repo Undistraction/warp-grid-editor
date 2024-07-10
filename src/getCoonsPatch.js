@@ -1,4 +1,5 @@
 import BezierEasing from 'bezier-easing'
+import uniq from 'uniq'
 import { getIntersectionsBetweenCurveSets, interpolatCurve } from './utils'
 
 // -----------------------------------------------------------------------------
@@ -48,19 +49,18 @@ const validateGrid = (grid) => {
   }
 }
 
-const getCurves = (rowsOrColums, curvesPair1, curvesPair2) => {
+const getCurves = (steps, curvesPair1, curvesPair2, ease) => {
   let currentWidth = 0
-  const rowsOrColumsTotal = rowsOrColums.length
+  const stepsTotal = steps.length
   const curves = []
-  const rowsOrColumsWidthTotal = rowsOrColums.reduce(addToTotal, 0)
-  for (let column = 0; column <= rowsOrColumsTotal; column++) {
+  const stepsWidthTotal = steps.reduce(addToTotal, 0)
+  for (let column = 0; column <= stepsTotal; column++) {
     // Allow different grid spacings
-    const ratio = currentWidth / rowsOrColumsWidthTotal
-    currentWidth = currentWidth + rowsOrColums[column]
+    const ratio = currentWidth / stepsWidthTotal
+    currentWidth = currentWidth + steps[column]
 
     // Allow easing
-    const ratioXEased = easeX(ratio)
-
+    const ratioXEased = ease(ratio)
     const curve = interpolatCurve(ratioXEased, curvesPair1, curvesPair2)
 
     curves.push(curve)
@@ -98,13 +98,15 @@ const getCoonsPatch = (boundingCurves, grid) => {
   const curvesFromLeftToRight = getCurves(
     columns,
     { curve1: boundingCurves.top, curve2: boundingCurves.bottom },
-    { curve3: boundingCurves.left, curve4: boundingCurves.right }
+    { curve3: boundingCurves.left, curve4: boundingCurves.right },
+    easeX
   )
 
   const curvesFromTopToBottom = getCurves(
     rows,
     { curve1: boundingCurves.left, curve2: boundingCurves.right },
-    { curve3: boundingCurves.top, curve4: boundingCurves.bottom }
+    { curve3: boundingCurves.top, curve4: boundingCurves.bottom },
+    easeY
   )
 
   const intersections = getIntersectionsBetweenCurveSets(
@@ -112,8 +114,16 @@ const getCoonsPatch = (boundingCurves, grid) => {
     curvesFromTopToBottom
   )
 
-  return {
+  // Due to the nature of Bezier.js's calculations, it often ends up with
+  // duplicate points so we need to deduplicate them
+  const intersectionsDeduped = uniq(
     intersections,
+    (p1, p2) => (p1.x === p2.x && p1.y === p2.y ? 0 : 1),
+    true
+  )
+
+  return {
+    intersections: intersectionsDeduped,
     curvesFromLeftToRight,
     curvesFromTopToBottom,
     boundingCurves,

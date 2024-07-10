@@ -1,14 +1,15 @@
 const getCanvasApi = (context) => {
-  function drawDot({ x, y }, { color = 'red', size = 2 } = {}) {
-    context.fillStyle = color
+  const drawDot = ({ x, y }, { color = 'red', size = 2 } = {}) => {
     context.beginPath()
+    context.moveTo(x, y)
     context.arc(x, y, size, 0, Math.PI * 2)
+    context.fillStyle = color
     context.fill()
   }
 
   const drawCurve = (
     { controlPoint1, controlPoint2, startPoint, endPoint },
-    color = 'red'
+    { color = 'red', lineWidth = 1 } = {}
   ) => {
     context.beginPath()
     context.moveTo(startPoint.x, startPoint.y)
@@ -24,10 +25,11 @@ const getCanvasApi = (context) => {
     )
 
     context.strokeStyle = color
+    context.lineWidth = lineWidth
     context.stroke()
   }
 
-  const drawQuad = (lines, color = 'red') => {
+  const drawQuad = (lines, { color = 'green', lineWidth = 1 } = {}) => {
     context.beginPath()
     context.moveTo(lines.top.startPoint.x, lines.top.startPoint.y)
 
@@ -75,15 +77,21 @@ const getCanvasApi = (context) => {
 
     context.closePath()
     context.strokeStyle = color
+    context.lineWidth = lineWidth
     context.stroke()
   }
 
-  const drawBounds = (lines, { color = 'puple', size = 8 } = {}) => {
-    drawQuad(lines)
-    drawDot(lines.top.startPoint, { color, size })
-    drawDot(lines.right.startPoint, { color, size })
-    drawDot(lines.left.endPoint, { color, size })
-    drawDot(lines.bottom.endPoint, { color, size })
+  const drawBounds = (
+    lines,
+    { lineColor = 'red', dotColor = 'red', dotSize = 4, lineWidth = 3 } = {}
+  ) => {
+    drawQuad(lines, { color: lineColor, lineWidth })
+
+    // Draw corner dots
+    drawDot(lines.top.startPoint, { color: dotColor, size: dotSize })
+    drawDot(lines.right.startPoint, { color: dotColor, size: dotSize })
+    drawDot(lines.left.endPoint, { color: dotColor, size: dotSize })
+    drawDot(lines.bottom.endPoint, { color: dotColor, size: dotSize })
   }
 
   const drawLine = (startPoint, endPoint, { color = 'grey' } = {}) => {
@@ -102,12 +110,19 @@ const getCanvasApi = (context) => {
     curve,
     { pointColor = 'red', lineColor = 'blue', controlPointColor = 'green' }
   ) => {
+    // Draw startPoint
     drawDot(curve.startPoint, { color: pointColor })
+    // Draw endPoint
     drawDot(curve.endPoint, { color: pointColor })
+    // Draw controlPoint1
     drawDot(curve.controlPoint1, { color: controlPointColor })
+    // Draw controlPoint2
     drawDot(curve.controlPoint2, { color: controlPointColor })
+    // Draw the curve line
     drawCurve(curve, { color: lineColor })
+    // Draw line connecting startPoint to controlPoint1
     drawLine(curve.startPoint, curve.controlPoint1)
+    // Draw line connecting endPoint to controlPoint2
     drawLine(curve.endPoint, curve.controlPoint2)
   }
 
@@ -120,7 +135,7 @@ const getCanvasApi = (context) => {
 
     // Draw intersections between grid lines
     coonsPatch.intersections.map((point) => {
-      drawDot(point)
+      drawDot(point, { color: `rgba(255, 0, 100, 0.4)`, size: 3 })
     })
   }
 

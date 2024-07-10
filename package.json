@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "bezier-easing": "^2.1.0",
-    "bezier-js": "^6.1.4"
+    "bezier-js": "^6.1.4",
+    "uniq": "^1.0.1"
   }
 }
