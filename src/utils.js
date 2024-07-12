@@ -6,16 +6,12 @@ import { Bezier } from 'bezier-js'
 
 const DEFAULT_PRECISION = 1000
 
-const BEZIER_POINT_NAMES = [
-  'startPoint',
-  'endPoint',
-  'controlPoint1',
-  'controlPoint2',
-]
-
 // -----------------------------------------------------------------------------
 // Utils
 // -----------------------------------------------------------------------------
+
+const getCoordinatesFromString = (pair) =>
+  pair.split('/').map((v) => parseFloat(v))
 
 const validateRatio = (ratio) => {
   if (ratio < 0 || ratio > 1) {
@@ -68,13 +64,13 @@ const getInterpolatedPointOnCurveEvenlyDistributed = (
   let point = null
   for (let j = 1; j < cumulativeLengths.length; j++) {
     if (cumulativeLengths[j] >= targetLength) {
-      const t =
+      const ratio =
         (j -
           1 +
           (targetLength - cumulativeLengths[j - 1]) /
             (cumulativeLengths[j] - cumulativeLengths[j - 1])) /
         precision
-      point = getInterpolatedPointOnCurve(t, curve)
+      point = getInterpolatedPointOnCurve(ratio, curve)
       break
     }
   }
@@ -96,31 +92,38 @@ const interpolateBetweenPoints = (range, point1, point2) => {
   }
 }
 
-const interpolateCurvePoints = (range, curve1, curve2) => {
-  return BEZIER_POINT_NAMES.reduce((acc, name) => {
-    acc[name] = interpolateBetweenPoints(range, curve1[name], curve2[name])
-    return acc
-  }, {})
+const interpolateControlPoints = (range, curve1, curve2) => {
+  return {
+    controlPoint1: interpolateBetweenPoints(
+      range,
+      curve1.controlPoint1,
+      curve2.controlPoint1
+    ),
+    controlPoint2: interpolateBetweenPoints(
+      range,
+      curve1.controlPoint2,
+      curve2.controlPoint2
+    ),
+  }
 }
 
-const getBezier = (curve) => {
+export const getBezier = (curve) => {
   return new Bezier(...getCurvePropsAsArray(curve))
 }
 
 const getIntersectionBetweenCurves = (curve1, curve2) => {
   const curve1Bezier = getBezier(curve1)
   const curve2Bezier = getBezier(curve2)
-
-  return curve1Bezier.intersects(curve2Bezier, 10).map((pair) => {
-    var t = pair.split('/').map((v) => parseFloat(v))
-    const point = curve1Bezier.get(t[0])
-    return point
+  return curve1Bezier.intersects(curve2Bezier).map((coordinateString) => {
+    var [x] = getCoordinatesFromString(coordinateString)
+    return curve1Bezier.get(x)
   })
 }
 
-const getIntersectionWithCurveSet = (curve, intersectionCurves) => {
-  return intersectionCurves.reduce((acc, intersectionCurve) => {
+const getIntersectionWithCurveSet = (curve, curvesToCheck) => {
+  return curvesToCheck.reduce((acc, intersectionCurve) => {
     const points = getIntersectionBetweenCurves(curve, intersectionCurve)
+
     return [...acc, ...points]
   }, [])
 }
@@ -136,13 +139,6 @@ const getCurvePropsAsArray = (curve) => {
     curve.endPoint.x,
     curve.endPoint.y,
   ]
-}
-
-const getPointOffsetByDeltas = (point, deltas) => {
-  return {
-    x: point.x + deltas.deltaX,
-    y: point.y + deltas.deltaY,
-  }
 }
 
 const getCornerPoints = (x, y, width, height) => {
@@ -174,10 +170,11 @@ const getInterpolatedPointOnCurve = (ratio, curve) => {
   return {
     x: getInterpolatedAxis('x', ratio, curve),
     y: getInterpolatedAxis('y', ratio, curve),
+    ratio,
   }
 }
 
-const getInterpolatedPointsOnCurveEvenlyDistributed = (
+export const getInterpolatedPointsOnCurveEvenlyDistributed = (
   ratio,
   curve,
   // Get an approximation using an arbitrary number of points. Increase for more
@@ -202,47 +199,6 @@ const getInterpolatedPointsOnCurveEvenlyDistributed = (
   )
 
   return point
-}
-
-// Simple stategy is to:
-// 1. find the correct start and end points on the adjacent edges
-// 2. Move the start and end points to those
-// 3. Move the control points half of the distance that the start/end points
-//    moved.
-// This gives a fairly pleasing result
-const simpleStrategy = (interpolatedCurve, ratio, curve1, curve2) => {
-  // Use ratio to find a point on the first curve which will be the starting
-  // point of our curve.
-  const startPoint = getInterpolatedPointsOnCurveEvenlyDistributed(
-    ratio,
-    curve1
-  )
-
-  // Use ratio to find a point on the opposite curve which will be the ending
-  // point of our curve.
-  const endPoint = getInterpolatedPointsOnCurveEvenlyDistributed(ratio, curve2)
-
-  const startDeltas = getDeltasBetweenPoints(
-    interpolatedCurve.startPoint,
-    startPoint
-  )
-  const endDeltas = getDeltasBetweenPoints(interpolatedCurve.endPoint, endPoint)
-
-  const controlPoint1Interpolated = getPointOffsetByDeltas(
-    interpolatedCurve.controlPoint1,
-    startDeltas
-  )
-  const controlPoint2Interpolated = getPointOffsetByDeltas(
-    interpolatedCurve.controlPoint2,
-    endDeltas
-  )
-
-  return {
-    startPoint,
-    endPoint,
-    controlPoint1: controlPoint1Interpolated,
-    controlPoint2: controlPoint2Interpolated,
-  }
 }
 
 // -----------------------------------------------------------------------------
@@ -274,10 +230,10 @@ export const getBoundingCurves = ({ x, y, width, height }) => {
   return boundingCurves
 }
 
-export const getIntersectionsBetweenCurveSets = (
+export const getIntersectionsBetweenCurveSets = ({
   curvesFromLeftToRight,
-  curvesFromTopToBottom
-) => {
+  curvesFromTopToBottom,
+}) => {
   return curvesFromLeftToRight.reduce((acc, curve) => {
     const points = getIntersectionWithCurveSet(curve, curvesFromTopToBottom)
     return [...acc, ...points]
@@ -287,19 +243,32 @@ export const getIntersectionsBetweenCurveSets = (
 export const interpolatCurve = (
   ratio,
   { curve1, curve2 },
-  { curve3, curve4 },
-  { strategy = true } = {}
+  { curve3, curve4 }
 ) => {
   validateRatio(ratio)
 
   // Get a curve that is interpolated between our start and end points
-  const interpolatedCurve = interpolateCurvePoints(ratio, curve3, curve4)
+  const { controlPoint1, controlPoint2 } = interpolateControlPoints(
+    ratio,
+    curve3,
+    curve4
+  )
 
-  // Because the bounds are curves, if we only interpolate between oppostite
-  // edges, the start and end points of the curve will not lie on their
-  // respective adjacent curves, so we need to adjust for this.
+  // Use ratio to find a point on the first curve which will be the starting
+  // point of our curve.
+  const startPoint = getInterpolatedPointsOnCurveEvenlyDistributed(
+    ratio,
+    curve1
+  )
 
-  return strategy
-    ? simpleStrategy(interpolatedCurve, ratio, curve1, curve2)
-    : interpolatedCurve
+  // Use ratio to find a point on the opposite curve which will be the ending
+  // point of our curve.
+  const endPoint = getInterpolatedPointsOnCurveEvenlyDistributed(ratio, curve2)
+
+  return {
+    startPoint,
+    endPoint,
+    controlPoint1,
+    controlPoint2,
+  }
 }

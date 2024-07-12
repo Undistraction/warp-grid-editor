@@ -53,5 +53,8 @@ function render() {
 
   const coonsPatch = getCoonsPatch(boundingCurvesWithControlPoints, grid)
 
+  const sq = coonsPatch.getGridSquareBounds(4, 5)
+
   canvasApi.drawCoonsPatch(coonsPatch)
+  canvasApi.drawSquare(sq)
 }

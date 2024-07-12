@@ -1,10 +1,14 @@
 const getCanvasApi = (context) => {
-  const drawDot = ({ x, y }, { color = 'red', size = 2 } = {}) => {
+  const drawDot = ({ x, y }, { color = 'red', size = 2, text } = {}) => {
     context.beginPath()
     context.moveTo(x, y)
     context.arc(x, y, size, 0, Math.PI * 2)
     context.fillStyle = color
     context.fill()
+    if (text) {
+      context.fillStyle = 'black'
+      context.fillText(text, x, y)
+    }
   }
 
   const drawCurve = (
@@ -128,15 +132,26 @@ const getCanvasApi = (context) => {
 
   const drawCoonsPatch = (coonsPatch) => {
     // Draw bounds
-    drawBounds(coonsPatch.boundingCurves)
+    //drawBounds(coonsPatch.boundingCurves)
     // Draw lines
     coonsPatch.curvesFromLeftToRight.map(drawGridCurve)
     coonsPatch.curvesFromTopToBottom.map(drawGridCurve)
 
     // Draw intersections between grid lines
-    coonsPatch.intersections.map((point) => {
-      drawDot(point, { color: `rgba(255, 0, 100, 0.4)`, size: 3 })
+    coonsPatch.intersections.map((point, idx) => {
+      drawDot(point, {
+        color: `rgba(255, 0, 100, 1)`,
+        size: 5,
+        // text: point.t,
+      })
     })
+  }
+
+  const drawSquare = ({ top, bottom, left, right }) => {
+    drawCurve(top, { color: 'green', lineWidth: 4 })
+    drawCurve(bottom, { color: 'green', lineWidth: 4 })
+    drawCurve(left, { color: 'blue', lineWidth: 4 })
+    drawCurve(right, { color: 'blue', lineWidth: 4 })
   }
 
   return {
@@ -146,6 +161,7 @@ const getCanvasApi = (context) => {
     drawBounds,
     clearCanvas,
     drawCoonsPatch,
+    drawSquare,
   }
 }
 
