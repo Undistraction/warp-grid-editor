@@ -1,6 +1,10 @@
 import getCanvasApi from './src/getCanvasApi'
 import getCoonsPatch from './src/getCoonsPatch'
-import { addRandomControlPointsToCurves, getRandomBounds } from './src/random'
+import {
+  addRandomControlPointsToCurves,
+  getRandomBounds,
+  getRandomGridSquareCoordicates,
+} from './src/random'
 import { getBoundingCurves } from './src/utils'
 
 // -----------------------------------------------------------------------------
@@ -51,10 +55,16 @@ function render() {
     // rows: [1, 0.2, 1, 0.2, 1, 0.2, 1],
   }
 
+  // Coons patch
   const coonsPatch = getCoonsPatch(boundingCurvesWithControlPoints, grid)
-
-  const sq = coonsPatch.getGridSquareBounds(4, 5)
-
   canvasApi.drawCoonsPatch(coonsPatch)
-  canvasApi.drawSquare(sq)
+
+  // Grid square
+  const { x, y } = getRandomGridSquareCoordicates(
+    coonsPatch.columns.length,
+    coonsPatch.rows.length
+  )
+
+  const gridSquareBounds = coonsPatch.getGridSquareBounds(x, y)
+  canvasApi.drawGridSquareBounds(gridSquareBounds)
 }

@@ -132,7 +132,7 @@ const getCanvasApi = (context) => {
 
   const drawCoonsPatch = (coonsPatch) => {
     // Draw bounds
-    //drawBounds(coonsPatch.boundingCurves)
+    drawBounds(coonsPatch.boundingCurves)
     // Draw lines
     coonsPatch.curvesFromLeftToRight.map(drawGridCurve)
     coonsPatch.curvesFromTopToBottom.map(drawGridCurve)
@@ -147,11 +147,8 @@ const getCanvasApi = (context) => {
     })
   }
 
-  const drawSquare = ({ top, bottom, left, right }) => {
-    drawCurve(top, { color: 'green', lineWidth: 4 })
-    drawCurve(bottom, { color: 'green', lineWidth: 4 })
-    drawCurve(left, { color: 'blue', lineWidth: 4 })
-    drawCurve(right, { color: 'blue', lineWidth: 4 })
+  const drawGridSquareBounds = (boundingCurves) => {
+    drawBounds(boundingCurves, { lineColor: 'green', dotColor: 'blue' })
   }
 
   return {
@@ -161,7 +158,7 @@ const getCanvasApi = (context) => {
     drawBounds,
     clearCanvas,
     drawCoonsPatch,
-    drawSquare,
+    drawGridSquareBounds,
   }
 }
 

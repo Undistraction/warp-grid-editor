@@ -1,9 +1,9 @@
 import BezierEasing from 'bezier-easing'
 import uniq from 'uniq'
 import {
-  getBezier,
-  getInterpolatedPointsOnCurveEvenlyDistributed,
   getIntersectionsBetweenCurveSets,
+  getPointFromArray,
+  getSubcurveBetweenRatios,
   interpolatCurve,
 } from './utils'
 
@@ -187,6 +187,8 @@ const getCoonsPatch = (boundingCurves, grid) => {
     rows.length
   )
 
+  // Get four curves that describe the bounds of the grid-sqare with the
+  // supplied grid coordicates
   const getGridSquareBounds = (x, y) => {
     validateGetSquareArguments(x, y, columns, rows)
     const columnsTotal = columns.length
@@ -198,83 +200,26 @@ const getCoonsPatch = (boundingCurves, grid) => {
     const leftCurve = curvesFromTopToBottom[x]
     const rightCurve = curvesFromTopToBottom[x + 1]
 
-    // Convert to Beziers
-    const topCurveBezier = getBezier(topCurve)
-    const bottomCurveBezier = getBezier(bottomCurve)
-    const leftCurveBezier = getBezier(leftCurve)
-    const rightCurveBezier = getBezier(rightCurve)
+    // Find the start and end ratios for the top and bottom curves
+    const ratioStartX = x / columnsTotal
+    const ratioEndX = (x + 1) / columnsTotal
 
-    const top = topCurveBezier.split(
-      getInterpolatedPointsOnCurveEvenlyDistributed(x / columnsTotal, topCurve)
-        .ratio,
-      getInterpolatedPointsOnCurveEvenlyDistributed(
-        (x + 1) / columnsTotal,
-        topCurve
-      ).ratio
-    )
-    const bottom = bottomCurveBezier.split(
-      getInterpolatedPointsOnCurveEvenlyDistributed(
-        x / columnsTotal,
-        bottomCurve
-      ).ratio,
-      getInterpolatedPointsOnCurveEvenlyDistributed(
-        (x + 1) / columnsTotal,
-        bottomCurve
-      ).ratio
-    )
+    // Find the start and end ratios for the left and right curves
+    const ratioStartY = y / rowsTotal
+    const ratioEndY = (y + 1) / rowsTotal
 
-    const left = leftCurveBezier.split(
-      getInterpolatedPointsOnCurveEvenlyDistributed(y / rowsTotal, leftCurve)
-        .ratio,
-      getInterpolatedPointsOnCurveEvenlyDistributed(
-        (y + 1) / rowsTotal,
-        leftCurve
-      ).ratio
-    )
-
-    const right = rightCurveBezier.split(
-      getInterpolatedPointsOnCurveEvenlyDistributed(y / rowsTotal, rightCurve)
-        .ratio,
-      getInterpolatedPointsOnCurveEvenlyDistributed(
-        (y + 1) / rowsTotal,
-        rightCurve
-      ).ratio
-    )
+    // Get sub-curves that describe the grid-square's bounds
+    const top = getSubcurveBetweenRatios(topCurve, ratioStartX, ratioEndX)
+    const bottom = getSubcurveBetweenRatios(bottomCurve, ratioStartX, ratioEndX)
+    const left = getSubcurveBetweenRatios(leftCurve, ratioStartY, ratioEndY)
+    const right = getSubcurveBetweenRatios(rightCurve, ratioStartY, ratioEndY)
 
     return {
-      topCurve,
-      bottomCurve,
-      leftCurve,
-      rightCurve,
-      top: {
-        startPoint: top.points[0],
-        controlPoint1: top.points[1],
-        controlPoint2: top.points[2],
-        endPoint: top.points[3],
-      },
-      bottom: {
-        startPoint: bottom.points[0],
-        controlPoint1: bottom.points[1],
-        controlPoint2: bottom.points[2],
-        endPoint: bottom.points[3],
-      },
-      left: {
-        startPoint: left.points[0],
-        controlPoint1: left.points[1],
-        controlPoint2: left.points[2],
-        endPoint: left.points[3],
-      },
-      right: {
-        startPoint: right.points[0],
-        controlPoint1: right.points[1],
-        controlPoint2: right.points[2],
-        endPoint: right.points[3],
-      },
+      top: getPointFromArray(top.points),
+      bottom: getPointFromArray(bottom.points),
+      left: getPointFromArray(left.points),
+      right: getPointFromArray(right.points),
     }
-
-    // Find the intersections for the four corner-points of x/y
-    // Split the four curves that make the bounds using the intersections
-    // Return the four
   }
 
   return {
@@ -283,6 +228,8 @@ const getCoonsPatch = (boundingCurves, grid) => {
     curvesFromTopToBottom,
     boundingCurves,
     getGridSquareBounds,
+    columns,
+    rows,
   }
 }
 

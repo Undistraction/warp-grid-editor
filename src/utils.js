@@ -10,7 +10,7 @@ const DEFAULT_PRECISION = 1000
 // Utils
 // -----------------------------------------------------------------------------
 
-const getCoordinatesFromString = (pair) =>
+const getCoordinatesFromSlashedString = (pair) =>
   pair.split('/').map((v) => parseFloat(v))
 
 const validateRatio = (ratio) => {
@@ -111,11 +111,39 @@ export const getBezier = (curve) => {
   return new Bezier(...getCurvePropsAsArray(curve))
 }
 
+export const getPointFromArray = ([
+  startPoint,
+  controlPoint1,
+  controlPoint2,
+  endPoint,
+]) => ({
+  startPoint,
+  controlPoint1,
+  controlPoint2,
+  endPoint,
+})
+
+export const getSubcurveBetweenRatios = (curve, ratioStart, ratioEnd) => {
+  const startPoint = getInterpolatedPointsOnCurveEvenlyDistributed(
+    ratioStart,
+    curve
+  )
+  const endPoint = getInterpolatedPointsOnCurveEvenlyDistributed(
+    ratioEnd,
+    curve
+  )
+
+  console.log('s', startPoint)
+  console.log('e', endPoint)
+
+  return getBezier(curve).split(startPoint.ratio, endPoint.ratio)
+}
+
 const getIntersectionBetweenCurves = (curve1, curve2) => {
   const curve1Bezier = getBezier(curve1)
   const curve2Bezier = getBezier(curve2)
   return curve1Bezier.intersects(curve2Bezier).map((coordinateString) => {
-    var [x] = getCoordinatesFromString(coordinateString)
+    var [x] = getCoordinatesFromSlashedString(coordinateString)
     return curve1Bezier.get(x)
   })
 }

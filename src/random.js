@@ -6,6 +6,10 @@ const getRandomValueBetween = (min, max) => {
   return Math.random() * (max - min) + min
 }
 
+const getRandomValueBetweenRounded = (min, max) => {
+  return Math.round(getRandomValueBetween(min, max))
+}
+
 const getControlPoint = (
   point,
   { minDistanceX, maxDistanceX, minDistanceY, maxDistanceY }
@@ -115,4 +119,12 @@ export const addRandomControlPointsToCurves = (boundingCurves, maxDistance) => {
   })
 
   return boundingCurves
+}
+
+export const getRandomGridSquareCoordicates = (columnsTotal, rowsTotal) => {
+  // Get and draw bounds of random grid-square
+  const x = getRandomValueBetweenRounded(0, columnsTotal - 1)
+  const y = getRandomValueBetweenRounded(0, rowsTotal - 1)
+
+  return { x, y }
 }
