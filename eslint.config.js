@@ -1,5 +1,7 @@
 import js from '@eslint/js'
 import playwright from 'eslint-plugin-playwright'
+import react from 'eslint-plugin-react'
+import tailwind from 'eslint-plugin-tailwind'
 import globals from 'globals'
 
 // -----------------------------------------------------------------------------
@@ -21,7 +23,7 @@ export default [
       'no-unused-vars': 'warn',
       'no-undef': 'warn',
     },
-    // plugins: { tailwind },
+    plugins: { react, tailwind },
   },
   // Rules for only test files
   {

@@ -1,11 +1,13 @@
-import getCanvasApi from './src/getCanvasApi'
-import getCoonsPatch from './src/getCoonsPatch'
+import React from 'react'
+import getCoonsPatch from '../../../src/getCoonsPatch'
+import { getBoundingCurves } from '../../../src/utils'
+import getCanvasApi from '../utils/getCanvasApi'
 import {
   addRandomControlPointsToCurves,
   getRandomBounds,
   getRandomGridSquareCoordicates,
-} from './src/random'
-import { getBoundingCurves } from './src/utils'
+} from '../utils/random'
+import Canvas from './Canvas'
 
 // -----------------------------------------------------------------------------
 // Const
@@ -16,23 +18,14 @@ const SHAPE_MIN_DISTANCE_FROM_EDGE = 100
 const COLUMN_COUNT = 7
 const ROW_COUNT = 7
 
-// -----------------------------------------------------------------------
-// UI
-// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+// Utils
+// -----------------------------------------------------------------------------
 
-const canvas = document.getElementById('shapeCanvas')
-const context = canvas.getContext('2d')
-const canvasApi = getCanvasApi(context)
-
-document.addEventListener('DOMContentLoaded', () => {
-  canvas.addEventListener('click', render)
-})
-
-// -----------------------------------------------------------------------
-// Entry point
-// -----------------------------------------------------------------------
-
-function render() {
+const generateRandomPatch = (canvas) => {
+  const canvasContext = canvas.getContext('2d')
+  console.log('>>>>', canvasContext)
+  const canvasApi = getCanvasApi(canvasContext)
   canvasApi.clearCanvas(canvas)
 
   const bounds = getRandomBounds(
@@ -68,3 +61,22 @@ function render() {
   const gridSquareBounds = coonsPatch.getGridSquareBounds(x, y)
   canvasApi.drawGridSquareBounds(gridSquareBounds)
 }
+
+// -----------------------------------------------------------------------------
+// Exports
+// -----------------------------------------------------------------------------
+
+const App = () => {
+  const [canvas, setCanvas] = React.useState(null)
+
+  console.log('CON', canvas)
+
+  return (
+    <Canvas
+      setCanvas={setCanvas}
+      onClick={() => generateRandomPatch(canvas)}
+    />
+  )
+}
+
+export default App

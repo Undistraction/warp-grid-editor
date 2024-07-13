@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   display: flex;
   flex-direction: column;
@@ -5,8 +9,4 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
-}
-
-canvas {
-  border: 5px solid black;
 }
