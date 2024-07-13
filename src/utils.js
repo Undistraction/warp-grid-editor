@@ -233,7 +233,7 @@ export const getInterpolatedPointsOnCurveEvenlyDistributed = (
 // Exports
 // -----------------------------------------------------------------------------
 
-export const getBoundingCurves = ({ x, y, width, height }) => {
+export const getBoundingCurvesFromBounds = ({ x, y, width, height }) => {
   const corners = getCornerPoints(x, y, width, height)
 
   const boundingCurves = {

@@ -1,5 +1,5 @@
 const getCanvasApi = (context) => {
-  const drawDot = ({ x, y }, { color = 'red', size = 2, text } = {}) => {
+  const drawDot = ({ x, y }, { color = 'black', size = 2, text } = {}) => {
     context.beginPath()
     context.moveTo(x, y)
     context.arc(x, y, size, 0, Math.PI * 2)
@@ -85,17 +85,8 @@ const getCanvasApi = (context) => {
     context.stroke()
   }
 
-  const drawBounds = (
-    lines,
-    { lineColor = 'red', dotColor = 'red', dotSize = 4, lineWidth = 3 } = {}
-  ) => {
+  const drawBounds = (lines, { lineColor = 'black', lineWidth = 3 } = {}) => {
     drawQuad(lines, { color: lineColor, lineWidth })
-
-    // Draw corner dots
-    drawDot(lines.top.startPoint, { color: dotColor, size: dotSize })
-    drawDot(lines.right.startPoint, { color: dotColor, size: dotSize })
-    drawDot(lines.left.endPoint, { color: dotColor, size: dotSize })
-    drawDot(lines.bottom.endPoint, { color: dotColor, size: dotSize })
   }
 
   const drawLine = (startPoint, endPoint, { color = 'grey' } = {}) => {
@@ -112,36 +103,35 @@ const getCanvasApi = (context) => {
 
   const drawGridCurve = (
     curve,
-    { pointColor = 'red', lineColor = 'blue', controlPointColor = 'green' }
+    { pointColor = 'red', lineColor = 'black' }
   ) => {
     // Draw startPoint
-    drawDot(curve.startPoint, { color: pointColor })
-    // Draw endPoint
-    drawDot(curve.endPoint, { color: pointColor })
+    // drawDot(curve.startPoint, { color: pointColor })
+    // // Draw endPoint
+    // drawDot(curve.endPoint, { color: pointColor })
     // Draw controlPoint1
-    drawDot(curve.controlPoint1, { color: controlPointColor })
-    // Draw controlPoint2
-    drawDot(curve.controlPoint2, { color: controlPointColor })
+    // drawDot(curve.controlPoint1, { color: controlPointColor })
+    // // Draw controlPoint2
+    // drawDot(curve.controlPoint2, { color: controlPointColor })
     // Draw the curve line
     drawCurve(curve, { color: lineColor })
     // Draw line connecting startPoint to controlPoint1
-    drawLine(curve.startPoint, curve.controlPoint1)
-    // Draw line connecting endPoint to controlPoint2
-    drawLine(curve.endPoint, curve.controlPoint2)
+    // drawLine(curve.startPoint, curve.controlPoint1)
+    // // Draw line connecting endPoint to controlPoint2
+    // drawLine(curve.endPoint, curve.controlPoint2)
   }
 
   const drawCoonsPatch = (coonsPatch) => {
     // Draw bounds
     drawBounds(coonsPatch.boundingCurves)
-    // Draw lines
+    // // Draw lines
     coonsPatch.curvesFromLeftToRight.map(drawGridCurve)
     coonsPatch.curvesFromTopToBottom.map(drawGridCurve)
 
     // Draw intersections between grid lines
-    coonsPatch.intersections.map((point, idx) => {
+    coonsPatch.intersections.map((point) => {
       drawDot(point, {
-        color: `rgba(255, 0, 100, 1)`,
-        size: 5,
+        size: 3,
         // text: point.t,
       })
     })

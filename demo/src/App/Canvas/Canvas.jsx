@@ -1,10 +1,11 @@
 import React from 'react'
+import getCanvasApi from '../../utils/getCanvasApi'
 
 // -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
 
-const Canvas = ({ setCanvas, onClick }) => {
+const Canvas = ({ setCanvas, width, height, coonsPatch, gridSquare }) => {
   const ref = React.useRef(null)
 
   React.useEffect(() => {
@@ -13,14 +14,22 @@ const Canvas = ({ setCanvas, onClick }) => {
     }
   }, [ref.current])
 
+  React.useEffect(() => {
+    if (coonsPatch) {
+      const canvasContext = ref.current.getContext('2d')
+      const canvasApi = getCanvasApi(canvasContext)
+      canvasApi.clearCanvas(ref.current)
+      canvasApi.drawCoonsPatch(coonsPatch)
+    }
+  }, [coonsPatch, gridSquare])
+
   return (
     <canvas
       id="canvas"
       className="border border-black"
       ref={ref}
-      width="800"
-      height="500"
-      onClick={onClick}
+      width={width}
+      height={height}
     ></canvas>
   )
 }
