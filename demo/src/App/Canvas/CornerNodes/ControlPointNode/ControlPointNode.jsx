@@ -2,52 +2,43 @@ import React from 'react'
 import Draggable from 'react-draggable'
 
 // -----------------------------------------------------------------------------
-// Const
+// Utils
 // -----------------------------------------------------------------------------
 
-const WIDTH = 20
-const HEIGHT = 20
+const WIDTH = 12
+const HEIGHT = 12
 
 // -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
 
-const CornerNode = ({ id, position, onDrag }) => {
+const ControlPointNode = ({ position, onDrag, id }) => {
   const nodeRef = React.useRef(null)
-
   return (
     <Draggable
       nodeRef={nodeRef}
       position={position}
       bounds="#patch-view"
-      onDrag={(event, dragElement) => onDrag(event, dragElement, id)}
       onStop={(event, dragElement) => onDrag(event, dragElement, id)}
-      handle=".corner-handle"
+      onDrag={(event, dragElement) => onDrag(event, dragElement, id)}
+      handle=".control-point-handle"
     >
       <div
-        className="corner-handle absolute -left-[10px] -top-[10px]"
         ref={nodeRef}
+        className="control-point-handle absolute -left-[6px] -top-[6px]"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           overflow="visible"
-          viewBox={`${-WIDTH * 0.5} ${-HEIGHT * 0.5}  ${WIDTH} ${HEIGHT}`}
+          viewBox={`${-WIDTH * 0.5} ${-HEIGHT * 0.5} ${WIDTH} ${HEIGHT}`}
           width={`${WIDTH}px`}
           height={`${HEIGHT}px`}
         >
           <circle
-            stroke="black"
-            strokeWidth="3"
-            fill="white"
+            fill="black"
             cx="0"
             cy="0"
             r={WIDTH * 0.5}
-          />
-          <circle
-            fill="black"
-            cx="0.25"
-            cy="0.25"
-            r={WIDTH * 0.25}
           />
         </svg>
       </div>
@@ -55,4 +46,4 @@ const CornerNode = ({ id, position, onDrag }) => {
   )
 }
 
-export default CornerNode
+export default ControlPointNode

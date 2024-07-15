@@ -1,5 +1,5 @@
 export default {
-  content: ['./**/*.jsx'],
+  content: ['./**/*.{js,jsx,html}'],
   theme: {
     extend: {},
   },

@@ -1,5 +1,5 @@
-import { getBoundingCurvesFromBounds, isInt } from '../../src/utils'
-import { CORNER_IDS } from './const'
+import { isInt } from '../../src/utils'
+import { BOUNDS_POINT_IDS } from './const'
 import getCanvasApi from './utils/getCanvasApi'
 import { addRandomControlPointsToCurves, getRandomBounds } from './utils/random'
 
@@ -9,6 +9,51 @@ import { addRandomControlPointsToCurves, getRandomBounds } from './utils/random'
 
 const CONTROL_POINT_MIN_DISTANCE_FROM_POINT = 60
 const SHAPE_MIN_DISTANCE_FROM_EDGE = 100
+
+// -----------------------------------------------------------------------------
+// Utils
+// -----------------------------------------------------------------------------
+
+const getCornerPoints = (x, y, width, height) => {
+  const rightBounds = x + width
+  const bottomBounds = y + height
+
+  return {
+    topLeft: { x, y },
+    topRight: { x: rightBounds, y },
+    bottomRight: { x: rightBounds, y: bottomBounds },
+    bottomLeft: { x, y: bottomBounds },
+  }
+}
+
+const getBoundingCurvesFromBounds = ({ x, y, width, height }) => {
+  const corners = getCornerPoints(x, y, width, height)
+
+  const topLeftOffset = Math.random() * 500 - 250
+
+  corners.topLeft.x = corners.topLeft.x + topLeftOffset
+
+  const boundingCurves = {
+    top: {
+      startPoint: corners.topLeft,
+      endPoint: corners.topRight,
+    },
+    right: {
+      startPoint: corners.topRight,
+      endPoint: corners.bottomRight,
+    },
+    bottom: {
+      startPoint: corners.bottomLeft,
+      endPoint: corners.bottomRight,
+    },
+    left: {
+      startPoint: corners.topLeft,
+      endPoint: corners.bottomLeft,
+    },
+  }
+
+  return boundingCurves
+}
 
 // -----------------------------------------------------------------------------
 // Exports
@@ -36,24 +81,64 @@ export const getRandomBoundingCurves = (canvas) => {
 }
 
 export const updateBoundingCurves = (point, id, boundingCurves) => {
-  if (id === CORNER_IDS.TOP_LEFT) {
+  // ---------------------------------------------------------------------------
+  // Corner points
+  // ---------------------------------------------------------------------------
+
+  if (id === BOUNDS_POINT_IDS.TOP_LEFT) {
     boundingCurves.top.startPoint = point
     boundingCurves.left.startPoint = point
   }
 
-  if (id === CORNER_IDS.TOP_RIGHT) {
+  if (id === BOUNDS_POINT_IDS.TOP_RIGHT) {
     boundingCurves.top.endPoint = point
     boundingCurves.right.startPoint = point
   }
 
-  if (id === CORNER_IDS.BOTTOM_LEFT) {
+  if (id === BOUNDS_POINT_IDS.BOTTOM_LEFT) {
     boundingCurves.bottom.startPoint = point
     boundingCurves.left.endPoint = point
   }
 
-  if (id === CORNER_IDS.BOTTOM_RIGHT) {
+  if (id === BOUNDS_POINT_IDS.BOTTOM_RIGHT) {
     boundingCurves.bottom.endPoint = point
     boundingCurves.right.endPoint = point
+  }
+
+  // ---------------------------------------------------------------------------
+  // Control points
+  // ---------------------------------------------------------------------------
+
+  if (id === BOUNDS_POINT_IDS.TOP_LEFT_CONTROL_1) {
+    boundingCurves.top.controlPoint1 = point
+  }
+
+  if (id === BOUNDS_POINT_IDS.TOP_LEFT_CONTROL_2) {
+    boundingCurves.left.controlPoint1 = point
+  }
+
+  if (id === BOUNDS_POINT_IDS.TOP_RIGHT_CONTROL_1) {
+    boundingCurves.top.controlPoint2 = point
+  }
+
+  if (id === BOUNDS_POINT_IDS.TOP_RIGHT_CONTROL_2) {
+    boundingCurves.right.controlPoint1 = point
+  }
+
+  if (id === BOUNDS_POINT_IDS.BOTTOM_LEFT_CONTROL_1) {
+    boundingCurves.bottom.controlPoint1 = point
+  }
+
+  if (id === BOUNDS_POINT_IDS.BOTTOM_LEFT_CONTROL_2) {
+    boundingCurves.left.controlPoint2 = point
+  }
+
+  if (id === BOUNDS_POINT_IDS.BOTTOM_RIGHT_CONTROL_1) {
+    boundingCurves.bottom.controlPoint2 = point
+  }
+
+  if (id === BOUNDS_POINT_IDS.BOTTOM_RIGHT_CONTROL_2) {
+    boundingCurves.right.controlPoint2 = point
   }
 
   // Create a new object to trigger useEffect
@@ -73,11 +158,14 @@ export const clampGridSquareToGridDimensions = (
 
   const gridSquare = {}
 
-  if (isInt(x)) {
+  const xInt = parseInt(x)
+  const yInt = parseInt(y)
+
+  if (isInt(xInt)) {
     gridSquare.x = clampNumberBetween(0, columnsTotal - 1, x)
   }
 
-  if (isInt(y)) {
+  if (isInt(yInt)) {
     gridSquare.y = clampNumberBetween(0, rowsTotal - 1, y)
   }
 

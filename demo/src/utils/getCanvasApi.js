@@ -31,11 +31,6 @@ const getCanvasApi = (context) => {
     context.strokeStyle = color
     context.lineWidth = lineWidth
     context.stroke()
-
-    if (shouldDrawControlPoints) {
-      drawLine(startPoint, controlPoint1)
-      drawLine(endPoint, controlPoint2)
-    }
   }
 
   const drawQuad = (lines, { color = 'green', lineWidth = 1 } = {}) => {
@@ -90,8 +85,24 @@ const getCanvasApi = (context) => {
     context.stroke()
   }
 
+  const drawPatchBounds = (
+    lines,
+    { lineColor = 'green', lineWidth = 3 } = {}
+  ) => {
+    console.log('DRAW PATCH')
+    drawQuad(lines, { color: lineColor, lineWidth })
+  }
+
   const drawBounds = (lines, { lineColor = 'black', lineWidth = 3 } = {}) => {
     drawQuad(lines, { color: lineColor, lineWidth })
+
+    // Draw control point stems
+    const edges = [lines.top, lines.bottom, lines.left, lines.right]
+
+    edges.map(({ startPoint, endPoint, controlPoint1, controlPoint2 }) => {
+      drawLine(startPoint, controlPoint1)
+      drawLine(endPoint, controlPoint2)
+    })
   }
 
   const drawLine = (startPoint, endPoint, { color = 'grey' } = {}) => {
@@ -99,6 +110,7 @@ const getCanvasApi = (context) => {
     context.moveTo(startPoint.x, startPoint.y)
     context.lineTo(endPoint.x, endPoint.y)
     context.strokeStyle = color
+    context.lineWidth = 1
     context.stroke()
   }
 
@@ -107,7 +119,7 @@ const getCanvasApi = (context) => {
   }
 
   const drawGridCurve = (curve, { lineColor = 'black' }) => {
-    drawCurve(curve, { color: lineColor, shouldDrawControlPoints: true })
+    drawCurve(curve, { color: lineColor })
   }
 
   const drawCoonsPatch = (coonsPatch) => {
@@ -127,7 +139,7 @@ const getCanvasApi = (context) => {
   }
 
   const drawGridSquareBounds = (boundingCurves) => {
-    drawBounds(boundingCurves, { lineColor: 'green', lineWidth: 3 })
+    drawPatchBounds(boundingCurves, { lineColor: 'green', lineWidth: 3 })
   }
 
   return {

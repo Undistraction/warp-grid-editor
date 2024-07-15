@@ -3,39 +3,76 @@
 // -----------------------------------------------------------------------------
 
 import React from 'react'
-import { CORNER_IDS } from '../../../const'
+import { BOUNDS_POINT_IDS } from '../../../const'
+import ControlPointNode from './ControlPointNode'
 import CornerNode from './CornerNode/CornerNode'
 
 // -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
 
-const CornerNodes = ({ boundingCurves, onStopDrag }) => {
+const CornerNodes = ({ boundingCurves, onDrag }) => {
   return (
     <div>
       <CornerNode
-        uid={CORNER_IDS.TOP_LEFT}
-        onStop={onStopDrag}
-        onDrag={onStopDrag}
+        id={BOUNDS_POINT_IDS.TOP_LEFT}
+        onDrag={onDrag}
         position={boundingCurves.top.startPoint}
       />
       <CornerNode
-        uid={CORNER_IDS.TOP_RIGHT}
-        onStop={onStopDrag}
-        onDrag={onStopDrag}
+        id={BOUNDS_POINT_IDS.TOP_RIGHT}
+        onDrag={onDrag}
         position={boundingCurves.top.endPoint}
       />
       <CornerNode
-        uid={CORNER_IDS.BOTTOM_LEFT}
-        onStop={onStopDrag}
-        onDrag={onStopDrag}
-        position={boundingCurves.bottom.startPoint}
+        id={BOUNDS_POINT_IDS.BOTTOM_LEFT}
+        onDrag={onDrag}
+        position={boundingCurves.left.endPoint}
       />
       <CornerNode
-        uid={CORNER_IDS.BOTTOM_RIGHT}
-        onStop={onStopDrag}
-        onDrag={onStopDrag}
+        id={BOUNDS_POINT_IDS.BOTTOM_RIGHT}
+        onDrag={onDrag}
         position={boundingCurves.bottom.endPoint}
+      />
+      <ControlPointNode
+        id={BOUNDS_POINT_IDS.TOP_LEFT_CONTROL_1}
+        onDrag={onDrag}
+        position={boundingCurves.top.controlPoint1}
+      />
+      <ControlPointNode
+        id={BOUNDS_POINT_IDS.TOP_LEFT_CONTROL_2}
+        onDrag={onDrag}
+        position={boundingCurves.left.controlPoint1}
+      />
+      <ControlPointNode
+        id={BOUNDS_POINT_IDS.TOP_RIGHT_CONTROL_1}
+        onDrag={onDrag}
+        position={boundingCurves.top.controlPoint2}
+      />
+      <ControlPointNode
+        id={BOUNDS_POINT_IDS.TOP_RIGHT_CONTROL_2}
+        onDrag={onDrag}
+        position={boundingCurves.right.controlPoint1}
+      />
+      <ControlPointNode
+        id={BOUNDS_POINT_IDS.BOTTOM_LEFT_CONTROL_1}
+        onDrag={onDrag}
+        position={boundingCurves.bottom.controlPoint1}
+      />
+      <ControlPointNode
+        id={BOUNDS_POINT_IDS.BOTTOM_LEFT_CONTROL_2}
+        onDrag={onDrag}
+        position={boundingCurves.left.controlPoint2}
+      />
+      <ControlPointNode
+        id={BOUNDS_POINT_IDS.BOTTOM_RIGHT_CONTROL_1}
+        onDrag={onDrag}
+        position={boundingCurves.bottom.controlPoint2}
+      />
+      <ControlPointNode
+        id={BOUNDS_POINT_IDS.BOTTOM_RIGHT_CONTROL_2}
+        onDrag={onDrag}
+        position={boundingCurves.right.controlPoint2}
       />
     </div>
   )

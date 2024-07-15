@@ -1,4 +1,5 @@
 import React from 'react'
+import { INTERPOLATION_STRATEGY } from '../../../src/const'
 import getCoonsPatch from '../../../src/getCoonsPatch'
 import {
   clampGridSquareToGridDimensions,
@@ -18,9 +19,14 @@ const CANVAS_HEIGHT = 400
 const GRID_DEFAULT = {
   columns: 3,
   rows: 3,
+  interpolationStrategy: INTERPOLATION_STRATEGY.LINEAR,
   // columns: [1, 0.2, 1, 0.2, 1, 0.2, 1],
   // rows: [1, 0.2, 1, 0.2, 1, 0.2, 1],
 }
+
+// -----------------------------------------------------------------------------
+// Utils
+// -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
 // Exports
@@ -33,7 +39,7 @@ const App = () => {
   const [grid, setGrid] = React.useState(GRID_DEFAULT)
   const [gridSquare, setGridSquare] = React.useState(null)
 
-  console.log('>>>', gridSquare)
+  const [savedBounds, setSavedBounds] = React.useState({ ...localStorage })
 
   React.useEffect(() => {
     if (boundingCurves) {
@@ -42,7 +48,7 @@ const App = () => {
     }
   }, [boundingCurves, canvas, grid, gridSquare])
 
-  const handleStopDrag = (event, dragElement, id) => {
+  const handleNodeDrag = (event, dragElement, id) => {
     const newPoint = {
       x: dragElement.x,
       y: dragElement.y,
@@ -56,8 +62,23 @@ const App = () => {
     ? clampGridSquareToGridDimensions(gridSquare, grid)
     : gridSquare
 
+  console.log('>>>>', gridSquare)
+
+  const handleSave = (name) => {
+    const boundCurveStringified = JSON.stringify(boundingCurves)
+    const key = `${name}-${new Date().toUTCString()}`
+    localStorage.setItem(key, boundCurveStringified)
+    setSavedBounds({ ...localStorage })
+  }
+
+  const onLoad = (key) => {
+    const boundingCurvesString = localStorage[key]
+    const newBoundingCurves = JSON.parse(boundingCurvesString)
+    setBoundingCurves(newBoundingCurves)
+  }
+
   return (
-    <div className="w-[800px] relative h-[400px] flex flex-row space-x-5">
+    <div className="relative flex h-[400px] w-[800px] flex-row space-x-5">
       <div
         className="relative"
         id="patch-view"
@@ -72,7 +93,7 @@ const App = () => {
         {boundingCurves && (
           <CornerNodes
             boundingCurves={boundingCurves}
-            onStopDrag={handleStopDrag}
+            onDrag={handleNodeDrag}
           />
         )}
       </div>
@@ -84,6 +105,9 @@ const App = () => {
         setBoundingCurves={setBoundingCurves}
         setGrid={setGrid}
         setGridSquare={setGridSquare}
+        onSave={handleSave}
+        onLoad={onLoad}
+        savedBounds={savedBounds}
       />
     </div>
   )
