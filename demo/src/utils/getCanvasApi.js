@@ -13,7 +13,7 @@ const getCanvasApi = (context) => {
 
   const drawCurve = (
     { controlPoint1, controlPoint2, startPoint, endPoint },
-    { color = 'red', lineWidth = 1 } = {}
+    { color = 'red', lineWidth = 1, shouldDrawControlPoints = false } = {}
   ) => {
     context.beginPath()
     context.moveTo(startPoint.x, startPoint.y)
@@ -31,6 +31,11 @@ const getCanvasApi = (context) => {
     context.strokeStyle = color
     context.lineWidth = lineWidth
     context.stroke()
+
+    if (shouldDrawControlPoints) {
+      drawLine(startPoint, controlPoint1)
+      drawLine(endPoint, controlPoint2)
+    }
   }
 
   const drawQuad = (lines, { color = 'green', lineWidth = 1 } = {}) => {
@@ -101,24 +106,8 @@ const getCanvasApi = (context) => {
     context.clearRect(0, 0, canvas.width, canvas.height)
   }
 
-  const drawGridCurve = (
-    curve,
-    { pointColor = 'red', lineColor = 'black' }
-  ) => {
-    // Draw startPoint
-    // drawDot(curve.startPoint, { color: pointColor })
-    // // Draw endPoint
-    // drawDot(curve.endPoint, { color: pointColor })
-    // Draw controlPoint1
-    // drawDot(curve.controlPoint1, { color: controlPointColor })
-    // // Draw controlPoint2
-    // drawDot(curve.controlPoint2, { color: controlPointColor })
-    // Draw the curve line
-    drawCurve(curve, { color: lineColor })
-    // Draw line connecting startPoint to controlPoint1
-    // drawLine(curve.startPoint, curve.controlPoint1)
-    // // Draw line connecting endPoint to controlPoint2
-    // drawLine(curve.endPoint, curve.controlPoint2)
+  const drawGridCurve = (curve, { lineColor = 'black' }) => {
+    drawCurve(curve, { color: lineColor, shouldDrawControlPoints: true })
   }
 
   const drawCoonsPatch = (coonsPatch) => {
@@ -128,17 +117,17 @@ const getCanvasApi = (context) => {
     coonsPatch.curvesFromLeftToRight.map(drawGridCurve)
     coonsPatch.curvesFromTopToBottom.map(drawGridCurve)
 
-    // Draw intersections between grid lines
-    coonsPatch.intersections.map((point) => {
-      drawDot(point, {
-        size: 3,
-        // text: point.t,
-      })
-    })
+    // // Draw intersections between grid lines
+    // coonsPatch.intersections.map((point) => {
+    //   drawDot(point, {
+    //     size: 3,
+    //     // text: point.t,
+    //   })
+    // })
   }
 
   const drawGridSquareBounds = (boundingCurves) => {
-    drawBounds(boundingCurves, { lineColor: 'green', dotColor: 'blue' })
+    drawBounds(boundingCurves, { lineColor: 'green', lineWidth: 3 })
   }
 
   return {

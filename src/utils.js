@@ -19,6 +19,10 @@ const validateRatio = (ratio) => {
   }
 }
 
+const pointsAreEqual = (p1, p2) => {
+  return p1.x === p2.x && p1.y === p2.y
+}
+
 const getDistanceBetweenPoints = (point1, point2) => {
   return Math.sqrt(
     Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2)
@@ -55,7 +59,7 @@ const getCumulativeLengths = (pointsApproximate) => {
   return cumulativeLengths
 }
 
-const getInterpolatedPointOnCurveEvenlyDistributed = (
+const findClosestPointOnCurve = (
   cumulativeLengths,
   curve,
   targetLength,
@@ -92,15 +96,15 @@ const interpolateBetweenPoints = (range, point1, point2) => {
   }
 }
 
-const interpolateControlPoints = (range, curve1, curve2) => {
+const interpolateControlPoints = (ratio, curve1, curve2) => {
   return {
     controlPoint1: interpolateBetweenPoints(
-      range,
+      ratio,
       curve1.controlPoint1,
       curve2.controlPoint1
     ),
     controlPoint2: interpolateBetweenPoints(
-      range,
+      ratio,
       curve1.controlPoint2,
       curve2.controlPoint2
     ),
@@ -111,7 +115,7 @@ export const getBezier = (curve) => {
   return new Bezier(...getCurvePropsAsArray(curve))
 }
 
-export const getPointFromArray = ([
+export const getCurveFromArray = ([
   startPoint,
   controlPoint1,
   controlPoint2,
@@ -124,28 +128,40 @@ export const getPointFromArray = ([
 })
 
 export const getSubcurveBetweenRatios = (curve, ratioStart, ratioEnd) => {
-  const startPoint = getInterpolatedPointsOnCurveEvenlyDistributed(
-    ratioStart,
-    curve
-  )
-  const endPoint = getInterpolatedPointsOnCurveEvenlyDistributed(
-    ratioEnd,
-    curve
-  )
-
-  console.log('s', startPoint)
-  console.log('e', endPoint)
+  const startPoint = getInterpolatedPointOnCurve(ratioStart, curve)
+  const endPoint = getInterpolatedPointOnCurve(ratioEnd, curve)
 
   return getBezier(curve).split(startPoint.ratio, endPoint.ratio)
 }
 
-const getIntersectionBetweenCurves = (curve1, curve2) => {
+export const getIntersectionBetweenCurves = (curve1, curve2) => {
   const curve1Bezier = getBezier(curve1)
   const curve2Bezier = getBezier(curve2)
-  return curve1Bezier.intersects(curve2Bezier).map((coordinateString) => {
-    var [x] = getCoordinatesFromSlashedString(coordinateString)
-    return curve1Bezier.get(x)
-  })
+  let results = curve1Bezier
+    .intersects(curve2Bezier)
+    .map((coordinateString) => {
+      const [x] = getCoordinatesFromSlashedString(coordinateString)
+      const result = curve1Bezier.get(x)
+
+      const r = {
+        x: result.x,
+        y: result.y,
+        ratio: result.t,
+      }
+      return r
+    })
+
+  if (pointsAreEqual(curve1.startPoint, curve2.startPoint)) {
+    results = [{ ...curve1.startPoint, ratio: 0 }, ...results]
+  } else if (pointsAreEqual(curve1.startPoint, curve2.endPoint)) {
+    results = [{ ...curve1.startPoint, ratio: 0 }, ...results]
+  } else if (pointsAreEqual(curve1.endPoint, curve2.endPoint)) {
+    results = [...results, { ...curve1.endPoint, ratio: 1 }]
+  } else if (pointsAreEqual(curve1.endPoint, curve2.startPoint)) {
+    results = [...results, { ...curve1.endPoint, ratio: 1 }]
+  }
+
+  return results
 }
 
 const getIntersectionWithCurveSet = (curve, curvesToCheck) => {
@@ -219,7 +235,7 @@ export const getInterpolatedPointsOnCurveEvenlyDistributed = (
   const targetLength = ratio * totalLength
 
   // Interpolate new point based on the cumulative arc length
-  let point = getInterpolatedPointOnCurveEvenlyDistributed(
+  const point = findClosestPointOnCurve(
     cumulativeLengths,
     curve,
     targetLength,
@@ -233,8 +249,18 @@ export const getInterpolatedPointsOnCurveEvenlyDistributed = (
 // Exports
 // -----------------------------------------------------------------------------
 
+export const isArray = Array.isArray
+export const isInt = Number.isInteger
+export const isUndefined = (value) => typeof value === 'undefined'
+export const isNull = (value) => value === null
+export const isNil = (value) => isUndefined(value) || isNull(value)
+
 export const getBoundingCurvesFromBounds = ({ x, y, width, height }) => {
   const corners = getCornerPoints(x, y, width, height)
+
+  const topLeftOffset = Math.random() * 500 - 250
+
+  corners.topLeft.x = corners.topLeft.x + topLeftOffset
 
   const boundingCurves = {
     top: {
@@ -275,13 +301,6 @@ export const interpolatCurve = (
 ) => {
   validateRatio(ratio)
 
-  // Get a curve that is interpolated between our start and end points
-  const { controlPoint1, controlPoint2 } = interpolateControlPoints(
-    ratio,
-    curve3,
-    curve4
-  )
-
   // Use ratio to find a point on the first curve which will be the starting
   // point of our curve.
   const startPoint = getInterpolatedPointsOnCurveEvenlyDistributed(
@@ -292,6 +311,13 @@ export const interpolatCurve = (
   // Use ratio to find a point on the opposite curve which will be the ending
   // point of our curve.
   const endPoint = getInterpolatedPointsOnCurveEvenlyDistributed(ratio, curve2)
+
+  // Get a curve that is interpolated between our start and end points
+  const { controlPoint1, controlPoint2 } = interpolateControlPoints(
+    endPoint.ratio,
+    curve3,
+    curve4
+  )
 
   return {
     startPoint,

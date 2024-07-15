@@ -1,72 +1,31 @@
 import BezierEasing from 'bezier-easing'
-import uniq from 'uniq'
 import {
-  getIntersectionsBetweenCurveSets,
-  getPointFromArray,
+  getCurveFromArray,
+  getIntersectionBetweenCurves,
   getSubcurveBetweenRatios,
   interpolatCurve,
+  isArray,
+  isInt,
+  isNil,
 } from './utils'
 
 // -----------------------------------------------------------------------------
 // Const
 // -----------------------------------------------------------------------------
 
-const CLOSENESS = 1
-
 // See https://gre.github.io/bezier-easing-editor/example/
 const easeX = BezierEasing(0, 0, 1, 1)
 const easeY = BezierEasing(0, 0, 1, 1)
-
-const filterPointsByProximity = (point1, point2) =>
-  Math.abs(point1.x - point2.x) < CLOSENESS &&
-  Math.abs(point1.y - point2.y) < CLOSENESS
-    ? 0
-    : 1
 
 // -----------------------------------------------------------------------------
 // Utils
 // -----------------------------------------------------------------------------
 
-const isArray = Array.isArray
-const isInt = Number.isInteger
-
-const insertAtIndex = (idx, value, array) => {
-  array.splice(idx, 0, value)
-  return array
-}
-
 export const isUndefined = (value) => typeof value === 'undefined'
-
-const addCornerPointsToIntersections = (
-  intersections,
-  boundingCurves,
-  columns,
-  rows
-) => {
-  const topLeftPoint = boundingCurves.top.startPoint
-  const topRightPoint = boundingCurves.top.endPoint
-  const bottomLeftPoint = boundingCurves.bottom.startPoint
-  const bottomRightPoint = boundingCurves.bottom.endPoint
-
-  intersections = insertAtIndex(0, topLeftPoint, intersections)
-  intersections = insertAtIndex(columns, topRightPoint, intersections)
-  intersections = insertAtIndex(
-    columns * (rows + 1),
-    bottomLeftPoint,
-    intersections
-  )
-  intersections = insertAtIndex(
-    columns * (rows + 2),
-    bottomRightPoint,
-    intersections
-  )
-
-  return intersections
-}
 
 const buildSpacing = (v) => {
   const spacing = []
-  for (let idx = 0; idx <= v; idx++) {
+  for (let idx = 0; idx < v; idx++) {
     spacing.push(1)
   }
   return spacing
@@ -77,7 +36,7 @@ const validateGrid = (grid) => {
     throw new Error('You must supply a grid')
   }
 
-  if (!grid.columns) {
+  if (isNil(grid.columns)) {
     throw new Error('You must supply grid.columns(Array or Int)')
   }
 
@@ -85,7 +44,7 @@ const validateGrid = (grid) => {
     throw new Error('grid.columns must be an Array of Ints or Int')
   }
 
-  if (!grid.rows) {
+  if (isNil(grid.rows)) {
     throw new Error('You must supply grid.rows(Array or Int)')
   }
 
@@ -107,25 +66,21 @@ const getCurves = (steps, curvesPair1, curvesPair2, ease) => {
   const stepsTotal = steps.length
   const curves = []
   const stepsWidthTotal = steps.reduce(addToTotal, 0)
-  for (let column = 0; column <= stepsTotal; column++) {
+  for (let step = 0; step <= stepsTotal; step++) {
     // Allow different grid spacings
     const ratio = currentWidth / stepsWidthTotal
-    currentWidth = currentWidth + steps[column]
+    currentWidth = currentWidth + steps[step]
 
     // Allow easing
     const ratioXEased = ease(ratio)
     const curve = interpolatCurve(ratioXEased, curvesPair1, curvesPair2)
 
-    curves.push(curve)
+    curves.push({ ...curve, step: step })
   }
   return curves
 }
 
 const addToTotal = (total, value) => total + value
-
-const filterIntersections = (intersections) => {
-  return uniq(intersections, filterPointsByProximity, true)
-}
 
 // -----------------------------------------------------------------------------
 // Exports
@@ -133,7 +88,6 @@ const filterIntersections = (intersections) => {
 
 const getCoonsPatch = (boundingCurves, grid) => {
   validateGrid(grid)
-
   // Columns can be either an int, or an array containing ints, each
   // representing the width of that column. If the total widths are different to
   // the width of the shape described by the bounding curves, they will be
@@ -166,33 +120,31 @@ const getCoonsPatch = (boundingCurves, grid) => {
     easeY
   )
 
-  const intersections = getIntersectionsBetweenCurveSets({
-    curvesFromLeftToRight,
-    curvesFromTopToBottom,
-  })
+  // const intersections = getIntersectionsBetweenCurveSets({
+  //   curvesFromLeftToRight,
+  //   curvesFromTopToBottom,
+  // })
 
-  // Due to the nature of finding intersections between curves, Bezier.js's
-  // calculations often result in multiple points for the same intersection that
-  // are very close together, so we need to filter out these points.
-  const filteredIntersections = filterIntersections(intersections)
+  // // Due to the nature of finding intersections between curves, Bezier.js's
+  // // calculations often result in multiple points for the same intersection that
+  // // are very close together, so we need to filter out these points.
+  // const filteredIntersections = filterIntersections(intersections)
 
-  // For reasons I don't understand the Bezier.js library doesn't detect
-  // intersections when the intersection is at the ends of both curves. This
-  // means all four corner points will be missing, so we need to add them back
-  // in, and do it at the right indices.
-  const filteredIntersectionsWithCornerPoints = addCornerPointsToIntersections(
-    filteredIntersections,
-    boundingCurves,
-    columns.length,
-    rows.length
-  )
+  // // For reasons I don't understand the Bezier.js library doesn't detect
+  // // intersections when the intersection is at the ends of both curves. This
+  // // means all four corner points will be missing, so we need to add them back
+  // // in, and do it at the right indices.
+  // const filteredIntersectionsWithCornerPoints = addCornerPointsToIntersections(
+  //   filteredIntersections,
+  //   boundingCurves,
+  //   columns.length,
+  //   rows.length
+  // )
 
   // Get four curves that describe the bounds of the grid-sqare with the
   // supplied grid coordicates
   const getGridSquareBounds = (x, y) => {
     validateGetSquareArguments(x, y, columns, rows)
-    const columnsTotal = columns.length
-    const rowsTotal = rows.length
 
     // Find the curves that run along the grid square bounds
     const topCurve = curvesFromLeftToRight[y]
@@ -200,30 +152,104 @@ const getCoonsPatch = (boundingCurves, grid) => {
     const leftCurve = curvesFromTopToBottom[x]
     const rightCurve = curvesFromTopToBottom[x + 1]
 
-    // Find the start and end ratios for the top and bottom curves
-    const ratioStartX = x / columnsTotal
-    const ratioEndX = (x + 1) / columnsTotal
+    const topCurveLeftIntersections = getIntersectionBetweenCurves(
+      topCurve,
+      leftCurve,
+      'topCurveLeftIntersections'
+    )
 
-    // Find the start and end ratios for the left and right curves
-    const ratioStartY = y / rowsTotal
-    const ratioEndY = (y + 1) / rowsTotal
+    const topCurveRightIntersections = getIntersectionBetweenCurves(
+      topCurve,
+      rightCurve,
+      `topCurveLeftIntersections`
+    )
+
+    const bottomCurveLeftIntersections = getIntersectionBetweenCurves(
+      bottomCurve,
+      leftCurve,
+      `bottomCurveLeftIntersections`
+    )
+
+    const bottomCurveRightIntersections = getIntersectionBetweenCurves(
+      bottomCurve,
+      rightCurve,
+      `bottomCurveRightIntersections`
+    )
+
+    const rightCurveTopIntersections = getIntersectionBetweenCurves(
+      rightCurve,
+      topCurve,
+      `rightCurveTopIntersections`
+    )
+
+    const rightCurveBottomIntersections = getIntersectionBetweenCurves(
+      rightCurve,
+      bottomCurve,
+      `rightCurveBottomIntersections`
+    )
+
+    const leftCurveTopIntersections = getIntersectionBetweenCurves(
+      leftCurve,
+      topCurve,
+      `leftCurveTopIntersections`
+    )
+
+    const leftCurveBottomIntersections = getIntersectionBetweenCurves(
+      leftCurve,
+      bottomCurve,
+      `leftCurveBottomIntersections`
+    )
+
+    if (
+      topCurveLeftIntersections.length === 0 ||
+      topCurveRightIntersections.length === 0 ||
+      bottomCurveLeftIntersections.length === 0 ||
+      bottomCurveRightIntersections.length === 0 ||
+      topCurveLeftIntersections.length === 0 ||
+      leftCurveTopIntersections.length === 0 ||
+      leftCurveBottomIntersections.length === 0 ||
+      rightCurveTopIntersections.length === 0 ||
+      rightCurveBottomIntersections.length === 0
+    ) {
+      throw new Error('Missing intesection')
+    }
 
     // Get sub-curves that describe the grid-square's bounds
-    const top = getSubcurveBetweenRatios(topCurve, ratioStartX, ratioEndX)
-    const bottom = getSubcurveBetweenRatios(bottomCurve, ratioStartX, ratioEndX)
-    const left = getSubcurveBetweenRatios(leftCurve, ratioStartY, ratioEndY)
-    const right = getSubcurveBetweenRatios(rightCurve, ratioStartY, ratioEndY)
+    const top = getSubcurveBetweenRatios(
+      topCurve,
+      topCurveLeftIntersections[0].ratio,
+      topCurveRightIntersections[0].ratio
+    )
+    const bottom = getSubcurveBetweenRatios(
+      bottomCurve,
+      bottomCurveLeftIntersections[0].ratio,
+      bottomCurveRightIntersections[0].ratio
+    )
+    const left = getSubcurveBetweenRatios(
+      leftCurve,
+      leftCurveTopIntersections[0].ratio,
+      leftCurveBottomIntersections[0].ratio
+    )
+    const right = getSubcurveBetweenRatios(
+      rightCurve,
+      rightCurveTopIntersections[0].ratio,
+      rightCurveBottomIntersections[0].ratio
+    )
 
     return {
-      top: getPointFromArray(top.points),
-      bottom: getPointFromArray(bottom.points),
-      left: getPointFromArray(left.points),
-      right: getPointFromArray(right.points),
+      top: getCurveFromArray(top.points),
+      bottom: getCurveFromArray(bottom.points),
+      left: getCurveFromArray(left.points),
+      right: getCurveFromArray(right.points),
+      intersections: {
+        topCurveLeftIntersections,
+        topCurveRightIntersections,
+      },
     }
   }
 
   return {
-    intersections: filteredIntersectionsWithCornerPoints,
+    // intersections: filteredIntersectionsWithCornerPoints,
     curvesFromLeftToRight,
     curvesFromTopToBottom,
     boundingCurves,
