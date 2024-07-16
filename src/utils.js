@@ -129,6 +129,7 @@ const interpolateDimensionLinear = (
   { controlPoint1, controlPoint2, startPoint, endPoint }
 ) => {
   return (
+    // (1−v)C1(u)
     Math.pow(1 - ratio, 3) * startPoint[axis] +
     3 * ratio * Math.pow(1 - ratio, 2) * controlPoint1[axis] +
     3 * ratio * ratio * (1 - ratio) * controlPoint2[axis] +
@@ -268,4 +269,60 @@ export const interpolateBetweenCurves = (
     controlPoint1,
     controlPoint2,
   }
+}
+
+const reverseCurve = ({
+  startPoint,
+  endPoint,
+  controlPoint1,
+  controlPoint2,
+}) => {
+  return {
+    startPoint: endPoint,
+    controlPoint1: controlPoint2,
+    controlPoint2: controlPoint1,
+    endPoint: startPoint,
+  }
+}
+
+export const getPointOnSurface = (
+  {
+    // C1
+    bottom,
+    // C2
+    top,
+    // C3
+    left,
+    // C4
+    right,
+  },
+  u,
+  v,
+  axis
+) => {
+  const cornerBottomLeft = bottom.startPoint
+  const cornerBottomRight = bottom.endPoint
+  const cornerTopLeft = top.startPoint
+  const cornerTopRight = top.endPoint
+
+  const leftReversed = reverseCurve(left)
+  const rightReversed = reverseCurve(right)
+
+  // (1-v)C1(u) +
+  return (
+    (1 - v) * interpolatePointOnCurveEvenlySpaced(u, bottom)[axis] +
+    // vC2(u)
+    v * interpolatePointOnCurveEvenlySpaced(u, top)[axis] +
+    // (1-u)C3(v) +
+    (1 - u) * interpolatePointOnCurveEvenlySpaced(v, leftReversed)[axis] +
+    // uC4(v) -
+    u * interpolatePointOnCurveEvenlySpaced(v, rightReversed)[axis] -
+    // (1-u)(1-v)P00
+    (1 - u) * (1 - v) * cornerBottomLeft[axis] -
+    // u(1-v)P10
+    u * (1 - v) * cornerBottomRight[axis] -
+    // (1−u)vP01
+    (1 - u) * v * cornerTopLeft[axis] -
+    u * v * cornerTopRight[axis]
+  )
 }

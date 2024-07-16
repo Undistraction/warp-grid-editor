@@ -45,17 +45,51 @@ const getGridSquareOptions = (minNumber, maxNumberOrArray) => {
 const Sidebar = ({
   grid,
   canvas,
-  gridSquare,
+  surface,
   getRandomBoundingCurves,
   setBoundingCurves,
   setGrid,
-  setGridSquare,
   onSave,
   onLoad,
   savedBounds,
+  setSurface,
 }) => {
   return (
     <div className="flex min-w-72 flex-col space-y-3 divide-y-2">
+      <SidebarGroup title="Surface">
+        <div className="flex flex-row space-x-2 align-middle">
+          <div>X</div>
+          <input
+            className="flex-grow"
+            type="range"
+            id="ratioX"
+            name="ratioX"
+            value={surface.x}
+            onChange={(event) =>
+              setSurface({ ...surface, x: event.target.value })
+            }
+            min="0"
+            max="1"
+            step="any"
+          />
+        </div>
+        <div className="flex flex-row space-x-2 align-middle">
+          <div>Y</div>
+          <input
+            className="flex-grow"
+            type="range"
+            id="ratioY"
+            name="ratioY"
+            value={surface.y}
+            onChange={(event) =>
+              setSurface({ ...surface, y: event.target.value })
+            }
+            min="0"
+            max="1"
+            step="any"
+          />
+        </div>
+      </SidebarGroup>
       <SidebarGroup title="Grid">
         <button
           className="rounded-md bg-black p-3 text-white"
@@ -104,23 +138,29 @@ const Sidebar = ({
       <SidebarGroup title="Grid square">
         <SteppedInput
           label="Across"
-          value={gridSquare ? gridSquare.x : ''}
+          value={surface.gridSquare ? surface.gridSquare.x : ''}
           options={getGridSquareOptions(0, grid.columns)}
           onChange={(x) => {
-            setGridSquare({
-              ...gridSquare,
-              x,
+            setSurface({
+              ...surface,
+              gridSquare: {
+                ...surface.gridSquare,
+                x,
+              },
             })
           }}
         />
         <SteppedInput
           label="Down"
-          value={gridSquare ? gridSquare.y : ''}
+          value={surface.gridSquare ? surface.gridSquare.y : ''}
           options={getGridSquareOptions(0, grid.rows)}
           onChange={(y) => {
-            setGridSquare({
-              ...gridSquare,
-              y,
+            setSurface({
+              ...surface,
+              gridSquare: {
+                ...surface.gridSquare,
+                y,
+              },
             })
           }}
         />

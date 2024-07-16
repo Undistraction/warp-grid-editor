@@ -1,12 +1,19 @@
 import React from 'react'
-import { isInt } from '../../../../src/utils'
+import { getPointOnSurface, isInt } from '../../../../src/utils'
 import getCanvasApi from '../../utils/getCanvasApi'
 
 // -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
 
-const Canvas = ({ setCanvas, width, height, coonsPatch, gridSquare }) => {
+const Canvas = ({
+  setCanvas,
+  width,
+  height,
+  coonsPatch,
+  gridSquare,
+  surface,
+}) => {
   const ref = React.useRef(null)
 
   React.useEffect(() => {
@@ -23,6 +30,22 @@ const Canvas = ({ setCanvas, width, height, coonsPatch, gridSquare }) => {
     if (coonsPatch) {
       canvasApi.drawCoonsPatch(coonsPatch)
 
+      const point = {
+        x: getPointOnSurface(
+          coonsPatch.boundingCurves,
+          surface.x,
+          surface.y,
+          'x'
+        ),
+        y: getPointOnSurface(
+          coonsPatch.boundingCurves,
+          surface.x,
+          surface.y,
+          'y'
+        ),
+      }
+      canvasApi.drawDot(point, { color: 'red', size: 5 })
+
       if (gridSquare && isInt(gridSquare.x) && isInt(gridSquare.y)) {
         try {
           const gridSquareBounds = coonsPatch.getGridSquareBounds(
@@ -35,7 +58,7 @@ const Canvas = ({ setCanvas, width, height, coonsPatch, gridSquare }) => {
         }
       }
     }
-  }, [coonsPatch, gridSquare])
+  }, [coonsPatch, gridSquare, surface])
 
   return (
     <canvas

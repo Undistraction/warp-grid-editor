@@ -23,6 +23,7 @@ const GRID_DEFAULT = {
   // columns: [1, 0.2, 1, 0.2, 1, 0.2, 1],
   // rows: [1, 0.2, 1, 0.2, 1, 0.2, 1],
 }
+const SURFACE_DEFAULT = { x: 0.0, y: 0.0, gridSquare: {} }
 
 // -----------------------------------------------------------------------------
 // Utils
@@ -37,7 +38,7 @@ const App = () => {
   const [boundingCurves, setBoundingCurves] = React.useState(null)
   const [coonsPatch, setCoonsPatch] = React.useState(null)
   const [grid, setGrid] = React.useState(GRID_DEFAULT)
-  const [gridSquare, setGridSquare] = React.useState(null)
+  const [surface, setSurface] = React.useState(SURFACE_DEFAULT)
 
   const [savedBounds, setSavedBounds] = React.useState({ ...localStorage })
 
@@ -46,7 +47,7 @@ const App = () => {
       const coonsPatch = getCoonsPatch(boundingCurves, grid)
       setCoonsPatch(coonsPatch)
     }
-  }, [boundingCurves, canvas, grid, gridSquare])
+  }, [boundingCurves, canvas, grid])
 
   const handleNodeDrag = (event, dragElement, id) => {
     const newPoint = {
@@ -58,9 +59,9 @@ const App = () => {
     setBoundingCurves(newBoundingCurves)
   }
 
-  const gridSquareClamped = gridSquare
-    ? clampGridSquareToGridDimensions(gridSquare, grid)
-    : gridSquare
+  const gridSquareClamped = surface.gridSquare
+    ? clampGridSquareToGridDimensions(surface.gridSquare, grid)
+    : surface.gridSquare
 
   const handleSave = (name) => {
     const value = JSON.stringify({
@@ -93,6 +94,7 @@ const App = () => {
           height={CANVAS_HEIGHT}
           coonsPatch={coonsPatch}
           gridSquare={gridSquareClamped}
+          surface={surface}
         />
         {boundingCurves && (
           <CornerNodes
@@ -108,10 +110,11 @@ const App = () => {
         getRandomBoundingCurves={getRandomBoundingCurves}
         setBoundingCurves={setBoundingCurves}
         setGrid={setGrid}
-        setGridSquare={setGridSquare}
         onSave={handleSave}
         onLoad={onLoad}
         savedBounds={savedBounds}
+        surface={surface}
+        setSurface={setSurface}
       />
     </div>
   )
