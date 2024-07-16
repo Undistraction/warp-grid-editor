@@ -62,18 +62,22 @@ const App = () => {
     ? clampGridSquareToGridDimensions(gridSquare, grid)
     : gridSquare
 
-  console.log('>>>>', gridSquare)
-
   const handleSave = (name) => {
-    const boundCurveStringified = JSON.stringify(boundingCurves)
+    const value = JSON.stringify({
+      boundingCurves,
+      grid,
+    })
     const key = `${name}-${new Date().toUTCString()}`
-    localStorage.setItem(key, boundCurveStringified)
+    localStorage.setItem(key, value)
     setSavedBounds({ ...localStorage })
   }
 
   const onLoad = (key) => {
-    const boundingCurvesString = localStorage[key]
-    const newBoundingCurves = JSON.parse(boundingCurvesString)
+    const value = localStorage[key]
+    const { boundingCurves: newBoundingCurves, grid: newGrid } =
+      JSON.parse(value)
+
+    setGrid(newGrid)
     setBoundingCurves(newBoundingCurves)
   }
 

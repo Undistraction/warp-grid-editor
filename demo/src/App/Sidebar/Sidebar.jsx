@@ -1,7 +1,8 @@
 import { INTERPOLATION_STRATEGY } from '../../../../src/const'
-import BoundsLoader from '../controls/BoundsLoader'
-import BoundsSaver from '../controls/BoundsSaver'
+import SettingsLoader from '../controls/SettingsLoader'
+import SettingsSaver from '../controls/SettingsSaver'
 import SteppedInput from '../controls/SteppedInput'
+import SidebarGroup from './SidebarGroup'
 
 // -----------------------------------------------------------------------------
 // Const
@@ -54,17 +55,17 @@ const Sidebar = ({
   savedBounds,
 }) => {
   return (
-    <div className="flex min-w-64 flex-col space-y-3 divide-y-2">
-      <button
-        className="rounded-md bg-black p-3 text-white"
-        onClick={() => {
-          const boundingCurves = getRandomBoundingCurves(canvas)
-          setBoundingCurves(boundingCurves)
-        }}
-      >
-        Randomise
-      </button>
-      <div className="flex flex-col space-y-2 pt-3">
+    <div className="flex min-w-72 flex-col space-y-3 divide-y-2">
+      <SidebarGroup title="Grid">
+        <button
+          className="rounded-md bg-black p-3 text-white"
+          onClick={() => {
+            const boundingCurves = getRandomBoundingCurves(canvas)
+            setBoundingCurves(boundingCurves)
+          }}
+        >
+          Randomise shape
+        </button>
         <SteppedInput
           label="Columns"
           value={grid.columns}
@@ -72,7 +73,7 @@ const Sidebar = ({
           onChange={(columns) => {
             setGrid({
               ...grid,
-              columns,
+              columns: parseInt(columns),
             })
           }}
         />
@@ -83,7 +84,7 @@ const Sidebar = ({
           onChange={(rows) => {
             setGrid({
               ...grid,
-              rows,
+              rows: parseInt(rows),
             })
           }}
         />
@@ -99,14 +100,13 @@ const Sidebar = ({
           }
           className="min-w-14 border border-black px-2 py-1"
         />
-      </div>
-      <div className="flex min-w-40 flex-col space-y-2 pt-3">
+      </SidebarGroup>
+      <SidebarGroup title="Grid square">
         <SteppedInput
-          label="Grid Square X"
+          label="Across"
           value={gridSquare ? gridSquare.x : ''}
           options={getGridSquareOptions(0, grid.columns)}
           onChange={(x) => {
-            console.log('SET', gridSquare, x)
             setGridSquare({
               ...gridSquare,
               x,
@@ -114,25 +114,27 @@ const Sidebar = ({
           }}
         />
         <SteppedInput
-          label="Grid Square Y"
+          label="Down"
           value={gridSquare ? gridSquare.y : ''}
           options={getGridSquareOptions(0, grid.rows)}
           onChange={(y) => {
-            console.log('SET', gridSquare, y)
             setGridSquare({
               ...gridSquare,
               y,
             })
           }}
         />
-      </div>
-      <div className="flex flex-col space-y-2 pt-3">
-        <BoundsLoader
+      </SidebarGroup>
+      <SidebarGroup
+        title="Load and save"
+        hint="You can save and load your settings from/to the local-storage of your machine."
+      >
+        <SettingsLoader
           onLoad={onLoad}
           savedBounds={savedBounds}
         />
-        <BoundsSaver onSave={onSave} />
-      </div>
+        <SettingsSaver onSave={onSave} />
+      </SidebarGroup>
     </div>
   )
 }

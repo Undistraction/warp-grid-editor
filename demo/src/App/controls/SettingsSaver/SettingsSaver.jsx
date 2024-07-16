@@ -5,7 +5,7 @@ import { isNil } from '../../../../../src/utils'
 // Exports
 // -----------------------------------------------------------------------------
 
-const BoundsSaver = ({ save }) => {
+const SettingsSaver = ({ onSave }) => {
   const [name, setName] = React.useState(null)
   return (
     <div className="flex flex-col space-y-2 pt-3">
@@ -13,16 +13,17 @@ const BoundsSaver = ({ save }) => {
         className="border border-black px-2 py-1"
         type="text"
         onChange={(event) => setName(event.target.value)}
+        placeholder="Name"
       ></input>
       <button
         className="rounded-md bg-black p-3 text-white disabled:bg-gray-300"
-        onClick={() => save(name)}
+        onClick={() => onSave(name)}
         disabled={name === '' || isNil(name)}
       >
-        Save
+        Save settings
       </button>
     </div>
   )
 }
 
-export default BoundsSaver
+export default SettingsSaver

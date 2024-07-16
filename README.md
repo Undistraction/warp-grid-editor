@@ -16,12 +16,11 @@ pnpm run dev
 
 ## TODO
 
-- Improve control point handling
+- Mobile styles
+- Dynamic canvas (takes as much screen as possible)
+- Move control points with corner points
+- Add settings for corner points (startPoint, endPoint, controlPoint values and allow control points to be toggled on/off per point and for all points)
 - Switch rendering to SVG using https://svgjs.dev/docs/3.0/
-- Add basic UI for controlling variables
-- Make shape interactive
-- Add shape save to local storage
-- Separate demo
 - Publish as package
 - Performance optimisation
 

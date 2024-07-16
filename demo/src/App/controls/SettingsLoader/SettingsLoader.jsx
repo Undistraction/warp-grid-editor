@@ -22,7 +22,7 @@ const renderOptions = (options) => {
 // Exports
 // -----------------------------------------------------------------------------
 
-const BoundsLoader = ({ onLoad, savedBounds }) => {
+const SettingsLoader = ({ onLoad, savedBounds }) => {
   const [key, setKey] = React.useState('')
   const keys = Object.keys(savedBounds)
   const options = ['', ...keys]
@@ -47,10 +47,10 @@ const BoundsLoader = ({ onLoad, savedBounds }) => {
           }
         }}
       >
-        Load
+        Load settings
       </button>
     </div>
   )
 }
 
-export default BoundsLoader
+export default SettingsLoader

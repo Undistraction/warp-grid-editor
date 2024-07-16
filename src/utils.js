@@ -48,7 +48,7 @@ const getApproximatePointsOnCurve = (curve, precision) => {
 
   for (let i = 0; i <= precision; i++) {
     const ratio = i / precision
-    points.push(lerpPoint(ratio, curve))
+    points.push(interpolatePointOnCurveLinear(ratio, curve))
   }
 
   return points
@@ -88,7 +88,7 @@ const findClosestPointOnCurve = (
           (targetLength - cumulativeLengths[i - 1]) /
             (cumulativeLengths[i] - cumulativeLengths[i - 1])) /
         precision
-      point = lerpPoint(ratio, curve)
+      point = interpolatePointOnCurveLinear(ratio, curve)
       break
     }
   }
@@ -123,7 +123,7 @@ const interpolateControlPoints = (ratio, curve1, curve2) => ({
   ),
 })
 
-const lerp = (
+const interpolateDimensionLinear = (
   axis,
   ratio,
   { controlPoint1, controlPoint2, startPoint, endPoint }
@@ -136,10 +136,10 @@ const lerp = (
   )
 }
 
-const lerpPoint = (ratio, curve) => {
+const interpolatePointOnCurveLinear = (ratio, curve) => {
   return {
-    x: lerp(AXIS.X, ratio, curve),
-    y: lerp(AXIS.Y, ratio, curve),
+    x: interpolateDimensionLinear(AXIS.X, ratio, curve),
+    y: interpolateDimensionLinear(AXIS.Y, ratio, curve),
     ratio,
   }
 }
@@ -174,8 +174,8 @@ export const getCurveFromArray = ([
 })
 
 export const getSubcurveBetweenRatios = (curve, ratioStart, ratioEnd) => {
-  const startPoint = lerpPoint(ratioStart, curve)
-  const endPoint = lerpPoint(ratioEnd, curve)
+  const startPoint = interpolatePointOnCurveLinear(ratioStart, curve)
+  const endPoint = interpolatePointOnCurveLinear(ratioEnd, curve)
 
   return getBezier(curve).split(startPoint.ratio, endPoint.ratio)
 }
@@ -245,7 +245,7 @@ export const interpolateBetweenCurves = (
   const getInterpolatedPointsOnCurve =
     interpolationStrategy === INTERPOLATION_STRATEGY.EVEN
       ? interpolatePointOnCurveEvenlySpaced
-      : lerpPoint
+      : interpolatePointOnCurveLinear
 
   // Use ratio to find a point on the first curve which will be the starting
   // point of our curve.

@@ -89,7 +89,6 @@ const getCanvasApi = (context) => {
     lines,
     { lineColor = 'green', lineWidth = 3 } = {}
   ) => {
-    console.log('DRAW PATCH')
     drawQuad(lines, { color: lineColor, lineWidth })
   }
 
