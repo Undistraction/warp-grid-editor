@@ -1,6 +1,7 @@
 import { INTERPOLATION_STRATEGY } from '../../../../src/const'
 import SettingsLoader from '../controls/SettingsLoader'
 import SettingsSaver from '../controls/SettingsSaver'
+import Slider from '../controls/Slider/Slider'
 import SteppedInput from '../controls/SteppedInput'
 import SidebarGroup from './SidebarGroup'
 
@@ -56,41 +57,7 @@ const Sidebar = ({
 }) => {
   return (
     <div className="flex min-w-72 flex-col space-y-3 divide-y-2">
-      <SidebarGroup title="Surface">
-        <div className="flex flex-row space-x-2 align-middle">
-          <div>X</div>
-          <input
-            className="flex-grow"
-            type="range"
-            id="ratioX"
-            name="ratioX"
-            value={surface.x}
-            onChange={(event) =>
-              setSurface({ ...surface, x: event.target.value })
-            }
-            min="0"
-            max="1"
-            step="any"
-          />
-        </div>
-        <div className="flex flex-row space-x-2 align-middle">
-          <div>Y</div>
-          <input
-            className="flex-grow"
-            type="range"
-            id="ratioY"
-            name="ratioY"
-            value={surface.y}
-            onChange={(event) =>
-              setSurface({ ...surface, y: event.target.value })
-            }
-            min="0"
-            max="1"
-            step="any"
-          />
-        </div>
-      </SidebarGroup>
-      <SidebarGroup title="Grid">
+      <SidebarGroup title="Shape">
         <button
           className="rounded-md bg-black p-3 text-white"
           onClick={() => {
@@ -100,6 +67,8 @@ const Sidebar = ({
         >
           Randomise shape
         </button>
+      </SidebarGroup>
+      <SidebarGroup title="Grid">
         <SteppedInput
           label="Columns"
           value={grid.columns}
@@ -133,6 +102,20 @@ const Sidebar = ({
             })
           }
           className="min-w-14 border border-black px-2 py-1"
+        />
+      </SidebarGroup>
+      <SidebarGroup title="Surface">
+        <Slider
+          value={surface.x}
+          name="ratioX"
+          onChange={(x) => setSurface({ ...surface, x })}
+          label="X"
+        />
+        <Slider
+          value={surface.y}
+          name="ratioY"
+          onChange={(y) => setSurface({ ...surface, y })}
+          label="Y"
         />
       </SidebarGroup>
       <SidebarGroup title="Grid square">
