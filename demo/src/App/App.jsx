@@ -50,12 +50,23 @@ const App = () => {
   }, [boundingCurves, canvas, grid])
 
   const handleNodeDrag = (event, dragElement, id) => {
-    const newPoint = {
+    console.log(dragElement)
+    const newLocation = {
       x: dragElement.x,
       y: dragElement.y,
     }
 
-    const newBoundingCurves = updateBoundingCurves(newPoint, id, boundingCurves)
+    const offset = {
+      x: dragElement.deltaX,
+      y: dragElement.deltaY,
+    }
+
+    const newBoundingCurves = updateBoundingCurves(
+      newLocation,
+      offset,
+      id,
+      boundingCurves
+    )
     setBoundingCurves(newBoundingCurves)
   }
 
