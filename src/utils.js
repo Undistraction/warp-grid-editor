@@ -332,3 +332,140 @@ export const getGridIntersections = (boundingCurves, columns, rows) => {
 
   return intersections
 }
+
+const getControlPoints = (startPoint, midPoint1, midPoint2, endPoint) => {
+  const controlPoint1X =
+    (1 / 6) *
+    (-5 * startPoint.x + 18 * midPoint1.x - 9 * midPoint2.x + 2 * endPoint.x)
+  const controlPoint1Y =
+    (1 / 6) *
+    (-5 * startPoint.y + 18 * midPoint1.y - 9 * midPoint2.y + 2 * endPoint.y)
+
+  const controlPoint2X =
+    (1 / 6) *
+    (2 * startPoint.x - 9 * midPoint1.x + 18 * midPoint2.x - 5 * endPoint.x)
+  const controlPoint2Y =
+    (1 / 6) *
+    (2 * startPoint.y - 9 * midPoint1.y + 18 * midPoint2.y - 5 * endPoint.y)
+
+  return {
+    controlPoint1: {
+      x: controlPoint1X,
+      y: controlPoint1Y,
+    },
+    controlPoint2: {
+      x: controlPoint2X,
+      y: controlPoint2Y,
+    },
+  }
+}
+
+export const getCurvesOnSurfaceLeftToRight = (
+  boundingCurves,
+  columns,
+  rows
+) => {
+  const columnsTotal = columns.length
+  const rowsTotal = rows.length
+
+  const columnWidthRatio = 1 / columnsTotal
+
+  const curves = []
+
+  for (var rowIdx = 0; rowIdx <= rowsTotal; rowIdx++) {
+    const curveSections = []
+    for (var columnIdx = 0; columnIdx < columnsTotal; columnIdx++) {
+      const ratioX = columnIdx / columnsTotal
+      const ratioY = rowIdx / rowsTotal
+
+      const startPoint = getPointOnSurface(boundingCurves, ratioX, ratioY)
+      const endPoint = getPointOnSurface(
+        boundingCurves,
+        ratioX + columnWidthRatio,
+        ratioY
+      )
+      const midPoint1 = getPointOnSurface(
+        boundingCurves,
+        ratioX + columnWidthRatio * 0.3333333,
+        ratioY
+      )
+
+      const midPoint2 = getPointOnSurface(
+        boundingCurves,
+        ratioX + columnWidthRatio * 0.6666666,
+        ratioY
+      )
+      const { controlPoint1, controlPoint2 } = getControlPoints(
+        startPoint,
+        midPoint1,
+        midPoint2,
+        endPoint
+      )
+
+      curveSections.push({
+        startPoint,
+        controlPoint1,
+        controlPoint2,
+        endPoint,
+      })
+    }
+    curves.push(curveSections)
+  }
+
+  return curves
+}
+
+export const getCurvesOnSurfaceTopToBottom = (
+  boundingCurves,
+  columns,
+  rows
+) => {
+  const columnsTotal = columns.length
+  const rowsTotal = rows.length
+
+  const rowWidthRatio = 1 / rowsTotal
+
+  const curves = []
+
+  for (var columnIdx = 0; columnIdx <= columnsTotal; columnIdx++) {
+    const curveSections = []
+    for (var rowIdx = 0; rowIdx < rowsTotal; rowIdx++) {
+      const ratioX = columnIdx / columnsTotal
+      const ratioY = rowIdx / rowsTotal
+
+      const startPoint = getPointOnSurface(boundingCurves, ratioX, ratioY)
+      const endPoint = getPointOnSurface(
+        boundingCurves,
+        ratioX,
+        ratioY + rowWidthRatio
+      )
+      const midPoint1 = getPointOnSurface(
+        boundingCurves,
+        ratioX,
+        ratioY + rowWidthRatio * 0.3333333
+      )
+
+      const midPoint2 = getPointOnSurface(
+        boundingCurves,
+        ratioX,
+        ratioY + rowWidthRatio * 0.6666666
+      )
+      const { controlPoint1, controlPoint2 } = getControlPoints(
+        startPoint,
+        midPoint1,
+        midPoint2,
+        endPoint
+      )
+
+      curveSections.push({
+        startPoint,
+        controlPoint1,
+        controlPoint2,
+        endPoint,
+      })
+    }
+    curves.push(curveSections)
+  }
+
+  return curves
+}
