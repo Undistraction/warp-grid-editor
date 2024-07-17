@@ -87,9 +87,11 @@ const getCoonsPatch = (boundingCurves, grid) => {
   const rows = isArray(grid.rows) ? grid.rows : buildStepSpacing(grid.rows)
 
   const interpolatePointOnCurve =
-    grid.interpolatePointOnCurve === INTERPOLATION_STRATEGY.LINEAR
+    grid.interpolationStrategy === INTERPOLATION_STRATEGY.LINEAR
       ? interpolatePointOnCurveLinear
       : interpolatePointOnCurveEvenlySpaced
+
+  console.log('>>>', grid.interpolationStrategy)
 
   const curvesFromLeftToRight = getCurvesOnSurfaceLeftToRight(
     boundingCurves,

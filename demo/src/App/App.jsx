@@ -14,8 +14,6 @@ import Sidebar from './Sidebar'
 // Const
 // -----------------------------------------------------------------------------
 
-const CANVAS_WIDTH = 800
-const CANVAS_HEIGHT = 400
 const GRID_DEFAULT = {
   columns: 3,
   rows: 3,
@@ -27,10 +25,6 @@ const GRID_DEFAULT = {
 const SURFACE_DEFAULT = { x: 0, y: 0, gridSquare: {} }
 
 // -----------------------------------------------------------------------------
-// Utils
-// -----------------------------------------------------------------------------
-
-// -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
 
@@ -40,8 +34,11 @@ const App = () => {
   const [coonsPatch, setCoonsPatch] = React.useState(null)
   const [grid, setGrid] = React.useState(GRID_DEFAULT)
   const [surface, setSurface] = React.useState(SURFACE_DEFAULT)
+  const [canvasSize, setCanvasSize] = React.useState({ width: 0, height: 0 })
 
   const [savedBounds, setSavedBounds] = React.useState({ ...localStorage })
+
+  const displayRef = React.useRef(null)
 
   React.useEffect(() => {
     if (boundingCurves) {
@@ -93,16 +90,34 @@ const App = () => {
     setBoundingCurves(newBoundingCurves)
   }
 
+  React.useEffect(() => {
+    const resizeObserver = new ResizeObserver((event) => {
+      const BORDER_WIDTH = 1
+      const TOTAL_BORDER_WIDTH = BORDER_WIDTH * 2
+      // Depending on the layout, you may need to swap inlineSize with blockSize
+      // https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserverEntry/contentBoxSize
+
+      const width = event[0].contentBoxSize[0].inlineSize - TOTAL_BORDER_WIDTH
+      const height = event[0].contentBoxSize[0].blockSize - TOTAL_BORDER_WIDTH
+      setCanvasSize({ width, height })
+    })
+
+    if (displayRef) {
+      resizeObserver.observe(displayRef.current)
+    }
+  }, [displayRef.current, displayRef.current])
+
   return (
-    <div className="relative flex h-[400px] w-[800px] flex-row space-x-5">
+    <div className="relative flex max-h-full w-screen flex-row space-x-5 p-5">
       <div
-        className="relative"
+        className="relative max-h-full flex-grow overflow-hidden"
         id="patch-view"
+        ref={displayRef}
       >
         <Canvas
           setCanvas={setCanvas}
-          width={CANVAS_WIDTH}
-          height={CANVAS_HEIGHT}
+          width={canvasSize.width}
+          height={canvasSize.height}
           coonsPatch={coonsPatch}
           gridSquare={gridSquareClamped}
           surface={surface}
@@ -114,19 +129,21 @@ const App = () => {
           />
         )}
       </div>
-      <Sidebar
-        grid={grid}
-        canvas={canvas}
-        gridSquare={gridSquareClamped}
-        getRandomBoundingCurves={getRandomBoundingCurves}
-        setBoundingCurves={setBoundingCurves}
-        setGrid={setGrid}
-        onSave={handleSave}
-        onLoad={onLoad}
-        savedBounds={savedBounds}
-        surface={surface}
-        setSurface={setSurface}
-      />
+      <div className="-mb-5 w-[300px] flex-shrink-0 flex-grow-0 overflow-y-scroll">
+        <Sidebar
+          grid={grid}
+          canvas={canvas}
+          gridSquare={gridSquareClamped}
+          getRandomBoundingCurves={getRandomBoundingCurves}
+          setBoundingCurves={setBoundingCurves}
+          setGrid={setGrid}
+          onSave={handleSave}
+          onLoad={onLoad}
+          savedBounds={savedBounds}
+          surface={surface}
+          setSurface={setSurface}
+        />
+      </div>
     </div>
   )
 }

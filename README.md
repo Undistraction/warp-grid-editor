@@ -17,10 +17,8 @@ pnpm run dev
 ## TODO
 
 - Mobile styles
-- Dynamic canvas (takes as much screen as possible)
-- Move control points with corner points
+- Checkbox to show intersection points
 - Add settings for corner points (startPoint, endPoint, controlPoint values and allow control points to be toggled on/off per point and for all points)
-- Switch rendering to SVG using https://svgjs.dev/docs/3.0/
 - Publish as package
 - Performance optimisation
 

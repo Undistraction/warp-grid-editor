@@ -56,7 +56,7 @@ const Sidebar = ({
   setSurface,
 }) => {
   return (
-    <div className="flex min-w-72 flex-col space-y-3 divide-y-2">
+    <div className="flex flex-col space-y-3 divide-y-2 pb-5">
       <SidebarGroup title="Shape">
         <button
           className="rounded-md bg-black p-3 text-white"
@@ -95,12 +95,12 @@ const Sidebar = ({
           label="Interpolation strategy"
           value={grid.interpolationStrategy}
           options={INTERPOLATION_STRATEGIES}
-          onChange={(interpolationStrategy) =>
+          onChange={(interpolationStrategy) => {
             setGrid({
               ...grid,
               interpolationStrategy,
             })
-          }
+          }}
           className="min-w-14 border border-black px-2 py-1"
         />
       </SidebarGroup>
