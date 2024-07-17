@@ -30,20 +30,12 @@ const Canvas = ({
     if (coonsPatch) {
       canvasApi.drawCoonsPatch(coonsPatch)
 
-      const point = {
-        x: getPointOnSurface(
-          coonsPatch.boundingCurves,
-          surface.x,
-          surface.y,
-          'x'
-        ),
-        y: getPointOnSurface(
-          coonsPatch.boundingCurves,
-          surface.x,
-          surface.y,
-          'y'
-        ),
-      }
+      const point = getPointOnSurface(
+        coonsPatch.boundingCurves,
+        surface.x,
+        surface.y
+      )
+
       canvasApi.drawDot(point, { color: 'red', size: 5 })
 
       if (gridSquare && isInt(gridSquare.x) && isInt(gridSquare.y)) {

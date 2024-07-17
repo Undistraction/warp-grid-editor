@@ -1,4 +1,4 @@
-export const AXIS = {
+export const COORDINATE = {
   X: 'x',
   Y: 'y',
 }

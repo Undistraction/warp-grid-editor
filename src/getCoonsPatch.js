@@ -1,6 +1,7 @@
 import BezierEasing from 'bezier-easing'
 import {
   getCurveFromArray,
+  getGridIntersections,
   getIntersectionBetweenCurves,
   getSubcurveBetweenRatios,
   interpolateBetweenCurves,
@@ -196,6 +197,8 @@ const getCoonsPatch = (boundingCurves, grid) => {
     { ease: easeY, interpolationStrategy: grid.interpolationStrategy }
   )
 
+  const intersections = getGridIntersections(boundingCurves, columns, rows)
+
   // Get four curves that describe the bounds of the grid-sqare with the
   // supplied grid coordicates
   const getGridSquareBounds = (x, y) => {
@@ -258,6 +261,7 @@ const getCoonsPatch = (boundingCurves, grid) => {
     boundingCurves,
     getGridSquareBounds,
     columns,
+    intersections,
     rows,
   }
 }

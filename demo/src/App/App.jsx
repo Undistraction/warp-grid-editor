@@ -50,7 +50,6 @@ const App = () => {
   }, [boundingCurves, canvas, grid])
 
   const handleNodeDrag = (event, dragElement, id) => {
-    console.log(dragElement)
     const newLocation = {
       x: dragElement.x,
       y: dragElement.y,

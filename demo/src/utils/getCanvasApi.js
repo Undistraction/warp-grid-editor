@@ -128,13 +128,14 @@ const getCanvasApi = (context) => {
     coonsPatch.curvesFromLeftToRight.map(drawGridCurve)
     coonsPatch.curvesFromTopToBottom.map(drawGridCurve)
 
-    // // Draw intersections between grid lines
-    // coonsPatch.intersections.map((point) => {
-    //   drawDot(point, {
-    //     size: 3,
-    //     // text: point.t,
-    //   })
-    // })
+    // Draw intersections between grid lines
+    coonsPatch.intersections.map((point) => {
+      drawDot(point, {
+        size: 12,
+        color: 'blue',
+        // text: point.t,
+      })
+    })
   }
 
   const drawGridSquareBounds = (boundingCurves) => {

@@ -1,5 +1,5 @@
 import { Bezier } from 'bezier-js'
-import { AXIS, INTERPOLATION_STRATEGY } from './const'
+import { COORDINATE, INTERPOLATION_STRATEGY } from './const'
 
 // -----------------------------------------------------------------------------
 // Const
@@ -139,8 +139,8 @@ const interpolateDimensionLinear = (
 
 const interpolatePointOnCurveLinear = (ratio, curve) => {
   return {
-    x: interpolateDimensionLinear(AXIS.X, ratio, curve),
-    y: interpolateDimensionLinear(AXIS.Y, ratio, curve),
+    x: interpolateDimensionLinear(COORDINATE.X, ratio, curve),
+    y: interpolateDimensionLinear(COORDINATE.Y, ratio, curve),
     ratio,
   }
 }
@@ -285,21 +285,7 @@ const reverseCurve = ({
   }
 }
 
-export const getPointOnSurface = (
-  {
-    // C1
-    bottom,
-    // C2
-    top,
-    // C3
-    left,
-    // C4
-    right,
-  },
-  u,
-  v,
-  axis
-) => {
+const getCoordinateOnSurface = ({ top, bottom, left, right }, u, v, axis) => {
   const cornerBottomLeft = bottom.startPoint
   const cornerBottomRight = bottom.endPoint
   const cornerTopLeft = top.startPoint
@@ -325,4 +311,27 @@ export const getPointOnSurface = (
     (1 - u) * v * cornerTopLeft[axis] -
     u * v * cornerTopRight[axis]
   )
+}
+
+export const getPointOnSurface = (boundingCurves, u, v) => ({
+  x: getCoordinateOnSurface(boundingCurves, u, v, COORDINATE.X),
+  y: getCoordinateOnSurface(boundingCurves, u, v, COORDINATE.Y),
+})
+
+export const getGridIntersections = (boundingCurves, columns, rows) => {
+  const intersections = []
+
+  const columnsTotal = columns.length
+  const rowsTotal = rows.length
+
+  for (var rowIdx = 0; rowIdx <= rowsTotal; rowIdx++) {
+    for (var columnIdx = 0; columnIdx <= columnsTotal; columnIdx++) {
+      const ratioX = columnIdx / columnsTotal
+      const ratioY = rowIdx / rowsTotal
+      const point = getPointOnSurface(boundingCurves, ratioX, ratioY)
+      intersections.push(point, ratioX, ratioY)
+    }
+  }
+
+  return intersections
 }
