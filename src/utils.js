@@ -1,5 +1,6 @@
 import { Bezier } from 'bezier-js'
 import { COORDINATE, INTERPOLATION_STRATEGY } from './const'
+import { getBezierCurveFromPoints } from './utils/bezier'
 
 // -----------------------------------------------------------------------------
 // Const
@@ -271,20 +272,6 @@ export const interpolateBetweenCurves = (
   }
 }
 
-const reverseCurve = ({
-  startPoint,
-  endPoint,
-  controlPoint1,
-  controlPoint2,
-}) => {
-  return {
-    startPoint: endPoint,
-    controlPoint1: controlPoint2,
-    controlPoint2: controlPoint1,
-    endPoint: startPoint,
-  }
-}
-
 const getCoordinateOnSurface = ({ top, bottom, left, right }, u, v, axis) => {
   const cornerBottomLeft = bottom.startPoint
   const cornerBottomRight = bottom.endPoint
@@ -333,33 +320,6 @@ export const getGridIntersections = (boundingCurves, columns, rows) => {
   return intersections
 }
 
-const getControlPoints = (startPoint, midPoint1, midPoint2, endPoint) => {
-  const controlPoint1X =
-    (1 / 6) *
-    (-5 * startPoint.x + 18 * midPoint1.x - 9 * midPoint2.x + 2 * endPoint.x)
-  const controlPoint1Y =
-    (1 / 6) *
-    (-5 * startPoint.y + 18 * midPoint1.y - 9 * midPoint2.y + 2 * endPoint.y)
-
-  const controlPoint2X =
-    (1 / 6) *
-    (2 * startPoint.x - 9 * midPoint1.x + 18 * midPoint2.x - 5 * endPoint.x)
-  const controlPoint2Y =
-    (1 / 6) *
-    (2 * startPoint.y - 9 * midPoint1.y + 18 * midPoint2.y - 5 * endPoint.y)
-
-  return {
-    controlPoint1: {
-      x: controlPoint1X,
-      y: controlPoint1Y,
-    },
-    controlPoint2: {
-      x: controlPoint2X,
-      y: controlPoint2Y,
-    },
-  }
-}
-
 export const getCurvesOnSurfaceLeftToRight = (
   boundingCurves,
   columns,
@@ -395,19 +355,14 @@ export const getCurvesOnSurfaceLeftToRight = (
         ratioX + columnWidthRatio * 0.6666666,
         ratioY
       )
-      const { controlPoint1, controlPoint2 } = getControlPoints(
+      const curve = getBezierCurveFromPoints(
         startPoint,
         midPoint1,
         midPoint2,
         endPoint
       )
 
-      curveSections.push({
-        startPoint,
-        controlPoint1,
-        controlPoint2,
-        endPoint,
-      })
+      curveSections.push(curve)
     }
     curves.push(curveSections)
   }
@@ -450,19 +405,14 @@ export const getCurvesOnSurfaceTopToBottom = (
         ratioX,
         ratioY + rowWidthRatio * 0.6666666
       )
-      const { controlPoint1, controlPoint2 } = getControlPoints(
+      const curve = getBezierCurveFromPoints(
         startPoint,
         midPoint1,
         midPoint2,
         endPoint
       )
 
-      curveSections.push({
-        startPoint,
-        controlPoint1,
-        controlPoint2,
-        endPoint,
-      })
+      curveSections.push(curve)
     }
     curves.push(curveSections)
   }

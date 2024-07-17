@@ -1,12 +1,8 @@
 import BezierEasing from 'bezier-easing'
 import {
-  getCurveFromArray,
   getCurvesOnSurfaceLeftToRight,
   getCurvesOnSurfaceTopToBottom,
   getGridIntersections,
-  getIntersectionBetweenCurves,
-  getSubcurveBetweenRatios,
-  interpolateBetweenCurves,
   isArray,
   isInt,
   isNil,
@@ -72,94 +68,6 @@ const validateCurveIntersections = (curveIntersections) => {
   })
 }
 
-const getCurves = (
-  steps,
-  curvesPair1,
-  curvesPair2,
-  { ease, interpolationStrategy }
-) => {
-  let currentWidth = 0
-  const stepsTotal = steps.length
-  const curves = []
-  const stepsWidthTotal = steps.reduce(addToTotal, 0)
-  for (let step = 0; step <= stepsTotal; step++) {
-    // Allow different grid spacings
-    const ratio = currentWidth / stepsWidthTotal
-    currentWidth = currentWidth + steps[step]
-
-    // Allow easing
-    const ratioXEased = ease(ratio)
-    const curve = interpolateBetweenCurves(
-      ratioXEased,
-      curvesPair1,
-      curvesPair2,
-      { interpolationStrategy }
-    )
-
-    curves.push({ ...curve, step: step })
-  }
-  return curves
-}
-
-const addToTotal = (total, value) => total + value
-
-const getIntersections = (topCurve, bottomCurve, leftCurve, rightCurve) => {
-  const topCurveLeftIntersections = getIntersectionBetweenCurves(
-    topCurve,
-    leftCurve
-  )
-
-  const topCurveRightIntersections = getIntersectionBetweenCurves(
-    topCurve,
-    rightCurve
-  )
-
-  const bottomCurveLeftIntersections = getIntersectionBetweenCurves(
-    bottomCurve,
-    leftCurve
-  )
-
-  const bottomCurveRightIntersections = getIntersectionBetweenCurves(
-    bottomCurve,
-    rightCurve
-  )
-
-  const rightCurveTopIntersections = getIntersectionBetweenCurves(
-    rightCurve,
-    topCurve
-  )
-
-  const rightCurveBottomIntersections = getIntersectionBetweenCurves(
-    rightCurve,
-    bottomCurve
-  )
-
-  const leftCurveTopIntersections = getIntersectionBetweenCurves(
-    leftCurve,
-    topCurve
-  )
-
-  const leftCurveBottomIntersections = getIntersectionBetweenCurves(
-    leftCurve,
-    bottomCurve
-  )
-
-  const curveIntersections = [
-    topCurveLeftIntersections,
-    topCurveRightIntersections,
-    bottomCurveLeftIntersections,
-    bottomCurveRightIntersections,
-    leftCurveTopIntersections,
-    leftCurveBottomIntersections,
-    rightCurveTopIntersections,
-    rightCurveBottomIntersections,
-  ]
-
-  validateCurveIntersections(curveIntersections)
-
-  return curveIntersections
-}
-
 // -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
@@ -185,22 +93,17 @@ const getCoonsPatch = (boundingCurves, grid) => {
   // with a uniform value for each item.
   const rows = isArray(grid.rows) ? grid.rows : buildSpacing(grid.rows)
 
-  const curvesFromTopToBottom = getCurves(
+  const curvesFromLeftToRight = getCurvesOnSurfaceLeftToRight(
+    boundingCurves,
     columns,
-    { curve1: boundingCurves.top, curve2: boundingCurves.bottom },
-    { curve3: boundingCurves.left, curve4: boundingCurves.right },
-    { ease: easeX, interpolationStrategy: grid.interpolationStrategy }
+    rows
   )
 
-  const curvesFromLeftToRight = getCurves(
-    rows,
-    { curve1: boundingCurves.left, curve2: boundingCurves.right },
-    { curve3: boundingCurves.top, curve4: boundingCurves.bottom },
-    { ease: easeY, interpolationStrategy: grid.interpolationStrategy }
+  const curvesFromTopToBottom = getCurvesOnSurfaceTopToBottom(
+    boundingCurves,
+    columns,
+    rows
   )
-
-  const cl2r = getCurvesOnSurfaceLeftToRight(boundingCurves, columns, rows)
-  const ct2b = getCurvesOnSurfaceTopToBottom(boundingCurves, columns, rows)
 
   const intersections = getGridIntersections(boundingCurves, columns, rows)
 
@@ -209,67 +112,28 @@ const getCoonsPatch = (boundingCurves, grid) => {
   const getGridSquareBounds = (x, y) => {
     validateGetSquareArguments(x, y, columns, rows)
 
-    // Find the curves that run along the grid square bounds
-    const topCurve = curvesFromLeftToRight[y]
-    const bottomCurve = curvesFromLeftToRight[y + 1]
-    const leftCurve = curvesFromTopToBottom[x]
-    const rightCurve = curvesFromTopToBottom[x + 1]
-
-    const [
-      topCurveLeftIntersections,
-      topCurveRightIntersections,
-      bottomCurveLeftIntersections,
-      bottomCurveRightIntersections,
-      leftCurveTopIntersections,
-      leftCurveBottomIntersections,
-      rightCurveTopIntersections,
-      rightCurveBottomIntersections,
-    ] = getIntersections(topCurve, bottomCurve, leftCurve, rightCurve)
-
-    // Get sub-curves that describe the grid-square's bounds
-    const top = getSubcurveBetweenRatios(
-      topCurve,
-      topCurveLeftIntersections[0].ratio,
-      topCurveRightIntersections[0].ratio
-    )
-    const bottom = getSubcurveBetweenRatios(
-      bottomCurve,
-      bottomCurveLeftIntersections[0].ratio,
-      bottomCurveRightIntersections[0].ratio
-    )
-    const left = getSubcurveBetweenRatios(
-      leftCurve,
-      leftCurveTopIntersections[0].ratio,
-      leftCurveBottomIntersections[0].ratio
-    )
-    const right = getSubcurveBetweenRatios(
-      rightCurve,
-      rightCurveTopIntersections[0].ratio,
-      rightCurveBottomIntersections[0].ratio
-    )
+    // // Find the curves that run along the grid square bounds
+    const top = curvesFromLeftToRight[y][x]
+    const bottom = curvesFromLeftToRight[y + 1][x]
+    const left = curvesFromTopToBottom[x][y]
+    const right = curvesFromTopToBottom[x + 1][y]
 
     return {
-      top: getCurveFromArray(top.points),
-      bottom: getCurveFromArray(bottom.points),
-      left: getCurveFromArray(left.points),
-      right: getCurveFromArray(right.points),
-      intersections: {
-        topCurveLeftIntersections,
-        topCurveRightIntersections,
-      },
+      top,
+      bottom,
+      left,
+      right,
     }
   }
 
   return {
-    curvesFromLeftToRight,
-    curvesFromTopToBottom,
     boundingCurves,
     getGridSquareBounds,
     columns,
     intersections,
     rows,
-    cl2r,
-    ct2b,
+    curvesFromLeftToRight,
+    curvesFromTopToBottom,
   }
 }
 

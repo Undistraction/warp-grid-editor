@@ -126,10 +126,10 @@ const getCanvasApi = (context) => {
     drawBounds(coonsPatch.boundingCurves)
     // // Draw lines
     //coonsPatch.curvesFromLeftToRight.map(drawGridCurve)
-    coonsPatch.cl2r.map((curveSections) => {
+    coonsPatch.curvesFromLeftToRight.map((curveSections) => {
       curveSections.map(drawGridCurve)
     })
-    coonsPatch.ct2b.map((curveSections) => {
+    coonsPatch.curvesFromTopToBottom.map((curveSections) => {
       curveSections.map(drawGridCurve)
     })
 
