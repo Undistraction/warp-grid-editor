@@ -291,25 +291,22 @@ const getCoordinateOnSurface = ({ top, bottom, left, right }, u, v, axis) => {
   const cornerTopLeft = top.startPoint
   const cornerTopRight = top.endPoint
 
-  const leftReversed = reverseCurve(left)
-  const rightReversed = reverseCurve(right)
-
-  // (1-v)C1(u) +
   return (
-    (1 - v) * interpolatePointOnCurveEvenlySpaced(u, bottom)[axis] +
+    // (1-v)C1(u) +
+    (1 - v) * interpolatePointOnCurveEvenlySpaced(u, top)[axis] +
     // vC2(u)
-    v * interpolatePointOnCurveEvenlySpaced(u, top)[axis] +
+    v * interpolatePointOnCurveEvenlySpaced(u, bottom)[axis] +
     // (1-u)C3(v) +
-    (1 - u) * interpolatePointOnCurveEvenlySpaced(v, leftReversed)[axis] +
+    (1 - u) * interpolatePointOnCurveEvenlySpaced(v, left)[axis] +
     // uC4(v) -
-    u * interpolatePointOnCurveEvenlySpaced(v, rightReversed)[axis] -
+    u * interpolatePointOnCurveEvenlySpaced(v, right)[axis] -
     // (1-u)(1-v)P00
-    (1 - u) * (1 - v) * cornerBottomLeft[axis] -
+    (1 - u) * (1 - v) * cornerTopLeft[axis] -
     // u(1-v)P10
-    u * (1 - v) * cornerBottomRight[axis] -
+    u * (1 - v) * cornerTopRight[axis] -
     // (1−u)vP01
-    (1 - u) * v * cornerTopLeft[axis] -
-    u * v * cornerTopRight[axis]
+    (1 - u) * v * cornerBottomLeft[axis] -
+    u * v * cornerBottomRight[axis]
   )
 }
 
