@@ -15,8 +15,8 @@ import Sidebar from './Sidebar'
 // -----------------------------------------------------------------------------
 
 const GRID_DEFAULT = {
-  columns: 3,
-  rows: 3,
+  columns: 25,
+  rows: 25,
   interpolationStrategy: INTERPOLATION_STRATEGY.LINEAR,
   highAccuracy: false,
   // columns: [1, 0.2, 1, 0.2, 1, 0.2, 1],

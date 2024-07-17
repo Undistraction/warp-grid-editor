@@ -9,8 +9,8 @@ import SidebarGroup from './SidebarGroup'
 // Const
 // -----------------------------------------------------------------------------
 
-const COLUMNS_VALUES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-const ROWS_VALUES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+const COLUMNS_VALUES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 25, 50]
+const ROWS_VALUES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 25, 50]
 const INTERPOLATION_STRATEGIES = [
   {
     label: 'Even',

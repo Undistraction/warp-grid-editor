@@ -10,7 +10,7 @@ const interpolateControlPoint1 = ({
   midPoint2,
   endPoint,
 }) => {
-  const [x, y] = Object.keys(COORDINATE).map((coordinate) => {
+  const [x, y] = Object.values(COORDINATE).map((coordinate) => {
     return (
       (1 / 6) *
       (-5 * startPoint[coordinate] +
@@ -19,6 +19,8 @@ const interpolateControlPoint1 = ({
         2 * endPoint[coordinate])
     )
   })
+
+  console.log(x, y)
   return {
     x,
     y,
@@ -31,7 +33,7 @@ const interpolateControlPoint2 = ({
   midPoint2,
   endPoint,
 }) => {
-  const [x, y] = Object.keys(COORDINATE).map((coordinate) => {
+  const [x, y] = Object.values(COORDINATE).map((coordinate) => {
     return (
       (1 / 6) *
       (2 * startPoint[coordinate] -
@@ -40,6 +42,8 @@ const interpolateControlPoint2 = ({
         5 * endPoint[coordinate])
     )
   })
+
+  console.log('X', x, 'Y', y)
   return {
     x,
     y,
