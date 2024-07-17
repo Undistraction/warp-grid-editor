@@ -20,10 +20,11 @@ const GRID_DEFAULT = {
   columns: 3,
   rows: 3,
   interpolationStrategy: INTERPOLATION_STRATEGY.LINEAR,
+  highAccuracy: false,
   // columns: [1, 0.2, 1, 0.2, 1, 0.2, 1],
   // rows: [1, 0.2, 1, 0.2, 1, 0.2, 1],
 }
-const SURFACE_DEFAULT = { x: 0.0, y: 0.0, gridSquare: {} }
+const SURFACE_DEFAULT = { x: 0, y: 0, gridSquare: {} }
 
 // -----------------------------------------------------------------------------
 // Utils

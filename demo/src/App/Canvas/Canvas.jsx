@@ -1,5 +1,5 @@
 import React from 'react'
-import { getPointOnSurface, isInt } from '../../../../src/utils'
+import { isInt } from '../../../../src/utils/types'
 import getCanvasApi from '../../utils/getCanvasApi'
 
 // -----------------------------------------------------------------------------
@@ -30,24 +30,20 @@ const Canvas = ({
     if (coonsPatch) {
       canvasApi.drawCoonsPatch(coonsPatch)
 
-      const point = getPointOnSurface(
-        coonsPatch.boundingCurves,
-        surface.x,
-        surface.y
-      )
+      // const point = getPointOnSurface(
+      //   coonsPatch.boundingCurves,
+      //   surface.x,
+      //   surface.y
+      // )
 
-      canvasApi.drawDot(point, { color: 'red', size: 5 })
+      // canvasApi.drawDot(point, { color: 'red', size: 5 })
 
       if (gridSquare && isInt(gridSquare.x) && isInt(gridSquare.y)) {
-        try {
-          const gridSquareBounds = coonsPatch.getGridSquareBounds(
-            gridSquare.x,
-            gridSquare.y
-          )
-          canvasApi.drawGridSquareBounds(gridSquareBounds)
-        } catch {
-          // The library used for detecting intersections between cubic Beziers is unreliable and will occasionally fail to detect intersections. We throw an error in this instance and catch it here, doing nothing
-        }
+        const gridSquareBounds = coonsPatch.getGridSquareBounds(
+          gridSquare.x,
+          gridSquare.y
+        )
+        canvasApi.drawGridSquareBounds(gridSquareBounds)
       }
     }
   }, [coonsPatch, gridSquare, surface])

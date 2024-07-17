@@ -1,12 +1,15 @@
 import BezierEasing from 'bezier-easing'
+import { INTERPOLATION_STRATEGY } from './const'
+import {
+  interpolatePointOnCurveEvenlySpaced,
+  interpolatePointOnCurveLinear,
+} from './utils/interpolate'
 import {
   getCurvesOnSurfaceLeftToRight,
   getCurvesOnSurfaceTopToBottom,
   getGridIntersections,
-  isArray,
-  isInt,
-  isNil,
-} from './utils'
+} from './utils/surface'
+import { isArray, isInt, isNil } from './utils/types'
 
 // -----------------------------------------------------------------------------
 // Const
@@ -20,9 +23,7 @@ const easeY = BezierEasing(0, 0, 1, 1)
 // Utils
 // -----------------------------------------------------------------------------
 
-export const isUndefined = (value) => typeof value === 'undefined'
-
-const buildSpacing = (v) => {
+const buildStepSpacing = (v) => {
   const spacing = []
   for (let idx = 0; idx < v; idx++) {
     spacing.push(1)
@@ -31,7 +32,7 @@ const buildSpacing = (v) => {
 }
 
 const validateGrid = (grid) => {
-  if (!grid) {
+  if (isNil(grid)) {
     throw new Error('You must supply a grid')
   }
 
@@ -60,14 +61,6 @@ const validateGetSquareArguments = (x, y, columns, rows) => {
   }
 }
 
-const validateCurveIntersections = (curveIntersections) => {
-  curveIntersections.map((intersections) => {
-    if (intersections.length === 0) {
-      throw new Error('Missing intesection')
-    }
-  })
-}
-
 // -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
@@ -83,7 +76,7 @@ const getCoonsPatch = (boundingCurves, grid) => {
   // of the int, with a uniform value for each item.
   const columns = isArray(grid.columns)
     ? grid.columns
-    : buildSpacing(grid.columns)
+    : buildStepSpacing(grid.columns)
 
   // Rows can be either an int, or an array containing ints, each representing
   // the height of that column. If the total heights are different to the height
@@ -91,38 +84,44 @@ const getCoonsPatch = (boundingCurves, grid) => {
   // the height of the shape, acting as ratios instead of absolute heights. If
   // the supplied value is an int, we create an array with a length of the int,
   // with a uniform value for each item.
-  const rows = isArray(grid.rows) ? grid.rows : buildSpacing(grid.rows)
+  const rows = isArray(grid.rows) ? grid.rows : buildStepSpacing(grid.rows)
+
+  const interpolatePointOnCurve =
+    grid.interpolatePointOnCurve === INTERPOLATION_STRATEGY.LINEAR
+      ? interpolatePointOnCurveLinear
+      : interpolatePointOnCurveEvenlySpaced
 
   const curvesFromLeftToRight = getCurvesOnSurfaceLeftToRight(
     boundingCurves,
     columns,
-    rows
+    rows,
+    interpolatePointOnCurve
   )
 
   const curvesFromTopToBottom = getCurvesOnSurfaceTopToBottom(
     boundingCurves,
     columns,
-    rows
+    rows,
+    interpolatePointOnCurve
   )
 
-  const intersections = getGridIntersections(boundingCurves, columns, rows)
+  const intersections = getGridIntersections(
+    boundingCurves,
+    columns,
+    rows,
+    interpolatePointOnCurve
+  )
 
   // Get four curves that describe the bounds of the grid-sqare with the
-  // supplied grid coordicates
+  // supplied grid coordinates
   const getGridSquareBounds = (x, y) => {
     validateGetSquareArguments(x, y, columns, rows)
 
-    // // Find the curves that run along the grid square bounds
-    const top = curvesFromLeftToRight[y][x]
-    const bottom = curvesFromLeftToRight[y + 1][x]
-    const left = curvesFromTopToBottom[x][y]
-    const right = curvesFromTopToBottom[x + 1][y]
-
     return {
-      top,
-      bottom,
-      left,
-      right,
+      top: curvesFromLeftToRight[y][x],
+      bottom: curvesFromLeftToRight[y + 1][x],
+      left: curvesFromTopToBottom[x][y],
+      right: curvesFromTopToBottom[x + 1][y],
     }
   }
 

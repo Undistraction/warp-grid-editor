@@ -11,24 +11,6 @@ importers:
       bezier-easing:
         specifier: ^2.1.0
         version: 2.1.0
-      bezier-js:
-        specifier: ^6.1.4
-        version: 6.1.4
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
-      react:
-        specifier: ^18.3.1
-        version: 18.3.1
-      react-dom:
-        specifier: ^18.3.1
-        version: 18.3.1(react@18.3.1)
-      react-draggable:
-        specifier: ^4.4.6
-        version: 4.4.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      uniq:
-        specifier: ^1.0.1
-        version: 1.0.1
     devDependencies:
       '@commitlint/config-conventional':
         specifier: ^19.2.2
@@ -90,6 +72,18 @@ importers:
       prettier-plugin-tailwindcss:
         specifier: ^0.6.5
         version: 0.6.5(prettier@3.3.2)
+      prop-types:
+        specifier: ^15.8.1
+        version: 15.8.1
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+      react-draggable:
+        specifier: ^4.4.6
+        version: 4.4.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       tailwindcss:
         specifier: ^3.4.4
         version: 3.4.4
@@ -735,9 +729,6 @@ packages:
 
   bezier-easing@2.1.0:
     resolution: {integrity: sha512-gbIqZ/eslnUFC1tjEvtz0sgx+xTK20wDnYMIA27VA04R7w6xxXQPZDbibjA9DTWZRA2CXtwHykkVzlCaAJAZig==}
-
-  bezier-js@6.1.4:
-    resolution: {integrity: sha512-PA0FW9ZpcHbojUCMu28z9Vg/fNkwTj5YhusSAjHHDfHDGLxJ6YUKrAN2vk1fP2MMOxVw4Oko16FMlRGVBGqLKg==}
 
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
@@ -2431,9 +2422,6 @@ packages:
     resolution: {integrity: sha512-lRfVq8fE8gz6QMBuDM6a+LO3IAzTi05H6gCVaUpir2E1Rwpo4ZUog45KpNXKC/Mn3Yb9UDuHumeFTo9iV/D9FQ==}
     engines: {node: '>=18'}
 
-  uniq@1.0.1:
-    resolution: {integrity: sha512-Gw+zz50YNKPDKXs+9d+aKAjVwpjNwqzvNpLigIruT4HA9lMZNdMqs9x07kKHB/L9WRzqp4+DlTU5s4wG2esdoA==}
-
   update-browserslist-db@1.1.0:
     resolution: {integrity: sha512-EdRAaAyk2cUE1wOf2DkEhzxqOQvFOoRJFNS6NeyJ01Gp2beMRpBAINjM2iDXE3KCuKhwnvHIQCJm6ThL2Z+HzQ==}
     hasBin: true
@@ -3207,8 +3195,6 @@ snapshots:
   balanced-match@1.0.2: {}
 
   bezier-easing@2.1.0: {}
-
-  bezier-js@6.1.4: {}
 
   binary-extensions@2.3.0: {}
 
@@ -5040,8 +5026,6 @@ snapshots:
   undici-types@5.26.5: {}
 
   unicorn-magic@0.1.0: {}
-
-  uniq@1.0.1: {}
 
   update-browserslist-db@1.1.0(browserslist@4.23.2):
     dependencies:

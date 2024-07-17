@@ -1,4 +1,4 @@
-import { isInt } from '../../src/utils'
+import { isInt } from '../../src/utils/types'
 import { BOUNDS_POINT_IDS } from './const'
 import getCanvasApi from './utils/getCanvasApi'
 import { addRandomControlPointsToCurves, getRandomBounds } from './utils/random'

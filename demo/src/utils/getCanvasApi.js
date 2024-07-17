@@ -1,3 +1,9 @@
+import { isArray } from '../../../src/utils/types'
+
+// -----------------------------------------------------------------------------
+// Exports
+// -----------------------------------------------------------------------------
+
 const getCanvasApi = (context) => {
   const drawDot = ({ x, y }, { color = 'black', size = 2, text } = {}) => {
     context.beginPath()
@@ -13,7 +19,7 @@ const getCanvasApi = (context) => {
 
   const drawCurve = (
     { controlPoint1, controlPoint2, startPoint, endPoint },
-    { color = 'red', lineWidth = 1, shouldDrawControlPoints = false } = {}
+    { color = 'red', lineWidth = 1 } = {}
   ) => {
     context.beginPath()
     context.moveTo(startPoint.x, startPoint.y)
@@ -126,11 +132,19 @@ const getCanvasApi = (context) => {
     drawBounds(coonsPatch.boundingCurves)
     // // Draw lines
     //coonsPatch.curvesFromLeftToRight.map(drawGridCurve)
-    coonsPatch.curvesFromLeftToRight.map((curveSections) => {
-      curveSections.map(drawGridCurve)
+    coonsPatch.curvesFromLeftToRight.map((curveSectionsOrCurve) => {
+      if (isArray(curveSectionsOrCurve)) {
+        curveSectionsOrCurve.map(drawGridCurve)
+      } else {
+        drawGridCurve(curveSectionsOrCurve)
+      }
     })
-    coonsPatch.curvesFromTopToBottom.map((curveSections) => {
-      curveSections.map(drawGridCurve)
+    coonsPatch.curvesFromTopToBottom.map((curveSectionsOrCurve) => {
+      if (isArray(curveSectionsOrCurve)) {
+        curveSectionsOrCurve.map(drawGridCurve)
+      } else {
+        drawGridCurve(curveSectionsOrCurve)
+      }
     })
 
     // Draw intersections between grid lines

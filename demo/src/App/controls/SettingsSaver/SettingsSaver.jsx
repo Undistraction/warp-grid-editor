@@ -1,5 +1,5 @@
 import React from 'react'
-import { isNil } from '../../../../../src/utils'
+import { isNil } from '../../../../../src/utils/types'
 
 // -----------------------------------------------------------------------------
 // Exports

@@ -2,7 +2,7 @@
 // Utils
 // -----------------------------------------------------------------------------
 
-import { isInt, isObject, isString } from '../../../../../src/utils'
+import { isInt, isObject, isString } from '../../../../../src/utils/types'
 
 const getOption = (objectOrString) => {
   if (isString(objectOrString) || isInt(objectOrString)) {
