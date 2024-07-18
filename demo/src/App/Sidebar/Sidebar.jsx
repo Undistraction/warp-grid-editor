@@ -1,8 +1,8 @@
 import { INTERPOLATION_STRATEGY } from '../../../../src/const'
 import SettingsLoader from '../controls/SettingsLoader'
 import SettingsSaver from '../controls/SettingsSaver'
-import Slider from '../controls/Slider/Slider'
 import SteppedInput from '../controls/SteppedInput'
+import Switch from '../controls/Switch'
 import SidebarGroup from './SidebarGroup'
 
 // -----------------------------------------------------------------------------
@@ -56,7 +56,7 @@ const Sidebar = ({
   setSurface,
 }) => {
   return (
-    <div className="flex flex-col space-y-3 divide-y-2 pb-5">
+    <div className="flex flex-col space-y-3 divide-y-2 py-5">
       <SidebarGroup title="Shape">
         <button
           className="rounded-md bg-black p-3 text-white"
@@ -67,6 +67,16 @@ const Sidebar = ({
         >
           Randomise shape
         </button>
+        <Switch
+          label="Draw intersections"
+          isSelected={grid.shouldDrawIntersections}
+          onChange={(value) =>
+            setGrid({
+              ...grid,
+              shouldDrawIntersections: value,
+            })
+          }
+        ></Switch>
       </SidebarGroup>
       <SidebarGroup title="Grid">
         <SteppedInput
@@ -102,20 +112,6 @@ const Sidebar = ({
             })
           }}
           className="min-w-14 border border-black px-2 py-1"
-        />
-      </SidebarGroup>
-      <SidebarGroup title="Surface">
-        <Slider
-          value={surface.x}
-          name="ratioX"
-          onChange={(x) => setSurface({ ...surface, x })}
-          label="X"
-        />
-        <Slider
-          value={surface.y}
-          name="ratioY"
-          onChange={(y) => setSurface({ ...surface, y })}
-          label="Y"
         />
       </SidebarGroup>
       <SidebarGroup title="Grid square">

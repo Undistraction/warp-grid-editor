@@ -4,7 +4,7 @@
 
 import { COORDINATE } from '../const'
 
-const DEFAULT_PRECISION = 5
+const DEFAULT_PRECISION = 15
 
 // -----------------------------------------------------------------------------
 // Utils

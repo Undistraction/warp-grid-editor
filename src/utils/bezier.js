@@ -20,7 +20,6 @@ const interpolateControlPoint1 = ({
     )
   })
 
-  console.log(x, y)
   return {
     x,
     y,
@@ -43,7 +42,6 @@ const interpolateControlPoint2 = ({
     )
   })
 
-  console.log('X', x, 'Y', y)
   return {
     x,
     y,

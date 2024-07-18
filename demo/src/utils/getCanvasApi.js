@@ -127,7 +127,7 @@ const getCanvasApi = (context) => {
     drawCurve(curve, { color: lineColor })
   }
 
-  const drawCoonsPatch = (coonsPatch) => {
+  const drawCoonsPatch = (coonsPatch, { shouldDrawIntersections }) => {
     // Draw bounds
     drawBounds(coonsPatch.boundingCurves)
     // // Draw lines
@@ -147,13 +147,15 @@ const getCanvasApi = (context) => {
       }
     })
 
-    // Draw intersections between grid lines
-    coonsPatch.intersections.map((point) => {
-      drawDot(point, {
-        size: 3,
-        // text: point.t,
+    if (shouldDrawIntersections) {
+      // Draw intersections between grid lines
+      coonsPatch.intersections.map((point) => {
+        drawDot(point, {
+          size: 3,
+          // text: point.t,
+        })
       })
-    })
+    }
   }
 
   const drawGridSquareBounds = (boundingCurves) => {
