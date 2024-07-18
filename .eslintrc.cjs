@@ -14,9 +14,16 @@ module.exports = {
     ecmaVersion: 2020,
     sourceType: 'module',
   },
-  extends: ['eslint:recommended', 'plugin:import/recommended'],
-  plugins: ['jest', 'tailwind', 'import'],
+  extends: [
+    'eslint:recommended',
+    'plugin:import/recommended',
+    'plugin:react/recommended',
+  ],
+  plugins: ['jest', 'tailwind', 'import', 'react'],
   ignorePatterns: ['**/coverage/*', `/node_modules/*`],
+  rules: {
+    'react/prop-types': 0,
+  },
 }
 
 // [
