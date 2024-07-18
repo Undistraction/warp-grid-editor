@@ -74,7 +74,7 @@ const findClosestPointOnCurve = (
   return point
 }
 
-export const interpolateDimensionLinear = (
+const interpolateDimensionLinear = (
   axis,
   ratio,
   { controlPoint1, controlPoint2, startPoint, endPoint }

@@ -34,14 +34,6 @@ const Canvas = ({
       })
 
       if (gridSquare && isInt(gridSquare.x) && isInt(gridSquare.y)) {
-        // const point = getPointOnSurface(
-        //   coonsPatch.data.boundingCurves,
-        //   surface.x,
-        //   surface.y
-        // )
-
-        // canvasApi.drawDot(point, { color: 'red', size: 5 })
-
         const gridSquareBounds = coonsPatch.api.getGridSquareBounds(
           gridSquare.x,
           gridSquare.y

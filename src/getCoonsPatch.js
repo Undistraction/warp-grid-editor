@@ -7,6 +7,7 @@ import {
   getCurvesOnSurfaceLeftToRight,
   getCurvesOnSurfaceTopToBottom,
   getGridIntersections,
+  getPointOnSurface,
 } from './utils/surface'
 import { isArray, isInt, isNil, isPlainObj } from './utils/types'
 
@@ -32,7 +33,12 @@ const buildStepSpacing = (v) => {
   return spacing
 }
 
-const validateCurves = (boundingCurves) => {
+const getPointsAreSame = (point1, point2) => {
+  console.log('>>', point1, point2)
+  return point1.x === point2.x && point2.y === point2.y
+}
+
+const validateCurveTypes = (boundingCurves) => {
   SIDES.map((side) => {
     const curve = boundingCurves[side]
     if (!isPlainObj(curve)) {
@@ -41,6 +47,51 @@ const validateCurves = (boundingCurves) => {
       )
     }
   })
+}
+
+const validateCornerPoints = (boundingCurves) => {
+  if (
+    !getPointsAreSame(
+      boundingCurves.top.startPoint,
+      boundingCurves.left.startPoint
+    )
+  ) {
+    throw new Error(
+      `top curve startPoint and left curve startPoint must have same coordinates`
+    )
+  }
+
+  if (
+    !getPointsAreSame(
+      boundingCurves.bottom.startPoint,
+      boundingCurves.left.endPoint
+    )
+  ) {
+    throw new Error(
+      `bottom curve startPoint and left curve endPoint must have the same coordinates`
+    )
+  }
+
+  if (
+    !getPointsAreSame(
+      boundingCurves.top.endPoint,
+      boundingCurves.right.startPoint
+    )
+  ) {
+    throw new Error(
+      `top curve endPoint and right curve startPoint must have the same coordinates`
+    )
+  }
+  if (
+    !getPointsAreSame(
+      boundingCurves.bottom.endPoint,
+      boundingCurves.right.endPoint
+    )
+  ) {
+    throw new Error(
+      `bottom curve endPoint and right curve endPoint must have the same coordinates`
+    )
+  }
 }
 
 const validateBoundingCurves = (boundingCurves) => {
@@ -52,7 +103,9 @@ const validateBoundingCurves = (boundingCurves) => {
     throw new Error('boundingCurves must be an object')
   }
 
-  validateCurves(boundingCurves)
+  validateCurveTypes(boundingCurves)
+
+  validateCornerPoints(boundingCurves)
 }
 
 const validateGrid = (grid) => {
@@ -147,6 +200,15 @@ const getCoonsPatch = (boundingCurves, grid) => {
   const getIntersections = () =>
     getGridIntersections(boundingCurves, columns, rows, interpolatePointOnCurve)
 
+  const getPoint = (ratioX, ratioY) => {
+    return getPointOnSurface(
+      boundingCurves,
+      ratioX,
+      ratioY,
+      interpolatePointOnCurve
+    )
+  }
+
   return {
     data: {
       boundingCurves,
@@ -158,6 +220,7 @@ const getCoonsPatch = (boundingCurves, grid) => {
     api: {
       getGridSquareBounds,
       getIntersections,
+      getPoint,
     },
   }
 }
