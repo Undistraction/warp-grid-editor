@@ -12,7 +12,7 @@ const HEIGHT = 20
 // Exports
 // -----------------------------------------------------------------------------
 
-const CornerNode = ({ id, position, onDrag }) => {
+const CornerNode = ({ id, position, onDrag, onDragStart, onDragEnd }) => {
   const nodeRef = React.useRef(null)
 
   return (
@@ -20,13 +20,15 @@ const CornerNode = ({ id, position, onDrag }) => {
       nodeRef={nodeRef}
       position={position}
       bounds="#patch-view"
-      onDrag={(event, dragElement) => onDrag(event, dragElement, id)}
-      onStop={(event, dragElement) => onDrag(event, dragElement, id)}
+      onStart={onDragStart(id)}
+      onDrag={onDrag(id)}
+      onStop={onDragEnd(id)}
       handle=".corner-handle"
     >
       <div
         className="corner-handle group absolute -left-[10px] -top-[10px]"
         ref={nodeRef}
+        id={id}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

@@ -4,10 +4,9 @@ import getCoonsPatch from '../../../src/getCoonsPatch'
 import {
   clampGridSquareToGridDimensions,
   getRandomBoundingCurves,
-  updateBoundingCurves,
 } from '../utils'
 import Canvas from './Canvas'
-import CornerNodes from './Canvas/CornerNodes'
+import ControlNodes from './Canvas/ControlNodes'
 import Sidebar from './Sidebar'
 
 // -----------------------------------------------------------------------------
@@ -46,26 +45,6 @@ const App = () => {
       setCoonsPatch(coonsPatch)
     }
   }, [boundingCurves, canvas, grid])
-
-  const handleNodeDrag = (event, dragElement, id) => {
-    const newLocation = {
-      x: dragElement.x,
-      y: dragElement.y,
-    }
-
-    const offset = {
-      x: dragElement.deltaX,
-      y: dragElement.deltaY,
-    }
-
-    const newBoundingCurves = updateBoundingCurves(
-      newLocation,
-      offset,
-      id,
-      boundingCurves
-    )
-    setBoundingCurves(newBoundingCurves)
-  }
 
   const gridSquareClamped = surface.gridSquare
     ? clampGridSquareToGridDimensions(surface.gridSquare, grid)
@@ -124,9 +103,9 @@ const App = () => {
           grid={grid}
         />
         {boundingCurves && (
-          <CornerNodes
+          <ControlNodes
             boundingCurves={boundingCurves}
-            onDrag={handleNodeDrag}
+            setBoundingCurves={setBoundingCurves}
           />
         )}
       </div>

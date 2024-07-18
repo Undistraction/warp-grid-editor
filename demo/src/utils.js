@@ -80,7 +80,13 @@ export const getRandomBoundingCurves = (canvas) => {
   return boundingCurvesWithControlPoints
 }
 
-export const updateBoundingCurves = (point, offset, id, boundingCurves) => {
+export const updateBoundingCurves = (
+  id,
+  boundingCurves,
+  point,
+  deltas,
+  startingPositions
+) => {
   // ---------------------------------------------------------------------------
   // Corner points
   // ---------------------------------------------------------------------------
@@ -88,37 +94,73 @@ export const updateBoundingCurves = (point, offset, id, boundingCurves) => {
   if (id === BOUNDS_POINT_IDS.TOP_LEFT) {
     boundingCurves.top.startPoint = point
     boundingCurves.left.startPoint = point
-    boundingCurves.top.controlPoint1.x += offset.x
-    boundingCurves.top.controlPoint1.y += offset.y
-    boundingCurves.left.controlPoint1.x += offset.x
-    boundingCurves.left.controlPoint1.y += offset.y
+
+    const controlPoint1StartPosition =
+      startingPositions[BOUNDS_POINT_IDS.TOP_LEFT_CONTROL_1]
+    const controlPoint2StartPosition =
+      startingPositions[BOUNDS_POINT_IDS.TOP_LEFT_CONTROL_2]
+
+    boundingCurves.top.controlPoint1.x = controlPoint1StartPosition.x + deltas.x
+    boundingCurves.top.controlPoint1.y = controlPoint1StartPosition.y + deltas.y
+    boundingCurves.left.controlPoint1.x =
+      controlPoint2StartPosition.x + deltas.x
+    boundingCurves.left.controlPoint1.y =
+      controlPoint2StartPosition.y + deltas.y
   }
 
   if (id === BOUNDS_POINT_IDS.TOP_RIGHT) {
     boundingCurves.top.endPoint = point
     boundingCurves.right.startPoint = point
-    boundingCurves.top.controlPoint2.x += offset.x
-    boundingCurves.top.controlPoint2.y += offset.y
-    boundingCurves.right.controlPoint1.x += offset.x
-    boundingCurves.right.controlPoint1.y += offset.y
+
+    const controlPoint1StartPosition =
+      startingPositions[BOUNDS_POINT_IDS.TOP_RIGHT_CONTROL_1]
+    const controlPoint2StartPosition =
+      startingPositions[BOUNDS_POINT_IDS.TOP_RIGHT_CONTROL_2]
+
+    boundingCurves.top.controlPoint2.x = controlPoint1StartPosition.x + deltas.x
+    boundingCurves.top.controlPoint2.y = controlPoint1StartPosition.y + deltas.y
+    boundingCurves.right.controlPoint1.x =
+      controlPoint2StartPosition.x + deltas.x
+    boundingCurves.right.controlPoint1.y =
+      controlPoint2StartPosition.y + deltas.y
   }
 
   if (id === BOUNDS_POINT_IDS.BOTTOM_LEFT) {
     boundingCurves.bottom.startPoint = point
     boundingCurves.left.endPoint = point
-    boundingCurves.bottom.controlPoint1.x += offset.x
-    boundingCurves.bottom.controlPoint1.y += offset.y
-    boundingCurves.left.controlPoint2.x += offset.x
-    boundingCurves.left.controlPoint2.y += offset.y
+
+    const controlPoint1StartPosition =
+      startingPositions[BOUNDS_POINT_IDS.BOTTOM_LEFT_CONTROL_1]
+    const controlPoint2StartPosition =
+      startingPositions[BOUNDS_POINT_IDS.BOTTOM_LEFT_CONTROL_2]
+
+    boundingCurves.bottom.controlPoint1.x =
+      controlPoint1StartPosition.x + deltas.x
+    boundingCurves.bottom.controlPoint1.y =
+      controlPoint1StartPosition.y + deltas.y
+    boundingCurves.left.controlPoint2.x =
+      controlPoint2StartPosition.x + deltas.x
+    boundingCurves.left.controlPoint2.y =
+      controlPoint2StartPosition.y + deltas.y
   }
 
   if (id === BOUNDS_POINT_IDS.BOTTOM_RIGHT) {
     boundingCurves.bottom.endPoint = point
     boundingCurves.right.endPoint = point
-    boundingCurves.bottom.controlPoint2.x += offset.x
-    boundingCurves.bottom.controlPoint2.y += offset.y
-    boundingCurves.right.controlPoint2.x += offset.x
-    boundingCurves.right.controlPoint2.y += offset.y
+
+    const controlPoint1StartPosition =
+      startingPositions[BOUNDS_POINT_IDS.BOTTOM_RIGHT_CONTROL_1]
+    const controlPoint2StartPosition =
+      startingPositions[BOUNDS_POINT_IDS.BOTTOM_RIGHT_CONTROL_2]
+
+    boundingCurves.bottom.controlPoint2.x =
+      controlPoint1StartPosition.x + deltas.x
+    boundingCurves.bottom.controlPoint2.y =
+      controlPoint1StartPosition.y + deltas.y
+    boundingCurves.right.controlPoint2.x =
+      controlPoint2StartPosition.x + deltas.x
+    boundingCurves.right.controlPoint2.y =
+      controlPoint2StartPosition.y + deltas.y
   }
 
   // ---------------------------------------------------------------------------

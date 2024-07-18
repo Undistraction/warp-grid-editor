@@ -12,24 +12,20 @@ const HEIGHT = 12
 // Exports
 // -----------------------------------------------------------------------------
 
-const ControlPointNode = ({ position, onDrag, id }) => {
+const ControlPointNode = ({ position, onDrag, onDragStart, onDragEnd, id }) => {
   const nodeRef = React.useRef(null)
   return (
     <Draggable
       nodeRef={nodeRef}
       position={position}
       bounds="#patch-view"
-      x
-      onStop={(event, dragElement) => onDrag(event, dragElement, id)}
-      onDrag={(event, dragElement, ...rest) => {
-        console.log('Event', event)
-        console.log('dragElement', dragElement)
-        console.log('rest', ...rest)
-        onDrag(event, dragElement, id)
-      }}
+      onStart={onDragStart(id)}
+      onDrag={onDrag(id)}
+      onStop={onDragEnd(id)}
       handle=".control-point-handle"
     >
       <div
+        id={id}
         ref={nodeRef}
         className="control-point-handle group absolute -left-[6px] -top-[6px]"
       >
