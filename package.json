@@ -1,8 +1,8 @@
 {
-  "name": "htmx-express",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "name": "coons-patch",
+  "version": "0.0.1",
+  "description": "Create a Coons patch for a four-sided shape and manipulate the grid",
+  "main": "coons-patch.js",
   "type": "module",
   "scripts": {
     "prepare": "husky",
@@ -11,12 +11,19 @@
     "test-ui": "ACTIVE_ENV=test playwright test --ui",
     "lint-prettier": "prettier . --write",
     "lint-eslint": "eslint .",
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "vite --config vite.config.demo.js",
+    "build": "vite build --config vite.config.demo.js",
+    "preview": "vite preview --config vite.config.demo.js",
+    "build-package": "vite build"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "coons patch",
+    "geometry",
+    "math",
+    "surface",
+    "grid"
+  ],
+  "author": "Pedr Browne",
   "license": "ISC",
   "devDependencies": {
     "@commitlint/config-conventional": "^19.2.2",
@@ -50,7 +57,6 @@
     "vite": "^5.3.3"
   },
   "dependencies": {
-    "bezier-easing": "^2.1.0",
-    "eslint-plugin-import": "^2.29.1"
+    "bezier-easing": "^2.1.0"
   }
 }
