@@ -25,7 +25,3 @@ export const isString = (value) =>
 
 export const isPlainObj = (value) =>
   !isNull(value) && isType('object', value) && value.constructor === Object
-
-export const isPoint = (value) => {
-  return isPlainObj(value) && isNumber(value.x) && isNumber(value.y)
-}

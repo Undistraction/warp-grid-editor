@@ -19,8 +19,6 @@ import { isArray, isInt, isNil, isPlainObj } from './utils/types'
 // const easeX = BezierEasing(0, 0, 1, 1)
 // const easeY = BezierEasing(0, 0, 1, 1)
 
-const SIDES = ['top', 'bottom', 'left', 'right']
-
 // -----------------------------------------------------------------------------
 // Utils
 // -----------------------------------------------------------------------------
@@ -36,17 +34,6 @@ const buildStepSpacing = (v) => {
 const getPointsAreSame = (point1, point2) => {
   console.log('>>', point1, point2)
   return point1.x === point2.x && point2.y === point2.y
-}
-
-const validateCurveTypes = (boundingCurves) => {
-  SIDES.map((side) => {
-    const curve = boundingCurves[side]
-    if (!isPlainObj(curve)) {
-      throw new Error(
-        `boundingCurves.${side} must be an object describing a bezier curve`
-      )
-    }
-  })
 }
 
 const validateCornerPoints = (boundingCurves) => {
@@ -102,8 +89,6 @@ const validateBoundingCurves = (boundingCurves) => {
   if (!isPlainObj(boundingCurves)) {
     throw new Error('boundingCurves must be an object')
   }
-
-  validateCurveTypes(boundingCurves)
 
   validateCornerPoints(boundingCurves)
 }
