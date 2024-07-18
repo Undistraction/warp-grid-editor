@@ -1,4 +1,7 @@
+import React from 'react'
 import { INTERPOLATION_STRATEGY } from '../../../../src/const'
+import { BOUNDS_POINT_IDS } from '../../const'
+import NodeEditor from '../controls/NodeEditor'
 import SettingsLoader from '../controls/SettingsLoader'
 import SettingsSaver from '../controls/SettingsSaver'
 import SteppedInput from '../controls/SteppedInput'
@@ -54,6 +57,7 @@ const Sidebar = ({
   onLoad,
   savedBounds,
   setSurface,
+  boundingCurves,
 }) => {
   return (
     <div className="flex flex-col space-y-3 divide-y-2 py-5">
@@ -77,6 +81,54 @@ const Sidebar = ({
             })
           }
         ></Switch>
+      </SidebarGroup>
+      <SidebarGroup title="Nodes">
+        <NodeEditor
+          title="Top Left"
+          onChange={(id) => (point) => {
+            if (id === BOUNDS_POINT_IDS.TOP_LEFT) {
+              setBoundingCurves({
+                ...boundingCurves,
+                top: {
+                  ...boundingCurves.top,
+                  startPoint: point,
+                },
+                left: {
+                  ...boundingCurves.left,
+                  startPoint: point,
+                },
+              })
+            } else if (id === BOUNDS_POINT_IDS.TOP_LEFT_CONTROL_1) {
+              setBoundingCurves({
+                ...boundingCurves,
+                top: {
+                  ...boundingCurves.top,
+                  controlPoint1: point,
+                },
+              })
+            } else if (id === BOUNDS_POINT_IDS.TOP_LEFT_CONTROL_2) {
+              setBoundingCurves({
+                ...boundingCurves,
+                left: {
+                  ...boundingCurves.left,
+                  controlPoint1: point,
+                },
+              })
+            }
+          }}
+          cornerPoint={{
+            id: BOUNDS_POINT_IDS.TOP_LEFT,
+            point: boundingCurves?.top?.startPoint,
+          }}
+          controlPoint1={{
+            id: BOUNDS_POINT_IDS.TOP_LEFT_CONTROL_1,
+            point: boundingCurves?.top?.controlPoint1,
+          }}
+          controlPoint2={{
+            id: BOUNDS_POINT_IDS.TOP_LEFT_CONTROL_2,
+            point: boundingCurves?.left?.controlPoint1,
+          }}
+        />
       </SidebarGroup>
       <SidebarGroup title="Grid">
         <SteppedInput

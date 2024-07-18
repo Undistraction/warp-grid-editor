@@ -1,8 +1,8 @@
+import React from 'react'
+
 // -----------------------------------------------------------------------------
 // Utils
 // -----------------------------------------------------------------------------
-
-import React from 'react'
 
 const renderOptions = (options) => {
   return options.map((value) => {

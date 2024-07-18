@@ -32,7 +32,6 @@ const buildStepSpacing = (v) => {
 }
 
 const getPointsAreSame = (point1, point2) => {
-  console.log('>>', point1, point2)
   return point1.x === point2.x && point2.y === point2.y
 }
 

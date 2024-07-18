@@ -39,6 +39,8 @@ const App = () => {
   const [savedBounds, setSavedBounds] = React.useState({ ...localStorage })
   const displayRef = React.useRef(null)
 
+  console.log('@@', boundingCurves)
+
   useObserveClientSize(displayRef, setCanvasSize, {
     // left + right border widths
     width: -2,
@@ -51,7 +53,7 @@ const App = () => {
       const coonsPatch = getCoonsPatch(boundingCurves, grid)
       setCoonsPatch(coonsPatch)
     }
-  }, [boundingCurves, canvas, grid])
+  }, [boundingCurves, canvas, grid, canvasSize])
 
   const gridSquareClamped = React.useMemo(
     () =>
@@ -91,6 +93,7 @@ const App = () => {
           gridSquare={gridSquareClamped}
           getRandomBoundingCurves={getRandomBoundingCurves}
           setBoundingCurves={setBoundingCurves}
+          boundingCurves={boundingCurves}
           setGrid={setGrid}
           onSave={(name) => {
             localStorageApi.save(name, { grid, boundingCurves })

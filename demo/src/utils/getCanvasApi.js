@@ -151,7 +151,7 @@ const getCanvasApi = (context) => {
 
     if (shouldDrawIntersections) {
       // Draw intersections between grid lines
-      coonsPatch.getIntersections().map((point) => {
+      coonsPatch.api.getIntersections().map((point) => {
         drawDot(point, {
           size: 3,
           // text: point.t,

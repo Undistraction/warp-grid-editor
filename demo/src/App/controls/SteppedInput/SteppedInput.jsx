@@ -1,8 +1,9 @@
+import React from 'react'
+import { isInt, isPlainObj, isString } from '../../../../../src/utils/types'
+
 // -----------------------------------------------------------------------------
 // Utils
 // -----------------------------------------------------------------------------
-
-import { isInt, isPlainObj, isString } from '../../../../../src/utils/types'
 
 const getOption = (objectOrString) => {
   if (isString(objectOrString) || isInt(objectOrString)) {
