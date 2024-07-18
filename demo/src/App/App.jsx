@@ -1,10 +1,12 @@
 import React from 'react'
 import { INTERPOLATION_STRATEGY } from '../../../src/const'
 import getCoonsPatch from '../../../src/getCoonsPatch'
+import useObserveClientSize from '../hooks/useObserveClientSize'
 import {
   clampGridSquareToGridDimensions,
   getRandomBoundingCurves,
 } from '../utils'
+import localStorageApi from '../utils/localStorageApi'
 import Canvas from './Canvas'
 import ControlNodes from './Canvas/ControlNodes'
 import Sidebar from './Sidebar'
@@ -34,10 +36,15 @@ const App = () => {
   const [grid, setGrid] = React.useState(GRID_DEFAULT)
   const [surface, setSurface] = React.useState(SURFACE_DEFAULT)
   const [canvasSize, setCanvasSize] = React.useState({ width: 0, height: 0 })
-
   const [savedBounds, setSavedBounds] = React.useState({ ...localStorage })
-
   const displayRef = React.useRef(null)
+
+  useObserveClientSize(displayRef, setCanvasSize, {
+    // left + right border widths
+    width: -2,
+    // top + bottom border widths
+    height: -2,
+  })
 
   React.useEffect(() => {
     if (boundingCurves) {
@@ -46,45 +53,13 @@ const App = () => {
     }
   }, [boundingCurves, canvas, grid])
 
-  const gridSquareClamped = surface.gridSquare
-    ? clampGridSquareToGridDimensions(surface.gridSquare, grid)
-    : surface.gridSquare
-
-  const handleSave = (name) => {
-    const value = JSON.stringify({
-      boundingCurves,
-      grid,
-    })
-    const key = `${name}-${new Date().toUTCString()}`
-    localStorage.setItem(key, value)
-    setSavedBounds({ ...localStorage })
-  }
-
-  const onLoad = (key) => {
-    const value = localStorage[key]
-    const { boundingCurves: newBoundingCurves, grid: newGrid } =
-      JSON.parse(value)
-
-    setGrid(newGrid)
-    setBoundingCurves(newBoundingCurves)
-  }
-
-  React.useEffect(() => {
-    const resizeObserver = new ResizeObserver((event) => {
-      const BORDER_WIDTH = 1
-      const TOTAL_BORDER_WIDTH = BORDER_WIDTH * 2
-      // Depending on the layout, you may need to swap inlineSize with blockSize
-      // https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserverEntry/contentBoxSize
-
-      const width = event[0].contentBoxSize[0].inlineSize - TOTAL_BORDER_WIDTH
-      const height = event[0].contentBoxSize[0].blockSize - TOTAL_BORDER_WIDTH
-      setCanvasSize({ width, height })
-    })
-
-    if (displayRef) {
-      resizeObserver.observe(displayRef.current)
-    }
-  }, [displayRef.current, displayRef.current])
+  const gridSquareClamped = React.useMemo(
+    () =>
+      surface.gridSquare
+        ? clampGridSquareToGridDimensions(surface.gridSquare, grid)
+        : surface.gridSquare,
+    [surface, grid]
+  )
 
   return (
     <div className="relative flex max-h-full w-screen flex-row space-x-5 p-5">
@@ -117,8 +92,15 @@ const App = () => {
           getRandomBoundingCurves={getRandomBoundingCurves}
           setBoundingCurves={setBoundingCurves}
           setGrid={setGrid}
-          onSave={handleSave}
-          onLoad={onLoad}
+          onSave={(name) => {
+            localStorageApi.save(name, { grid, boundingCurves })
+            setSavedBounds({ ...localStorage })
+          }}
+          onLoad={(name) => {
+            const result = localStorageApi.load(name)
+            setGrid(result.grid)
+            setBoundingCurves(result.boundingCurves)
+          }}
           savedBounds={savedBounds}
           surface={surface}
           setSurface={setSurface}
