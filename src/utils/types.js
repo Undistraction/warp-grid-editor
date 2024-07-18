@@ -1,4 +1,10 @@
 // -----------------------------------------------------------------------------
+// Utils
+// -----------------------------------------------------------------------------
+
+const isType = (type, value) => typeof value === type
+
+// -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
 
@@ -6,13 +12,14 @@ export const isArray = Array.isArray
 
 export const isInt = Number.isInteger
 
-export const isUndefined = (value) => typeof value === 'undefined'
+export const isUndefined = (value) => isType('undefined', value)
 
 export const isNull = (value) => value === null
 
 export const isNil = (value) => isUndefined(value) || isNull(value)
 
 export const isString = (value) =>
-  typeof value === 'string' || value instanceof String
+  isType('string', value) || value instanceof String
 
-export const isObject = (value) => typeof value === 'object'
+export const isPlainObj = (value) =>
+  !isNull(value) && isType('object', value) && value.constructor === Object

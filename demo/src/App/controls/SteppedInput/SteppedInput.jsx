@@ -2,7 +2,7 @@
 // Utils
 // -----------------------------------------------------------------------------
 
-import { isInt, isObject, isString } from '../../../../../src/utils/types'
+import { isInt, isPlainObj, isString } from '../../../../../src/utils/types'
 
 const getOption = (objectOrString) => {
   if (isString(objectOrString) || isInt(objectOrString)) {
@@ -46,7 +46,7 @@ const SteppedInput = ({ onChange, value, label, options }) => {
         name="columns"
         onChange={(event) => {
           const objectOrString = event.target.value
-          const value = isObject(objectOrString)
+          const value = isPlainObj(objectOrString)
             ? objectOrString.value
             : objectOrString
           onChange(value)

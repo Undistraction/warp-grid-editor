@@ -17,7 +17,6 @@ pnpm run dev
 ## TODO
 
 - Mobile styles
-- Checkbox to show intersection points
 - Add settings for corner points (startPoint, endPoint, controlPoint values and allow control points to be toggled on/off per point and for all points)
 - Publish as package
 - Performance optimisation

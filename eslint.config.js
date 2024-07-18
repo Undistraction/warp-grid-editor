@@ -1,5 +1,5 @@
 import js from '@eslint/js'
-import playwright from 'eslint-plugin-playwright'
+import jest from 'eslint-plugin-jest'
 import react from 'eslint-plugin-react'
 import tailwind from 'eslint-plugin-tailwind'
 import globals from 'globals'
@@ -35,7 +35,9 @@ export default [
   // Rules for only test files
   {
     name: 'demo/tests',
-    files: ['tests/**.js'],
-    ...playwright.configs['flat/recommended'],
+    files: ['tests/**.{mjs,js}'],
+    plugins: {
+      jest,
+    },
   },
 ]

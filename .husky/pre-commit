@@ -3,5 +3,5 @@
 # Run lint-staged before every commit
 pnpm exec lint-staged
 
-# Run e2e tests before every commit
-# pnpm run test
+# Run tests before every commit
+pnpm run test-once
