@@ -8,7 +8,7 @@ import {
   getCurvesOnSurfaceTopToBottom,
   getGridIntersections,
 } from './utils/surface'
-import { isArray, isInt, isNil } from './utils/types'
+import { isArray, isInt, isNil, isPlainObj } from './utils/types'
 
 // -----------------------------------------------------------------------------
 // Const
@@ -17,6 +17,8 @@ import { isArray, isInt, isNil } from './utils/types'
 // See https://gre.github.io/bezier-easing-editor/example/
 // const easeX = BezierEasing(0, 0, 1, 1)
 // const easeY = BezierEasing(0, 0, 1, 1)
+
+const SIDES = ['top', 'bottom', 'left', 'right']
 
 // -----------------------------------------------------------------------------
 // Utils
@@ -30,9 +32,32 @@ const buildStepSpacing = (v) => {
   return spacing
 }
 
+const validateCurves = (boundingCurves) => {
+  SIDES.map((side) => {
+    const curve = boundingCurves[side]
+    if (!isPlainObj(curve)) {
+      throw new Error(
+        `boundingCurves.${side} must be an object describing a bezier curve`
+      )
+    }
+  })
+}
+
+const validateBoundingCurves = (boundingCurves) => {
+  if (isNil(boundingCurves)) {
+    throw new Error('You must supply boundingCurves(Object)')
+  }
+
+  if (!isPlainObj(boundingCurves)) {
+    throw new Error('boundingCurves must be an object')
+  }
+
+  validateCurves(boundingCurves)
+}
+
 const validateGrid = (grid) => {
   if (isNil(grid)) {
-    throw new Error('You must supply a grid')
+    throw new Error('You must supply a grid(Object)')
   }
 
   if (isNil(grid.columns)) {
@@ -65,6 +90,7 @@ const validateGetSquareArguments = (x, y, columns, rows) => {
 // -----------------------------------------------------------------------------
 
 const getCoonsPatch = (boundingCurves, grid) => {
+  validateBoundingCurves(boundingCurves)
   validateGrid(grid)
 
   // Columns can be either an int, or an array containing ints, each
@@ -88,23 +114,17 @@ const getCoonsPatch = (boundingCurves, grid) => {
   const interpolatePointOnCurve =
     grid.interpolationStrategy === INTERPOLATION_STRATEGY.LINEAR
       ? interpolatePointOnCurveLinear
-      : interpolatePointOnCurveEvenlySpaced
+      : // Default to even
+        interpolatePointOnCurveEvenlySpaced
 
-  const curvesFromLeftToRight = getCurvesOnSurfaceLeftToRight(
+  const curvesYAxis = getCurvesOnSurfaceLeftToRight(
     boundingCurves,
     columns,
     rows,
     interpolatePointOnCurve
   )
 
-  const curvesFromTopToBottom = getCurvesOnSurfaceTopToBottom(
-    boundingCurves,
-    columns,
-    rows,
-    interpolatePointOnCurve
-  )
-
-  const intersections = getGridIntersections(
+  const curvesXAxis = getCurvesOnSurfaceTopToBottom(
     boundingCurves,
     columns,
     rows,
@@ -117,21 +137,28 @@ const getCoonsPatch = (boundingCurves, grid) => {
     validateGetSquareArguments(x, y, columns, rows)
 
     return {
-      top: curvesFromLeftToRight[y][x],
-      bottom: curvesFromLeftToRight[y + 1][x],
-      left: curvesFromTopToBottom[x][y],
-      right: curvesFromTopToBottom[x + 1][y],
+      top: curvesYAxis[y][x],
+      bottom: curvesYAxis[y + 1][x],
+      left: curvesXAxis[x][y],
+      right: curvesXAxis[x + 1][y],
     }
   }
 
+  const getIntersections = () =>
+    getGridIntersections(boundingCurves, columns, rows, interpolatePointOnCurve)
+
   return {
-    boundingCurves,
-    getGridSquareBounds,
-    columns,
-    intersections,
-    rows,
-    curvesFromLeftToRight,
-    curvesFromTopToBottom,
+    data: {
+      boundingCurves,
+      columns,
+      rows,
+      curvesYAxis,
+      curvesXAxis,
+    },
+    api: {
+      getGridSquareBounds,
+      getIntersections,
+    },
   }
 }
 

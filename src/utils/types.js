@@ -12,6 +12,8 @@ export const isArray = Array.isArray
 
 export const isInt = Number.isInteger
 
+export const isNumber = (value) => !isNaN(value) && isType('number', value)
+
 export const isUndefined = (value) => isType('undefined', value)
 
 export const isNull = (value) => value === null
@@ -23,3 +25,7 @@ export const isString = (value) =>
 
 export const isPlainObj = (value) =>
   !isNull(value) && isType('object', value) && value.constructor === Object
+
+export const isPoint = (value) => {
+  return isPlainObj(value) && isNumber(value.x) && isNumber(value.y)
+}

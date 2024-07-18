@@ -3,10 +3,11 @@ import {
   isInt,
   isNil,
   isNull,
+  isNumber,
   isPlainObj,
   isString,
   isUndefined,
-} from '../src/utils/types'
+} from '../../src/utils/types'
 
 describe(`types`, () => {
   describe('isInt', () => {
@@ -32,6 +33,32 @@ describe(`types`, () => {
       expect(isInt(``)).toBeFalse()
       expect(isInt(/abc/)).toBeFalse()
       expect(isInt(() => {})).toBeFalse()
+    })
+  })
+
+  describe('isNumber', () => {
+    test('returns true if argument is an int', () => {
+      expect(isNumber(0)).toBeTrue()
+      expect(isNumber(-7)).toBeTrue()
+      expect(isNumber(7)).toBeTrue()
+      expect(isNumber(0.1)).toBeTrue()
+      expect(isNumber(-0.1)).toBeTrue()
+    })
+
+    test('returns false if argument is not an int', () => {
+      expect(isNumber(null)).toBeFalse()
+      expect(isNumber(undefined)).toBeFalse()
+      expect(isNumber()).toBeFalse()
+      expect(isNumber(NaN)).toBeFalse()
+      expect(isNumber(true)).toBeFalse()
+      expect(isNumber(false)).toBeFalse()
+      expect(isNumber([])).toBeFalse()
+      expect(isNumber({})).toBeFalse()
+      expect(isNumber()).toBeFalse()
+      expect(isNumber(`abc`)).toBeFalse()
+      expect(isNumber(``)).toBeFalse()
+      expect(isNumber(/abc/)).toBeFalse()
+      expect(isNumber(() => {})).toBeFalse()
     })
   })
 

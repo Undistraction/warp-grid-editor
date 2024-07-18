@@ -129,17 +129,19 @@ const getCanvasApi = (context) => {
 
   const drawCoonsPatch = (coonsPatch, { shouldDrawIntersections }) => {
     // Draw bounds
-    drawBounds(coonsPatch.boundingCurves)
-    // // Draw lines
-    //coonsPatch.curvesFromLeftToRight.map(drawGridCurve)
-    coonsPatch.curvesFromLeftToRight.map((curveSectionsOrCurve) => {
+    drawBounds(coonsPatch.data.boundingCurves)
+
+    // Draw curves along x axis
+    coonsPatch.data.curvesXAxis.map((curveSectionsOrCurve) => {
       if (isArray(curveSectionsOrCurve)) {
         curveSectionsOrCurve.map(drawGridCurve)
       } else {
         drawGridCurve(curveSectionsOrCurve)
       }
     })
-    coonsPatch.curvesFromTopToBottom.map((curveSectionsOrCurve) => {
+
+    // Draw curves along y axis
+    coonsPatch.data.curvesYAxis.map((curveSectionsOrCurve) => {
       if (isArray(curveSectionsOrCurve)) {
         curveSectionsOrCurve.map(drawGridCurve)
       } else {
@@ -149,7 +151,7 @@ const getCanvasApi = (context) => {
 
     if (shouldDrawIntersections) {
       // Draw intersections between grid lines
-      coonsPatch.intersections.map((point) => {
+      coonsPatch.getIntersections().map((point) => {
         drawDot(point, {
           size: 3,
           // text: point.t,

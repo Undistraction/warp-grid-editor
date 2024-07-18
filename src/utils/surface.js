@@ -198,7 +198,7 @@ export const getGridIntersections = (
         ratioY,
         interpolatePointOnCurve
       )
-      intersections.push(point, ratioX, ratioY)
+      intersections.push(point)
     }
   }
 
