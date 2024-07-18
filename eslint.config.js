@@ -9,6 +9,9 @@ import globals from 'globals'
 // -----------------------------------------------------------------------------
 
 export default [
+  {
+    ignores: ['**/coverage/*'],
+  },
   js.configs.recommended,
   {
     name: 'demo/all',
