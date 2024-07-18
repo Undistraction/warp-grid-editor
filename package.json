@@ -2,7 +2,7 @@
   "name": "coons-patch",
   "version": "0.0.1",
   "description": "Create a Coons patch for a four-sided shape and manipulate the grid",
-  "main": "coons-patch.js",
+  "main": "dist/coons-patch.js",
   "type": "module",
   "scripts": {
     "prepare": "husky",
