@@ -25,7 +25,7 @@ const CornerNode = ({ id, position, onDrag }) => {
       handle=".corner-handle"
     >
       <div
-        className="corner-handle absolute -left-[10px] -top-[10px]"
+        className="corner-handle group absolute -left-[10px] -top-[10px]"
         ref={nodeRef}
       >
         <svg
@@ -34,6 +34,7 @@ const CornerNode = ({ id, position, onDrag }) => {
           viewBox={`${-WIDTH * 0.5} ${-HEIGHT * 0.5}  ${WIDTH} ${HEIGHT}`}
           width={`${WIDTH}px`}
           height={`${HEIGHT}px`}
+          className="scale-1 transition-transform hover:scale-125 group-[.react-draggable-dragging]:scale-125"
         >
           <circle
             stroke="black"

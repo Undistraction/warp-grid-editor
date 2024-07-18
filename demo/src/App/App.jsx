@@ -17,7 +17,7 @@ import Sidebar from './Sidebar'
 const GRID_DEFAULT = {
   columns: 25,
   rows: 25,
-  interpolationStrategy: INTERPOLATION_STRATEGY.LINEAR,
+  interpolationStrategy: INTERPOLATION_STRATEGY.EVEN,
   highAccuracy: false,
   // columns: [1, 0.2, 1, 0.2, 1, 0.2, 1],
   // rows: [1, 0.2, 1, 0.2, 1, 0.2, 1],
@@ -121,6 +121,7 @@ const App = () => {
           coonsPatch={coonsPatch}
           gridSquare={gridSquareClamped}
           surface={surface}
+          grid={grid}
         />
         {boundingCurves && (
           <CornerNodes
@@ -129,7 +130,7 @@ const App = () => {
           />
         )}
       </div>
-      <div className="-mb-5 w-[300px] flex-shrink-0 flex-grow-0 overflow-y-scroll">
+      <div className="-my-5 w-[300px] flex-shrink-0 flex-grow-0 overflow-y-scroll">
         <Sidebar
           grid={grid}
           canvas={canvas}

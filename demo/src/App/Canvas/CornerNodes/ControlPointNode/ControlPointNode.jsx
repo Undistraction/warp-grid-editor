@@ -19,13 +19,19 @@ const ControlPointNode = ({ position, onDrag, id }) => {
       nodeRef={nodeRef}
       position={position}
       bounds="#patch-view"
+      x
       onStop={(event, dragElement) => onDrag(event, dragElement, id)}
-      onDrag={(event, dragElement) => onDrag(event, dragElement, id)}
+      onDrag={(event, dragElement, ...rest) => {
+        console.log('Event', event)
+        console.log('dragElement', dragElement)
+        console.log('rest', ...rest)
+        onDrag(event, dragElement, id)
+      }}
       handle=".control-point-handle"
     >
       <div
         ref={nodeRef}
-        className="control-point-handle absolute -left-[6px] -top-[6px]"
+        className="control-point-handle group absolute -left-[6px] -top-[6px]"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -33,6 +39,7 @@ const ControlPointNode = ({ position, onDrag, id }) => {
           viewBox={`${-WIDTH * 0.5} ${-HEIGHT * 0.5} ${WIDTH} ${HEIGHT}`}
           width={`${WIDTH}px`}
           height={`${HEIGHT}px`}
+          className="transition-transform hover:scale-125 group-[.react-draggable-dragging]:scale-125"
         >
           <circle
             fill="black"
