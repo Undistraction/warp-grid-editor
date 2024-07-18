@@ -62,9 +62,9 @@ const App = () => {
   )
 
   return (
-    <div className="relative flex max-h-full w-screen flex-row space-x-5 p-5">
+    <div className="relative flex h-full w-screen flex-row space-x-5 p-5">
       <div
-        className="relative max-h-full flex-grow overflow-hidden"
+        className="relative h-full flex-grow overflow-hidden"
         id="patch-view"
         ref={displayRef}
       >
