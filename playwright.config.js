@@ -1,7 +1,6 @@
 // @ts-check
 import { defineConfig, devices } from '@playwright/test'
 import process from 'process'
-import './test/loadEnvs'
 
 /**
  * @see https://playwright.dev/docs/test-configuration

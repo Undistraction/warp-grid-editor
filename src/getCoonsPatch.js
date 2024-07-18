@@ -1,4 +1,3 @@
-import BezierEasing from 'bezier-easing'
 import { INTERPOLATION_STRATEGY } from './const'
 import {
   interpolatePointOnCurveEvenlySpaced,
@@ -16,8 +15,8 @@ import { isArray, isInt, isNil } from './utils/types'
 // -----------------------------------------------------------------------------
 
 // See https://gre.github.io/bezier-easing-editor/example/
-const easeX = BezierEasing(0, 0, 1, 1)
-const easeY = BezierEasing(0, 0, 1, 1)
+// const easeX = BezierEasing(0, 0, 1, 1)
+// const easeY = BezierEasing(0, 0, 1, 1)
 
 // -----------------------------------------------------------------------------
 // Utils
