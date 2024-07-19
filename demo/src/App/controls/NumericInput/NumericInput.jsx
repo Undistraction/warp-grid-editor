@@ -13,7 +13,7 @@ const NumericInput = ({ value, label, onChange }) => {
         type="number"
         value={value}
         onChange={(event) => {
-          onChange(event.target.value || 0)
+          onChange(parseFloat(event.target.value) || 0)
         }}
       />
     </div>
