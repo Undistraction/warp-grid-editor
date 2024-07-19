@@ -5,15 +5,25 @@ import React from 'react'
 // -----------------------------------------------------------------------------
 
 const NumericInput = ({ value, label, onChange }) => {
+  const [localValue, setLocalValue] = React.useState(null)
+  const resolvedValue = localValue === '' ? localValue : value
   return (
-    <div className="flex max-w-28 cursor-pointer flex-row items-center space-x-2">
-      <div>{label}</div>
+    <div className="flex max-w-24 cursor-pointer flex-row items-center space-x-1">
+      <div className="text-sm">{label}</div>
       <input
-        className="min-w-14 border border-black px-2 py-1"
+        className="min-w-14 border border-black px-1 py-0.5 font-mono text-sm"
         type="number"
-        value={value}
+        value={resolvedValue}
         onChange={(event) => {
-          onChange(parseFloat(event.target.value) || 0)
+          const { value } = event.target
+          if (value === '') {
+            console.log('LOCAL VALUE', value)
+            setLocalValue(value)
+          } else {
+            const resolvedValue = parseFloat(value)
+            setLocalValue(null)
+            onChange(resolvedValue)
+          }
         }}
       />
     </div>

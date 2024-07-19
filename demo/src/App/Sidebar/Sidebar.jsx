@@ -1,7 +1,8 @@
 import React from 'react'
 import { INTERPOLATION_STRATEGY } from '../../../../src/const'
-import { BOUNDS_POINT_IDS } from '../../const'
-import NodeEditor from '../controls/NodeEditor'
+import { getCorners } from '../../utils/corners'
+import BoundsEditor from '../controls/BoundsEditor'
+import Button from '../controls/Button'
 import SettingsLoader from '../controls/SettingsLoader'
 import SettingsSaver from '../controls/SettingsSaver'
 import SteppedInput from '../controls/SteppedInput'
@@ -14,6 +15,7 @@ import SidebarGroup from './SidebarGroup'
 
 const COLUMNS_VALUES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 25, 50]
 const ROWS_VALUES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 25, 50]
+
 const INTERPOLATION_STRATEGIES = [
   {
     label: 'Even',
@@ -59,18 +61,17 @@ const Sidebar = ({
   setSurface,
   boundingCurves,
 }) => {
+  const corners = getCorners(boundingCurves)
   return (
     <div className="flex flex-col space-y-3 divide-y-2 py-5">
-      <SidebarGroup title="Shape">
-        <button
-          className="rounded-md bg-black p-3 text-white"
+      <SidebarGroup title="Bounds">
+        <Button
+          label="Randomise"
           onClick={() => {
             const boundingCurves = getRandomBoundingCurves(canvas)
             setBoundingCurves(boundingCurves)
           }}
-        >
-          Randomise shape
-        </button>
+        />
         <Switch
           label="Draw intersections"
           isSelected={grid.shouldDrawIntersections}
@@ -80,54 +81,6 @@ const Sidebar = ({
               shouldDrawIntersections: value,
             })
           }
-        ></Switch>
-      </SidebarGroup>
-      <SidebarGroup title="Nodes">
-        <NodeEditor
-          title="Top Left"
-          onChange={(id) => (point) => {
-            if (id === BOUNDS_POINT_IDS.TOP_LEFT) {
-              setBoundingCurves({
-                ...boundingCurves,
-                top: {
-                  ...boundingCurves.top,
-                  startPoint: point,
-                },
-                left: {
-                  ...boundingCurves.left,
-                  startPoint: point,
-                },
-              })
-            } else if (id === BOUNDS_POINT_IDS.TOP_LEFT_CONTROL_1) {
-              setBoundingCurves({
-                ...boundingCurves,
-                top: {
-                  ...boundingCurves.top,
-                  controlPoint1: point,
-                },
-              })
-            } else if (id === BOUNDS_POINT_IDS.TOP_LEFT_CONTROL_2) {
-              setBoundingCurves({
-                ...boundingCurves,
-                left: {
-                  ...boundingCurves.left,
-                  controlPoint1: point,
-                },
-              })
-            }
-          }}
-          cornerPoint={{
-            id: BOUNDS_POINT_IDS.TOP_LEFT,
-            point: boundingCurves?.top?.startPoint,
-          }}
-          controlPoint1={{
-            id: BOUNDS_POINT_IDS.TOP_LEFT_CONTROL_1,
-            point: boundingCurves?.top?.controlPoint1,
-          }}
-          controlPoint2={{
-            id: BOUNDS_POINT_IDS.TOP_LEFT_CONTROL_2,
-            point: boundingCurves?.left?.controlPoint1,
-          }}
         />
       </SidebarGroup>
       <SidebarGroup title="Grid">
@@ -166,6 +119,14 @@ const Sidebar = ({
           className="min-w-14 border border-black px-2 py-1"
         />
       </SidebarGroup>
+      <SidebarGroup title="Nodes">
+        <BoundsEditor
+          corners={corners}
+          boundingCurves={boundingCurves}
+          setBoundingCurves={setBoundingCurves}
+        />
+      </SidebarGroup>
+
       <SidebarGroup title="Grid square">
         <SteppedInput
           label="Across"

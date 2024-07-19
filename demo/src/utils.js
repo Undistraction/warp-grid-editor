@@ -1,6 +1,7 @@
 import { isInt } from '../../src/utils/types'
 import { BOUNDS_POINT_IDS } from './const'
 import getCanvasApi from './utils/getCanvasApi'
+import { clampNumberBetween } from './utils/math'
 import { addRandomControlPointsToCurves, getRandomBounds } from './utils/random'
 
 // -----------------------------------------------------------------------------
@@ -201,10 +202,6 @@ export const updateBoundingCurves = (
 
   // Create a new object to trigger useEffect
   return { ...boundingCurves }
-}
-
-export const clampNumberBetween = (min, max, value) => {
-  return Math.min(Math.max(value, min), max)
 }
 
 export const clampGridSquareToGridDimensions = (

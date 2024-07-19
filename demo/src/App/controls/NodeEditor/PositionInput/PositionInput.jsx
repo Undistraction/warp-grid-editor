@@ -1,4 +1,6 @@
 import React from 'react'
+import { isNumber } from '../../../../../../src/utils/types'
+import { roundToTwoPlaces } from '../../../../utils/math'
 import NumericInput from '../../NumericInput'
 
 // -----------------------------------------------------------------------------
@@ -6,23 +8,25 @@ import NumericInput from '../../NumericInput'
 // -----------------------------------------------------------------------------
 
 const PositionInput = ({ label, point, onChange }) => {
+  const x = isNumber(point?.x) ? roundToTwoPlaces(point?.x) : 0
+  const y = isNumber(point?.y) ? roundToTwoPlaces(point?.y) : 0
   return (
-    <div className="flex flex-col space-y-2">
-      <h2 className="text-sm">{label}</h2>
+    <div className="flex flex-row space-x-2">
       <div className="flex flex-row space-x-2">
         <NumericInput
           label="X"
-          value={point?.x}
+          value={x}
           onChange={(value) => {
             onChange({ ...point, x: value })
           }}
         />
         <NumericInput
           label="Y"
-          value={point?.y}
+          value={y}
           onChange={(value) => onChange({ ...point, y: value })}
         />
       </div>
+      <h2 className="text-sm">{label}</h2>
     </div>
   )
 }

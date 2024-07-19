@@ -14,8 +14,10 @@ const Switch = ({ isSelected, label, onChange }) => {
         }}
       >
         <div
-          className={`absolute top-0 h-full w-1/2 border border-black bg-white ${isSelected ? `right-0` : `left-0`}`}
-        ></div>
+          className={`absolute top-0 h-full w-1/2 border border-black bg-white ${isSelected ? `right-0` : `left-0`} flex flex-col items-center justify-center`}
+        >
+          <div className="h-1/3 w-1/4 border border-l-black border-r-black"></div>
+        </div>
       </div>
       <div>{label}</div>
     </div>

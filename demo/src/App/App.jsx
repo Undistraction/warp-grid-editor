@@ -39,8 +39,6 @@ const App = () => {
   const [savedBounds, setSavedBounds] = React.useState({ ...localStorage })
   const displayRef = React.useRef(null)
 
-  console.log('@@', boundingCurves)
-
   useObserveClientSize(displayRef, setCanvasSize, {
     // left + right border widths
     width: -2,
