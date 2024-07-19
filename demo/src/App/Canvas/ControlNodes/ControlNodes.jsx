@@ -6,7 +6,7 @@ import React from 'react'
 import { BOUNDS_POINT_IDS } from '../../../const'
 import { updateBoundingCurves } from '../../../utils'
 import ControlPointNode from './ControlPointNode'
-import CornerNode from './CornerNode/CornerNode'
+import CornerNode from './CornerNode'
 
 // -----------------------------------------------------------------------------
 // Utils

@@ -24,7 +24,7 @@
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js ./tests --watchAll",
     "test-ui": "ACTIVE_ENV=test playwright test --ui",
     "lint-prettier": "prettier . --write",
-    "lint-eslint": "eslint .",
+    "lint-eslint": "eslint './**/*.{js,jsx,cjs}'",
     "dev": "vite --config vite.config.demo.js",
     "build": "vite build --config vite.config.demo.js",
     "preview": "vite preview --config vite.config.demo.js",

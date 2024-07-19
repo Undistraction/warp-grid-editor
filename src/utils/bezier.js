@@ -1,8 +1,8 @@
+import { COORDINATE } from '../const'
+
 // -----------------------------------------------------------------------------
 // Utils
 // -----------------------------------------------------------------------------
-
-import { COORDINATE } from '../const'
 
 const interpolateControlPoint1 = ({
   startPoint,

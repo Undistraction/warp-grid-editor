@@ -11,50 +11,35 @@ module.exports = {
   },
 
   parserOptions: {
-    ecmaVersion: 2020,
+    ecmaVersion: 2024,
     sourceType: 'module',
   },
+
+  settings: {
+    react: {
+      version: '18',
+    },
+  },
+
   extends: [
     'eslint:recommended',
     'plugin:import/recommended',
     'plugin:react/recommended',
   ],
-  plugins: ['jest', 'tailwind', 'import', 'react'],
-  ignorePatterns: ['**/coverage/*', `/node_modules/*`],
+
+  plugins: ['tailwind', 'import', 'react'],
+
+  ignorePatterns: ['**/coverage/*', `/node_modules/*`, `/dist/`],
+
   rules: {
     'react/prop-types': 0,
   },
-}
 
-// [
-//   {
-//     name: 'demo/all',
-//     languageOptions: {
-//       sourceType: `module`,
-//       parserOptions: {
-//         ecmaFeatures: {
-//           jsx: true,
-//         },
-//       },
-//       globals: {
-//         ...globals.browser,
-//       },
-//     },
-//     files: [`**/*.{js,jsx}`],
-//     rules: {
-//       'no-unused-vars': 'warn',
-//       'no-undef': 'warn',
-//       'react/jsx-uses-react': 'error',
-//       'react/jsx-uses-vars': 'error',
-//     },
-//     plugins: { react, tailwind },
-//   },
-//   // Rules for only test files
-//   {
-//     name: 'demo/tests',
-//     files: ['tests/**.{mjs,js}'],
-//     plugins: {
-//       jest,
-//     },
-//   },
-// ]
+  overrides: [
+    {
+      files: [`tests/**/*.js`],
+      plugins: [`jest`],
+      extends: [`plugin:jest/recommended`],
+    },
+  ],
+}

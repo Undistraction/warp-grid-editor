@@ -62,7 +62,7 @@ describe(`getCoonsPatch`, () => {
         }).toThrow('boundingCurves must be an object')
       })
 
-      it(`throws if top and left bounding curves don't meet `, () => {
+      it(`throws if top and left bounding curves don't meet`, () => {
         expect(() => {
           const bounds = clone(boundsValid)
           bounds.top.startPoint.x = -10
@@ -72,7 +72,7 @@ describe(`getCoonsPatch`, () => {
         )
       })
 
-      it(`throws if top and right bounding curves don't meet `, () => {
+      it(`throws if top and right bounding curves don't meet`, () => {
         expect(() => {
           const bounds = clone(boundsValid)
           bounds.right.startPoint.x = -10
@@ -82,7 +82,7 @@ describe(`getCoonsPatch`, () => {
         )
       })
 
-      it(`throws if bottom and left bounding curves don't meet `, () => {
+      it(`throws if bottom and left bounding curves don't meet`, () => {
         expect(() => {
           const bounds = clone(boundsValid)
           bounds.left.endPoint.x = -10
@@ -92,7 +92,7 @@ describe(`getCoonsPatch`, () => {
         )
       })
 
-      it(`throws if bottom and right bounding curves don't meet `, () => {
+      it(`throws if bottom and right bounding curves don't meet`, () => {
         expect(() => {
           const bounds = clone(boundsValid)
           bounds.right.endPoint.x = -10
@@ -170,13 +170,17 @@ describe(`getCoonsPatch`, () => {
         })
       })
       describe(`getIntersections`, () => {
-        const intersectons = api.getIntersections()
-        expect(intersectons).toEqual(fixture.api.getIntersections())
+        it(`returns all intersections between curves`, () => {
+          const intersectons = api.getIntersections()
+          expect(intersectons).toEqual(fixture.api.getIntersections())
+        })
       })
       describe(`getPoint`, () => {
-        const args = [0.5, 0.25]
-        const point = api.getPoint(...args)
-        expect(point).toEqual(fixture.api.getPoint(...args))
+        it(`returns point at supplied coordinates`, () => {
+          const args = [0.5, 0.25]
+          const point = api.getPoint(...args)
+          expect(point).toEqual(fixture.api.getPoint(...args))
+        })
       })
     })
   })
