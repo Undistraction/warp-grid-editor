@@ -12,6 +12,7 @@ import { updateNodePosition } from '../utils/corners'
 import localStorageApi from '../utils/localStorageApi'
 import Canvas from './Canvas'
 import ControlNodes from './Canvas/ControlNodes'
+import Shape from './Canvas/Shape'
 import Sidebar from './Sidebar'
 
 // -----------------------------------------------------------------------------
@@ -50,6 +51,174 @@ const handleNodePositionChange =
     )
     setBoundingCurves(updatedBoundingCurves)
   }
+
+const handleShapeDrag = (boundingCurves, setBoundingCurves) => (position) => {
+  console.log('@drag', position)
+  setBoundingCurves({
+    top: {
+      startPoint: {
+        x: position.x,
+        y: position.y,
+      },
+      endPoint: {
+        x:
+          boundingCurves.top.endPoint.x -
+          boundingCurves.top.startPoint.x +
+          position.x,
+        y:
+          boundingCurves.top.endPoint.y -
+          boundingCurves.top.startPoint.y +
+          position.y,
+      },
+      controlPoint1: {
+        x:
+          boundingCurves.top.controlPoint1.x -
+          boundingCurves.top.startPoint.x +
+          position.x,
+        y:
+          boundingCurves.top.controlPoint1.y -
+          boundingCurves.top.startPoint.y +
+          position.y,
+      },
+      controlPoint2: {
+        x:
+          boundingCurves.top.controlPoint2.x -
+          boundingCurves.top.startPoint.x +
+          position.x,
+        y:
+          boundingCurves.top.controlPoint2.y -
+          boundingCurves.top.startPoint.y +
+          position.y,
+      },
+    },
+    bottom: {
+      startPoint: {
+        x:
+          boundingCurves.bottom.startPoint.x -
+          boundingCurves.top.startPoint.x +
+          position.x,
+        y:
+          boundingCurves.bottom.startPoint.y -
+          boundingCurves.top.startPoint.y +
+          position.y,
+      },
+      endPoint: {
+        x:
+          boundingCurves.bottom.endPoint.x -
+          boundingCurves.top.startPoint.x +
+          position.x,
+        y:
+          boundingCurves.bottom.endPoint.y -
+          boundingCurves.top.startPoint.y +
+          position.y,
+      },
+      controlPoint1: {
+        x:
+          boundingCurves.bottom.controlPoint1.x -
+          boundingCurves.top.startPoint.x +
+          position.x,
+        y:
+          boundingCurves.bottom.controlPoint1.y -
+          boundingCurves.top.startPoint.y +
+          position.y,
+      },
+      controlPoint2: {
+        x:
+          boundingCurves.bottom.controlPoint2.x -
+          boundingCurves.top.startPoint.x +
+          position.x,
+        y:
+          boundingCurves.bottom.controlPoint2.y -
+          boundingCurves.top.startPoint.y +
+          position.y,
+      },
+    },
+    left: {
+      startPoint: {
+        x:
+          boundingCurves.left.startPoint.x -
+          boundingCurves.top.startPoint.x +
+          position.x,
+        y:
+          boundingCurves.left.startPoint.y -
+          boundingCurves.top.startPoint.y +
+          position.y,
+      },
+      endPoint: {
+        x:
+          boundingCurves.left.endPoint.x -
+          boundingCurves.top.startPoint.x +
+          position.x,
+        y:
+          boundingCurves.left.endPoint.y -
+          boundingCurves.top.startPoint.y +
+          position.y,
+      },
+      controlPoint1: {
+        x:
+          boundingCurves.left.controlPoint1.x -
+          boundingCurves.top.startPoint.x +
+          position.x,
+        y:
+          boundingCurves.left.controlPoint1.y -
+          boundingCurves.top.startPoint.y +
+          position.y,
+      },
+      controlPoint2: {
+        x:
+          boundingCurves.left.controlPoint2.x -
+          boundingCurves.top.startPoint.x +
+          position.x,
+        y:
+          boundingCurves.left.controlPoint2.y -
+          boundingCurves.top.startPoint.y +
+          position.y,
+      },
+    },
+    right: {
+      startPoint: {
+        x:
+          boundingCurves.right.startPoint.x -
+          boundingCurves.top.startPoint.x +
+          position.x,
+        y:
+          boundingCurves.right.startPoint.y -
+          boundingCurves.top.startPoint.y +
+          position.y,
+      },
+      endPoint: {
+        x:
+          boundingCurves.right.endPoint.x -
+          boundingCurves.top.startPoint.x +
+          position.x,
+        y:
+          boundingCurves.right.endPoint.y -
+          boundingCurves.top.startPoint.y +
+          position.y,
+      },
+      controlPoint1: {
+        x:
+          boundingCurves.right.controlPoint1.x -
+          boundingCurves.top.startPoint.x +
+          position.x,
+        y:
+          boundingCurves.right.controlPoint1.y -
+          boundingCurves.top.startPoint.y +
+          position.y,
+      },
+      controlPoint2: {
+        x:
+          boundingCurves.right.controlPoint2.x -
+          boundingCurves.top.startPoint.x +
+          position.x,
+        y:
+          boundingCurves.right.controlPoint2.y -
+          boundingCurves.top.startPoint.y +
+          position.y,
+      },
+    },
+  })
+}
 
 // -----------------------------------------------------------------------------
 // Exports
@@ -106,14 +275,20 @@ const App = () => {
           grid={grid}
         />
         {boundingCurves && (
-          <ControlNodes
-            boundingCurves={boundingCurves}
-            onNodePositionChange={handleNodePositionChange(
-              boundingCurves,
-              setBoundingCurves,
-              config
-            )}
-          />
+          <React.Fragment>
+            <Shape
+              boundingCurves={boundingCurves}
+              onDrag={handleShapeDrag(boundingCurves, setBoundingCurves)}
+            />
+            <ControlNodes
+              boundingCurves={boundingCurves}
+              onNodePositionChange={handleNodePositionChange(
+                boundingCurves,
+                setBoundingCurves,
+                config
+              )}
+            />
+          </React.Fragment>
         )}
       </div>
       <div className="-my-5 w-[300px] flex-shrink-0 flex-grow-0 overflow-y-scroll">

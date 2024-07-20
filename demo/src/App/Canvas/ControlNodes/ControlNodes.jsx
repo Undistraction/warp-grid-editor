@@ -11,40 +11,16 @@ import CornerNode from './CornerNode'
 // Utils
 // -----------------------------------------------------------------------------
 
-const renderNodes = (
-  handleNodeDragStart,
-  handleNodeDrag,
-  handleNodeDragEnd,
-  nodes
-) => {
+const renderNodes = (handleNodeDrag, nodes) => {
   return nodes.map(({ id, position, Component }) => {
     return (
       <Component
         id={id}
         key={id}
-        onDragStart={handleNodeDragStart}
         onDrag={handleNodeDrag}
-        onDragEnd={handleNodeDragEnd}
         position={position}
       />
     )
-  })
-}
-
-const getTranslateXY = (element) => {
-  const style = window.getComputedStyle(element)
-  const matrix = new DOMMatrixReadOnly(style.transform)
-  return {
-    x: matrix.m41,
-    y: matrix.m42,
-  }
-}
-
-const snapshotPositions = (cache) => {
-  Object.values(BOUNDS_POINT_IDS).map((id) => {
-    const element = document.getElementById(id)
-    const point = getTranslateXY(element)
-    cache[id] = point
   })
 }
 
@@ -53,8 +29,6 @@ const snapshotPositions = (cache) => {
 // -----------------------------------------------------------------------------
 
 const ControlNodes = ({ boundingCurves, onNodePositionChange }) => {
-  const startingPositions = React.useRef({})
-
   const handleNodeDrag = (id) => (event, dragElement) => {
     const newPosition = {
       x: dragElement.x,
@@ -64,18 +38,9 @@ const ControlNodes = ({ boundingCurves, onNodePositionChange }) => {
     onNodePositionChange(id)(newPosition)
   }
 
-  const handleNodeDragStart = (id) => (event, dragElement) => {
-    snapshotPositions(startingPositions.current)
-    onNodePositionChange(startingPositions, dragElement, id)
-  }
-
-  const handleNodeDragEnd = (id) => (event, dragElement) => {
-    onNodePositionChange(startingPositions, dragElement, id)
-  }
-
   return (
-    <div className="absolute bottom-0 left-0 right-0 top-0">
-      {renderNodes(handleNodeDragStart, handleNodeDrag, handleNodeDragEnd, [
+    <div className="pointer-events-none absolute bottom-0 left-0 right-0 top-0">
+      {renderNodes(handleNodeDrag, [
         {
           id: BOUNDS_POINT_IDS.TOP_LEFT,
           position: boundingCurves.top.startPoint,

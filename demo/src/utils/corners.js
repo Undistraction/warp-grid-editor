@@ -57,7 +57,6 @@ const getUpdatedLinkedControlPoint = (
       ? distanceToCornerFromNewPosition
       : distanceToCornerFromLinkedPoint)
   )
-  console.log('= ', isMirrored)
 
   return linkedPointNew
 }
@@ -70,7 +69,6 @@ const getLinkedControlPointPosition = (
   linkedControlPointName,
   config
 ) => {
-  console.log('>>', config)
   const { isLinked, isMirrored } = config[cornerId]
 
   // If the corner points are linked
