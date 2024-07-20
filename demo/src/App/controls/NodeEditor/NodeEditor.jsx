@@ -11,7 +11,7 @@ const NodeEditor = ({
   cornerPoint,
   controlPoint1,
   controlPoint2,
-  onChange,
+  onNodeChange,
   onZeroControlPoints,
   onLinkControlPoints,
 }) => {
@@ -33,17 +33,17 @@ const NodeEditor = ({
           <PositionInput
             label="Corner"
             point={cornerPoint.point}
-            onChange={onChange}
+            onChange={onNodeChange(cornerPoint.id)}
           />
           <PositionInput
             label="Control 1"
             point={controlPoint1.point}
-            onChange={onChange}
+            onChange={onNodeChange(controlPoint1.id)}
           />
           <PositionInput
             label="Control 2"
             point={controlPoint2.point}
-            onChange={onChange}
+            onChange={onNodeChange(controlPoint2.id)}
           />
         </div>
         <div className="flex flex-row items-start space-x-3 pl-3">

@@ -11,20 +11,31 @@ import NodeEditor from '../NodeEditor'
 // Utils
 // -----------------------------------------------------------------------------
 
-const handleNodeChange = (id, boundingCurves, setBoundingCurves) => (point) => {
-  const updatedBoundingCurves = updateNodePosition(boundingCurves, id, point)
-  setBoundingCurves(updatedBoundingCurves)
-}
+const handleNodeChange =
+  (boundingCurves, setBoundingCurves) => (nodeId) => (point) => {
+    const updatedBoundingCurves = updateNodePosition(
+      boundingCurves,
+      nodeId,
+      point
+    )
+    setBoundingCurves(updatedBoundingCurves)
+  }
 
 const handleLinkControlPoints =
-  (id, boundingCurves, setBoundingCurves) => () => {
-    const updatedBoundingCurves = expandControlPoints(boundingCurves, id)
+  (cornerNodeId, boundingCurves, setBoundingCurves) => () => {
+    const updatedBoundingCurves = expandControlPoints(
+      boundingCurves,
+      cornerNodeId
+    )
     setBoundingCurves(updatedBoundingCurves)
   }
 
 const handleZeroControlPoints =
-  (id, boundingCurves, setBoundingCurves) => () => {
-    const updatedBoundingCurves = zeroControlPoints(boundingCurves, id)
+  (cornerNodeId, boundingCurves, setBoundingCurves) => () => {
+    const updatedBoundingCurves = zeroControlPoints(
+      boundingCurves,
+      cornerNodeId
+    )
     setBoundingCurves(updatedBoundingCurves)
   }
 
@@ -37,11 +48,7 @@ const BoundsEditor = ({ boundingCurves, setBoundingCurves, corners }) => {
     <div className="flex flex-col divide-y divide-black border border-black">
       <NodeEditor
         title="Top Left"
-        onNodeChange={handleNodeChange(
-          BOUNDS_POINT_IDS.TOP_LEFT,
-          boundingCurves,
-          setBoundingCurves
-        )}
+        onNodeChange={handleNodeChange(boundingCurves, setBoundingCurves)}
         onZeroControlPoints={handleZeroControlPoints(
           BOUNDS_POINT_IDS.TOP_LEFT,
           boundingCurves,
@@ -56,11 +63,7 @@ const BoundsEditor = ({ boundingCurves, setBoundingCurves, corners }) => {
       />
       <NodeEditor
         title="Top right"
-        onNodeChange={handleNodeChange(
-          BOUNDS_POINT_IDS.TOP_RIGHT,
-          boundingCurves,
-          setBoundingCurves
-        )}
+        onNodeChange={handleNodeChange(boundingCurves, setBoundingCurves)}
         onZeroControlPoints={handleZeroControlPoints(
           BOUNDS_POINT_IDS.TOP_RIGHT,
           boundingCurves,
@@ -75,11 +78,7 @@ const BoundsEditor = ({ boundingCurves, setBoundingCurves, corners }) => {
       />
       <NodeEditor
         title="Bottom left"
-        onNodeChange={handleNodeChange(
-          BOUNDS_POINT_IDS.BOTTOM_LEFT,
-          boundingCurves,
-          setBoundingCurves
-        )}
+        onNodeChange={handleNodeChange(boundingCurves, setBoundingCurves)}
         onZeroControlPoints={handleZeroControlPoints(
           BOUNDS_POINT_IDS.BOTTOM_LEFT,
           boundingCurves,
@@ -94,11 +93,7 @@ const BoundsEditor = ({ boundingCurves, setBoundingCurves, corners }) => {
       />
       <NodeEditor
         title="Bottom right"
-        onNodeChange={handleNodeChange(
-          BOUNDS_POINT_IDS.BOTTOM_RIGHT,
-          boundingCurves,
-          setBoundingCurves
-        )}
+        onNodeChange={handleNodeChange(boundingCurves, setBoundingCurves)}
         onZeroControlPoints={handleZeroControlPoints(
           BOUNDS_POINT_IDS.BOTTOM_RIGHT,
           boundingCurves,

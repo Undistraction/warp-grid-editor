@@ -1,4 +1,5 @@
 import React from 'react'
+import { useDebounce } from 'use-debounce'
 import { INTERPOLATION_STRATEGY } from '../../../src/const'
 import getCoonsPatch from '../../../src/getCoonsPatch'
 import useObserveClientSize from '../hooks/useObserveClientSize'
@@ -10,8 +11,6 @@ import localStorageApi from '../utils/localStorageApi'
 import Canvas from './Canvas'
 import ControlNodes from './Canvas/ControlNodes'
 import Sidebar from './Sidebar'
-
-import { useDebounce } from 'use-debounce'
 
 // -----------------------------------------------------------------------------
 // Const
@@ -91,7 +90,6 @@ const App = () => {
         <Sidebar
           grid={grid}
           canvas={canvas}
-          gridSquare={gridSquareClamped}
           getRandomBoundingCurves={getRandomBoundingCurves}
           setBoundingCurves={setBoundingCurves}
           boundingCurves={boundingCurves}
