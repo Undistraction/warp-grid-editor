@@ -4,15 +4,28 @@ import React from 'react'
 // Exports
 // -----------------------------------------------------------------------------
 
-const Button = ({ label, labelSelected, isSelected, onClick }) => {
+const IconButton = ({
+  label,
+  labelSelected,
+  isSelected,
+  onClick,
+  isSelectable,
+  isDisabled,
+}) => {
   return (
     <button
-      className="font-bold"
-      onClick={() => onClick(isSelected)}
+      className={`font-bold ${isDisabled && `text-gray-300`}`}
+      onClick={() => {
+        if (isSelectable) {
+          onClick(!isSelected)
+        } else {
+          onClick()
+        }
+      }}
     >
       {isSelected ? labelSelected : label}
     </button>
   )
 }
 
-export default Button
+export default IconButton

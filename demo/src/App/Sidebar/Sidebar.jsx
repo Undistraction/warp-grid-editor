@@ -60,6 +60,9 @@ const Sidebar = ({
   savedBounds,
   setSurface,
   boundingCurves,
+  config,
+  setConfig,
+  onNodePositionChange,
 }) => {
   const corners = getCorners(boundingCurves)
   return (
@@ -84,28 +87,30 @@ const Sidebar = ({
         />
       </SidebarGroup>
       <SidebarGroup title="Grid">
-        <SteppedInput
-          label="Columns"
-          value={grid.columns}
-          options={COLUMNS_VALUES}
-          onChange={(columns) => {
-            setGrid({
-              ...grid,
-              columns: parseInt(columns),
-            })
-          }}
-        />
-        <SteppedInput
-          label="Rows"
-          value={grid.rows}
-          options={ROWS_VALUES}
-          onChange={(rows) => {
-            setGrid({
-              ...grid,
-              rows: parseInt(rows),
-            })
-          }}
-        />
+        <div className="flex [&>*]:basis-1/2">
+          <SteppedInput
+            label="Columns"
+            value={grid.columns}
+            options={COLUMNS_VALUES}
+            onChange={(columns) => {
+              setGrid({
+                ...grid,
+                columns: parseInt(columns),
+              })
+            }}
+          />
+          <SteppedInput
+            label="Rows"
+            value={grid.rows}
+            options={ROWS_VALUES}
+            onChange={(rows) => {
+              setGrid({
+                ...grid,
+                rows: parseInt(rows),
+              })
+            }}
+          />
+        </div>
         <SteppedInput
           label="Interpolation strategy"
           value={grid.interpolationStrategy}
@@ -116,7 +121,6 @@ const Sidebar = ({
               interpolationStrategy,
             })
           }}
-          className="min-w-14 border border-black px-2 py-1"
         />
       </SidebarGroup>
       <SidebarGroup title="Nodes">
@@ -124,6 +128,9 @@ const Sidebar = ({
           corners={corners}
           boundingCurves={boundingCurves}
           setBoundingCurves={setBoundingCurves}
+          config={config}
+          setConfig={setConfig}
+          onNodePositionChange={onNodePositionChange}
         />
       </SidebarGroup>
 

@@ -2,11 +2,13 @@ import React from 'react'
 import { useDebounce } from 'use-debounce'
 import { INTERPOLATION_STRATEGY } from '../../../src/const'
 import getCoonsPatch from '../../../src/getCoonsPatch'
+import { BOUNDS_POINT_IDS } from '../const'
 import useObserveClientSize from '../hooks/useObserveClientSize'
 import {
   clampGridSquareToGridDimensions,
   getRandomBoundingCurves,
 } from '../utils'
+import { updateNodePosition } from '../utils/corners'
 import localStorageApi from '../utils/localStorageApi'
 import Canvas from './Canvas'
 import ControlNodes from './Canvas/ControlNodes'
@@ -24,7 +26,30 @@ const GRID_DEFAULT = {
   // columns: [1, 0.2, 1, 0.2, 1, 0.2, 1],
   // rows: [1, 0.2, 1, 0.2, 1, 0.2, 1],
 }
+
 const SURFACE_DEFAULT = { x: 0, y: 0, gridSquare: {} }
+
+const CONFIG_DEFAULT = {
+  [BOUNDS_POINT_IDS.TOP_LEFT]: { isLinked: false, isMirrored: false },
+  [BOUNDS_POINT_IDS.TOP_RIGHT]: { isLinked: false, isMirrored: false },
+  [BOUNDS_POINT_IDS.BOTTOM_LEFT]: { isLinked: false, isMirrored: false },
+  [BOUNDS_POINT_IDS.BOTTOM_RIGHT]: { isLinked: false, isMirrored: false },
+}
+
+// -----------------------------------------------------------------------------
+// Utils
+// -----------------------------------------------------------------------------
+
+const handleNodePositionChange =
+  (boundingCurves, setBoundingCurves, config) => (nodeId) => (newPosition) => {
+    const updatedBoundingCurves = updateNodePosition(
+      boundingCurves,
+      nodeId,
+      newPosition,
+      config
+    )
+    setBoundingCurves(updatedBoundingCurves)
+  }
 
 // -----------------------------------------------------------------------------
 // Exports
@@ -34,6 +59,7 @@ const App = () => {
   const [canvas, setCanvas] = React.useState(null)
   const [boundingCurves, setBoundingCurves] = React.useState(null)
   const [coonsPatch, setCoonsPatch] = React.useState(null)
+  const [config, setConfig] = React.useState(CONFIG_DEFAULT)
   const [grid, setGrid] = React.useState(GRID_DEFAULT)
   const [surface, setSurface] = React.useState(SURFACE_DEFAULT)
   const [canvasSize, setCanvasSize] = React.useState({ width: 0, height: 0 })
@@ -82,7 +108,11 @@ const App = () => {
         {boundingCurves && (
           <ControlNodes
             boundingCurves={boundingCurves}
-            setBoundingCurves={setBoundingCurves}
+            onNodePositionChange={handleNodePositionChange(
+              boundingCurves,
+              setBoundingCurves,
+              config
+            )}
           />
         )}
       </div>
@@ -93,6 +123,8 @@ const App = () => {
           getRandomBoundingCurves={getRandomBoundingCurves}
           setBoundingCurves={setBoundingCurves}
           boundingCurves={boundingCurves}
+          config={config}
+          setConfig={setConfig}
           setGrid={setGrid}
           onSave={(name) => {
             localStorageApi.save(name, { grid, boundingCurves })
@@ -103,6 +135,11 @@ const App = () => {
             setGrid(result.grid)
             setBoundingCurves(result.boundingCurves)
           }}
+          onNodePositionChange={handleNodePositionChange(
+            boundingCurves,
+            setBoundingCurves,
+            config
+          )}
           savedBounds={savedBounds}
           surface={surface}
           setSurface={setSurface}

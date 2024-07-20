@@ -11,9 +11,12 @@ const NodeEditor = ({
   cornerPoint,
   controlPoint1,
   controlPoint2,
-  onNodeChange,
+  onNodePositionChange,
   onZeroControlPoints,
+  onMirrorControlPoints,
   onLinkControlPoints,
+  controlNodesAreLinked,
+  controlNodesAreMirrored,
 }) => {
   const [isMinimised, setIsMinised] = React.useState(true)
 
@@ -33,17 +36,17 @@ const NodeEditor = ({
           <PositionInput
             label="Corner"
             point={cornerPoint.point}
-            onChange={onNodeChange(cornerPoint.id)}
+            onChange={onNodePositionChange(cornerPoint.id)}
           />
           <PositionInput
             label="Control 1"
             point={controlPoint1.point}
-            onChange={onNodeChange(controlPoint1.id)}
+            onChange={onNodePositionChange(controlPoint1.id)}
           />
           <PositionInput
             label="Control 2"
             point={controlPoint2.point}
-            onChange={onNodeChange(controlPoint2.id)}
+            onChange={onNodePositionChange(controlPoint2.id)}
           />
         </div>
         <div className="flex flex-row items-start space-x-3 pl-3">
@@ -53,7 +56,18 @@ const NodeEditor = ({
           />
           <IconButton
             label="Link"
+            labelSelected="Unlink"
+            isSelectable
             onClick={onLinkControlPoints}
+            isSelected={controlNodesAreLinked}
+          />
+          <IconButton
+            label="Mirror"
+            labelSelected="UnMirror"
+            isDisabled={!controlNodesAreLinked}
+            isSelectable
+            onClick={onMirrorControlPoints}
+            isSelected={controlNodesAreMirrored}
           />
         </div>
       </div>

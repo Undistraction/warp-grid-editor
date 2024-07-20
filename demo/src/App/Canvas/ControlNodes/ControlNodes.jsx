@@ -4,7 +4,6 @@
 
 import React from 'react'
 import { BOUNDS_POINT_IDS } from '../../../const'
-import { updateBoundingCurves } from '../../../utils'
 import ControlPointNode from './ControlPointNode'
 import CornerNode from './CornerNode'
 
@@ -53,44 +52,25 @@ const snapshotPositions = (cache) => {
 // Exports
 // -----------------------------------------------------------------------------
 
-const ControlNodes = ({ boundingCurves, setBoundingCurves }) => {
+const ControlNodes = ({ boundingCurves, onNodePositionChange }) => {
   const startingPositions = React.useRef({})
 
-  const update = (element, id) => {
-    const newPosition = {
-      x: element.x,
-      y: element.y,
-    }
-
-    const originalPosition = startingPositions.current[id]
-
-    const deltas = {
-      x: newPosition.x - originalPosition.x,
-      y: newPosition.y - originalPosition.y,
-    }
-
-    const newBoundingCurves = updateBoundingCurves(
-      id,
-      boundingCurves,
-      newPosition,
-      deltas,
-      startingPositions.current
-    )
-
-    setBoundingCurves(newBoundingCurves)
-  }
-
   const handleNodeDrag = (id) => (event, dragElement) => {
-    update(dragElement, id)
+    const newPosition = {
+      x: dragElement.x,
+      y: dragElement.y,
+    }
+
+    onNodePositionChange(id)(newPosition)
   }
 
   const handleNodeDragStart = (id) => (event, dragElement) => {
     snapshotPositions(startingPositions.current)
-    update(dragElement, id)
+    onNodePositionChange(startingPositions, dragElement, id)
   }
 
   const handleNodeDragEnd = (id) => (event, dragElement) => {
-    update(dragElement, id)
+    onNodePositionChange(startingPositions, dragElement, id)
   }
 
   return (
