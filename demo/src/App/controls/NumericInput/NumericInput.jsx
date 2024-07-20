@@ -17,7 +17,6 @@ const NumericInput = ({ value, label, onChange }) => {
         onChange={(event) => {
           const { value } = event.target
           if (value === '') {
-            console.log('LOCAL VALUE', value)
             setLocalValue(value)
           } else {
             const resolvedValue = parseFloat(value)

@@ -23,7 +23,7 @@ const Canvas = ({
     }
   }, [ref.current])
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     const canvasContext = ref.current.getContext('2d')
     const canvasApi = getCanvasApi(canvasContext)
     canvasApi.clearCanvas(ref.current)

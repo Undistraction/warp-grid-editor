@@ -11,6 +11,8 @@ import Canvas from './Canvas'
 import ControlNodes from './Canvas/ControlNodes'
 import Sidebar from './Sidebar'
 
+import { useDebounce } from 'use-debounce'
+
 // -----------------------------------------------------------------------------
 // Const
 // -----------------------------------------------------------------------------
@@ -38,6 +40,7 @@ const App = () => {
   const [canvasSize, setCanvasSize] = React.useState({ width: 0, height: 0 })
   const [savedBounds, setSavedBounds] = React.useState({ ...localStorage })
   const displayRef = React.useRef(null)
+  const [boundingCurvesDebounced] = useDebounce(boundingCurves, 5)
 
   useObserveClientSize(displayRef, setCanvasSize, {
     // left + right border widths
@@ -46,12 +49,12 @@ const App = () => {
     height: -2,
   })
 
-  React.useEffect(() => {
-    if (boundingCurves) {
-      const coonsPatch = getCoonsPatch(boundingCurves, grid)
+  React.useLayoutEffect(() => {
+    if (boundingCurvesDebounced) {
+      const coonsPatch = getCoonsPatch(boundingCurvesDebounced, grid)
       setCoonsPatch(coonsPatch)
     }
-  }, [boundingCurves, canvas, grid, canvasSize])
+  }, [boundingCurvesDebounced, canvas, grid, canvasSize])
 
   const gridSquareClamped = React.useMemo(
     () =>
