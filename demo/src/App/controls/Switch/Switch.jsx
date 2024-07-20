@@ -6,7 +6,7 @@ import React from 'react'
 
 const Switch = ({ isSelected, label, onChange }) => {
   return (
-    <div className="flex cursor-pointer flex-row space-x-2 align-middle">
+    <div className="flex cursor-pointer flex-row items-center space-x-2">
       <div
         className="relative h-8 w-16 bg-black"
         onClick={() => {

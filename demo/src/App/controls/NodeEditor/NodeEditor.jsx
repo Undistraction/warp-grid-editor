@@ -23,7 +23,7 @@ const NodeEditor = ({
   const icon = isMinimised ? '+' : '-'
 
   return (
-    <div className="flex flex-col space-y-3 p-3">
+    <div className="flex flex-col space-y-3 p-2">
       <header
         onClick={() => setIsMinised(!isMinimised)}
         className="flex cursor-pointer flex-row items-center justify-between"

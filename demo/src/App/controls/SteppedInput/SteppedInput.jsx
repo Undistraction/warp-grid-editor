@@ -42,7 +42,7 @@ const renderOptions = (options) => {
 
 const SteppedInput = ({ onChange, value, label, options }) => {
   return (
-    <div className="flex flex-row space-x-2">
+    <div className="flex flex-row items-center space-x-2">
       <select
         name="columns"
         onChange={(event) => {

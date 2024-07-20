@@ -24,7 +24,7 @@ const CornerNode = ({ id, position, onDrag }) => {
       handle=".corner-handle"
     >
       <div
-        className="corner-handle group pointer-events-auto absolute -left-[10px] -top-[10px]"
+        className="corner-handle group pointer-events-auto absolute -left-[10px] -top-[10px] cursor-move"
         ref={nodeRef}
         id={id}
       >

@@ -25,7 +25,7 @@ const ControlPointNode = ({ position, onDrag, id }) => {
       <div
         id={id}
         ref={nodeRef}
-        className="control-point-handle group pointer-events-auto absolute -left-[6px] -top-[6px]"
+        className="control-point-handle group pointer-events-auto absolute -left-[6px] -top-[6px] cursor-move"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

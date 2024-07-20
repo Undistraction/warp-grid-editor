@@ -53,7 +53,6 @@ const handleNodePositionChange =
   }
 
 const handleShapeDrag = (boundingCurves, setBoundingCurves) => (position) => {
-  console.log('@drag', position)
   setBoundingCurves({
     top: {
       startPoint: {

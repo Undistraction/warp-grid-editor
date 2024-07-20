@@ -65,8 +65,6 @@ const renderPath = ({ top, left, bottom, right }) => {
 const Shape = ({ boundingCurves, onDrag }) => {
   const nodeRef = React.useRef(null)
 
-  console.log('>>', boundingCurves.top.startPoint)
-
   return (
     <Draggable
       nodeRef={nodeRef}
@@ -84,7 +82,7 @@ const Shape = ({ boundingCurves, onDrag }) => {
     >
       <div
         ref={nodeRef}
-        className="shape-handle absolute left-0 top-0 cursor-pointer"
+        className="shape-handle absolute left-0 top-0 cursor-move"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
