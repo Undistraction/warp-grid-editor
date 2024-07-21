@@ -20,12 +20,11 @@ import Sidebar from './Sidebar'
 // -----------------------------------------------------------------------------
 
 const GRID_DEFAULT = {
-  columns: 25,
-  rows: 25,
+  // columns: 25,
+  // rows: 25,
+  columns: [5, 1, 5, 4, 5, 1, 5, 1, 5],
+  rows: [5, 1, 5, 3, 5, 1, 10],
   interpolationStrategy: INTERPOLATION_STRATEGY.EVEN,
-  highAccuracy: false,
-  // columns: [1, 0.2, 1, 0.2, 1, 0.2, 1],
-  // rows: [1, 0.2, 1, 0.2, 1, 0.2, 1],
 }
 
 const SURFACE_DEFAULT = { x: 0, y: 0, gridSquare: {} }

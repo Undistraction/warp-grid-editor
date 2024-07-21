@@ -1,4 +1,4 @@
-const RESPONSE = {
+const fixture3X3Grid = {
   api: {
     getGridSquareBounds: (columns, rows) => {
       if (columns === 2 && rows === 2) {
@@ -284,4 +284,4 @@ const RESPONSE = {
   },
 }
 
-export default RESPONSE
+export default fixture3X3Grid

@@ -1,6 +1,6 @@
 import getCoonsPatch from '../src/getCoonsPatch'
-import fixture from './fixtures/patch3x3Grid'
-
+import fixture3X3Grid from './fixtures/patch3x3Grid'
+import fixtureVariantColumnsAndRows from './fixtures/patchVariantColumnsAndRows'
 // -----------------------------------------------------------------------------
 // Const
 // -----------------------------------------------------------------------------
@@ -36,6 +36,26 @@ const gridWithNumericColumns = {
   columns: 3,
   rows: 3,
 }
+
+const variants = [
+  {
+    name: '3x3 grid',
+    input: {
+      grid: gridWithNumericColumns,
+    },
+    fixture: fixture3X3Grid,
+  },
+  {
+    name: 'Variant columns and rows',
+    input: {
+      grid: {
+        columns: [5, 1, 5, 4, 5, 1, 5, 1, 5],
+        rows: [5, 1, 5, 3, 5, 1, 10],
+      },
+    },
+    fixture: fixtureVariantColumnsAndRows,
+  },
+]
 
 // -----------------------------------------------------------------------------
 // Utils
@@ -136,56 +156,61 @@ describe(`getCoonsPatch`, () => {
     })
   })
 
-  describe(`with valid params returns patch`, () => {
-    const patch = getCoonsPatch(boundsValid, gridWithNumericColumns)
+  // Loop through different types of grid
+  describe.each(variants)(
+    `For a $name returns correct patch`,
+    ({ fixture, input }) => {
+      const patch = getCoonsPatch(boundsValid, input.grid)
 
-    describe('config', () => {
-      const { config } = patch
+      describe('config', () => {
+        const { config } = patch
 
-      it(`with original boundingCurves`, () => {
-        expect(config.boundingCurves).toEqual(boundsValid)
-      })
+        it(`with original boundingCurves`, () => {
+          expect(config.boundingCurves).toEqual(boundsValid)
+        })
 
-      it(`with arrays of column and row values`, () => {
-        expect(config.columns).toEqual(fixture.config.columns)
-        expect(config.rows).toEqual(fixture.config.rows)
-      })
-    })
-
-    describe(`with an API`, () => {
-      const { api } = patch
-
-      describe(`getGridSquareBounds`, () => {
-        it(`provides bounds for the grid square at the supplied coordinates`, () => {
-          const args = [2, 2]
-          const gridSquareBounds = api.getGridSquareBounds(...args)
-          expect(gridSquareBounds).toEqual(
-            fixture.api.getGridSquareBounds(...args)
-          )
+        it(`with arrays of column and row values`, () => {
+          expect(config.columns).toEqual(fixture.config.columns)
+          expect(config.rows).toEqual(fixture.config.rows)
         })
       })
 
-      describe(`getIntersections`, () => {
-        it(`returns all intersections between curves`, () => {
-          const intersectons = api.getIntersections()
-          expect(intersectons).toEqual(fixture.api.getIntersections())
-        })
-      })
+      describe(`with an API`, () => {
+        const { api } = patch
 
-      describe(`getPoint`, () => {
-        it(`returns point at supplied coordinates`, () => {
-          const args = [0.5, 0.25]
-          const point = api.getPoint(...args)
-          expect(point).toEqual(fixture.api.getPoint(...args))
+        describe(`getGridSquareBounds`, () => {
+          it(`provides bounds for the grid square at the supplied coordinates`, () => {
+            const args = [2, 2]
+            const gridSquareBounds = api.getGridSquareBounds(...args)
+            expect(gridSquareBounds).toEqual(
+              fixture.api.getGridSquareBounds(...args)
+            )
+          })
         })
-      })
 
-      describe(`getCurves`, () => {
-        it(`returns point at supplied coordinates`, () => {
-          const curves = api.getCurves()
-          expect(curves).toEqual(fixture.api.getCurves())
+        describe(`getIntersections`, () => {
+          it(`returns all intersections between curves`, () => {
+            const intersectons = api.getIntersections()
+
+            expect(intersectons).toEqual(fixture.api.getIntersections())
+          })
+        })
+
+        describe(`getPoint`, () => {
+          it(`returns point at supplied coordinates`, () => {
+            const args = [0.5, 0.25]
+            const point = api.getPoint(...args)
+            expect(point).toEqual(fixture.api.getPoint(...args))
+          })
+        })
+
+        describe(`getCurves`, () => {
+          it(`returns point at supplied coordinates`, () => {
+            const curves = api.getCurves()
+            expect(curves).toEqual(fixture.api.getCurves())
+          })
         })
       })
-    })
-  })
+    }
+  )
 })
