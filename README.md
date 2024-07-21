@@ -18,16 +18,35 @@ pnpm install
 pnpm run dev
 ```
 
-## TODO
+## TODO (MSCW)
 
-- Fix random (not adhering to bounds)
-- Fix width and height for Shape SVG
-- Add back easing
-- Add back columns of different widths
-- Basic mobile styles
-- Shortcuts
-  - double-click to reset corner controls
-- Add credit
-- Global zero/link/mirror
-- Hide / show control points
-- Multi
+### Must do
+
+1.  Fix random (not adhering to bounds)
+2.  Fix width and height for Shape SVG
+3.  Basic mobile styles
+4.  Add credit
+
+### Should do
+
+2. Global zero/link/mirror
+
+### Could do
+
+1. Shortcuts
+
+- double-click to reset corner controls
+
+2. Hide / show control points
+3. Add back easing
+
+#### Add back easing
+
+(See https://gre.github.io/bezier-easing-editor/example/), basically pass each ratio to an easing function before using it.
+
+```
+// const easeX = BezierEasing(0, 0, 1, 1)
+// const easeY = BezierEasing(0, 0, 1, 1)
+
+const easedRatioX = easeX(ratioX)
+```
