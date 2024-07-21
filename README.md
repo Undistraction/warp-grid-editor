@@ -20,8 +20,12 @@ pnpm run dev
 
 ## TODO
 
-- Mobile styles
-- Add settings for corner points (startPoint, endPoint, controlPoint values and allow control points to be toggled on/off per point and for all points)
-- Publish as package
-- Performance optimisation
-- memoize api
+- Fix random (not adhering to bounds)
+- Fix width and height for Shape SVG
+- Basic mobile styles
+- Shortcuts
+  - double-click to reset corner controls
+- Add credit
+- Global zero/link/mirror
+- Hide / show control points
+- Multi
