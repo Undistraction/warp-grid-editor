@@ -22,6 +22,8 @@ pnpm run dev
 
 - Fix random (not adhering to bounds)
 - Fix width and height for Shape SVG
+- Add back easing
+- Add back columns of different widths
 - Basic mobile styles
 - Shortcuts
   - double-click to reset corner controls

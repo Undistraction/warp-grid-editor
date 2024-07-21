@@ -1,6 +1,6 @@
 import React from 'react'
 import { INTERPOLATION_STRATEGY } from '../../../../src/const'
-import { getCorners } from '../../utils/corners'
+import { getBoundsApi } from '../../utils/boundsApi'
 import BoundsEditor from '../controls/BoundsEditor'
 import Button from '../controls/Button'
 import SettingsLoader from '../controls/SettingsLoader'
@@ -64,7 +64,8 @@ const Sidebar = ({
   setConfig,
   onNodePositionChange,
 }) => {
-  const corners = getCorners(boundingCurves)
+  const boundsApi = getBoundsApi(boundingCurves)
+  const { corners } = boundsApi
   return (
     <div className="flex flex-col space-y-3 divide-y-2 py-5">
       <SidebarGroup title="Bounds">

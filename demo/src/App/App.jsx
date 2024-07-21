@@ -8,7 +8,7 @@ import {
   clampGridSquareToGridDimensions,
   getRandomBoundingCurves,
 } from '../utils'
-import { updateNodePosition } from '../utils/corners'
+import { getBoundsApi } from '../utils/boundsApi'
 import localStorageApi from '../utils/localStorageApi'
 import Canvas from './Canvas'
 import ControlNodes from './Canvas/ControlNodes'
@@ -43,11 +43,10 @@ const CONFIG_DEFAULT = {
 
 const handleNodePositionChange =
   (boundingCurves, setBoundingCurves, config) => (nodeId) => (newPosition) => {
-    const updatedBoundingCurves = updateNodePosition(
-      boundingCurves,
+    const boundsApi = getBoundsApi(boundingCurves, config)
+    const updatedBoundingCurves = boundsApi.updateNodePosition(
       nodeId,
-      newPosition,
-      config
+      newPosition
     )
     setBoundingCurves(updatedBoundingCurves)
   }

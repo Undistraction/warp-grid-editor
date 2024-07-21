@@ -1,6 +1,6 @@
 import React from 'react'
 import { BOUNDS_POINT_IDS } from '../../../const'
-import { expandControlPoints, zeroControlPoints } from '../../../utils/corners'
+import { getBoundsApi } from '../../../utils/boundsApi'
 import NodeEditor from '../NodeEditor'
 
 // -----------------------------------------------------------------------------
@@ -8,13 +8,10 @@ import NodeEditor from '../NodeEditor'
 // -----------------------------------------------------------------------------
 
 const handleLinkControlPoints =
-  (cornerNodeId, boundingCurves, setBoundingCurves, config, setConfig) =>
+  (boundsApi, config, cornerNodeId, setBoundingCurves, setConfig) =>
   (isLinked) => {
     if (isLinked) {
-      const updatedBoundingCurves = expandControlPoints(
-        boundingCurves,
-        cornerNodeId
-      )
+      const updatedBoundingCurves = boundsApi.expandControlPoints(cornerNodeId)
       setBoundingCurves(updatedBoundingCurves)
     }
     setConfig({
@@ -24,8 +21,8 @@ const handleLinkControlPoints =
   }
 
 const handleZeroControlPoints =
-  (cornerNodeId, boundingCurves, setBoundingCurves) => () => {
-    const updatedBoundingCurves = zeroControlPoints(
+  (boundsApi, cornerNodeId, boundingCurves, setBoundingCurves) => () => {
+    const updatedBoundingCurves = boundsApi.zeroControlPoints(
       boundingCurves,
       cornerNodeId
     )
@@ -33,7 +30,7 @@ const handleZeroControlPoints =
   }
 
 const handleMirrorControlPoint =
-  (cornerNodeId, config, setConfig) => (isMirrored) => {
+  (config, cornerNodeId, setConfig) => (isMirrored) => {
     setConfig({
       ...config,
       [cornerNodeId]: { ...config[cornerNodeId], isMirrored },
@@ -52,6 +49,8 @@ const BoundsEditor = ({
   corners,
   onNodePositionChange,
 }) => {
+  const boundsApi = getBoundsApi(boundingCurves, config)
+
   return (
     <div className="flex flex-col divide-y divide-black border border-black">
       <NodeEditor
@@ -60,20 +59,20 @@ const BoundsEditor = ({
         controlNodesAreMirrored={config[BOUNDS_POINT_IDS.TOP_LEFT].isMirrored}
         onNodePositionChange={onNodePositionChange}
         onZeroControlPoints={handleZeroControlPoints(
+          boundsApi,
           BOUNDS_POINT_IDS.TOP_LEFT,
-          boundingCurves,
           setBoundingCurves
         )}
         onLinkControlPoints={handleLinkControlPoints(
-          BOUNDS_POINT_IDS.TOP_LEFT,
-          boundingCurves,
-          setBoundingCurves,
+          boundsApi,
           config,
+          BOUNDS_POINT_IDS.TOP_LEFT,
+          setBoundingCurves,
           setConfig
         )}
         onMirrorControlPoints={handleMirrorControlPoint(
-          BOUNDS_POINT_IDS.TOP_LEFT,
           config,
+          BOUNDS_POINT_IDS.TOP_LEFT,
           setConfig
         )}
         {...corners[BOUNDS_POINT_IDS.TOP_LEFT]}
@@ -84,13 +83,13 @@ const BoundsEditor = ({
         controlNodesAreMirrored={config[BOUNDS_POINT_IDS.TOP_RIGHT].isMirrored}
         onNodePositionChange={onNodePositionChange}
         onZeroControlPoints={handleZeroControlPoints(
+          boundsApi,
           BOUNDS_POINT_IDS.TOP_RIGHT,
-          boundingCurves,
           setBoundingCurves
         )}
         onLinkControlPoints={handleLinkControlPoints(
+          boundsApi,
           BOUNDS_POINT_IDS.TOP_RIGHT,
-          boundingCurves,
           setBoundingCurves,
           config,
           setConfig
@@ -110,20 +109,19 @@ const BoundsEditor = ({
         }
         onNodePositionChange={onNodePositionChange}
         onZeroControlPoints={handleZeroControlPoints(
+          boundsApi,
           BOUNDS_POINT_IDS.BOTTOM_LEFT,
-          boundingCurves,
           setBoundingCurves
         )}
         onLinkControlPoints={handleLinkControlPoints(
+          boundsApi,
           BOUNDS_POINT_IDS.BOTTOM_LEFT,
-          boundingCurves,
           setBoundingCurves,
-          config,
           setConfig
         )}
         onMirrorControlPoints={handleMirrorControlPoint(
+          boundsApi,
           BOUNDS_POINT_IDS.BOTTOM_LEFT,
-          config,
           setConfig
         )}
         {...corners[BOUNDS_POINT_IDS.BOTTOM_LEFT]}
@@ -136,15 +134,14 @@ const BoundsEditor = ({
         }
         onNodePositionChange={onNodePositionChange}
         onZeroControlPoints={handleZeroControlPoints(
+          boundsApi,
           BOUNDS_POINT_IDS.BOTTOM_RIGHT,
-          boundingCurves,
           setBoundingCurves
         )}
         onLinkControlPoints={handleLinkControlPoints(
+          boundsApi,
           BOUNDS_POINT_IDS.BOTTOM_RIGHT,
-          boundingCurves,
           setBoundingCurves,
-          config,
           setConfig
         )}
         onMirrorControlPoints={handleMirrorControlPoint(
