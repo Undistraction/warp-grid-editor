@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDebounce } from 'use-debounce'
+import getCoonsPatch from '../../../src/'
 import { INTERPOLATION_STRATEGY_ID } from '../../../src/const'
-import getCoonsPatch from '../../../src/getCoonsPatch'
 import { BOUNDS_POINT_IDS } from '../const'
 import useObserveClientSize from '../hooks/useObserveClientSize'
 import {

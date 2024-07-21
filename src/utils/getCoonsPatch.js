@@ -1,15 +1,15 @@
-import { INTERPOLATION_STRATEGY_ID } from './const'
+import { INTERPOLATION_STRATEGY_ID } from '../const'
 import {
   interpolatePointOnCurveEvenlySpaced,
   interpolatePointOnCurveLinear,
-} from './utils/interpolate'
+} from './interpolate'
 import {
   getCurvesOnSurfaceLeftToRight,
   getCurvesOnSurfaceTopToBottom,
   getGridIntersections,
   getPointOnSurface,
-} from './utils/surface'
-import { isArray, isInt, isNil, isPlainObj } from './utils/types'
+} from './surface'
+import { isArray, isInt, isNil, isPlainObj } from './types'
 
 // -----------------------------------------------------------------------------
 // Utils

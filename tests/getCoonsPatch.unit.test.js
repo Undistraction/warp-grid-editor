@@ -1,4 +1,4 @@
-import getCoonsPatch from '../src/getCoonsPatch'
+import getCoonsPatch from '../src/'
 import fixture3X3Grid from './fixtures/patch3x3Grid'
 import fixtureVariantColumnsAndRows from './fixtures/patchVariantColumnsAndRows'
 // -----------------------------------------------------------------------------

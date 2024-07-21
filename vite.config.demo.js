@@ -16,5 +16,6 @@ export default defineConfig(() => {
         plugins: [tailwindcss()],
       },
     },
+    root: './demo',
   }
 })
