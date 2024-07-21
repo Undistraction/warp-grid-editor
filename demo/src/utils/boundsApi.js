@@ -69,7 +69,7 @@ const getLinkedControlPointPosition = (
   linkedControlPointName,
   config
 ) => {
-  const { isLinked, isMirrored } = config[cornerId]
+  const { isLinked, isMirrored } = config.bounds[cornerId]
 
   // If the corner points are linked
   if (isLinked) {

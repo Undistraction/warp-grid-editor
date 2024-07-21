@@ -1,4 +1,4 @@
-import { INTERPOLATION_STRATEGY } from './const'
+import { INTERPOLATION_STRATEGY_ID } from './const'
 import {
   interpolatePointOnCurveEvenlySpaced,
   interpolatePointOnCurveLinear,
@@ -10,14 +10,6 @@ import {
   getPointOnSurface,
 } from './utils/surface'
 import { isArray, isInt, isNil, isPlainObj } from './utils/types'
-
-// -----------------------------------------------------------------------------
-// Const
-// -----------------------------------------------------------------------------
-
-// See https://gre.github.io/bezier-easing-editor/example/
-// const easeX = BezierEasing(0, 0, 1, 1)
-// const easeY = BezierEasing(0, 0, 1, 1)
 
 // -----------------------------------------------------------------------------
 // Utils
@@ -151,7 +143,7 @@ const getCoonsPatch = (boundingCurves, grid) => {
   // Choose the function to use for interpolating the location of a point on a
   // curve.
   const interpolatePointOnCurve =
-    grid.interpolationStrategy === INTERPOLATION_STRATEGY.LINEAR
+    grid.interpolationStrategy === INTERPOLATION_STRATEGY_ID.LINEAR
       ? interpolatePointOnCurveLinear
       : // Default to even
         interpolatePointOnCurveEvenlySpaced
@@ -165,23 +157,31 @@ const getCoonsPatch = (boundingCurves, grid) => {
     )
   }
 
-  const getCurves = () => ({
-    xAxis: getCurvesOnSurfaceTopToBottom(
-      boundingCurves,
-      columns,
-      rows,
-      interpolatePointOnCurve
-    ),
-    yAxis: getCurvesOnSurfaceLeftToRight(
-      boundingCurves,
-      columns,
-      rows,
-      interpolatePointOnCurve
-    ),
-  })
+  const getCurves = () => {
+    return {
+      xAxis: getCurvesOnSurfaceTopToBottom(
+        boundingCurves,
+        columns,
+        rows,
+        interpolatePointOnCurve
+      ),
+      yAxis: getCurvesOnSurfaceLeftToRight(
+        boundingCurves,
+        columns,
+        rows,
+        interpolatePointOnCurve
+      ),
+    }
+  }
 
-  const getIntersections = () =>
-    getGridIntersections(boundingCurves, columns, rows, interpolatePointOnCurve)
+  const getIntersections = () => {
+    return getGridIntersections(
+      boundingCurves,
+      columns,
+      rows,
+      interpolatePointOnCurve
+    )
+  }
 
   // Get four curves that describe the bounds of the grid-square with the
   // supplied grid coordinates

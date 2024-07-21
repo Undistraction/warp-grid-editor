@@ -3,6 +3,7 @@
 // -----------------------------------------------------------------------------
 
 import { COORDINATE } from '../const'
+import { roundTo10 } from './math'
 
 const DEFAULT_PRECISION = 15
 
@@ -96,7 +97,11 @@ export const interpolatePointOnCurveEvenlySpaced = (
   // accuracy at cost of performance
   { precision = DEFAULT_PRECISION } = {}
 ) => {
-  validateRatio(ratio)
+  // Round the ratio to 10 decimal places to avoid rounding issues where the
+  // number is fractionally over 1 or below 0
+  const ratioRounded = roundTo10(ratio)
+
+  validateRatio(ratioRounded)
 
   // Approximate the curve with a high number of points
   const pointsApproximate = getApproximatePointsOnCurve(curve, precision)
@@ -105,7 +110,7 @@ export const interpolatePointOnCurveEvenlySpaced = (
   const cumulativeLengths = getCumulativeLengths(pointsApproximate)
 
   const totalLength = cumulativeLengths[cumulativeLengths.length - 1]
-  const targetLength = ratio * totalLength
+  const targetLength = ratioRounded * totalLength
 
   // Interpolate new point based on the cumulative arc length
   return findClosestPointOnCurve(
@@ -117,11 +122,14 @@ export const interpolatePointOnCurveEvenlySpaced = (
 }
 
 export const interpolatePointOnCurveLinear = (ratio, curve) => {
-  validateRatio(ratio)
+  // Round the ratio to 10 decimal places to avoid rounding issues where the
+  // number is fractionally over 1 or below 0
+  const ratioRounded = roundTo10(ratio)
+  validateRatio(ratioRounded)
 
   return {
-    x: interpolateDimensionLinear(COORDINATE.X, ratio, curve),
-    y: interpolateDimensionLinear(COORDINATE.Y, ratio, curve),
+    x: interpolateDimensionLinear(COORDINATE.X, ratioRounded, curve),
+    y: interpolateDimensionLinear(COORDINATE.Y, ratioRounded, curve),
     ratio,
   }
 }

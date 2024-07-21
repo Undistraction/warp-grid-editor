@@ -200,12 +200,13 @@ describe(`getCoonsPatch`, () => {
           it(`returns point at supplied coordinates`, () => {
             const args = [0.5, 0.25]
             const point = api.getPoint(...args)
+
             expect(point).toEqual(fixture.api.getPoint(...args))
           })
         })
 
         describe(`getCurves`, () => {
-          it(`returns point at supplied coordinates`, () => {
+          it(`returns curves along x and y axes`, () => {
             const curves = api.getCurves()
             expect(curves).toEqual(fixture.api.getCurves())
           })

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDebounce } from 'use-debounce'
-import { INTERPOLATION_STRATEGY } from '../../../src/const'
+import { INTERPOLATION_STRATEGY_ID } from '../../../src/const'
 import getCoonsPatch from '../../../src/getCoonsPatch'
 import { BOUNDS_POINT_IDS } from '../const'
 import useObserveClientSize from '../hooks/useObserveClientSize'
@@ -20,20 +20,25 @@ import Sidebar from './Sidebar'
 // -----------------------------------------------------------------------------
 
 const GRID_DEFAULT = {
-  // columns: 25,
-  // rows: 25,
-  columns: [5, 1, 5, 4, 5, 1, 5, 1, 5],
-  rows: [5, 1, 5, 3, 5, 1, 10],
-  interpolationStrategy: INTERPOLATION_STRATEGY.EVEN,
+  columns: 25,
+  rows: 25,
+  // columns: [5, 1, 5, 4, 5, 1, 5, 1, 5],
+  // rows: [5, 1, 5, 3, 5, 1, 10],
+  interpolationStrategy: INTERPOLATION_STRATEGY_ID.EVEN,
 }
 
 const SURFACE_DEFAULT = { x: 0, y: 0, gridSquare: {} }
 
 const CONFIG_DEFAULT = {
-  [BOUNDS_POINT_IDS.TOP_LEFT]: { isLinked: false, isMirrored: false },
-  [BOUNDS_POINT_IDS.TOP_RIGHT]: { isLinked: false, isMirrored: false },
-  [BOUNDS_POINT_IDS.BOTTOM_LEFT]: { isLinked: false, isMirrored: false },
-  [BOUNDS_POINT_IDS.BOTTOM_RIGHT]: { isLinked: false, isMirrored: false },
+  grid: {
+    shouldUseComplexColumnsRows: false,
+  },
+  bounds: {
+    [BOUNDS_POINT_IDS.TOP_LEFT]: { isLinked: false, isMirrored: false },
+    [BOUNDS_POINT_IDS.TOP_RIGHT]: { isLinked: false, isMirrored: false },
+    [BOUNDS_POINT_IDS.BOTTOM_LEFT]: { isLinked: false, isMirrored: false },
+    [BOUNDS_POINT_IDS.BOTTOM_RIGHT]: { isLinked: false, isMirrored: false },
+  },
 }
 
 // -----------------------------------------------------------------------------

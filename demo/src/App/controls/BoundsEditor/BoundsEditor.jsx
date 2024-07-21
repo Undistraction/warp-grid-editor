@@ -16,16 +16,16 @@ const handleLinkControlPoints =
     }
     setConfig({
       ...config,
-      [cornerNodeId]: { ...config[cornerNodeId], isLinked },
+      bounds: {
+        ...config.bounds,
+        [cornerNodeId]: { ...config.bounds[cornerNodeId], isLinked },
+      },
     })
   }
 
 const handleZeroControlPoints =
-  (boundsApi, cornerNodeId, boundingCurves, setBoundingCurves) => () => {
-    const updatedBoundingCurves = boundsApi.zeroControlPoints(
-      boundingCurves,
-      cornerNodeId
-    )
+  (boundsApi, cornerNodeId, setBoundingCurves) => () => {
+    const updatedBoundingCurves = boundsApi.zeroControlPoints(cornerNodeId)
     setBoundingCurves(updatedBoundingCurves)
   }
 
@@ -33,7 +33,10 @@ const handleMirrorControlPoint =
   (config, cornerNodeId, setConfig) => (isMirrored) => {
     setConfig({
       ...config,
-      [cornerNodeId]: { ...config[cornerNodeId], isMirrored },
+      bounds: {
+        ...config.bounds,
+        [cornerNodeId]: { ...config.bounds[cornerNodeId], isMirrored },
+      },
     })
   }
 
@@ -55,8 +58,12 @@ const BoundsEditor = ({
     <div className="flex flex-col divide-y divide-black border border-black">
       <NodeEditor
         title="Top Left"
-        controlNodesAreLinked={config[BOUNDS_POINT_IDS.TOP_LEFT].isLinked}
-        controlNodesAreMirrored={config[BOUNDS_POINT_IDS.TOP_LEFT].isMirrored}
+        controlNodesAreLinked={
+          config.bounds[BOUNDS_POINT_IDS.TOP_LEFT].isLinked
+        }
+        controlNodesAreMirrored={
+          config.bounds[BOUNDS_POINT_IDS.TOP_LEFT].isMirrored
+        }
         onNodePositionChange={onNodePositionChange}
         onZeroControlPoints={handleZeroControlPoints(
           boundsApi,
@@ -79,8 +86,12 @@ const BoundsEditor = ({
       />
       <NodeEditor
         title="Top right"
-        controlNodesAreLinked={config[BOUNDS_POINT_IDS.TOP_RIGHT].isLinked}
-        controlNodesAreMirrored={config[BOUNDS_POINT_IDS.TOP_RIGHT].isMirrored}
+        controlNodesAreLinked={
+          config.bounds[BOUNDS_POINT_IDS.TOP_RIGHT].isLinked
+        }
+        controlNodesAreMirrored={
+          config.bounds[BOUNDS_POINT_IDS.TOP_RIGHT].isMirrored
+        }
         onNodePositionChange={onNodePositionChange}
         onZeroControlPoints={handleZeroControlPoints(
           boundsApi,
@@ -103,9 +114,11 @@ const BoundsEditor = ({
       />
       <NodeEditor
         title="Bottom left"
-        controlNodesAreLinked={config[BOUNDS_POINT_IDS.BOTTOM_LEFT].isLinked}
+        controlNodesAreLinked={
+          config.bounds[BOUNDS_POINT_IDS.BOTTOM_LEFT].isLinked
+        }
         controlNodesAreMirrored={
-          config[BOUNDS_POINT_IDS.BOTTOM_LEFT].isMirrored
+          config.bounds[BOUNDS_POINT_IDS.BOTTOM_LEFT].isMirrored
         }
         onNodePositionChange={onNodePositionChange}
         onZeroControlPoints={handleZeroControlPoints(
@@ -128,9 +141,11 @@ const BoundsEditor = ({
       />
       <NodeEditor
         title="Bottom right"
-        controlNodesAreLinked={config[BOUNDS_POINT_IDS.BOTTOM_RIGHT].isLinked}
+        controlNodesAreLinked={
+          config.bounds[BOUNDS_POINT_IDS.BOTTOM_RIGHT].isLinked
+        }
         controlNodesAreMirrored={
-          config[BOUNDS_POINT_IDS.BOTTOM_RIGHT].isMirrored
+          config.bounds[BOUNDS_POINT_IDS.BOTTOM_RIGHT].isMirrored
         }
         onNodePositionChange={onNodePositionChange}
         onZeroControlPoints={handleZeroControlPoints(

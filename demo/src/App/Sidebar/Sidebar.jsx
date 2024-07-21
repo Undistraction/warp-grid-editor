@@ -1,8 +1,8 @@
 import React from 'react'
-import { INTERPOLATION_STRATEGY } from '../../../../src/const'
 import { getBoundsApi } from '../../utils/boundsApi'
 import BoundsEditor from '../controls/BoundsEditor'
 import Button from '../controls/Button'
+import GridEditor from '../controls/GridEditor'
 import SettingsLoader from '../controls/SettingsLoader'
 import SettingsSaver from '../controls/SettingsSaver'
 import SteppedInput from '../controls/SteppedInput'
@@ -12,20 +12,6 @@ import SidebarGroup from './SidebarGroup'
 // -----------------------------------------------------------------------------
 // Const
 // -----------------------------------------------------------------------------
-
-const COLUMNS_VALUES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 25, 50]
-const ROWS_VALUES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 25, 50]
-
-const INTERPOLATION_STRATEGIES = [
-  {
-    label: 'Even',
-    value: INTERPOLATION_STRATEGY.EVEN,
-  },
-  {
-    label: 'Linear',
-    value: INTERPOLATION_STRATEGY.LINEAR,
-  },
-]
 
 // -----------------------------------------------------------------------------
 // Utils
@@ -87,41 +73,15 @@ const Sidebar = ({
           }
         />
       </SidebarGroup>
-      <SidebarGroup title="Grid">
-        <div className="flex [&>*]:basis-1/2">
-          <SteppedInput
-            label="Columns"
-            value={grid.columns}
-            options={COLUMNS_VALUES}
-            onChange={(columns) => {
-              setGrid({
-                ...grid,
-                columns: parseInt(columns),
-              })
-            }}
-          />
-          <SteppedInput
-            label="Rows"
-            value={grid.rows}
-            options={ROWS_VALUES}
-            onChange={(rows) => {
-              setGrid({
-                ...grid,
-                rows: parseInt(rows),
-              })
-            }}
-          />
-        </div>
-        <SteppedInput
-          label="Interpolation strategy"
-          value={grid.interpolationStrategy}
-          options={INTERPOLATION_STRATEGIES}
-          onChange={(interpolationStrategy) => {
-            setGrid({
-              ...grid,
-              interpolationStrategy,
-            })
-          }}
+      <SidebarGroup
+        title="Grid"
+        hint="Switch to 'Advanced' mode to input a comma deliniated list of column or row ratios. Values will be totalled, and each row or column will act as a ratio of that total."
+      >
+        <GridEditor
+          grid={grid}
+          setGrid={setGrid}
+          config={config}
+          setConfig={setConfig}
         />
       </SidebarGroup>
       <SidebarGroup title="Nodes">

@@ -72,14 +72,14 @@ export const getCurvesOnSurfaceLeftToRight = (
   const curves = []
   let rowsTotalRatio = 0
 
-  for (var rowIdx = 0; rowIdx <= rowsTotalCount; rowIdx++) {
+  for (let rowIdx = 0; rowIdx <= rowsTotalCount; rowIdx++) {
     const curveSections = []
     const rowValue = rows[rowIdx]
     const rowRatio = rowValue / rowsTotalValue
 
     let columnsTotalRatio = 0
 
-    for (var columnIdx = 0; columnIdx < columnsTotalCount; columnIdx++) {
+    for (let columnIdx = 0; columnIdx < columnsTotalCount; columnIdx++) {
       const columnValue = columns[columnIdx]
       const columnRatio = columnValue / columnsTotalValue
       const columnEndRatio = columnsTotalRatio + columnRatio
@@ -145,14 +145,14 @@ export const getCurvesOnSurfaceTopToBottom = (
   const curves = []
   let columnsTotalRatio = 0
 
-  for (var columnIdx = 0; columnIdx <= columnsTotalCount; columnIdx++) {
+  for (let columnIdx = 0; columnIdx <= columnsTotalCount; columnIdx++) {
     const curveSections = []
     const columnValue = columns[columnIdx]
     const columnRatio = columnValue / columnsTotalValue
 
     let rowsTotalRatio = 0
 
-    for (var rowIdx = 0; rowIdx < rowsTotalCount; rowIdx++) {
+    for (let rowIdx = 0; rowIdx < rowsTotalCount; rowIdx++) {
       const rowValue = rows[rowIdx]
       const rowRatio = rowValue / rowsTotalValue
       const rowEndRatio = rowsTotalRatio + rowRatio
@@ -170,7 +170,6 @@ export const getCurvesOnSurfaceTopToBottom = (
         rowEndRatio,
         interpolatePointOnCurve
       )
-
       const midPoint1 = getPointOnSurface(
         boundingCurves,
         columnsTotalRatio,
