@@ -139,21 +139,16 @@ describe(`getCoonsPatch`, () => {
   describe(`with valid params returns patch`, () => {
     const patch = getCoonsPatch(boundsValid, gridWithNumericColumns)
 
-    describe('data', () => {
-      const { data } = patch
+    describe('config', () => {
+      const { config } = patch
 
       it(`with original boundingCurves`, () => {
-        expect(data.boundingCurves).toEqual(boundsValid)
+        expect(config.boundingCurves).toEqual(boundsValid)
       })
 
       it(`with arrays of column and row values`, () => {
-        expect(data.columns).toEqual(fixture.data.columns)
-        expect(data.rows).toEqual(fixture.data.rows)
-      })
-
-      it(`with curvesXAxis and curvesYAxis arrays which each contains a separate curve for each grid section along that curve`, () => {
-        expect(data.curvesXAxis).toEqual(fixture.data.curvesXAxis)
-        expect(data.curvesYAxis).toEqual(fixture.data.curvesYAxis)
+        expect(config.columns).toEqual(fixture.config.columns)
+        expect(config.rows).toEqual(fixture.config.rows)
       })
     })
 
@@ -169,17 +164,26 @@ describe(`getCoonsPatch`, () => {
           )
         })
       })
+
       describe(`getIntersections`, () => {
         it(`returns all intersections between curves`, () => {
           const intersectons = api.getIntersections()
           expect(intersectons).toEqual(fixture.api.getIntersections())
         })
       })
+
       describe(`getPoint`, () => {
         it(`returns point at supplied coordinates`, () => {
           const args = [0.5, 0.25]
           const point = api.getPoint(...args)
           expect(point).toEqual(fixture.api.getPoint(...args))
+        })
+      })
+
+      describe(`getCurves`, () => {
+        it(`returns point at supplied coordinates`, () => {
+          const curves = api.getCurves()
+          expect(curves).toEqual(fixture.api.getCurves())
         })
       })
     })

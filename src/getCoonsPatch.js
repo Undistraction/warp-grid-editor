@@ -148,41 +148,13 @@ const getCoonsPatch = (boundingCurves, grid) => {
   // with a uniform value for each item.
   const rows = isArray(grid.rows) ? grid.rows : buildStepSpacing(grid.rows)
 
+  // Choose the function to use for interpolating the location of a point on a
+  // curve.
   const interpolatePointOnCurve =
     grid.interpolationStrategy === INTERPOLATION_STRATEGY.LINEAR
       ? interpolatePointOnCurveLinear
       : // Default to even
         interpolatePointOnCurveEvenlySpaced
-
-  const curvesYAxis = getCurvesOnSurfaceLeftToRight(
-    boundingCurves,
-    columns,
-    rows,
-    interpolatePointOnCurve
-  )
-
-  const curvesXAxis = getCurvesOnSurfaceTopToBottom(
-    boundingCurves,
-    columns,
-    rows,
-    interpolatePointOnCurve
-  )
-
-  // Get four curves that describe the bounds of the grid-sqare with the
-  // supplied grid coordinates
-  const getGridSquareBounds = (x, y) => {
-    validateGetSquareArguments(x, y, columns, rows)
-
-    return {
-      top: curvesYAxis[y][x],
-      bottom: curvesYAxis[y + 1][x],
-      left: curvesXAxis[x][y],
-      right: curvesXAxis[x + 1][y],
-    }
-  }
-
-  const getIntersections = () =>
-    getGridIntersections(boundingCurves, columns, rows, interpolatePointOnCurve)
 
   const getPoint = (ratioX, ratioY) => {
     return getPointOnSurface(
@@ -193,18 +165,50 @@ const getCoonsPatch = (boundingCurves, grid) => {
     )
   }
 
-  return {
-    data: {
+  const getCurves = () => ({
+    xAxis: getCurvesOnSurfaceTopToBottom(
       boundingCurves,
       columns,
       rows,
-      curvesYAxis,
-      curvesXAxis,
+      interpolatePointOnCurve
+    ),
+    yAxis: getCurvesOnSurfaceLeftToRight(
+      boundingCurves,
+      columns,
+      rows,
+      interpolatePointOnCurve
+    ),
+  })
+
+  const getIntersections = () =>
+    getGridIntersections(boundingCurves, columns, rows, interpolatePointOnCurve)
+
+  // Get four curves that describe the bounds of the grid-square with the
+  // supplied grid coordinates
+  const getGridSquareBounds = (x, y) => {
+    validateGetSquareArguments(x, y, columns, rows)
+
+    const { xAxis, yAxis } = getCurves()
+
+    return {
+      top: yAxis[y][x],
+      bottom: yAxis[y + 1][x],
+      left: xAxis[x][y],
+      right: xAxis[x + 1][y],
+    }
+  }
+
+  return {
+    config: {
+      boundingCurves,
+      columns,
+      rows,
     },
     api: {
-      getGridSquareBounds,
-      getIntersections,
       getPoint,
+      getCurves,
+      getIntersections,
+      getGridSquareBounds,
     },
   }
 }
