@@ -178,12 +178,12 @@ describe(`getCoonsPatch`, () => {
       describe(`with an API`, () => {
         const { api } = patch
 
-        describe(`getGridSquareBounds`, () => {
+        describe(`getGridCellBounds`, () => {
           it(`provides bounds for the grid square at the supplied coordinates`, () => {
             const args = [2, 2]
-            const gridSquareBounds = api.getGridSquareBounds(...args)
+            const gridSquareBounds = api.getGridCellBounds(...args)
             expect(gridSquareBounds).toEqual(
-              fixture.api.getGridSquareBounds(...args)
+              fixture.api.getGridCellBounds(...args)
             )
           })
         })

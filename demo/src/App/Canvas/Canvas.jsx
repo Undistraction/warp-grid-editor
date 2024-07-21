@@ -34,7 +34,7 @@ const Canvas = ({
       })
 
       if (gridSquare && isInt(gridSquare.x) && isInt(gridSquare.y)) {
-        const gridSquareBounds = coonsPatch.api.getGridSquareBounds(
+        const gridSquareBounds = coonsPatch.api.getGridCellBounds(
           gridSquare.x,
           gridSquare.y
         )

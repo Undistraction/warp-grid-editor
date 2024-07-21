@@ -185,7 +185,7 @@ const getCoonsPatch = (boundingCurves, grid) => {
 
   // Get four curves that describe the bounds of the grid-square with the
   // supplied grid coordinates
-  const getGridSquareBounds = (x, y) => {
+  const getGridCellBounds = (x, y) => {
     validateGetSquareArguments(x, y, columns, rows)
 
     const { xAxis, yAxis } = getCurves()
@@ -208,7 +208,7 @@ const getCoonsPatch = (boundingCurves, grid) => {
       getPoint,
       getCurves,
       getIntersections,
-      getGridSquareBounds,
+      getGridCellBounds,
     },
   }
 }

@@ -1,6 +1,6 @@
 const fixtureVariantColumnsAndRows = {
   api: {
-    getGridSquareBounds: (columns, rows) => {
+    getGridCellBounds: (columns, rows) => {
       if (columns === 2 && rows === 2) {
         return {
           top: {
