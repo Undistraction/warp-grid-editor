@@ -1,5 +1,4 @@
 import React from 'react'
-import { INTERPOLATION_STRATEGY_ID } from '../../../../../src/const'
 import { isArray } from '../../../../../src/utils/types'
 import SteppedInput from '../SteppedInput'
 import Switch from '../Switch'
@@ -8,17 +7,6 @@ import TextInput from '../TextInput'
 // -----------------------------------------------------------------------------
 // Const
 // -----------------------------------------------------------------------------
-
-export const INTERPOLATION_STRATEGY_OPTIONS = [
-  {
-    label: 'Even',
-    value: INTERPOLATION_STRATEGY_ID.EVEN,
-  },
-  {
-    label: 'Linear',
-    value: INTERPOLATION_STRATEGY_ID.LINEAR,
-  },
-]
 
 const COLUMNS_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 25, 50]
 const ROWS_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 25, 50]
@@ -44,17 +32,6 @@ const convertListIntoInputString = (listOrNumber) => {
 const GridEditor = ({ grid, setGrid, config, setConfig }) => {
   return (
     <div className="flex flex-col space-y-3">
-      <SteppedInput
-        label="Interpolation strategy"
-        value={grid.interpolationStrategy}
-        options={INTERPOLATION_STRATEGY_OPTIONS}
-        onChange={(interpolationStrategy) => {
-          setGrid({
-            ...grid,
-            interpolationStrategy,
-          })
-        }}
-      />
       <Switch
         label="Advanced"
         isSelected={config.grid.shouldUseComplexColumnsRows}

@@ -2,13 +2,12 @@
 
 ### Must do
 
-1.  Deploy to vercel
-2.  Improve package publishing workflow
 3.  Separate demo to own repo
 4.  Fix random (not adhering to bounds)
 5.  Fix width and height for Shape SVG
-6.  Basic mobile styles
-7.  Add credit
+6.  Fix weird edge alignment issue
+7.  Basic mobile styles
+8.  Add credit
 
 ### Should do
 

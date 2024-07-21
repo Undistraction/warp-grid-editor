@@ -44,13 +44,18 @@ const Canvas = ({
   }, [coonsPatch, gridSquare, surface])
 
   return (
-    <canvas
-      id="canvas"
-      className="border border-black"
-      ref={ref}
-      width={width}
-      height={height}
-    ></canvas>
+    <div>
+      <canvas
+        id="canvas"
+        className="relative border border-black"
+        ref={ref}
+        width={width}
+        height={height}
+      />
+      <div className="absolute bottom-2 left-3 text-xs text-gray-400">
+        {width} x {height}
+      </div>
+    </div>
   )
 }
 
