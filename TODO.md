@@ -2,15 +2,12 @@
 
 ### Must do
 
-4.  Fix random (not adhering to bounds)
 5.  Fix weird edge alignment issue
 6.  Separate demo to own repo
 7.  Basic mobile styles
 
 ### Should do
 
-1.  Global zero/link/mirror
-2.  Don't render grid during drag (setting/toggle)
 3.  Improve saving mechanism. Better structure of saved data. Save and check version.
 
 ### Could do
@@ -21,6 +18,7 @@
 
 2.  Hide / show control points
 3.  Add back easing
+4.  Don't render grid during drag (setting/toggle)
 
 #### Add back easing
 
