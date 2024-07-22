@@ -124,6 +124,17 @@ const getCanvasApi = (context) => {
   }
 
   const drawGridCurve = (curve, { lineColor = 'black' }) => {
+    // if (curve.original) {
+    //   const { original } = curve
+    //   drawDot(original.startPoint, { color: `red`, size: 12 })
+    //   drawDot(original.endPoint, { color: `blue`, size: 12 })
+    //   drawDot(original.midPoint1, { color: `green`, size: 12 })
+    //   drawDot(original.midPoint2, { color: `orange`, size: 12 })
+
+    //   drawDot(curve.controlPoint1, { color: `purple`, size: 12 })
+    //   drawDot(curve.controlPoint2, { color: `yellow`, size: 12 })
+    // }
+
     drawCurve(curve, { color: lineColor })
   }
 

@@ -5,8 +5,8 @@ import Draggable from 'react-draggable'
 // Const
 // -----------------------------------------------------------------------------
 
-const WIDTH = 20
-const HEIGHT = 20
+const WIDTH = 24
+const HEIGHT = 24
 
 // -----------------------------------------------------------------------------
 // Exports
@@ -24,7 +24,7 @@ const CornerNode = ({ id, position, onDrag }) => {
       handle=".corner-handle"
     >
       <div
-        className="corner-handle group pointer-events-auto absolute -left-[10px] -top-[10px] cursor-move"
+        className="corner-handle group pointer-events-auto absolute -left-[12px] -top-[12px] cursor-move"
         ref={nodeRef}
         id={id}
       >

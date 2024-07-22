@@ -11,6 +11,12 @@ importers:
       bezier-easing:
         specifier: ^2.1.0
         version: 2.1.0
+      bezier-js:
+        specifier: ^6.1.4
+        version: 6.1.4
+      bezier.js:
+        specifier: ^0.0.0
+        version: 0.0.0
     devDependencies:
       '@commitlint/config-conventional':
         specifier: ^19.2.2
@@ -1020,6 +1026,12 @@ packages:
   bezier-easing@2.1.0:
     resolution: {integrity: sha512-gbIqZ/eslnUFC1tjEvtz0sgx+xTK20wDnYMIA27VA04R7w6xxXQPZDbibjA9DTWZRA2CXtwHykkVzlCaAJAZig==}
 
+  bezier-js@6.1.4:
+    resolution: {integrity: sha512-PA0FW9ZpcHbojUCMu28z9Vg/fNkwTj5YhusSAjHHDfHDGLxJ6YUKrAN2vk1fP2MMOxVw4Oko16FMlRGVBGqLKg==}
+
+  bezier.js@0.0.0:
+    resolution: {integrity: sha512-EKKWMujbzs2bpXLE+Ysrf8LgjInN72IvlvphG/aqHoBBuwzgOrdTFvvo7q8YSC+LKGDNJ4U3b8ToKx6BPJgcew==}
+
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
     engines: {node: '>=8'}
@@ -1166,6 +1178,10 @@ packages:
 
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
+
+  construct-style-sheets-polyfill@3.0.1:
+    resolution: {integrity: sha512-vyAiTcS3i29IxjzJ12K2MGUUBYgrF69p6fKD+8ZPRLFhwTtuaxXLpazl4Yw4FITsQXwUMrh8juI1bOHWYjzkwA==}
+    engines: {npm: '>=7'}
 
   conventional-changelog-angular@7.0.0:
     resolution: {integrity: sha512-ROjNchA9LgfNMTTFSIWPzebCwOGFdgkEq45EnvvrmSLvCtAw0HSmrCs7/ty+wAeYUZyNay0YMUNYFTRL72PkBQ==}
@@ -2530,6 +2546,9 @@ packages:
     resolution: {integrity: sha512-yBYjY9QX2hnRmZHAjG/f13MzmBzxzYgQhFrke06TTyKY5zSTEqkOeukBzIdVA3j3ulu8Qa3MbVFShV7T2RmGtQ==}
     engines: {node: '>= 0.4'}
 
+  omi@7.6.17:
+    resolution: {integrity: sha512-7WFWWp1+IjHogHVfsZuLFR2npQHLX/eR9kr+o/OwhIkSqkKqiwy+1daUYzgDM6fGxgrkiRve7VCe8ceYa43W0g==}
+
   once@1.4.0:
     resolution: {integrity: sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==}
 
@@ -2834,6 +2853,9 @@ packages:
   react@18.3.1:
     resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
     engines: {node: '>=0.10.0'}
+
+  reactive-signal@1.0.3:
+    resolution: {integrity: sha512-UlbIDgdkreGW0QFdrxCsVQNcPkiv+aOT4bWIF3inHb4jZlBdvRCZtgO9Ie5ayFxlnjetQg1QvRhg5PlGKSxZEA==}
 
   read-cache@1.0.0:
     resolution: {integrity: sha512-Owdv/Ft7IjOgm/i0xvNDZ1LrRANRfew4b2prF3OWMQLxLfu3bS8FVhCsrSCMK4lR56Y9ya+AThoTpDCTxCmpRA==}
@@ -3346,6 +3368,10 @@ packages:
 
   walker@1.0.8:
     resolution: {integrity: sha512-ts/8E8l5b7kY0vlWLewOkDXMmPdLcVV4GmOQLyxuSswIJsweeFZtAsMF7k1Nszz+TYBQrlYRmzOnr398y1JemQ==}
+
+  weakmap-polyfill@2.0.4:
+    resolution: {integrity: sha512-ZzxBf288iALJseijWelmECm/1x7ZwQn3sMYIkDr2VvZp7r6SEKuT8D0O9Wiq6L9Nl5mazrOMcmiZE/2NCenaxw==}
+    engines: {node: '>=8.10.0'}
 
   webidl-conversions@7.0.0:
     resolution: {integrity: sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==}
@@ -4532,6 +4558,12 @@ snapshots:
 
   bezier-easing@2.1.0: {}
 
+  bezier-js@6.1.4: {}
+
+  bezier.js@0.0.0:
+    dependencies:
+      omi: 7.6.17
+
   binary-extensions@2.3.0: {}
 
   brace-expansion@1.1.11:
@@ -4674,6 +4706,8 @@ snapshots:
       dot-prop: 5.3.0
 
   concat-map@0.0.1: {}
+
+  construct-style-sheets-polyfill@3.0.1: {}
 
   conventional-changelog-angular@7.0.0:
     dependencies:
@@ -6416,6 +6450,12 @@ snapshots:
       define-properties: 1.2.1
       es-object-atoms: 1.0.0
 
+  omi@7.6.17:
+    dependencies:
+      construct-style-sheets-polyfill: 3.0.1
+      reactive-signal: 1.0.3
+      weakmap-polyfill: 2.0.4
+
   once@1.4.0:
     dependencies:
       wrappy: 1.0.2
@@ -6638,6 +6678,8 @@ snapshots:
   react@18.3.1:
     dependencies:
       loose-envify: 1.4.0
+
+  reactive-signal@1.0.3: {}
 
   read-cache@1.0.0:
     dependencies:
@@ -7193,6 +7235,8 @@ snapshots:
   walker@1.0.8:
     dependencies:
       makeerror: 1.0.12
+
+  weakmap-polyfill@2.0.4: {}
 
   webidl-conversions@7.0.0: {}
 

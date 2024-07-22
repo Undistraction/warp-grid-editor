@@ -4,8 +4,8 @@ import {
   interpolatePointOnCurveLinear,
 } from './interpolate'
 import {
-  getCurvesOnSurfaceLeftToRight,
-  getCurvesOnSurfaceTopToBottom,
+  getCurvesOnXAxis,
+  getCurvesOnYAxis,
   getGridIntersections,
   getPointOnSurface,
 } from './surface'
@@ -159,13 +159,13 @@ const getCoonsPatch = (boundingCurves, grid) => {
 
   const getCurves = () => {
     return {
-      xAxis: getCurvesOnSurfaceTopToBottom(
+      xAxis: getCurvesOnXAxis(
         boundingCurves,
         columns,
         rows,
         interpolatePointOnCurve
       ),
-      yAxis: getCurvesOnSurfaceLeftToRight(
+      yAxis: getCurvesOnYAxis(
         boundingCurves,
         columns,
         rows,

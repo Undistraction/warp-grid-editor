@@ -9,6 +9,7 @@
 ### Should do
 
 3.  Improve saving mechanism. Better structure of saved data. Save and check version.
+4.  Switch drawing of control point stems to SVG
 
 ### Could do
 
