@@ -2,12 +2,10 @@
 
 ### Must do
 
-3.  Separate demo to own repo
 4.  Fix random (not adhering to bounds)
-5.  Fix width and height for Shape SVG
-6.  Fix weird edge alignment issue
+5.  Fix weird edge alignment issue
+6.  Separate demo to own repo
 7.  Basic mobile styles
-8.  Add credit
 
 ### Should do
 
@@ -31,6 +29,5 @@
 ```
 // const easeX = BezierEasing(0, 0, 1, 1)
 // const easeY = BezierEasing(0, 0, 1, 1)
-
 const easedRatioX = easeX(ratioX)
 ```

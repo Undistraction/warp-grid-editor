@@ -2,6 +2,14 @@ import React from 'react'
 import Draggable from 'react-draggable'
 
 // -----------------------------------------------------------------------------
+// Const
+// -----------------------------------------------------------------------------
+
+const DEFAULT_CANVAS_SIZE = { width: 0, height: 0, x: 0, y: 0 }
+
+const BORDER_WIDTH = 2
+
+// -----------------------------------------------------------------------------
 // Utils
 // -----------------------------------------------------------------------------
 
@@ -19,13 +27,8 @@ const reverseCurve = ({
 
 const getPathFromCurve = (
   origin,
-  { startPoint, endPoint, controlPoint1, controlPoint2 }
+  { endPoint, controlPoint1, controlPoint2 }
 ) => {
-  const startPointOffset = {
-    x: startPoint.x - origin.x,
-    y: startPoint.y - origin.y,
-  }
-
   const endPointOffset = {
     x: endPoint.x - origin.x,
     y: endPoint.y - origin.y,
@@ -64,6 +67,24 @@ const renderPath = ({ top, left, bottom, right }) => {
 
 const Shape = ({ boundingCurves, onDrag }) => {
   const nodeRef = React.useRef(null)
+  const svgRef = React.useRef(null)
+  const [{ width, height, x, y }, setCanvasBounds] =
+    React.useState(DEFAULT_CANVAS_SIZE)
+
+  React.useLayoutEffect(() => {
+    const svgElement = svgRef.current
+    if (svgElement) {
+      const boundingBox = svgElement.getBBox({ stroke: true })
+      const newWidth = boundingBox.width
+      const newHeight = boundingBox.height
+      setCanvasBounds({
+        width: newWidth + BORDER_WIDTH,
+        height: newHeight + BORDER_WIDTH,
+        x: boundingBox.x,
+        y: boundingBox.y,
+      })
+    }
+  }, [svgRef.current, boundingCurves])
 
   return (
     <Draggable
@@ -75,21 +96,25 @@ const Shape = ({ boundingCurves, onDrag }) => {
           x: dragElement.x,
           y: dragElement.y,
         }
-
         onDrag(newPosition)
       }}
       handle=".shape-handle"
     >
       <div
         ref={nodeRef}
-        className="shape-handle absolute left-0 top-0 cursor-move"
+        style={{
+          left: x,
+          top: y,
+        }}
+        className={`shape-handle absolute cursor-move outline outline-transparent hover:outline-gray-200`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           overflow="visible"
-          viewBox={`0 0 300 300`}
-          width={`100%`}
-          height={`100%`}
+          viewBox={`${x} ${y} ${width} ${height}`}
+          width={width}
+          height={height}
+          ref={svgRef}
         >
           {renderPath(boundingCurves)}
         </svg>
