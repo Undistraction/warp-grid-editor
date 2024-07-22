@@ -2,7 +2,7 @@ import React from 'react'
 import { useDebounce } from 'use-debounce'
 import getCoonsPatch from '../../../src/'
 import { INTERPOLATION_STRATEGY_ID } from '../../../src/const'
-import { BOUNDS_POINT_IDS } from '../const'
+import { BOUNDS_POINT_IDS, CORNER_POINTS } from '../const'
 import useObserveClientSize from '../hooks/useObserveClientSize'
 import {
   clampGridSquareToGridDimensions,
@@ -30,16 +30,22 @@ const GRID_DEFAULT = {
 const SURFACE_DEFAULT = { x: 0, y: 0, gridSquare: {} }
 
 const CONFIG_DEFAULT = {
+  global: {
+    isLinked: true,
+    isMirrored: false,
+  },
   grid: {
     shouldUseComplexColumnsRows: false,
   },
   bounds: {
-    [BOUNDS_POINT_IDS.TOP_LEFT]: { isLinked: false, isMirrored: false },
-    [BOUNDS_POINT_IDS.TOP_RIGHT]: { isLinked: false, isMirrored: false },
-    [BOUNDS_POINT_IDS.BOTTOM_LEFT]: { isLinked: false, isMirrored: false },
-    [BOUNDS_POINT_IDS.BOTTOM_RIGHT]: { isLinked: false, isMirrored: false },
+    [BOUNDS_POINT_IDS.TOP_LEFT]: { isLinked: true, isMirrored: false },
+    [BOUNDS_POINT_IDS.TOP_RIGHT]: { isLinked: true, isMirrored: false },
+    [BOUNDS_POINT_IDS.BOTTOM_LEFT]: { isLinked: true, isMirrored: false },
+    [BOUNDS_POINT_IDS.BOTTOM_RIGHT]: { isLinked: true, isMirrored: false },
   },
 }
+
+const BORDER_WIDTHS = 2
 
 // -----------------------------------------------------------------------------
 // Utils
@@ -55,172 +61,131 @@ const handleNodePositionChange =
     setBoundingCurves(updatedBoundingCurves)
   }
 
-const handleShapeDrag = (boundingCurves, setBoundingCurves) => (position) => {
-  setBoundingCurves({
-    top: {
-      startPoint: {
-        x: position.x,
-        y: position.y,
+const handleShapeDrag =
+  (boundingCurves, setBoundingCurves, config) => (position) => {
+    const boundsApi = getBoundsApi(boundingCurves, config)
+    const newBoundingCurves = boundsApi.offset(position)
+    setBoundingCurves(newBoundingCurves)
+  }
+
+const handleLinkControlPoints =
+  (boundsApi, setBoundingCurves, config, setConfig) =>
+  (cornerNodeId) =>
+  (isLinked) => {
+    if (isLinked) {
+      const updatedBoundingCurves = boundsApi.expandControlPoints(cornerNodeId)
+      setBoundingCurves(updatedBoundingCurves)
+    }
+    setConfig({
+      ...config,
+      global: {
+        ...config.global,
+        // If any individual control points are unmirrored set global to false
+        isLinked: !isLinked ? false : config.global.isLinked,
       },
-      endPoint: {
-        x:
-          boundingCurves.top.endPoint.x -
-          boundingCurves.top.startPoint.x +
-          position.x,
-        y:
-          boundingCurves.top.endPoint.y -
-          boundingCurves.top.startPoint.y +
-          position.y,
+      bounds: {
+        ...config.bounds,
+        [cornerNodeId]: { ...config.bounds[cornerNodeId], isLinked },
       },
-      controlPoint1: {
-        x:
-          boundingCurves.top.controlPoint1.x -
-          boundingCurves.top.startPoint.x +
-          position.x,
-        y:
-          boundingCurves.top.controlPoint1.y -
-          boundingCurves.top.startPoint.y +
-          position.y,
+    })
+  }
+
+const handleZeroControlPoints =
+  (boundsApi, setBoundingCurves) => (cornerNodeId) => () => {
+    const updatedBoundingCurves = boundsApi.zeroControlPoints(cornerNodeId)
+    setBoundingCurves(updatedBoundingCurves)
+  }
+
+const handleMirrorControlPoints =
+  (config, setConfig) => (cornerNodeId) => (isMirrored) => {
+    setConfig({
+      ...config,
+      global: {
+        ...config.global,
+        // If any individual control points are unmirrored set global to false
+        isMirrored: !isMirrored ? false : config.global.isMirrored,
       },
-      controlPoint2: {
-        x:
-          boundingCurves.top.controlPoint2.x -
-          boundingCurves.top.startPoint.x +
-          position.x,
-        y:
-          boundingCurves.top.controlPoint2.y -
-          boundingCurves.top.startPoint.y +
-          position.y,
+      bounds: {
+        ...config.bounds,
+        [cornerNodeId]: { ...config.bounds[cornerNodeId], isMirrored },
       },
-    },
-    bottom: {
-      startPoint: {
-        x:
-          boundingCurves.bottom.startPoint.x -
-          boundingCurves.top.startPoint.x +
-          position.x,
-        y:
-          boundingCurves.bottom.startPoint.y -
-          boundingCurves.top.startPoint.y +
-          position.y,
+    })
+  }
+
+const handleZeroControlPointsGlobal =
+  (boundingCurves, setBoundingCurves) => () => {
+    const updatedBoundingCurves = CORNER_POINTS.reduce((acc, name) => {
+      const boundsApi = getBoundsApi(acc)
+      return boundsApi.zeroControlPoints(name)
+    }, boundingCurves)
+
+    setBoundingCurves(updatedBoundingCurves)
+  }
+
+const handleLinkControlPointsGlobal =
+  (boundingCurves, setBoundingCurves, config, setConfig) => (isLinked) => {
+    const updatedBoundingCurves = CORNER_POINTS.reduce((acc, cornerNodeId) => {
+      const boundsApi = getBoundsApi(acc)
+      return boundsApi.expandControlPoints(cornerNodeId)
+    }, boundingCurves)
+
+    setBoundingCurves(updatedBoundingCurves)
+
+    setConfig({
+      ...config,
+      global: {
+        ...config.global,
+        isLinked,
       },
-      endPoint: {
-        x:
-          boundingCurves.bottom.endPoint.x -
-          boundingCurves.top.startPoint.x +
-          position.x,
-        y:
-          boundingCurves.bottom.endPoint.y -
-          boundingCurves.top.startPoint.y +
-          position.y,
+      bounds: {
+        [BOUNDS_POINT_IDS.TOP_LEFT]: {
+          ...config.bounds[BOUNDS_POINT_IDS.TOP_LEFT],
+          isLinked,
+        },
+        [BOUNDS_POINT_IDS.TOP_RIGHT]: {
+          ...config.bounds[BOUNDS_POINT_IDS.TOP_RIGHT],
+          isLinked,
+        },
+        [BOUNDS_POINT_IDS.BOTTOM_LEFT]: {
+          ...config.bounds[BOUNDS_POINT_IDS.BOTTOM_LEFT],
+          isLinked,
+        },
+        [BOUNDS_POINT_IDS.BOTTOM_RIGHT]: {
+          ...config.bounds[BOUNDS_POINT_IDS.BOTTOM_RIGHT],
+          isLinked,
+        },
       },
-      controlPoint1: {
-        x:
-          boundingCurves.bottom.controlPoint1.x -
-          boundingCurves.top.startPoint.x +
-          position.x,
-        y:
-          boundingCurves.bottom.controlPoint1.y -
-          boundingCurves.top.startPoint.y +
-          position.y,
+    })
+  }
+
+const handleMirrorControlPointsGlobal =
+  (boundingCurves, setBoundingCurves, config, setConfig) => (isMirrored) => {
+    setConfig({
+      ...config,
+      global: {
+        ...config.global,
+        isMirrored,
       },
-      controlPoint2: {
-        x:
-          boundingCurves.bottom.controlPoint2.x -
-          boundingCurves.top.startPoint.x +
-          position.x,
-        y:
-          boundingCurves.bottom.controlPoint2.y -
-          boundingCurves.top.startPoint.y +
-          position.y,
+      bounds: {
+        [BOUNDS_POINT_IDS.TOP_LEFT]: {
+          ...config.bounds[BOUNDS_POINT_IDS.TOP_LEFT],
+          isMirrored,
+        },
+        [BOUNDS_POINT_IDS.TOP_RIGHT]: {
+          ...config.bounds[BOUNDS_POINT_IDS.TOP_RIGHT],
+          isMirrored,
+        },
+        [BOUNDS_POINT_IDS.BOTTOM_LEFT]: {
+          ...config.bounds[BOUNDS_POINT_IDS.BOTTOM_LEFT],
+          isMirrored,
+        },
+        [BOUNDS_POINT_IDS.BOTTOM_RIGHT]: {
+          ...config.bounds[BOUNDS_POINT_IDS.BOTTOM_RIGHT],
+          isMirrored,
+        },
       },
-    },
-    left: {
-      startPoint: {
-        x:
-          boundingCurves.left.startPoint.x -
-          boundingCurves.top.startPoint.x +
-          position.x,
-        y:
-          boundingCurves.left.startPoint.y -
-          boundingCurves.top.startPoint.y +
-          position.y,
-      },
-      endPoint: {
-        x:
-          boundingCurves.left.endPoint.x -
-          boundingCurves.top.startPoint.x +
-          position.x,
-        y:
-          boundingCurves.left.endPoint.y -
-          boundingCurves.top.startPoint.y +
-          position.y,
-      },
-      controlPoint1: {
-        x:
-          boundingCurves.left.controlPoint1.x -
-          boundingCurves.top.startPoint.x +
-          position.x,
-        y:
-          boundingCurves.left.controlPoint1.y -
-          boundingCurves.top.startPoint.y +
-          position.y,
-      },
-      controlPoint2: {
-        x:
-          boundingCurves.left.controlPoint2.x -
-          boundingCurves.top.startPoint.x +
-          position.x,
-        y:
-          boundingCurves.left.controlPoint2.y -
-          boundingCurves.top.startPoint.y +
-          position.y,
-      },
-    },
-    right: {
-      startPoint: {
-        x:
-          boundingCurves.right.startPoint.x -
-          boundingCurves.top.startPoint.x +
-          position.x,
-        y:
-          boundingCurves.right.startPoint.y -
-          boundingCurves.top.startPoint.y +
-          position.y,
-      },
-      endPoint: {
-        x:
-          boundingCurves.right.endPoint.x -
-          boundingCurves.top.startPoint.x +
-          position.x,
-        y:
-          boundingCurves.right.endPoint.y -
-          boundingCurves.top.startPoint.y +
-          position.y,
-      },
-      controlPoint1: {
-        x:
-          boundingCurves.right.controlPoint1.x -
-          boundingCurves.top.startPoint.x +
-          position.x,
-        y:
-          boundingCurves.right.controlPoint1.y -
-          boundingCurves.top.startPoint.y +
-          position.y,
-      },
-      controlPoint2: {
-        x:
-          boundingCurves.right.controlPoint2.x -
-          boundingCurves.top.startPoint.x +
-          position.x,
-        y:
-          boundingCurves.right.controlPoint2.y -
-          boundingCurves.top.startPoint.y +
-          position.y,
-      },
-    },
-  })
-}
+    })
+  }
 
 // -----------------------------------------------------------------------------
 // Exports
@@ -240,12 +205,16 @@ const App = () => {
 
   useObserveClientSize(displayRef, setCanvasSize, {
     // left + right border widths
-    width: -2,
+    width: -BORDER_WIDTHS,
     // top + bottom border widths
-    height: -2,
+    height: -BORDER_WIDTHS,
   })
 
   React.useLayoutEffect(() => {
+    if (!boundingCurves && canvas && canvasSize.width > 0) {
+      setBoundingCurves(getRandomBoundingCurves(canvas))
+    }
+
     if (boundingCurvesDebounced) {
       const coonsPatch = getCoonsPatch(boundingCurvesDebounced, grid)
       setCoonsPatch(coonsPatch)
@@ -259,6 +228,8 @@ const App = () => {
         : surface.gridSquare,
     [surface, grid]
   )
+
+  const boundsApi = getBoundsApi(boundingCurves)
 
   return (
     <div className="relative flex h-full w-screen flex-row space-x-5 p-5">
@@ -280,7 +251,11 @@ const App = () => {
           <React.Fragment>
             <Shape
               boundingCurves={boundingCurves}
-              onDrag={handleShapeDrag(boundingCurves, setBoundingCurves)}
+              onDrag={handleShapeDrag(
+                boundingCurves,
+                setBoundingCurves,
+                config
+              )}
             />
             <ControlNodes
               boundingCurves={boundingCurves}
@@ -303,6 +278,38 @@ const App = () => {
           config={config}
           setConfig={setConfig}
           setGrid={setGrid}
+          savedBounds={savedBounds}
+          surface={surface}
+          setSurface={setSurface}
+          onLinkControlPoints={handleLinkControlPoints(
+            boundsApi,
+            setBoundingCurves,
+            config,
+            setConfig
+          )}
+          onZeroControlPoints={handleZeroControlPoints(
+            boundsApi,
+            setBoundingCurves
+          )}
+          onMirrorControlPoints={handleMirrorControlPoints(config, setConfig)}
+          onLinkControlPointsGlobal={handleLinkControlPointsGlobal(
+            boundingCurves,
+            setBoundingCurves,
+            config,
+            setConfig
+          )}
+          onZeroControlPointsGlobal={handleZeroControlPointsGlobal(
+            boundingCurves,
+            setBoundingCurves,
+            config,
+            setConfig
+          )}
+          onMirrorControlPointsGlobal={handleMirrorControlPointsGlobal(
+            boundingCurves,
+            setBoundingCurves,
+            config,
+            setConfig
+          )}
           onSave={(name) => {
             localStorageApi.save(name, { grid, boundingCurves })
             setSavedBounds({ ...localStorage })
@@ -317,9 +324,6 @@ const App = () => {
             setBoundingCurves,
             config
           )}
-          savedBounds={savedBounds}
-          surface={surface}
-          setSurface={setSurface}
         />
       </div>
     </div>

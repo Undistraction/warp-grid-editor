@@ -27,7 +27,7 @@ const getControlPoint = (
 // Exports
 // -----------------------------------------------------------------------------
 
-export const getRandomBounds = (
+export const getRandomRectangleBounds = (
   availableWidth,
   availableHeight,
   minDistanceFromEdge
@@ -48,6 +48,7 @@ export const getRandomBounds = (
     minDistanceFromEdge,
     availableHeight - height - minDistanceFromEdge
   )
+
   return { width, height, x, y }
 }
 

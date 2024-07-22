@@ -3,6 +3,7 @@ import { INTERPOLATION_STRATEGY_ID } from '../../../../src/const'
 import { getBoundsApi } from '../../utils/boundsApi'
 import BoundsEditor from '../controls/BoundsEditor'
 import Button from '../controls/Button'
+import ControlPointEditor from '../controls/ControlPointEditor/ControlPointEditor'
 import GridEditor from '../controls/GridEditor'
 import SettingsLoader from '../controls/SettingsLoader'
 import SettingsSaver from '../controls/SettingsSaver'
@@ -53,14 +54,20 @@ const Sidebar = ({
   getRandomBoundingCurves,
   setBoundingCurves,
   setGrid,
-  onSave,
-  onLoad,
   savedBounds,
   setSurface,
   boundingCurves,
   config,
   setConfig,
+  onSave,
+  onLoad,
   onNodePositionChange,
+  onLinkControlPoints,
+  onZeroControlPoints,
+  onMirrorControlPoints,
+  onZeroControlPointsGlobal,
+  onLinkControlPointsGlobal,
+  onMirrorControlPointsGlobal,
 }) => {
   const boundsApi = getBoundsApi(boundingCurves)
   const { corners } = boundsApi
@@ -77,7 +84,7 @@ const Sidebar = ({
       </header>
       <SidebarGroup title="Config">
         <SteppedInput
-          label="Interpolation strategy"
+          label="Interpolation type"
           value={grid.interpolationStrategy}
           options={INTERPOLATION_STRATEGY_OPTIONS}
           onChange={(interpolationStrategy) => {
@@ -106,6 +113,13 @@ const Sidebar = ({
             })
           }
         />
+        <ControlPointEditor
+          onZeroControlPoints={onZeroControlPointsGlobal}
+          onLinkControlPoints={onLinkControlPointsGlobal}
+          onMirrorControlPoints={onMirrorControlPointsGlobal}
+          controlNodesAreLinked={config.global.isLinked}
+          controlNodesAreMirrored={config.global.isMirrored}
+        />
         <BoundsEditor
           corners={corners}
           boundingCurves={boundingCurves}
@@ -113,6 +127,9 @@ const Sidebar = ({
           config={config}
           setConfig={setConfig}
           onNodePositionChange={onNodePositionChange}
+          onLinkControlPoints={onLinkControlPoints}
+          onZeroControlPoints={onZeroControlPoints}
+          onMirrorControlPoints={onMirrorControlPoints}
         />
       </SidebarGroup>
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import IconButton from '../IconButton'
+import ControlPointEditor from '../ControlPointEditor'
 import PositionInput from './PositionInput'
 
 // -----------------------------------------------------------------------------
@@ -49,27 +49,13 @@ const NodeEditor = ({
             onChange={onNodePositionChange(controlPoint2.id)}
           />
         </div>
-        <div className="flex flex-row items-start space-x-3 pl-3">
-          <IconButton
-            label="Ø"
-            onClick={onZeroControlPoints}
-          />
-          <IconButton
-            label="Link"
-            labelSelected="Unlink"
-            isSelectable
-            onClick={onLinkControlPoints}
-            isSelected={controlNodesAreLinked}
-          />
-          <IconButton
-            label="Mirror"
-            labelSelected="UnMirror"
-            isDisabled={!controlNodesAreLinked}
-            isSelectable
-            onClick={onMirrorControlPoints}
-            isSelected={controlNodesAreMirrored}
-          />
-        </div>
+        <ControlPointEditor
+          onZeroControlPoints={onZeroControlPoints}
+          onLinkControlPoints={onLinkControlPoints}
+          onMirrorControlPoints={onMirrorControlPoints}
+          controlNodesAreLinked={controlNodesAreLinked}
+          controlNodesAreMirrored={controlNodesAreMirrored}
+        />
       </div>
     </div>
   )

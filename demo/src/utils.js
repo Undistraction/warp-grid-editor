@@ -1,13 +1,14 @@
 import { isInt } from '../../src/utils/types'
+import { CORNER_POINTS } from './const'
+import { getBoundsApi } from './utils/boundsApi'
 import getCanvasApi from './utils/getCanvasApi'
 import { clampNumberBetween } from './utils/math'
-import { addRandomControlPointsToCurves, getRandomBounds } from './utils/random'
+import { getRandomRectangleBounds } from './utils/random'
 
 // -----------------------------------------------------------------------------
 // Const
 // -----------------------------------------------------------------------------
 
-const CONTROL_POINT_MIN_DISTANCE_FROM_POINT = 60
 const SHAPE_MIN_DISTANCE_FROM_EDGE = 100
 
 // -----------------------------------------------------------------------------
@@ -26,28 +27,32 @@ const getCornerPoints = (x, y, width, height) => {
   }
 }
 
-const getBoundingCurvesFromBounds = ({ x, y, width, height }) => {
+const getBoundingCurvesFromRectangularBounds = ({ x, y, width, height }) => {
   const corners = getCornerPoints(x, y, width, height)
-
-  const topLeftOffset = Math.random() * 500 - 250
-
-  corners.topLeft.x = corners.topLeft.x + topLeftOffset
 
   const boundingCurves = {
     top: {
       startPoint: corners.topLeft,
+      controlPoint1: corners.topLeft,
+      controlPoint2: corners.topRight,
       endPoint: corners.topRight,
     },
     right: {
       startPoint: corners.topRight,
+      controlPoint1: corners.topRight,
+      controlPoint2: corners.bottomRight,
       endPoint: corners.bottomRight,
     },
     bottom: {
       startPoint: corners.bottomLeft,
+      controlPoint1: corners.bottomLeft,
+      controlPoint2: corners.bottomRight,
       endPoint: corners.bottomRight,
     },
     left: {
       startPoint: corners.topLeft,
+      controlPoint1: corners.topLeft,
+      controlPoint2: corners.bottomLeft,
       endPoint: corners.bottomLeft,
     },
   }
@@ -64,20 +69,19 @@ export const getRandomBoundingCurves = (canvas) => {
   const canvasApi = getCanvasApi(canvasContext)
   canvasApi.clearCanvas(canvas)
 
-  const bounds = getRandomBounds(
+  const bounds = getRandomRectangleBounds(
     canvas.width,
     canvas.height,
     SHAPE_MIN_DISTANCE_FROM_EDGE
   )
 
-  const boundingCurves = getBoundingCurvesFromBounds(bounds)
+  const boundingCurves = getBoundingCurvesFromRectangularBounds(bounds)
 
-  const boundingCurvesWithControlPoints = addRandomControlPointsToCurves(
-    boundingCurves,
-    CONTROL_POINT_MIN_DISTANCE_FROM_POINT
-  )
-
-  return boundingCurvesWithControlPoints
+  // Loop through each corner and expand the control points
+  return CORNER_POINTS.reduce((acc, name) => {
+    const boundsApi = getBoundsApi(acc)
+    return boundsApi.expandControlPoints(name)
+  }, boundingCurves)
 }
 
 export const clampGridSquareToGridDimensions = (
