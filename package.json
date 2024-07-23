@@ -87,6 +87,7 @@
     "vite": "^5.3.3"
   },
   "dependencies": {
+    "coons-patch": "^1.0.0",
     "matrix-js": "^1.7.1"
   }
 }

@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      coons-patch:
+        specifier: ^1.0.0
+        version: 1.0.0
       matrix-js:
         specifier: ^1.7.1
         version: 1.7.1
@@ -1363,6 +1366,9 @@ packages:
 
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
+
+  coons-patch@1.0.0:
+    resolution: {integrity: sha512-cBKoHIK96kRKmkRi8k+G1jB2RhY5LEJ8lxVRiAFnXrXYSMEo+niXSvGPWHgZ5Z4g3Mr8s2NciP0OrUqIxKwjuQ==}
 
   core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
@@ -5632,6 +5638,10 @@ snapshots:
   convert-hrtime@5.0.0: {}
 
   convert-source-map@2.0.0: {}
+
+  coons-patch@1.0.0:
+    dependencies:
+      matrix-js: 1.7.1
 
   core-util-is@1.0.3: {}
 
