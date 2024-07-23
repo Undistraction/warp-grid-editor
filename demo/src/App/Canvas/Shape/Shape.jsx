@@ -79,27 +79,28 @@ const Shape = ({ boundingCurves, onDrag }) => {
     if (svgElement) {
       const boundingBox = svgElement.getBBox({ stroke: true })
 
-      const { left, right, top, bottom } =
-        boundsApi.getBoundsTranslatedOnOrigin()
+      const dimensions = boundsApi.getBoundsDimensionsSimple()
 
       const resolvedX =
-        boundingBox.x > left - CORNER_POINT_RADIUS
-          ? left - CORNER_POINT_RADIUS
+        boundingBox.x > -CORNER_POINT_RADIUS
+          ? -CORNER_POINT_RADIUS
           : boundingBox.x
 
       const resolvedY =
-        boundingBox.y > top - CORNER_POINT_RADIUS
-          ? top - CORNER_POINT_RADIUS
+        boundingBox.y > -CORNER_POINT_RADIUS
+          ? -CORNER_POINT_RADIUS
           : boundingBox.y
 
       const resolvedWidth =
-        boundingBox.width < right - boundingBox.x + CORNER_POINT_RADIUS
-          ? right - boundingBox.x + CORNER_POINT_RADIUS
+        boundingBox.width <
+        dimensions.width - boundingBox.x + CORNER_POINT_RADIUS
+          ? dimensions.width - boundingBox.x + CORNER_POINT_RADIUS
           : boundingBox.width
 
       const resolvedHeight =
-        boundingBox.height < bottom - boundingBox.y + CORNER_POINT_RADIUS
-          ? bottom - boundingBox.y + CORNER_POINT_RADIUS
+        boundingBox.height <
+        dimensions.height - boundingBox.y + CORNER_POINT_RADIUS
+          ? dimensions.height - boundingBox.y + CORNER_POINT_RADIUS
           : boundingBox.height
 
       const addedWidth = boundingBox.x - resolvedX

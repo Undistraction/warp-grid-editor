@@ -680,9 +680,7 @@ export const getBoundsApi = (boundingCurves, config) => {
     }
   }
 
-  const getBoundsTranslatedOnOrigin = () => {
-    const origin = boundingCurves.top.startPoint
-
+  const getBoundsTranslatedOnOrigin = (origin) => {
     const bounds = [
       boundingCurves.top,
       boundingCurves.left,
@@ -716,6 +714,17 @@ export const getBoundsApi = (boundingCurves, config) => {
     }
   }
 
+  // These are calculated corner to corner and don't take account of curves that
+  // might increase width past corners
+  const getBoundsDimensionsSimple = () => {
+    const bounds = getBoundsTranslatedOnOrigin(boundingCurves.top.startPoint)
+
+    return {
+      width: bounds.right - bounds.left,
+      height: bounds.bottom - bounds.top,
+    }
+  }
+
   return {
     expandControlPoints,
     zeroControlPoints,
@@ -723,5 +732,6 @@ export const getBoundsApi = (boundingCurves, config) => {
     translateToPoint,
     getCorners,
     getBoundsTranslatedOnOrigin,
+    getBoundsDimensionsSimple,
   }
 }
