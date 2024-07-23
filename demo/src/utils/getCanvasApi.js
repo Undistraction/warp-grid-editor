@@ -111,30 +111,6 @@ const getCanvasApi = (context) => {
     drawQuad(boundingCurves, { color: lineColor, lineWidth })
   }
 
-  const drawControlPoints = (boundingCurves) => {
-    // Draw control point stems
-    const edges = [
-      boundingCurves.top,
-      boundingCurves.bottom,
-      boundingCurves.left,
-      boundingCurves.right,
-    ]
-
-    edges.map(({ startPoint, endPoint, controlPoint1, controlPoint2 }) => {
-      drawLine(startPoint, controlPoint1)
-      drawLine(endPoint, controlPoint2)
-    })
-  }
-
-  const drawLine = (startPoint, endPoint, { color = 'grey' } = {}) => {
-    context.beginPath()
-    context.moveTo(startPoint.x, startPoint.y)
-    context.lineTo(endPoint.x, endPoint.y)
-    context.strokeStyle = color
-    context.lineWidth = 1
-    context.stroke()
-  }
-
   const clearCanvas = (canvas) => {
     context.clearRect(0, 0, canvas.width, canvas.height)
   }
@@ -158,14 +134,10 @@ const getCanvasApi = (context) => {
 
   const drawCoonsPatch = (
     coonsPatch,
-    { shouldDrawIntersections, shouldDrawBounds, shouldDrawCornerPoints }
+    { shouldDrawIntersections, shouldDrawBounds }
   ) => {
     if (shouldDrawBounds) {
       drawBounds(coonsPatch.config.boundingCurves)
-    }
-
-    if (shouldDrawCornerPoints) {
-      drawControlPoints(coonsPatch.config.boundingCurves)
     }
 
     const curves = coonsPatch.api.getCurves()

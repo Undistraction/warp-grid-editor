@@ -18,7 +18,7 @@ const ControlPointNode = ({ position, onDrag, id }) => {
     <Draggable
       nodeRef={nodeRef}
       position={position}
-      bounds="#patch-view"
+      bounds="#work-area"
       onDrag={onDrag(id)}
       handle=".control-point-handle"
     >

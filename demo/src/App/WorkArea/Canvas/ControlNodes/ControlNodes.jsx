@@ -3,7 +3,7 @@
 // -----------------------------------------------------------------------------
 
 import React from 'react'
-import { BOUNDS_POINT_IDS } from '../../../const'
+import { BOUNDS_POINT_IDS } from '../../../../const'
 import ControlPointNode from './ControlPointNode'
 import CornerNode from './CornerNode'
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import Draggable from 'react-draggable'
-import { getBoundsApi } from '../../../utils/boundsApi'
+import { getBoundsApi } from '../../../../utils/boundsApi'
 
 // -----------------------------------------------------------------------------
 // Const
@@ -119,7 +119,7 @@ const Shape = ({ boundingCurves, onDrag }) => {
     <Draggable
       nodeRef={nodeRef}
       position={boundingCurves.top.startPoint}
-      bounds="#patch-view"
+      bounds="#work-area"
       onDrag={(event, dragElement) => {
         const newPosition = {
           x: dragElement.x,

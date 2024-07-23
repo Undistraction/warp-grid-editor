@@ -19,7 +19,7 @@ const CornerNode = ({ id, position, onDrag }) => {
     <Draggable
       nodeRef={nodeRef}
       position={position}
-      bounds="#patch-view"
+      bounds="#work-area"
       onDrag={onDrag(id)}
       handle=".corner-handle"
     >

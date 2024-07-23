@@ -1,6 +1,6 @@
 import React from 'react'
-import { isInt } from '../../../../src/utils/types'
-import getCanvasApi from '../../utils/getCanvasApi'
+import { isInt } from '../../../../../src/utils/types'
+import getCanvasApi from '../../../utils/getCanvasApi'
 
 // -----------------------------------------------------------------------------
 // Exports
@@ -32,7 +32,6 @@ const Canvas = ({
       canvasApi.drawCoonsPatch(coonsPatch, {
         shouldDrawBounds: config.bounds.shouldDrawBounds,
         shouldDrawIntersections: config.grid.shouldDrawIntersections,
-        shouldDrawCornerPoints: config.bounds.shouldDrawCornerPoints,
       })
 
       if (gridSquare && isInt(gridSquare.x) && isInt(gridSquare.y)) {

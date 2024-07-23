@@ -3,17 +3,11 @@ import { useDebounce } from 'use-debounce'
 import getCoonsPatch from '../../../src/'
 import { INTERPOLATION_STRATEGY_ID } from '../../../src/const'
 import { BOUNDS_POINT_IDS, CORNER_POINTS } from '../const'
-import useObserveClientSize from '../hooks/useObserveClientSize'
-import {
-  clampGridSquareToGridDimensions,
-  getRandomBoundingCurves,
-} from '../utils'
+import { getRandomBoundingCurves } from '../utils'
 import { getBoundsApi } from '../utils/boundsApi'
 import localStorageApi from '../utils/localStorageApi'
-import Canvas from './Canvas'
-import ControlNodes from './Canvas/ControlNodes'
-import Shape from './Canvas/Shape'
 import Sidebar from './Sidebar'
+import WorkArea from './WorkArea'
 
 // -----------------------------------------------------------------------------
 // Const
@@ -47,8 +41,6 @@ const CONFIG_DEFAULT = {
     [BOUNDS_POINT_IDS.BOTTOM_RIGHT]: { isLinked: true, isMirrored: false },
   },
 }
-
-const BORDER_WIDTHS = 2
 
 // -----------------------------------------------------------------------------
 // Utils
@@ -205,15 +197,7 @@ const App = () => {
   const [savedProjects, setSavedProjects] = React.useState(
     localStorageApi.getProjects()
   )
-  const displayRef = React.useRef(null)
   const [boundingCurvesDebounced] = useDebounce(boundingCurves, 5)
-
-  useObserveClientSize(displayRef, setCanvasSize, {
-    // left + right border widths
-    width: -BORDER_WIDTHS,
-    // top + bottom border widths
-    height: -BORDER_WIDTHS,
-  })
 
   React.useLayoutEffect(() => {
     if (!boundingCurves && canvas && canvasSize.width > 0) {
@@ -226,55 +210,23 @@ const App = () => {
     }
   }, [boundingCurvesDebounced, canvas, grid, canvasSize])
 
-  const gridSquareClamped = React.useMemo(
-    () =>
-      surface.gridSquare
-        ? clampGridSquareToGridDimensions(surface.gridSquare, grid)
-        : surface.gridSquare,
-    [surface, grid]
-  )
-
   const boundsApi = getBoundsApi(boundingCurves)
 
   return (
     <div className="relative flex h-full w-screen flex-row space-x-5 p-5">
-      <div
-        className="relative h-full flex-grow overflow-hidden"
-        id="patch-view"
-        ref={displayRef}
-      >
-        <Canvas
-          setCanvas={setCanvas}
-          width={canvasSize.width}
-          height={canvasSize.height}
-          coonsPatch={coonsPatch}
-          gridSquare={gridSquareClamped}
-          surface={surface}
-          config={config}
-        />
-        {boundingCurves && (
-          <React.Fragment>
-            <Shape
-              boundingCurves={boundingCurves}
-              onDrag={handleShapeDrag(
-                boundingCurves,
-                setBoundingCurves,
-                config
-              )}
-            />
-            {config.bounds.shouldDrawCornerPoints && (
-              <ControlNodes
-                boundingCurves={boundingCurves}
-                onNodePositionChange={handleNodePositionChange(
-                  boundingCurves,
-                  setBoundingCurves,
-                  config
-                )}
-              />
-            )}
-          </React.Fragment>
-        )}
-      </div>
+      <WorkArea
+        handleShapeDrag={handleShapeDrag}
+        boundingCurves={boundingCurves}
+        setCanvas={setCanvas}
+        canvasSize={canvasSize}
+        coonsPatch={coonsPatch}
+        surface={surface}
+        config={config}
+        setBoundingCurves={setBoundingCurves}
+        handleNodePositionChange={handleNodePositionChange}
+        setCanvasSize={setCanvasSize}
+        grid={grid}
+      />
       <div className="-my-5 w-[300px] flex-shrink-0 flex-grow-0 overflow-y-scroll">
         <Sidebar
           grid={grid}
