@@ -1,6 +1,7 @@
 {
   "name": "coons-patch",
   "version": "0.0.4",
+  "packageManager": "pnpm@9.6.0",
   "description": "Create a Coons patch for a four-sided shape and manipulate the grid",
   "main": "lib/coons-patch.js",
   "exports": {
