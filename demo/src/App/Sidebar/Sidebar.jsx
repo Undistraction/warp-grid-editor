@@ -54,7 +54,7 @@ const Sidebar = ({
   getRandomBoundingCurves,
   setBoundingCurves,
   setGrid,
-  savedBounds,
+  savedProjects,
   setSurface,
   boundingCurves,
   config,
@@ -181,7 +181,7 @@ const Sidebar = ({
       >
         <SettingsLoader
           onLoad={onLoad}
-          savedBounds={savedBounds}
+          savedProjects={savedProjects}
         />
         <SettingsSaver onSave={onSave} />
       </SidebarGroup>

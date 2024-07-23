@@ -72,7 +72,6 @@ const handleLinkControlPoints =
   (boundsApi, setBoundingCurves, config, setConfig) =>
   (cornerNodeId) =>
   (isLinked) => {
-    console.log('LINK', cornerNodeId)
     if (isLinked) {
       const updatedBoundingCurves = boundsApi.expandControlPoints(cornerNodeId)
       setBoundingCurves(updatedBoundingCurves)
@@ -200,7 +199,9 @@ const App = () => {
   const [grid, setGrid] = React.useState(GRID_DEFAULT)
   const [surface, setSurface] = React.useState(SURFACE_DEFAULT)
   const [canvasSize, setCanvasSize] = React.useState({ width: 0, height: 0 })
-  const [savedBounds, setSavedBounds] = React.useState({ ...localStorage })
+  const [savedProjects, setSavedProjects] = React.useState(
+    localStorageApi.getProjects()
+  )
   const displayRef = React.useRef(null)
   const [boundingCurvesDebounced] = useDebounce(boundingCurves, 5)
 
@@ -279,7 +280,7 @@ const App = () => {
           config={config}
           setConfig={setConfig}
           setGrid={setGrid}
-          savedBounds={savedBounds}
+          savedProjects={savedProjects}
           surface={surface}
           setSurface={setSurface}
           onLinkControlPoints={handleLinkControlPoints(
@@ -311,12 +312,13 @@ const App = () => {
             config,
             setConfig
           )}
-          onSave={(name) => {
-            localStorageApi.save(name, { grid, boundingCurves })
-            setSavedBounds({ ...localStorage })
+          onSave={(id) => {
+            localStorageApi.save(id, { grid, boundingCurves, config })
+            setSavedProjects(localStorageApi.getProjects())
           }}
-          onLoad={(name) => {
-            const result = localStorageApi.load(name)
+          onLoad={(id) => {
+            const result = localStorageApi.load(id)
+            setConfig(result.config)
             setGrid(result.grid)
             setBoundingCurves(result.boundingCurves)
           }}

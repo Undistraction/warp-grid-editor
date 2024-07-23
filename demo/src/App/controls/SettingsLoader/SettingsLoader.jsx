@@ -5,27 +5,32 @@ import React from 'react'
 // -----------------------------------------------------------------------------
 
 const renderOptions = (options) => {
-  return options.map((value) => {
-    const key = `option-${value.replace(/\s/g, '')}`
-    return (
-      <option
-        value={value}
-        key={key}
-      >
-        {value}
-      </option>
-    )
-  })
+  return options.map(({ id, name }) => (
+    <option
+      value={id}
+      key={id}
+    >
+      {name}
+    </option>
+  ))
 }
 
 // -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
 
-const SettingsLoader = ({ onLoad, savedBounds }) => {
+const SettingsLoader = ({ onLoad, savedProjects }) => {
   const [key, setKey] = React.useState('')
-  const keys = Object.keys(savedBounds)
-  const options = ['', ...keys]
+
+  const options = [
+    { id: 'none', value: '' },
+    ...savedProjects.map((project) => {
+      return {
+        id: project.id,
+        name: project.name,
+      }
+    }),
+  ]
 
   return (
     <div className="flex flex-col space-y-2">
