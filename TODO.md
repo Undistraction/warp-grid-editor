@@ -2,14 +2,14 @@
 
 ### Must do
 
-5.  Fix weird edge alignment issue
-6.  Separate demo to own repo
-7.  Basic mobile styles
+1.  Separate demo to own repo
+2.  Basic mobile styles
+3.  getGridCells - return an array of cell data
 
 ### Should do
 
-3.  Improve saving mechanism. Better structure of saved data. Save and check version.
-4.  Switch drawing of control point stems to SVG
+1.  Improve saving mechanism. Better structure of saved data. Save and check version.
+2.  Switch drawing of control point stems to SVG
 
 ### Could do
 
@@ -17,9 +17,8 @@
 
 - double-click to reset corner controls
 
-2.  Hide / show control points
-3.  Add back easing
-4.  Don't render grid during drag (setting/toggle)
+2.  Add back easing
+3.  Don't render grid during drag (setting/toggle)
 
 #### Add back easing
 
