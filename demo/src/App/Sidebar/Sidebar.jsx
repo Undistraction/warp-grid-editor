@@ -74,7 +74,7 @@ const Sidebar = ({
   return (
     <div className="flex flex-col space-y-3 divide-y-2 py-5">
       <header className="flex flex-row items-center justify-between">
-        <h1>coons-patch demo</h1>
+        <h1>coons-patch explorer</h1>
         <a
           className="underline"
           href="https://github.com/Undistraction/coons-patch"
@@ -105,11 +105,40 @@ const Sidebar = ({
         />
         <Switch
           label="Draw intersections"
-          isSelected={grid.shouldDrawIntersections}
+          isSelected={config.grid.shouldDrawIntersections}
           onChange={(value) =>
-            setGrid({
-              ...grid,
-              shouldDrawIntersections: value,
+            setConfig({
+              ...config,
+              grid: {
+                ...config.grid,
+                shouldDrawIntersections: value,
+              },
+            })
+          }
+        />
+        <Switch
+          label="Draw bounds"
+          isSelected={config.bounds.shouldDrawBounds}
+          onChange={(value) =>
+            setConfig({
+              ...config,
+              bounds: {
+                ...config.bounds,
+                shouldDrawBounds: value,
+              },
+            })
+          }
+        />
+        <Switch
+          label="Draw corner points"
+          isSelected={config.bounds.shouldDrawCornerPoints}
+          onChange={(value) =>
+            setConfig({
+              ...config,
+              bounds: {
+                ...config.bounds,
+                shouldDrawCornerPoints: value,
+              },
             })
           }
         />

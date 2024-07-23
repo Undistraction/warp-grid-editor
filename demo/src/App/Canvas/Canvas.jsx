@@ -13,7 +13,7 @@ const Canvas = ({
   coonsPatch,
   gridSquare,
   surface,
-  grid,
+  config,
 }) => {
   const ref = React.useRef(null)
 
@@ -30,7 +30,9 @@ const Canvas = ({
 
     if (coonsPatch) {
       canvasApi.drawCoonsPatch(coonsPatch, {
-        shouldDrawIntersections: grid.shouldDrawIntersections,
+        shouldDrawBounds: config.bounds.shouldDrawBounds,
+        shouldDrawIntersections: config.grid.shouldDrawIntersections,
+        shouldDrawCornerPoints: config.bounds.shouldDrawCornerPoints,
       })
 
       if (gridSquare && isInt(gridSquare.x) && isInt(gridSquare.y)) {
@@ -41,7 +43,7 @@ const Canvas = ({
         canvasApi.drawGridSquareBounds(gridSquareBounds)
       }
     }
-  }, [coonsPatch, gridSquare, surface])
+  }, [coonsPatch, gridSquare, surface, config])
 
   return (
     <div>

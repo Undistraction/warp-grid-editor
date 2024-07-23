@@ -36,8 +36,11 @@ const CONFIG_DEFAULT = {
   },
   grid: {
     shouldUseComplexColumnsRows: false,
+    shouldDrawIntersections: false,
   },
   bounds: {
+    shouldDrawBounds: true,
+    shouldDrawCornerPoints: true,
     [BOUNDS_POINT_IDS.TOP_LEFT]: { isLinked: true, isMirrored: false },
     [BOUNDS_POINT_IDS.TOP_RIGHT]: { isLinked: true, isMirrored: false },
     [BOUNDS_POINT_IDS.BOTTOM_LEFT]: { isLinked: true, isMirrored: false },
@@ -247,7 +250,7 @@ const App = () => {
           coonsPatch={coonsPatch}
           gridSquare={gridSquareClamped}
           surface={surface}
-          grid={grid}
+          config={config}
         />
         {boundingCurves && (
           <React.Fragment>
@@ -259,14 +262,16 @@ const App = () => {
                 config
               )}
             />
-            <ControlNodes
-              boundingCurves={boundingCurves}
-              onNodePositionChange={handleNodePositionChange(
-                boundingCurves,
-                setBoundingCurves,
-                config
-              )}
-            />
+            {config.bounds.shouldDrawCornerPoints && (
+              <ControlNodes
+                boundingCurves={boundingCurves}
+                onNodePositionChange={handleNodePositionChange(
+                  boundingCurves,
+                  setBoundingCurves,
+                  config
+                )}
+              />
+            )}
           </React.Fragment>
         )}
       </div>

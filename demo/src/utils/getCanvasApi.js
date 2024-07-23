@@ -39,50 +39,56 @@ const getCanvasApi = (context) => {
     context.stroke()
   }
 
-  const drawQuad = (lines, { color = 'green', lineWidth = 1 } = {}) => {
+  const drawQuad = (
+    boundingCurves,
+    { color = 'green', lineWidth = 1 } = {}
+  ) => {
     context.beginPath()
-    context.moveTo(lines.top.startPoint.x, lines.top.startPoint.y)
+    context.moveTo(
+      boundingCurves.top.startPoint.x,
+      boundingCurves.top.startPoint.y
+    )
 
     // Draw Top (left to right)
     context.bezierCurveTo(
-      lines.top.controlPoint1.x,
-      lines.top.controlPoint1.y,
-      lines.top.controlPoint2.x,
-      lines.top.controlPoint2.y,
-      lines.top.endPoint.x,
-      lines.top.endPoint.y
+      boundingCurves.top.controlPoint1.x,
+      boundingCurves.top.controlPoint1.y,
+      boundingCurves.top.controlPoint2.x,
+      boundingCurves.top.controlPoint2.y,
+      boundingCurves.top.endPoint.x,
+      boundingCurves.top.endPoint.y
     )
 
     // Draw Right (top to bottom)
     context.bezierCurveTo(
-      lines.right.controlPoint1.x,
-      lines.right.controlPoint1.y,
-      lines.right.controlPoint2.x,
-      lines.right.controlPoint2.y,
-      lines.right.endPoint.x,
-      lines.right.endPoint.y
+      boundingCurves.right.controlPoint1.x,
+      boundingCurves.right.controlPoint1.y,
+      boundingCurves.right.controlPoint2.x,
+      boundingCurves.right.controlPoint2.y,
+      boundingCurves.right.endPoint.x,
+      boundingCurves.right.endPoint.y
     )
 
     // Draw Bottom (right to left) note the changed order as the line is
     // defined left to right and we are drawing right to left
     context.bezierCurveTo(
-      lines.bottom.controlPoint2.x,
-      lines.bottom.controlPoint2.y,
-      lines.bottom.controlPoint1.x,
-      lines.bottom.controlPoint1.y,
-      lines.bottom.startPoint.x,
-      lines.bottom.startPoint.y
+      boundingCurves.bottom.controlPoint2.x,
+      boundingCurves.bottom.controlPoint2.y,
+      boundingCurves.bottom.controlPoint1.x,
+      boundingCurves.bottom.controlPoint1.y,
+      boundingCurves.bottom.startPoint.x,
+      boundingCurves.bottom.startPoint.y
     )
 
     // Draw Left (bottom to top) note the changed order as the line is
     // defined top to bottom and we are drawing bottom to top
     context.bezierCurveTo(
-      lines.left.controlPoint2.x,
-      lines.left.controlPoint2.y,
-      lines.left.controlPoint1.x,
-      lines.left.controlPoint1.y,
-      lines.left.startPoint.x,
-      lines.left.startPoint.y
+      boundingCurves.left.controlPoint2.x,
+      boundingCurves.left.controlPoint2.y,
+      boundingCurves.left.controlPoint1.x,
+      boundingCurves.left.controlPoint1.y,
+      boundingCurves.left.startPoint.x,
+      boundingCurves.left.startPoint.y
     )
 
     context.closePath()
@@ -92,17 +98,27 @@ const getCanvasApi = (context) => {
   }
 
   const drawPatchBounds = (
-    lines,
+    boundingCurves,
     { lineColor = 'green', lineWidth = 3 } = {}
   ) => {
-    drawQuad(lines, { color: lineColor, lineWidth })
+    drawQuad(boundingCurves, { color: lineColor, lineWidth })
   }
 
-  const drawBounds = (lines, { lineColor = 'black', lineWidth = 3 } = {}) => {
-    drawQuad(lines, { color: lineColor, lineWidth })
+  const drawBounds = (
+    boundingCurves,
+    { lineColor = 'black', lineWidth = 2 } = {}
+  ) => {
+    drawQuad(boundingCurves, { color: lineColor, lineWidth })
+  }
 
+  const drawControlPoints = (boundingCurves) => {
     // Draw control point stems
-    const edges = [lines.top, lines.bottom, lines.left, lines.right]
+    const edges = [
+      boundingCurves.top,
+      boundingCurves.bottom,
+      boundingCurves.left,
+      boundingCurves.right,
+    ]
 
     edges.map(({ startPoint, endPoint, controlPoint1, controlPoint2 }) => {
       drawLine(startPoint, controlPoint1)
@@ -125,7 +141,6 @@ const getCanvasApi = (context) => {
 
   const drawGridCurve = (curve, { lineColor = 'black' }) => {
     // if (curve.original) {
-    //   console.log('CURVE', curve)
     //   drawDot(curve.startPoint, { color: `red`, size: 12 })
     //   drawDot(curve.endPoint, { color: `blue`, size: 12 })
     //   drawDot(curve.controlPoint1, { color: `green`, size: 12 })
@@ -141,9 +156,17 @@ const getCanvasApi = (context) => {
     drawCurve(curve, { color: lineColor })
   }
 
-  const drawCoonsPatch = (coonsPatch, { shouldDrawIntersections }) => {
-    // Draw bounds
-    drawBounds(coonsPatch.config.boundingCurves)
+  const drawCoonsPatch = (
+    coonsPatch,
+    { shouldDrawIntersections, shouldDrawBounds, shouldDrawCornerPoints }
+  ) => {
+    if (shouldDrawBounds) {
+      drawBounds(coonsPatch.config.boundingCurves)
+    }
+
+    if (shouldDrawCornerPoints) {
+      drawControlPoints(coonsPatch.config.boundingCurves)
+    }
 
     const curves = coonsPatch.api.getCurves()
 
@@ -166,7 +189,7 @@ const getCanvasApi = (context) => {
     })
 
     if (shouldDrawIntersections) {
-      // Draw intersections between grid lines
+      // Draw intersections between grid boundingCurves
       coonsPatch.api.getIntersections().map((point) => {
         drawDot(point, {
           size: 3,
