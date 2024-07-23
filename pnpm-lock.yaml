@@ -17,6 +17,9 @@ importers:
       bezier.js:
         specifier: ^0.0.0
         version: 0.0.0
+      matrix-js:
+        specifier: ^1.7.1
+        version: 1.7.1
       uuid:
         specifier: ^10.0.0
         version: 10.0.0
@@ -2405,6 +2408,9 @@ packages:
 
   makeerror@1.0.12:
     resolution: {integrity: sha512-JmqCvUhmt43madlpFzG4BQzG2Z3m6tvQDNKdClZnO3VbIudJYmxsT0FNJMeiB2+JTSlTQTSbU8QdesVmwJcmLg==}
+
+  matrix-js@1.7.1:
+    resolution: {integrity: sha512-1s2aiQeSqtD3UjLiL/V6Bxd4x/AjZ4E79vI2DQzaAFPV6bi66vk9URZb2T5ZklK9MnFAF00vlZO0qo+D07jdsg==}
 
   meow@12.1.1:
     resolution: {integrity: sha512-BhXM0Au22RwUneMPwSCnyhTOizdWoIEPU9sp0Aqa1PnDMR5Wv2FGXYDjuzJEIX+Eo2Rb8xuYe5jrnm5QowQFkw==}
@@ -6324,6 +6330,8 @@ snapshots:
   makeerror@1.0.12:
     dependencies:
       tmpl: 1.0.5
+
+  matrix-js@1.7.1: {}
 
   meow@12.1.1: {}
 

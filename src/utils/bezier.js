@@ -1,40 +1,44 @@
-import { Matrix, generateBasisMatrix, getRatioMatrix } from './matrix'
+/*------------------------------------------------------------------------------
+ * The fitCurveToPoints function is based on work by Pomax on curve fitting,
+ * and all credit is due to him.
+ *
+ * That work can be found here: https://pomax.github.io/bezierinfo/#curvefitting
+ * ---------------------------------------------------------------------------*/
 
-const fitCurveToPoints = (n, points, tvalues) => {
-  // alright, let's do this thing:
-  const tm = getRatioMatrix(tvalues, n),
-    T = tm.transposedMatrix,
-    Tt = tm.matrix,
-    M = generateBasisMatrix(n),
-    M1 = M.invert(),
-    TtT1 = Tt.multiply(T).invert(),
-    step1 = TtT1.multiply(Tt),
-    step2 = M1.multiply(step1),
-    // almost there...
-    X = new Matrix(points.map((v) => [v.x])),
-    Cx = step2.multiply(X),
-    x = Cx.data,
-    // almost...
-    Y = new Matrix(points.map((v) => [v.y])),
-    Cy = step2.multiply(Y),
-    y = Cy.data,
-    // last step!
-    bpoints = x.map((r, i) => ({ x: r[0], y: y[i][0] }))
+import matrix from 'matrix-js'
+import { getBasisMatrix, getRatioMatrix } from './matrix'
 
-  return bpoints
+// -----------------------------------------------------------------------------
+// Utils
+// -----------------------------------------------------------------------------
+
+const fitCurveToPoints = (points, ratios) => {
+  const numberOfPoints = points.length
+  const { ratioMatrix, transposedRatioMatrix } = getRatioMatrix(ratios)
+
+  const basisMatrix = getBasisMatrix(numberOfPoints)
+  const basisMatrixInverted = matrix(basisMatrix.inv())
+  const ratioMultipliedMatrix = matrix(ratioMatrix.prod(transposedRatioMatrix))
+  const invertedRatioMultipliedMatrix = matrix(ratioMultipliedMatrix.inv())
+  const step1 = matrix(invertedRatioMultipliedMatrix.prod(ratioMatrix))
+  const step2 = matrix(basisMatrixInverted.prod(step1))
+  const X = matrix(points.map((v) => [v.x]))
+  const x = step2.prod(X)
+  const Y = matrix(points.map((v) => [v.y]))
+  const y = step2.prod(Y)
+  return x.map((r, i) => ({ x: r[0], y: y[i][0] }))
 }
 
 // -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
 
-export const getBezierCurveFromPoints = (
+export const fitCubicBezierToPoints = (
   points,
   ratioMidpoint1,
   ratioMidpoint2
 ) => {
   const result = fitCurveToPoints(
-    4,
     [points.startPoint, points.midPoint1, points.midPoint2, points.endPoint],
     [0, ratioMidpoint1, ratioMidpoint2, 1]
   )

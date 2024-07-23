@@ -10,7 +10,7 @@ const RATIO_MIDPOINT_2 = 0.75
 // -----------------------------------------------------------------------------
 
 import { COORDINATE } from '../const'
-import { getBezierCurveFromPoints } from './bezier'
+import { fitCubicBezierToPoints } from './bezier'
 
 const getCoordinateOnSurface = (
   { top, bottom, left, right },
@@ -123,7 +123,7 @@ export const getCurvesOnXAxis = (
         interpolatePointOnCurve
       )
 
-      const curve = getBezierCurveFromPoints(
+      const curve = fitCubicBezierToPoints(
         {
           startPoint,
           midPoint1,
@@ -208,7 +208,7 @@ export const getCurvesOnYAxis = (
         interpolatePointOnCurve
       )
 
-      const curve = getBezierCurveFromPoints(
+      const curve = fitCubicBezierToPoints(
         {
           startPoint,
           midPoint1,

@@ -84,6 +84,7 @@
     "bezier-easing": "^2.1.0",
     "bezier-js": "^6.1.4",
     "bezier.js": "^0.0.0",
+    "matrix-js": "^1.7.1",
     "uuid": "^10.0.0"
   }
 }
