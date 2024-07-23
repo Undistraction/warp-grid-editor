@@ -1,5 +1,31 @@
 /* eslint-disable no-unused-vars */
 
+// -----------------------------------------------------------------------------
+// Const
+// -----------------------------------------------------------------------------
+const binomialCoefficients = [[1], [1, 1]]
+
+// -----------------------------------------------------------------------------
+// Utils
+// -----------------------------------------------------------------------------
+
+const binomial = (n, k) => {
+  if (n === 0) return 1
+  const lut = binomialCoefficients
+
+  while (n >= lut.length) {
+    const lutLength = lut.length
+    const nextRow = [1]
+    for (let i = 1, prev = lutLength - 1; i < lutLength; i++) {
+      nextRow[i] = lut[prev][i - 1] + lut[prev][i]
+    }
+    nextRow[lutLength] = 1
+    lut.push(nextRow)
+  }
+
+  return lut[n][k]
+}
+
 function invert(M) {
   // Copied from http://blog.acipo.com/matrix-inversion-in-javascript/
   // With permission, http://blog.acipo.com/matrix-inversion-in-javascript/#comment-5057289889
@@ -125,16 +151,17 @@ function transpose(M) {
   return M[0].map((col, i) => M.map((row) => row[i]))
 }
 
-class Matrix {
+// -----------------------------------------------------------------------------
+// Exports
+// -----------------------------------------------------------------------------
+
+export class Matrix {
   constructor(n, m, data) {
     data = n instanceof Array ? n : data
     this.data =
       data ?? [...new Array(n)].map((v) => [...new Array(m)].map((v) => 0))
     this.rows = this.data.length
     this.cols = this.data[0].length
-  }
-  setData(data) {
-    this.data = data
   }
   get(i, j) {
     return this.data[i][j]
@@ -164,4 +191,35 @@ class Matrix {
   }
 }
 
-export { Matrix }
+export const getRatioMatrix = (row, idx) => {
+  // it's actually easier to create the transposed
+  // version, and then (un)transpose that to get T!
+  const data = []
+  for (let i = 0; i < idx; i++) {
+    data.push(row.map((v) => v ** i))
+  }
+  const matrix = new Matrix(idx, idx, data)
+  const transposedMatrix = matrix.transpose()
+  return { transposedMatrix, matrix }
+}
+
+export const generateBasisMatrix = (numberOfPoints) => {
+  const M = new Matrix(numberOfPoints, numberOfPoints)
+
+  // populate the main diagonal
+  var k = numberOfPoints - 1
+  for (let i = 0; i < numberOfPoints; i++) {
+    M.set(i, i, binomial(k, i))
+  }
+
+  // compute the remaining values
+  for (var c = 0, r; c < numberOfPoints; c++) {
+    for (r = c + 1; r < numberOfPoints; r++) {
+      var sign = (r + c) % 2 === 0 ? 1 : -1
+      var value = binomial(r, c) * M.get(r, r)
+      M.set(r, c, sign * value)
+    }
+  }
+
+  return M
+}

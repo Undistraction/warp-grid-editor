@@ -64,7 +64,7 @@ const handleNodePositionChange =
 const handleShapeDrag =
   (boundingCurves, setBoundingCurves, config) => (position) => {
     const boundsApi = getBoundsApi(boundingCurves, config)
-    const newBoundingCurves = boundsApi.offset(position)
+    const newBoundingCurves = boundsApi.translateToPoint(position)
     setBoundingCurves(newBoundingCurves)
   }
 
@@ -72,6 +72,7 @@ const handleLinkControlPoints =
   (boundsApi, setBoundingCurves, config, setConfig) =>
   (cornerNodeId) =>
   (isLinked) => {
+    console.log('LINK', cornerNodeId)
     if (isLinked) {
       const updatedBoundingCurves = boundsApi.expandControlPoints(cornerNodeId)
       setBoundingCurves(updatedBoundingCurves)

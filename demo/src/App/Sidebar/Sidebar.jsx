@@ -70,7 +70,7 @@ const Sidebar = ({
   onMirrorControlPointsGlobal,
 }) => {
   const boundsApi = getBoundsApi(boundingCurves)
-  const { corners } = boundsApi
+  const corners = boundsApi.getCorners()
   return (
     <div className="flex flex-col space-y-3 divide-y-2 py-5">
       <header className="flex flex-row items-center justify-between">
