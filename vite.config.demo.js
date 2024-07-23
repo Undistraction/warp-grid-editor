@@ -17,6 +17,6 @@ export default defineConfig(() => {
       },
     },
     root: './demo',
-    publicDir: './demo/public',
+    publicDir: './public',
   }
 })
