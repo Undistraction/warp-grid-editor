@@ -117,9 +117,6 @@ importers:
       prettier-plugin-tailwindcss:
         specifier: ^0.6.5
         version: 0.6.5(prettier@3.3.2)
-      semantic-release:
-        specifier: ^24.0.0
-        version: 24.0.0(typescript@5.5.3)
       tailwindcss:
         specifier: ^3.4.4
         version: 3.4.4
