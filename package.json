@@ -1,31 +1,17 @@
 {
-  "name": "coons-patch",
+  "name": "coons-patch-editor",
   "version": "1.1.0",
   "packageManager": "pnpm@9.6.0",
-  "description": "Create a Coons patch for a four-sided shape and manipulate the grid",
+  "description": "Editor/demo for coons-patch",
   "main": "dist/coons-patch.js",
-  "exports": {
-    ".": {
-      "import": "./dist/coons-patch.js",
-      "require": "./dist/index.umd.cjs"
-    }
-  },
-  "files": [
-    "/dist",
-    "/src"
-  ],
   "homepage": "https://coons-patch.undistraction.com",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/undistraction/coons-patch.git"
+    "url": "git+https://github.com/undistraction/coons-patch-editor.git"
   },
   "bugs": {
-    "url": "https://github.com/undistraction/coons-patch/issues"
+    "url": "https://github.com/undistraction/coons-patch-editor/issues"
   },
-  "publishConfig": {
-    "access": "public"
-  },
-  "private": false,
   "type": "module",
   "scripts": {
     "prepare": "husky",
@@ -35,11 +21,10 @@
     "lint": "pnpm run lint-prettier && pnpm run lint-eslint",
     "lint-prettier": "prettier . --write",
     "lint-eslint": "eslint './**/*.{js,jsx,cjs}'",
-    "dev": "vite --config vite.config.demo.js",
-    "build": "vite build --config vite.config.demo.js",
-    "preview": "vite preview --config vite.config.demo.js",
-    "build-package": "vite build",
-    "release": "semantic-release --no-ci --dry-run --debug"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "build-package": "vite build"
   },
   "keywords": [
     "coons patch",
@@ -48,7 +33,7 @@
     "surface",
     "grid"
   ],
-  "author": "Pedr Browne ",
+  "author": "Pedr Browne",
   "license": "MIT",
   "devDependencies": {
     "@commitlint/config-conventional": "^19.2.2",
@@ -77,18 +62,17 @@
     "prettier": "3.3.2",
     "prettier-plugin-ejs": "^1.0.3",
     "prettier-plugin-tailwindcss": "^0.6.5",
+    "tailwindcss": "^3.4.4",
+    "typescript": "^5.5.3",
+    "vite": "^5.3.3"
+  },
+  "dependencies": {
+    "coons-patch": "^1.1.0",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-draggable": "^4.4.6",
-    "semantic-release": "^24.0.0",
-    "tailwindcss": "^3.4.4",
-    "typescript": "^5.5.3",
     "use-debounce": "^10.0.1",
-    "uuid": "^10.0.0",
-    "vite": "^5.3.3"
-  },
-  "dependencies": {
-    "matrix-js": "^1.7.1"
+    "uuid": "^10.0.0"
   }
 }

@@ -1,8 +1,7 @@
 import react from '@vitejs/plugin-react'
-import { resolve } from 'path'
 import tailwindcss from 'tailwindcss'
 // eslint-disable-next-line
-import { defineConfig } from 'vite'
+import {defineConfig} from 'vite'
 
 // -----------------------------------------------------------------------------
 // Exports
@@ -15,16 +14,6 @@ export default defineConfig(() => {
     css: {
       postcss: {
         plugins: [tailwindcss()],
-      },
-    },
-    build: {
-      sourcemap: true,
-      lib: {
-        entry: resolve(__dirname, 'src/index.js'),
-        name: 'coons-patch',
-        // the phtmlroper extensions will be added
-        fileName: 'coons-patch',
-        formats: ['es', 'cjs', 'umd'],
       },
     },
   }
