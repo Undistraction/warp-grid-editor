@@ -22,7 +22,7 @@ export default defineConfig(() => {
       lib: {
         entry: resolve(__dirname, 'src/index.js'),
         name: 'coons-patch',
-        // the proper extensions will be added
+        // the phtmlroper extensions will be added
         fileName: 'coons-patch',
         formats: ['es', 'cjs', 'umd'],
       },
