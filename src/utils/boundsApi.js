@@ -1,5 +1,4 @@
-import { getDistanceBetweenPoints } from '../../../src/utils/interpolate'
-import { isNull } from '../../../src/utils/types'
+import { isNil } from 'ramda'
 import { BOUNDS_POINT_IDS, CURVE_NAMES, POINT_NAMES } from '../const'
 
 // -----------------------------------------------------------------------------
@@ -11,6 +10,9 @@ const EXPANSION_DISTANCE = 30
 // -----------------------------------------------------------------------------
 // Utils
 // -----------------------------------------------------------------------------
+
+const getDistanceBetweenPoints = (point1, point2) =>
+  Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2))
 
 const getPointAtDistanceAndAngle = (origin, angleRads, distance) => {
   return {
@@ -691,7 +693,7 @@ export const getBoundsApi = (boundingCurves, config) => {
       const top = startPoint.y < endPoint.y ? startPoint.y : endPoint.y
       const right = startPoint.x > endPoint.x ? startPoint.x : endPoint.x
       const bottom = startPoint.y > endPoint.y ? startPoint.y : endPoint.y
-      return isNull(acc)
+      return isNil(acc)
         ? {
             top,
             bottom,

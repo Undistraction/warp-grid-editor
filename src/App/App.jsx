@@ -1,7 +1,6 @@
+import getCoonsPatch from 'coons-patch'
 import React from 'react'
 import { useDebounce } from 'use-debounce'
-import getCoonsPatch from '../../../src/'
-import { INTERPOLATION_STRATEGY_ID } from '../../../src/const'
 import { BOUNDS_POINT_IDS, CORNER_POINTS } from '../const'
 import { getRandomBoundingCurves } from '../utils'
 import { getBoundsApi } from '../utils/boundsApi'
@@ -18,7 +17,7 @@ const GRID_DEFAULT = {
   rows: 25,
   // columns: [5, 1, 5, 4, 5, 1, 5, 1, 5],
   // rows: [5, 1, 5, 3, 5, 1, 10],
-  interpolationStrategy: INTERPOLATION_STRATEGY_ID.EVEN,
+  interpolationStrategy: 'even',
 }
 
 const SURFACE_DEFAULT = { x: 0, y: 0, gridSquare: {} }

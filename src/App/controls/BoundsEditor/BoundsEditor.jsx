@@ -11,7 +11,6 @@ const BoundsEditor = ({
   boundingCurves,
   setBoundingCurves,
   config,
-  setConfig,
   corners,
   onNodePositionChange,
   onZeroControlPoints,

@@ -1,4 +1,4 @@
-import { isInt } from '../../src/utils/types'
+import { isInteger } from 'ramda-adjunct'
 import { CORNER_POINTS } from './const'
 import { getBoundsApi } from './utils/boundsApi'
 import getCanvasApi from './utils/getCanvasApi'
@@ -88,19 +88,19 @@ export const clampGridSquareToGridDimensions = (
   { x, y },
   { columns, rows }
 ) => {
-  const columnsTotal = isInt(columns) ? columns : columns.length
-  const rowsTotal = isInt(rows) ? rows : rows.length
+  const columnsTotal = isInteger(columns) ? columns : columns.length
+  const rowsTotal = isInteger(rows) ? rows : rows.length
 
   const gridSquare = {}
 
   const xInt = parseInt(x)
   const yInt = parseInt(y)
 
-  if (isInt(xInt)) {
+  if (isInteger(xInt)) {
     gridSquare.x = clampNumberBetween(0, columnsTotal - 1, x)
   }
 
-  if (isInt(yInt)) {
+  if (isInteger(yInt)) {
     gridSquare.y = clampNumberBetween(0, rowsTotal - 1, y)
   }
 

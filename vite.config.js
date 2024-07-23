@@ -1,7 +1,7 @@
 import react from '@vitejs/plugin-react'
 import tailwindcss from 'tailwindcss'
 // eslint-disable-next-line
-import {defineConfig} from 'vite'
+import { defineConfig } from 'vite'
 
 // -----------------------------------------------------------------------------
 // Exports

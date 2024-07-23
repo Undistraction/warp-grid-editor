@@ -1,5 +1,4 @@
 import React from 'react'
-import { INTERPOLATION_STRATEGY_ID } from '../../../../src/const'
 import { getBoundsApi } from '../../utils/boundsApi'
 import BoundsEditor from '../controls/BoundsEditor'
 import Button from '../controls/Button'
@@ -18,11 +17,11 @@ import SidebarGroup from './SidebarGroup'
 export const INTERPOLATION_STRATEGY_OPTIONS = [
   {
     label: 'Even',
-    value: INTERPOLATION_STRATEGY_ID.EVEN,
+    value: 'even',
   },
   {
     label: 'Linear',
-    value: INTERPOLATION_STRATEGY_ID.LINEAR,
+    value: 'linear',
   },
 ]
 

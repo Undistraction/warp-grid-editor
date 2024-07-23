@@ -1,12 +1,12 @@
+import { isInteger, isPlainObj, isString } from 'ramda-adjunct'
 import React from 'react'
-import { isInt, isPlainObj, isString } from '../../../../../src/utils/types'
 
 // -----------------------------------------------------------------------------
 // Utils
 // -----------------------------------------------------------------------------
 
 const getOption = (objectOrString) => {
-  if (isString(objectOrString) || isInt(objectOrString)) {
+  if (isString(objectOrString) || isInteger(objectOrString)) {
     const keyRoot = objectOrString === '' ? 'unknown' : objectOrString
     return {
       value: objectOrString,

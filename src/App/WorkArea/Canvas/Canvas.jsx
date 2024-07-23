@@ -1,5 +1,5 @@
+import { isInteger } from 'ramda-adjunct'
 import React from 'react'
-import { isInt } from '../../../../../src/utils/types'
 import getCanvasApi from '../../../utils/getCanvasApi'
 
 // -----------------------------------------------------------------------------
@@ -34,7 +34,7 @@ const Canvas = ({
         shouldDrawIntersections: config.grid.shouldDrawIntersections,
       })
 
-      if (gridSquare && isInt(gridSquare.x) && isInt(gridSquare.y)) {
+      if (gridSquare && isInteger(gridSquare.x) && isInteger(gridSquare.y)) {
         const gridSquareBounds = coonsPatch.api.getGridCellBounds(
           gridSquare.x,
           gridSquare.y

@@ -1,5 +1,5 @@
+import { isNumber } from 'ramda-adjunct'
 import React from 'react'
-import { isNumber } from '../../../../../../src/utils/types'
 import { roundToTwoPlaces } from '../../../../utils/math'
 import NumericInput from '../../NumericInput'
 

@@ -1,5 +1,5 @@
+import { isArray } from 'ramda-adjunct'
 import React from 'react'
-import { isArray } from '../../../../../src/utils/types'
 import SteppedInput from '../SteppedInput'
 import Switch from '../Switch'
 import TextInput from '../TextInput'

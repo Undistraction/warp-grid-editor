@@ -1,8 +1,8 @@
-import { isArray } from '../../../src/utils/types'
-
 // -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
+
+import { isArray } from 'ramda-adjunct'
 
 const getCanvasApi = (context) => {
   const drawDot = ({ x, y }, { color = 'black', size = 2, text } = {}) => {
