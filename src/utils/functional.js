@@ -1,14 +1,3 @@
-// import { isArray } from './types'
-
-// const pipe =
-//   (funcs) =>
-//   (...args) => {
-//     return funcs.reduce((acc, func) => {
-//       const resolvedAcc = isArray(acc) ? acc : [acc]
-//       return func(...acc)
-//     }, args)
-//   }
-
 // -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
