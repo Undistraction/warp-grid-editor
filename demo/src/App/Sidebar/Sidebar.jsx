@@ -205,7 +205,7 @@ const Sidebar = ({
         />
       </SidebarGroup>
       <SidebarGroup
-        title="Load and save"
+        title="Load and save project"
         hint="You can save and load your settings from/to the local-storage of your machine."
       >
         <SettingsLoader

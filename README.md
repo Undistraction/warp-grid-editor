@@ -6,6 +6,8 @@ There is an [interactive demo](https://coons-patch.undistraction.com) which allo
 
 This package only models the coons patch and calculates the position of the curves that make up the grid, their intersections and the bounds of the grid squares. It doesn't handle the rendering of that data data to the screen, however it gives you all the underlying metrics you need to render a patch using SVG or HTML canvas. Both approaches are used in the demo, the code for which can be found in `/demo/`.
 
+Note that calulating the curves that make up the grid (and therefore the grid cell bounds) is not a perfect process, and involves transforming a parametised into a cubic Bezier curve. Because there is no guarantee that the interpolated curve can be represented by a cubic Bezier, the Bezier has to fitted to the parametised curve. In some cases this means the edges will deviate from the bounds. In cases of a 1x1 grid, I cheat and just return the bounds of the grid, however with low numbers of columns and rows, and when curves are tighter at the corners, the curves will sometimes deviate from the bounds. This isn't a problem with higher numbers of rows/columns as each curve is made up of a different curve for each cell which gives more accurate results. Whilst it would certainly be possible to compose each grid-cell's bounds of multiple curves for increased accuracy, this would prevent one of the most useful bits of functionality - recursion, meaning you can use the bounds of any grid cell as the bounds for another nested grid.
+
 ## Install package
 
 ```bash
