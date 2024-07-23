@@ -50,17 +50,9 @@ const BoundsEditor = ({
           BOUNDS_POINT_IDS.TOP_RIGHT,
           setBoundingCurves
         )}
-        onLinkControlPoints={onLinkControlPoints(
-          boundsApi,
-          BOUNDS_POINT_IDS.TOP_RIGHT,
-          setBoundingCurves,
-          config,
-          setConfig
-        )}
+        onLinkControlPoints={onLinkControlPoints(BOUNDS_POINT_IDS.TOP_RIGHT)}
         onMirrorControlPoints={onMirrorControlPoints(
-          BOUNDS_POINT_IDS.TOP_RIGHT,
-          config,
-          setConfig
+          BOUNDS_POINT_IDS.TOP_RIGHT
         )}
         {...corners[BOUNDS_POINT_IDS.TOP_RIGHT]}
       />
@@ -73,21 +65,10 @@ const BoundsEditor = ({
           config.bounds[BOUNDS_POINT_IDS.BOTTOM_LEFT].isMirrored
         }
         onNodePositionChange={onNodePositionChange}
-        onZeroControlPoints={onZeroControlPoints(
-          boundsApi,
-          BOUNDS_POINT_IDS.BOTTOM_LEFT,
-          setBoundingCurves
-        )}
-        onLinkControlPoints={onLinkControlPoints(
-          boundsApi,
-          BOUNDS_POINT_IDS.BOTTOM_LEFT,
-          setBoundingCurves,
-          setConfig
-        )}
+        onZeroControlPoints={onZeroControlPoints(BOUNDS_POINT_IDS.BOTTOM_LEFT)}
+        onLinkControlPoints={onLinkControlPoints(BOUNDS_POINT_IDS.BOTTOM_LEFT)}
         onMirrorControlPoints={onMirrorControlPoints(
-          boundsApi,
-          BOUNDS_POINT_IDS.BOTTOM_LEFT,
-          setConfig
+          BOUNDS_POINT_IDS.BOTTOM_LEFT
         )}
         {...corners[BOUNDS_POINT_IDS.BOTTOM_LEFT]}
       />
@@ -100,21 +81,10 @@ const BoundsEditor = ({
           config.bounds[BOUNDS_POINT_IDS.BOTTOM_RIGHT].isMirrored
         }
         onNodePositionChange={onNodePositionChange}
-        onZeroControlPoints={onZeroControlPoints(
-          boundsApi,
-          BOUNDS_POINT_IDS.BOTTOM_RIGHT,
-          setBoundingCurves
-        )}
-        onLinkControlPoints={onLinkControlPoints(
-          boundsApi,
-          BOUNDS_POINT_IDS.BOTTOM_RIGHT,
-          setBoundingCurves,
-          setConfig
-        )}
+        onZeroControlPoints={onZeroControlPoints(BOUNDS_POINT_IDS.BOTTOM_RIGHT)}
+        onLinkControlPoints={onLinkControlPoints(BOUNDS_POINT_IDS.BOTTOM_RIGHT)}
         onMirrorControlPoints={onMirrorControlPoints(
-          BOUNDS_POINT_IDS.BOTTOM_RIGHT,
-          config,
-          setConfig
+          BOUNDS_POINT_IDS.BOTTOM_RIGHT
         )}
         {...corners[BOUNDS_POINT_IDS.BOTTOM_RIGHT]}
       />
