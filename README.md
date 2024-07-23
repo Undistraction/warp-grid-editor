@@ -200,3 +200,7 @@ pnpm run test
 pnpm run lint-prettier
 pnpm run lint-eslint
 ```
+
+## Thanks
+
+Thanks to pomax for his help (and code) for curve fitting (which is much more complex than it might seem). His [A Primer on Bézier Curves](https://pomax.github.io/bezierinfo/) is a thing of wonder.
