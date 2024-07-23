@@ -1,4 +1,5 @@
 import { getDistanceBetweenPoints } from '../../../src/utils/interpolate'
+import { isNull } from '../../../src/utils/types'
 import { BOUNDS_POINT_IDS, CURVE_NAMES, POINT_NAMES } from '../const'
 
 // -----------------------------------------------------------------------------
@@ -254,7 +255,7 @@ const getCorners = (boundingCurves) => {
 // -----------------------------------------------------------------------------
 
 export const getBoundsApi = (boundingCurves, config) => {
-  const offset = (position) => ({
+  const translateToPoint = (position) => ({
     top: {
       startPoint: {
         x: position.x,
@@ -679,13 +680,48 @@ export const getBoundsApi = (boundingCurves, config) => {
     }
   }
 
-  const corners = getCorners(boundingCurves)
+  const getBoundsTranslatedOnOrigin = () => {
+    const origin = boundingCurves.top.startPoint
+
+    const bounds = [
+      boundingCurves.top,
+      boundingCurves.left,
+      boundingCurves.bottom,
+      boundingCurves.right,
+    ].reduce((acc, { startPoint, endPoint }) => {
+      const left = startPoint.x < endPoint.x ? startPoint.x : endPoint.x
+      const top = startPoint.y < endPoint.y ? startPoint.y : endPoint.y
+      const right = startPoint.x > endPoint.x ? startPoint.x : endPoint.x
+      const bottom = startPoint.y > endPoint.y ? startPoint.y : endPoint.y
+      return isNull(acc)
+        ? {
+            top,
+            bottom,
+            left,
+            right,
+          }
+        : {
+            top: Math.min(acc.top, top),
+            left: Math.min(acc.left, left),
+            bottom: Math.max(acc.bottom, bottom),
+            right: Math.max(acc.right, right),
+          }
+    }, null)
+
+    return {
+      top: bounds.top - origin.y,
+      bottom: bounds.bottom - origin.y,
+      left: bounds.left - origin.x,
+      right: bounds.right - origin.x,
+    }
+  }
 
   return {
     expandControlPoints,
     zeroControlPoints,
     updateNodePosition,
-    offset,
-    corners,
+    translateToPoint,
+    getCorners,
+    getBoundsTranslatedOnOrigin,
   }
 }

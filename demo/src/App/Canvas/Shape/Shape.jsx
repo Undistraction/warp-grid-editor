@@ -1,5 +1,6 @@
 import React from 'react'
 import Draggable from 'react-draggable'
+import { getBoundsApi } from '../../../utils/boundsApi'
 
 // -----------------------------------------------------------------------------
 // Const
@@ -8,6 +9,7 @@ import Draggable from 'react-draggable'
 const DEFAULT_CANVAS_SIZE = { width: 0, height: 0, x: 0, y: 0 }
 
 const BORDER_WIDTH = 2
+const CORNER_POINT_RADIUS = 12
 
 // -----------------------------------------------------------------------------
 // Utils
@@ -68,6 +70,7 @@ const renderPath = ({ top, left, bottom, right }) => {
 const Shape = ({ boundingCurves, onDrag }) => {
   const nodeRef = React.useRef(null)
   const svgRef = React.useRef(null)
+  const boundsApi = getBoundsApi(boundingCurves)
   const [{ width, height, x, y }, setCanvasBounds] =
     React.useState(DEFAULT_CANVAS_SIZE)
 
@@ -75,13 +78,38 @@ const Shape = ({ boundingCurves, onDrag }) => {
     const svgElement = svgRef.current
     if (svgElement) {
       const boundingBox = svgElement.getBBox({ stroke: true })
-      const newWidth = boundingBox.width
-      const newHeight = boundingBox.height
+
+      const { left, right, top, bottom } =
+        boundsApi.getBoundsTranslatedOnOrigin()
+
+      const resolvedX =
+        boundingBox.x > left - CORNER_POINT_RADIUS
+          ? left - CORNER_POINT_RADIUS
+          : boundingBox.x
+
+      const resolvedY =
+        boundingBox.y > top - CORNER_POINT_RADIUS
+          ? top - CORNER_POINT_RADIUS
+          : boundingBox.y
+
+      const resolvedWidth =
+        boundingBox.width < right - boundingBox.x + CORNER_POINT_RADIUS
+          ? right - boundingBox.x + CORNER_POINT_RADIUS
+          : boundingBox.width
+
+      const resolvedHeight =
+        boundingBox.height < bottom - boundingBox.y + CORNER_POINT_RADIUS
+          ? bottom - boundingBox.y + CORNER_POINT_RADIUS
+          : boundingBox.height
+
+      const addedWidth = boundingBox.x - resolvedX
+      const addedHeight = boundingBox.y - resolvedY
+
       setCanvasBounds({
-        width: newWidth + BORDER_WIDTH,
-        height: newHeight + BORDER_WIDTH,
-        x: boundingBox.x,
-        y: boundingBox.y,
+        width: resolvedWidth + addedWidth + BORDER_WIDTH * 2,
+        height: resolvedHeight + addedHeight + BORDER_WIDTH * 2,
+        x: resolvedX - BORDER_WIDTH,
+        y: resolvedY - BORDER_WIDTH,
       })
     }
   }, [svgRef.current, boundingCurves])
