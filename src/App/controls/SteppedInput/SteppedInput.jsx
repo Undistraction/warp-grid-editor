@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import { isInteger, isPlainObj, isString } from 'ramda-adjunct'
 import React from 'react'
 
@@ -7,16 +8,16 @@ import React from 'react'
 
 const getOption = (objectOrString) => {
   if (isString(objectOrString) || isInteger(objectOrString)) {
-    const keyRoot = objectOrString === '' ? 'unknown' : objectOrString
+    const keyRoot = objectOrString === `` ? `unknown` : objectOrString
     return {
       value: objectOrString,
-      key: `option-${keyRoot.toString().replace(/\s/g, '')}`,
+      key: `option-${keyRoot.toString().replace(/\s/g, ``)}`,
       label: objectOrString,
     }
   } else {
     return {
       value: objectOrString.value,
-      key: `option-${objectOrString.value.toString().replace(/\s/g, '')}`,
+      key: `option-${objectOrString.value.toString().replace(/\s/g, ``)}`,
       label: objectOrString.label,
     }
   }
@@ -60,6 +61,13 @@ const SteppedInput = ({ onChange, value, label, options }) => {
       <div>{label}</div>
     </div>
   )
+}
+
+SteppedInput.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  label: PropTypes.string.isRequired,
+  options: PropTypes.array.isRequired,
 }
 
 export default SteppedInput

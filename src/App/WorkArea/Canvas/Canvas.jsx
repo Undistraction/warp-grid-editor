@@ -1,5 +1,7 @@
+import PropTypes from 'prop-types'
 import { isInteger } from 'ramda-adjunct'
 import React from 'react'
+import { typeConfig, typePoint, typeSurface } from '../../../prop-types'
 import getCanvasApi from '../../../utils/getCanvasApi'
 
 // -----------------------------------------------------------------------------
@@ -21,10 +23,10 @@ const Canvas = ({
     if (ref.current) {
       setCanvas(ref.current)
     }
-  }, [ref.current])
+  }, [setCanvas])
 
   React.useLayoutEffect(() => {
-    const canvasContext = ref.current.getContext('2d')
+    const canvasContext = ref.current.getContext(`2d`)
     const canvasApi = getCanvasApi(canvasContext)
     canvasApi.clearCanvas(ref.current)
 
@@ -58,6 +60,16 @@ const Canvas = ({
       </div>
     </div>
   )
+}
+
+Canvas.propTypes = {
+  setCanvas: PropTypes.func.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  coonsPatch: PropTypes.object,
+  gridSquare: typePoint,
+  surface: typeSurface,
+  config: typeConfig.isRequired,
 }
 
 export default Canvas

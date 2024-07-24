@@ -7,6 +7,8 @@ import React from 'react'
 // See: https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserverEntry
 const useObserveClientSize = (ref, callback, modify) => {
   React.useEffect(() => {
+    const element = ref.current
+
     const resizeObserver = new ResizeObserver((event) => {
       const width = event[0].contentBoxSize[0].inlineSize + modify.width
       const height = event[0].contentBoxSize[0].blockSize + modify.height
@@ -14,16 +16,16 @@ const useObserveClientSize = (ref, callback, modify) => {
     })
 
     if (ref.current) {
-      resizeObserver.observe(ref.current)
+      resizeObserver.observe(element)
     }
 
     // Clean up
     return () => {
-      if (ref.current) {
-        resizeObserver.unobserve(ref.current)
+      if (element) {
+        resizeObserver.unobserve(element)
       }
     }
-  }, [ref.current, ref.current])
+  }, [callback, modify, ref])
 }
 
 export default useObserveClientSize

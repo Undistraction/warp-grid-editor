@@ -1,12 +1,14 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import Draggable from 'react-draggable'
+import { METRICS } from '../../../../../const'
+import { typePoint } from '../../../../../prop-types'
 
 // -----------------------------------------------------------------------------
 // Const
 // -----------------------------------------------------------------------------
 
-const WIDTH = 24
-const HEIGHT = 24
+const { WIDTH, HEIGHT } = METRICS.CORNER_NODE
 
 // -----------------------------------------------------------------------------
 // Exports
@@ -54,6 +56,12 @@ const CornerNode = ({ id, position, onDrag }) => {
       </div>
     </Draggable>
   )
+}
+
+CornerNode.propTypes = {
+  id: PropTypes.string.isRequired,
+  position: typePoint.isRequired,
+  onDrag: PropTypes.func.isRequired,
 }
 
 export default CornerNode

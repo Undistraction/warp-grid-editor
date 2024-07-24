@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import { isNil } from 'ramda'
 import React from 'react'
 
@@ -16,7 +17,7 @@ const TextInput = ({ value, label, onChange }) => {
         value={resolvedValue}
         onChange={(event) => {
           const { value } = event.target
-          if (value === '' || value.endsWith(',') || value.endsWith(' ')) {
+          if (value === `` || value.endsWith(`,`) || value.endsWith(` `)) {
             setLocalValue(value)
           } else {
             setLocalValue(null)
@@ -27,6 +28,12 @@ const TextInput = ({ value, label, onChange }) => {
       <div className="min-w-[70px]">{label}</div>
     </div>
   )
+}
+
+TextInput.propTypes = {
+  value: PropTypes.string,
+  label: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 }
 
 export default TextInput

@@ -17,10 +17,10 @@ const GRID_DEFAULT = {
   rows: 25,
   // columns: [5, 1, 5, 4, 5, 1, 5, 1, 5],
   // rows: [5, 1, 5, 3, 5, 1, 10],
-  interpolationStrategy: 'even',
+  interpolationStrategy: `even`,
 }
 
-const SURFACE_DEFAULT = { x: 0, y: 0, gridSquare: {} }
+const SURFACE_DEFAULT = { x: 0, y: 0 }
 
 const CONFIG_DEFAULT = {
   global: {
@@ -198,16 +198,20 @@ const App = () => {
   )
   const [boundingCurvesDebounced] = useDebounce(boundingCurves, 5)
 
-  React.useLayoutEffect(() => {
+  // Create a random set of bounding curves on first render
+  React.useEffect(() => {
     if (!boundingCurves && canvas && canvasSize.width > 0) {
       setBoundingCurves(getRandomBoundingCurves(canvas))
     }
+  }, [boundingCurves, canvasSize, canvas])
 
+  // Create new coons-patch based on bounds
+  React.useLayoutEffect(() => {
     if (boundingCurvesDebounced) {
       const coonsPatch = getCoonsPatch(boundingCurvesDebounced, grid)
       setCoonsPatch(coonsPatch)
     }
-  }, [boundingCurvesDebounced, canvas, grid, canvasSize])
+  }, [boundingCurvesDebounced, grid])
 
   const boundsApi = getBoundsApi(boundingCurves)
 
@@ -227,63 +231,65 @@ const App = () => {
         grid={grid}
       />
       <div className="-my-5 w-[300px] flex-shrink-0 flex-grow-0 overflow-y-scroll">
-        <Sidebar
-          grid={grid}
-          canvas={canvas}
-          getRandomBoundingCurves={getRandomBoundingCurves}
-          setBoundingCurves={setBoundingCurves}
-          boundingCurves={boundingCurves}
-          config={config}
-          setConfig={setConfig}
-          setGrid={setGrid}
-          savedProjects={savedProjects}
-          surface={surface}
-          setSurface={setSurface}
-          onLinkControlPoints={handleLinkControlPoints(
-            boundsApi,
-            setBoundingCurves,
-            config,
-            setConfig
-          )}
-          onZeroControlPoints={handleZeroControlPoints(
-            boundsApi,
-            setBoundingCurves
-          )}
-          onMirrorControlPoints={handleMirrorControlPoints(config, setConfig)}
-          onLinkControlPointsGlobal={handleLinkControlPointsGlobal(
-            boundingCurves,
-            setBoundingCurves,
-            config,
-            setConfig
-          )}
-          onZeroControlPointsGlobal={handleZeroControlPointsGlobal(
-            boundingCurves,
-            setBoundingCurves,
-            config,
-            setConfig
-          )}
-          onMirrorControlPointsGlobal={handleMirrorControlPointsGlobal(
-            boundingCurves,
-            setBoundingCurves,
-            config,
-            setConfig
-          )}
-          onSave={(id) => {
-            localStorageApi.save(id, { grid, boundingCurves, config })
-            setSavedProjects(localStorageApi.getProjects())
-          }}
-          onLoad={(id) => {
-            const result = localStorageApi.load(id)
-            setConfig(result.config)
-            setGrid(result.grid)
-            setBoundingCurves(result.boundingCurves)
-          }}
-          onNodePositionChange={handleNodePositionChange(
-            boundingCurves,
-            setBoundingCurves,
-            config
-          )}
-        />
+        {canvas && (
+          <Sidebar
+            grid={grid}
+            canvas={canvas}
+            getRandomBoundingCurves={getRandomBoundingCurves}
+            setBoundingCurves={setBoundingCurves}
+            boundingCurves={boundingCurves}
+            config={config}
+            setConfig={setConfig}
+            setGrid={setGrid}
+            savedProjects={savedProjects}
+            surface={surface}
+            setSurface={setSurface}
+            onLinkControlPoints={handleLinkControlPoints(
+              boundsApi,
+              setBoundingCurves,
+              config,
+              setConfig
+            )}
+            onZeroControlPoints={handleZeroControlPoints(
+              boundsApi,
+              setBoundingCurves
+            )}
+            onMirrorControlPoints={handleMirrorControlPoints(config, setConfig)}
+            onLinkControlPointsGlobal={handleLinkControlPointsGlobal(
+              boundingCurves,
+              setBoundingCurves,
+              config,
+              setConfig
+            )}
+            onZeroControlPointsGlobal={handleZeroControlPointsGlobal(
+              boundingCurves,
+              setBoundingCurves,
+              config,
+              setConfig
+            )}
+            onMirrorControlPointsGlobal={handleMirrorControlPointsGlobal(
+              boundingCurves,
+              setBoundingCurves,
+              config,
+              setConfig
+            )}
+            onSave={(id) => {
+              localStorageApi.save(id, { grid, boundingCurves, config })
+              setSavedProjects(localStorageApi.getProjects())
+            }}
+            onLoad={(id) => {
+              const result = localStorageApi.load(id)
+              setConfig(result.config)
+              setGrid(result.grid)
+              setBoundingCurves(result.boundingCurves)
+            }}
+            onNodePositionChange={handleNodePositionChange(
+              boundingCurves,
+              setBoundingCurves,
+              config
+            )}
+          />
+        )}
       </div>
     </div>
   )

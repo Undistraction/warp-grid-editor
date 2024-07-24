@@ -1,5 +1,12 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import useObserveClientSize from '../../hooks/useObserveClientSize'
+import {
+  typeBoundingCurves,
+  typeConfig,
+  typeDimensions,
+  typeSurface,
+} from '../../prop-types'
 import { clampGridSquareToGridDimensions } from '../../utils'
 import Canvas from './Canvas'
 import ControlNodes from './Canvas/ControlNodes'
@@ -88,6 +95,20 @@ const WorkArea = ({
       )}
     </div>
   )
+}
+
+WorkArea.propTypes = {
+  setCanvas: PropTypes.func.isRequired,
+  canvasSize: typeDimensions.isRequired,
+  coonsPatch: PropTypes.object,
+  surface: typeSurface.isRequired,
+  config: typeConfig,
+  boundingCurves: typeBoundingCurves,
+  setBoundingCurves: PropTypes.func.isRequired,
+  handleNodePositionChange: PropTypes.func.isRequired,
+  handleShapeDrag: PropTypes.func.isRequired,
+  setCanvasSize: PropTypes.func.isRequired,
+  grid: PropTypes.object.isRequired,
 }
 
 export default WorkArea

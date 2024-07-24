@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 // -----------------------------------------------------------------------------
@@ -20,6 +21,13 @@ const Slider = ({ value, name, onChange, label }) => {
       />
     </div>
   )
+}
+
+Slider.propTypes = {
+  value: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired,
 }
 
 export default Slider

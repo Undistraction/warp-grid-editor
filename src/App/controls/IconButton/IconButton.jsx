@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 // -----------------------------------------------------------------------------
@@ -7,10 +8,10 @@ import React from 'react'
 const IconButton = ({
   label,
   labelSelected,
-  isSelected,
+  isSelected = false,
   onClick,
-  isSelectable,
-  isDisabled,
+  isSelectable = false,
+  isDisabled = false,
 }) => {
   return (
     <button
@@ -26,6 +27,15 @@ const IconButton = ({
       {isSelected ? labelSelected : label}
     </button>
   )
+}
+
+IconButton.propTypes = {
+  label: PropTypes.string.isRequired,
+  labelSelected: PropTypes.string,
+  isSelected: PropTypes.bool,
+  onClick: PropTypes.func.isRequired,
+  isSelectable: PropTypes.bool,
+  isDisabled: PropTypes.bool,
 }
 
 export default IconButton

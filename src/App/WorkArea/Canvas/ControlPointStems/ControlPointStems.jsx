@@ -1,4 +1,6 @@
+import PropTypes from 'prop-types'
 import React from 'react'
+import { typeBoundingCurves } from '../../../../prop-types'
 
 // -----------------------------------------------------------------------------
 // Utils
@@ -35,7 +37,7 @@ const ControlPointStems = ({ boundingCurves, width, height }) => {
   ]
 
   return (
-    <div className={`absolute inset-0`}>
+    <div className={`pointer-events-none absolute inset-0`}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         overflow="visible"
@@ -47,6 +49,12 @@ const ControlPointStems = ({ boundingCurves, width, height }) => {
       </svg>
     </div>
   )
+}
+
+ControlPointStems.propTypes = {
+  boundingCurves: typeBoundingCurves,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
 }
 
 export default ControlPointStems

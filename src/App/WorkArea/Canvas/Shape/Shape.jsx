@@ -1,5 +1,8 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import Draggable from 'react-draggable'
+import { METRICS } from '../../../../const'
+import { typeBoundingCurves } from '../../../../prop-types'
 import { getBoundsApi } from '../../../../utils/boundsApi'
 
 // -----------------------------------------------------------------------------
@@ -8,8 +11,8 @@ import { getBoundsApi } from '../../../../utils/boundsApi'
 
 const DEFAULT_CANVAS_SIZE = { width: 0, height: 0, x: 0, y: 0 }
 
-const BORDER_WIDTH = 2
-const CORNER_POINT_RADIUS = 12
+const BORDER_WIDTH = METRICS.CANVAS.BORDER_WIDTH
+const CORNER_POINT_RADIUS = METRICS.CONTROL_POINT.WIDTH * 0.5
 
 // -----------------------------------------------------------------------------
 // Utils
@@ -113,7 +116,7 @@ const Shape = ({ boundingCurves, onDrag }) => {
         y: resolvedY - BORDER_WIDTH,
       })
     }
-  }, [svgRef.current, boundingCurves])
+  }, [boundsApi, boundingCurves])
 
   return (
     <Draggable
@@ -150,6 +153,11 @@ const Shape = ({ boundingCurves, onDrag }) => {
       </div>
     </Draggable>
   )
+}
+
+Shape.propTypes = {
+  boundingCurves: typeBoundingCurves,
+  onDrag: PropTypes.func.isRequired,
 }
 
 export default Shape

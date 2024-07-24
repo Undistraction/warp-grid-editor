@@ -1,5 +1,7 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import { BOUNDS_POINT_IDS } from '../../../const'
+import { typeBoundingCurves, typeConfig } from '../../../prop-types'
 import { getBoundsApi } from '../../../utils/boundsApi'
 import NodeEditor from '../NodeEditor'
 
@@ -89,6 +91,17 @@ const BoundsEditor = ({
       />
     </div>
   )
+}
+
+BoundsEditor.propTypes = {
+  boundingCurves: typeBoundingCurves,
+  setBoundingCurves: PropTypes.func.isRequired,
+  config: typeConfig.isRequired,
+  corners: PropTypes.object.isRequired,
+  onNodePositionChange: PropTypes.func.isRequired,
+  onZeroControlPoints: PropTypes.func.isRequired,
+  onLinkControlPoints: PropTypes.func.isRequired,
+  onMirrorControlPoints: PropTypes.func.isRequired,
 }
 
 export default BoundsEditor

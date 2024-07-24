@@ -78,6 +78,7 @@ const getLinkedControlPointPosition = (
   if (isLinked) {
     const cornerPoint = getCorners(boundingCurves)[cornerId].cornerPoint.point
     const linkedPoint = boundingCurves[linkedCurveName][linkedControlPointName]
+
     return getUpdatedLinkedControlPointPosition(
       newPosition,
       linkedPoint,
@@ -732,7 +733,7 @@ export const getBoundsApi = (boundingCurves, config) => {
     zeroControlPoints,
     updateNodePosition,
     translateToPoint,
-    getCorners,
+    getCorners: () => getCorners(boundingCurves),
     getBoundsTranslatedOnOrigin,
     getBoundsDimensionsSimple,
   }

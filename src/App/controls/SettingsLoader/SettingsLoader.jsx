@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 // -----------------------------------------------------------------------------
@@ -20,10 +21,10 @@ const renderOptions = (options) => {
 // -----------------------------------------------------------------------------
 
 const SettingsLoader = ({ onLoad, savedProjects }) => {
-  const [key, setKey] = React.useState('')
+  const [key, setKey] = React.useState(``)
 
   const options = [
-    { id: 'none', value: '' },
+    { id: `none`, value: `` },
     ...savedProjects.map((project) => {
       return {
         id: project.id,
@@ -45,9 +46,9 @@ const SettingsLoader = ({ onLoad, savedProjects }) => {
       </select>
       <button
         className="rounded-md bg-black p-3 text-white disabled:bg-gray-300"
-        disabled={key === ''}
+        disabled={key === ``}
         onClick={() => {
-          if (key !== '') {
+          if (key !== ``) {
             onLoad(key)
           }
         }}
@@ -56,6 +57,11 @@ const SettingsLoader = ({ onLoad, savedProjects }) => {
       </button>
     </div>
   )
+}
+
+SettingsLoader.propTypes = {
+  onLoad: PropTypes.func.isRequired,
+  savedProjects: PropTypes.array.isRequired,
 }
 
 export default SettingsLoader

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 // -----------------------------------------------------------------------------
@@ -6,7 +7,7 @@ import React from 'react'
 
 const NumericInput = ({ value, label, onChange }) => {
   const [localValue, setLocalValue] = React.useState(null)
-  const resolvedValue = localValue === '' ? localValue : value
+  const resolvedValue = localValue === `` ? localValue : value
   return (
     <div className="flex max-w-24 cursor-pointer flex-row items-center space-x-1">
       <div className="text-sm">{label}</div>
@@ -16,7 +17,7 @@ const NumericInput = ({ value, label, onChange }) => {
         value={resolvedValue}
         onChange={(event) => {
           const { value } = event.target
-          if (value === '') {
+          if (value === ``) {
             setLocalValue(value)
           } else {
             const resolvedValue = parseFloat(value)
@@ -27,6 +28,12 @@ const NumericInput = ({ value, label, onChange }) => {
       />
     </div>
   )
+}
+
+NumericInput.propTypes = {
+  value: PropTypes.number.isRequired,
+  label: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 }
 
 export default NumericInput

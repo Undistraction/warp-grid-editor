@@ -1,10 +1,10 @@
 export default {
-  branches: ['main'],
+  branches: [`main`],
   plugins: [
-    '@semantic-release/commit-analyzer',
-    '@semantic-release/changelog',
-    '@semantic-release/npm',
-    '@semantic-release/git',
-    '@semantic-release/github',
+    `@semantic-release/commit-analyzer`,
+    `@semantic-release/changelog`,
+    `@semantic-release/npm`,
+    `@semantic-release/git`,
+    `@semantic-release/github`,
   ],
 }

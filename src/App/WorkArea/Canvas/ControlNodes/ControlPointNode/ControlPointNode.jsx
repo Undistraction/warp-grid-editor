@@ -1,12 +1,14 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import Draggable from 'react-draggable'
+import { METRICS } from '../../../../../const'
+import { typePoint } from '../../../../../prop-types'
 
 // -----------------------------------------------------------------------------
 // Utils
 // -----------------------------------------------------------------------------
 
-const WIDTH = 12
-const HEIGHT = 12
+const { WIDTH, HEIGHT } = METRICS.CONTROL_POINT
 
 // -----------------------------------------------------------------------------
 // Exports
@@ -45,6 +47,12 @@ const ControlPointNode = ({ position, onDrag, id }) => {
       </div>
     </Draggable>
   )
+}
+
+ControlPointNode.propTypes = {
+  position: typePoint.isRequired,
+  onDrag: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
 }
 
 export default ControlPointNode

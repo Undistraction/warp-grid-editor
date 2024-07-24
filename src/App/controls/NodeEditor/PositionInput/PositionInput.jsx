@@ -1,5 +1,7 @@
+import PropTypes from 'prop-types'
 import { isNumber } from 'ramda-adjunct'
 import React from 'react'
+import { typePoint } from '../../../../prop-types'
 import { roundToTwoPlaces } from '../../../../utils/math'
 import NumericInput from '../../NumericInput'
 
@@ -29,6 +31,12 @@ const PositionInput = ({ label, point, onChange }) => {
       <h2 className="text-sm">{label}</h2>
     </div>
   )
+}
+
+PositionInput.propTypes = {
+  label: PropTypes.string.isRequired,
+  point: typePoint.isRequired,
+  onChange: PropTypes.func.isRequired,
 }
 
 export default PositionInput

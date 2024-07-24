@@ -1,5 +1,7 @@
+import PropTypes from 'prop-types'
 import { isArray } from 'ramda-adjunct'
 import React from 'react'
+import { typeConfig, typeGrid } from '../../../prop-types'
 import SteppedInput from '../SteppedInput'
 import Switch from '../Switch'
 import TextInput from '../TextInput'
@@ -16,13 +18,13 @@ const ROWS_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 25, 50]
 // -----------------------------------------------------------------------------
 
 const getItemsFromString = (string) => {
-  const list = string.split(',')
+  const list = string.split(`,`)
   const trimmed = list.map((value) => value.trim())
   return trimmed.filter(Number)
 }
 
 const convertListIntoInputString = (listOrNumber) => {
-  return isArray(listOrNumber) ? listOrNumber.join(', ') : listOrNumber
+  return isArray(listOrNumber) ? listOrNumber.join(`, `) : listOrNumber
 }
 
 // -----------------------------------------------------------------------------
@@ -99,6 +101,13 @@ const GridEditor = ({ grid, setGrid, config, setConfig }) => {
       )}
     </div>
   )
+}
+
+GridEditor.propTypes = {
+  grid: typeGrid.isRequired,
+  setGrid: PropTypes.func.isRequired,
+  config: typeConfig,
+  setConfig: PropTypes.func.isRequired,
 }
 
 export default GridEditor

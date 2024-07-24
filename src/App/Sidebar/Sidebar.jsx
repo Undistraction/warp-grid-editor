@@ -1,4 +1,11 @@
+import PropTypes from 'prop-types'
 import React from 'react'
+import {
+  typeBoundingCurves,
+  typeConfig,
+  typeGrid,
+  typeSurface,
+} from '../../prop-types'
 import { getBoundsApi } from '../../utils/boundsApi'
 import BoundsEditor from '../controls/BoundsEditor'
 import Button from '../controls/Button'
@@ -16,12 +23,12 @@ import SidebarGroup from './SidebarGroup'
 
 export const INTERPOLATION_STRATEGY_OPTIONS = [
   {
-    label: 'Even',
-    value: 'even',
+    label: `Even`,
+    value: `even`,
   },
   {
-    label: 'Linear',
-    value: 'linear',
+    label: `Linear`,
+    value: `linear`,
   },
 ]
 
@@ -34,7 +41,7 @@ const getGridSquareOptions = (minNumber, maxNumberOrArray) => {
     ? maxNumberOrArray
     : maxNumberOrArray.length
 
-  const options = ['']
+  const options = [``]
   for (let i = minNumber; i < maxNumber; i++) {
     options.push(i)
   }
@@ -148,17 +155,19 @@ const Sidebar = ({
           controlNodesAreLinked={config.global.isLinked}
           controlNodesAreMirrored={config.global.isMirrored}
         />
-        <BoundsEditor
-          corners={corners}
-          boundingCurves={boundingCurves}
-          setBoundingCurves={setBoundingCurves}
-          config={config}
-          setConfig={setConfig}
-          onNodePositionChange={onNodePositionChange}
-          onLinkControlPoints={onLinkControlPoints}
-          onZeroControlPoints={onZeroControlPoints}
-          onMirrorControlPoints={onMirrorControlPoints}
-        />
+        {boundingCurves && (
+          <BoundsEditor
+            corners={corners}
+            boundingCurves={boundingCurves}
+            setBoundingCurves={setBoundingCurves}
+            config={config}
+            setConfig={setConfig}
+            onNodePositionChange={onNodePositionChange}
+            onLinkControlPoints={onLinkControlPoints}
+            onZeroControlPoints={onZeroControlPoints}
+            onMirrorControlPoints={onMirrorControlPoints}
+          />
+        )}
       </SidebarGroup>
 
       <SidebarGroup
@@ -176,7 +185,7 @@ const Sidebar = ({
       <SidebarGroup title="Grid square">
         <SteppedInput
           label="Across"
-          value={surface.gridSquare ? surface.gridSquare.x : ''}
+          value={surface.gridSquare ? surface.gridSquare.x : ``}
           options={getGridSquareOptions(0, grid.columns)}
           onChange={(x) => {
             setSurface({
@@ -190,7 +199,7 @@ const Sidebar = ({
         />
         <SteppedInput
           label="Down"
-          value={surface.gridSquare ? surface.gridSquare.y : ''}
+          value={surface.gridSquare ? surface.gridSquare.y : ``}
           options={getGridSquareOptions(0, grid.rows)}
           onChange={(y) => {
             setSurface({
@@ -215,7 +224,7 @@ const Sidebar = ({
       </SidebarGroup>
       <div className="flex justify-center pt-2 align-middle text-sm text-gray-500">
         <div>
-          Built by{' '}
+          Built by{` `}
           <a
             className="text-black"
             href="https://undistraction.com"
@@ -226,6 +235,29 @@ const Sidebar = ({
       </div>
     </div>
   )
+}
+
+Sidebar.propTypes = {
+  grid: typeGrid.isRequired,
+  canvas: PropTypes.object.isRequired,
+  surface: typeSurface.isRequired,
+  getRandomBoundingCurves: PropTypes.func.isRequired,
+  setBoundingCurves: PropTypes.func.isRequired,
+  setGrid: PropTypes.func.isRequired,
+  savedProjects: PropTypes.array.isRequired,
+  setSurface: PropTypes.func.isRequired,
+  boundingCurves: typeBoundingCurves,
+  config: typeConfig.isRequired,
+  setConfig: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
+  onLoad: PropTypes.func.isRequired,
+  onNodePositionChange: PropTypes.func.isRequired,
+  onLinkControlPoints: PropTypes.func.isRequired,
+  onZeroControlPoints: PropTypes.func.isRequired,
+  onMirrorControlPoints: PropTypes.func.isRequired,
+  onZeroControlPointsGlobal: PropTypes.func.isRequired,
+  onLinkControlPointsGlobal: PropTypes.func.isRequired,
+  onMirrorControlPointsGlobal: PropTypes.func.isRequired,
 }
 
 export default Sidebar

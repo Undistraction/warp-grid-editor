@@ -32,7 +32,7 @@ const save = (name, value) => {
     ...projects,
     { ...value, id, version: VERSION, name, date: new Date().toUTCString() },
   ])
-  localStorage.setItem('projects', updatedProjects)
+  localStorage.setItem(`projects`, updatedProjects)
 }
 
 const load = (id) => {

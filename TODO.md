@@ -2,8 +2,8 @@
 
 ### Must do
 
-1.  Separate demo to own repo
-2.  Basic mobile styles
+1.  Basic mobile styles
+2.  SVG Export
 
 ### Should do
 

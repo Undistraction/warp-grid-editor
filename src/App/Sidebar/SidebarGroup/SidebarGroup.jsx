@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 // -----------------------------------------------------------------------------
@@ -6,7 +7,7 @@ import React from 'react'
 
 const SidebarGroup = ({ title, children, hint }) => {
   const [isMinimised, setIsMinised] = React.useState(false)
-  const icon = isMinimised ? '+' : '-'
+  const icon = isMinimised ? `+` : `-`
 
   return (
     <div className="flex flex-col space-y-2 pt-3">
@@ -19,12 +20,18 @@ const SidebarGroup = ({ title, children, hint }) => {
       </header>
       <div className="flex flex-col space-y-3">
         {hint && <div className="-m2-2 text-sm italic">{hint}</div>}
-        <div className={`flex flex-col space-y-3 ${isMinimised && 'hidden'}`}>
+        <div className={`flex flex-col space-y-3 ${isMinimised && `hidden`}`}>
           {children}
         </div>
       </div>
     </div>
   )
+}
+
+SidebarGroup.propTypes = {
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+  hint: PropTypes.string,
 }
 
 export default SidebarGroup

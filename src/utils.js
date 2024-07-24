@@ -65,7 +65,7 @@ const getBoundingCurvesFromRectangularBounds = ({ x, y, width, height }) => {
 // -----------------------------------------------------------------------------
 
 export const getRandomBoundingCurves = (canvas) => {
-  const canvasContext = canvas.getContext('2d')
+  const canvasContext = canvas.getContext(`2d`)
   const canvasApi = getCanvasApi(canvasContext)
   canvasApi.clearCanvas(canvas)
 

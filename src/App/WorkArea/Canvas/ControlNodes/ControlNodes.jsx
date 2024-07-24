@@ -2,8 +2,10 @@
 // Exports
 // -----------------------------------------------------------------------------
 
+import PropTypes from 'prop-types'
 import React from 'react'
 import { BOUNDS_POINT_IDS } from '../../../../const'
+import { typeBoundingCurves } from '../../../../prop-types'
 import ControlPointNode from './ControlPointNode'
 import CornerNode from './CornerNode'
 
@@ -106,6 +108,11 @@ const ControlNodes = ({ boundingCurves, onNodePositionChange }) => {
       ])}
     </div>
   )
+}
+
+ControlNodes.propTypes = {
+  boundingCurves: typeBoundingCurves,
+  onNodePositionChange: PropTypes.func.isRequired,
 }
 
 export default ControlNodes

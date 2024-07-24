@@ -5,21 +5,21 @@
 import { isArray } from 'ramda-adjunct'
 
 const getCanvasApi = (context) => {
-  const drawDot = ({ x, y }, { color = 'black', size = 2, text } = {}) => {
+  const drawDot = ({ x, y }, { color = `black`, size = 2, text } = {}) => {
     context.beginPath()
     context.moveTo(x, y)
     context.arc(x, y, size, 0, Math.PI * 2)
     context.fillStyle = color
     context.fill()
     if (text) {
-      context.fillStyle = 'black'
+      context.fillStyle = `black`
       context.fillText(text, x, y)
     }
   }
 
   const drawCurve = (
     { controlPoint1, controlPoint2, startPoint, endPoint },
-    { color = 'red', lineWidth = 1 } = {}
+    { color = `red`, lineWidth = 1 } = {}
   ) => {
     context.beginPath()
     context.moveTo(startPoint.x, startPoint.y)
@@ -41,7 +41,7 @@ const getCanvasApi = (context) => {
 
   const drawQuad = (
     boundingCurves,
-    { color = 'green', lineWidth = 1 } = {}
+    { color = `green`, lineWidth = 1 } = {}
   ) => {
     context.beginPath()
     context.moveTo(
@@ -99,14 +99,14 @@ const getCanvasApi = (context) => {
 
   const drawPatchBounds = (
     boundingCurves,
-    { lineColor = 'green', lineWidth = 3 } = {}
+    { lineColor = `green`, lineWidth = 3 } = {}
   ) => {
     drawQuad(boundingCurves, { color: lineColor, lineWidth })
   }
 
   const drawBounds = (
     boundingCurves,
-    { lineColor = 'black', lineWidth = 2 } = {}
+    { lineColor = `black`, lineWidth = 2 } = {}
   ) => {
     drawQuad(boundingCurves, { color: lineColor, lineWidth })
   }
@@ -115,7 +115,7 @@ const getCanvasApi = (context) => {
     context.clearRect(0, 0, canvas.width, canvas.height)
   }
 
-  const drawGridCurve = (curve, { lineColor = 'black' }) => {
+  const drawGridCurve = (curve, { lineColor = `black` }) => {
     // if (curve.original) {
     //   drawDot(curve.startPoint, { color: `red`, size: 12 })
     //   drawDot(curve.endPoint, { color: `blue`, size: 12 })
@@ -171,7 +171,7 @@ const getCanvasApi = (context) => {
   }
 
   const drawGridSquareBounds = (boundingCurves) => {
-    drawPatchBounds(boundingCurves, { lineColor: 'green', lineWidth: 3 })
+    drawPatchBounds(boundingCurves, { lineColor: `green`, lineWidth: 3 })
   }
 
   function drawLineFromPoints(points) {

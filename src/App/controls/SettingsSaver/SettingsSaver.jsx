@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import { isNil } from 'ramda'
 import React from 'react'
 
@@ -18,12 +19,16 @@ const SettingsSaver = ({ onSave }) => {
       <button
         className="rounded-md bg-black p-3 text-white disabled:bg-gray-300"
         onClick={() => onSave(id)}
-        disabled={id === '' || isNil(id)}
+        disabled={id === `` || isNil(id)}
       >
         Save settings
       </button>
     </div>
   )
+}
+
+SettingsSaver.propTypes = {
+  onSave: PropTypes.func.isRequired,
 }
 
 export default SettingsSaver

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 // -----------------------------------------------------------------------------
@@ -22,6 +23,12 @@ const Switch = ({ isSelected, label, onChange }) => {
       <div>{label}</div>
     </div>
   )
+}
+
+Switch.propTypes = {
+  isSelected: PropTypes.bool.isRequired,
+  label: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 }
 
 export default Switch

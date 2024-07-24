@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import IconButton from '../IconButton'
 
@@ -35,6 +36,14 @@ const ControlPointEditor = ({
       />
     </div>
   )
+}
+
+ControlPointEditor.propTypes = {
+  onZeroControlPoints: PropTypes.func.isRequired,
+  onLinkControlPoints: PropTypes.func.isRequired,
+  onMirrorControlPoints: PropTypes.func.isRequired,
+  controlNodesAreLinked: PropTypes.bool.isRequired,
+  controlNodesAreMirrored: PropTypes.bool.isRequired,
 }
 
 export default ControlPointEditor
