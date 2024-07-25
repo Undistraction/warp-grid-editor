@@ -199,19 +199,16 @@ const App = () => {
   const [boundingCurvesDebounced] = useDebounce(boundingCurves, 5)
 
   // Create a random set of bounding curves on first render
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     if (!boundingCurves && canvas && canvasSize.width > 0) {
       setBoundingCurves(getRandomBoundingCurves(canvas))
     }
-  }, [boundingCurves, canvasSize, canvas])
 
-  // Create new coons-patch based on bounds
-  React.useLayoutEffect(() => {
     if (boundingCurvesDebounced) {
       const coonsPatch = getCoonsPatch(boundingCurvesDebounced, grid)
       setCoonsPatch(coonsPatch)
     }
-  }, [boundingCurvesDebounced, grid])
+  }, [boundingCurvesDebounced, grid, boundingCurves, canvasSize, canvas])
 
   const boundsApi = getBoundsApi(boundingCurves)
 

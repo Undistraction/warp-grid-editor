@@ -69,7 +69,7 @@
     "vite": "^5.3.3"
   },
   "dependencies": {
-    "coons-patch": "^1.1.0",
+    "coons-patch": "^1.2.0",
     "prop-types": "^15.8.1",
     "ramda": "^0.30.1",
     "ramda-adjunct": "^5.0.1",

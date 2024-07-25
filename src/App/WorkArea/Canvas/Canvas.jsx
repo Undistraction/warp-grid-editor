@@ -26,11 +26,10 @@ const Canvas = ({
   }, [setCanvas])
 
   React.useLayoutEffect(() => {
-    const canvasContext = ref.current.getContext(`2d`)
-    const canvasApi = getCanvasApi(canvasContext)
-    canvasApi.clearCanvas(ref.current)
-
     if (coonsPatch) {
+      const canvasContext = ref.current.getContext(`2d`)
+      const canvasApi = getCanvasApi(canvasContext)
+      canvasApi.clearCanvas(ref.current)
       canvasApi.drawCoonsPatch(coonsPatch, {
         shouldDrawBounds: config.bounds.shouldDrawBounds,
         shouldDrawIntersections: config.grid.shouldDrawIntersections,

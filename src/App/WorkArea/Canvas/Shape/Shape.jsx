@@ -73,7 +73,6 @@ const renderPath = ({ top, left, bottom, right }) => {
 const Shape = ({ boundingCurves, onDrag }) => {
   const nodeRef = React.useRef(null)
   const svgRef = React.useRef(null)
-  const boundsApi = getBoundsApi(boundingCurves)
   const [{ width, height, x, y }, setCanvasBounds] =
     React.useState(DEFAULT_CANVAS_SIZE)
 
@@ -81,6 +80,7 @@ const Shape = ({ boundingCurves, onDrag }) => {
     const svgElement = svgRef.current
     if (svgElement) {
       const boundingBox = svgElement.getBBox({ stroke: true })
+      const boundsApi = getBoundsApi(boundingCurves)
 
       const dimensions = boundsApi.getBoundsDimensionsSimple()
 
@@ -116,7 +116,7 @@ const Shape = ({ boundingCurves, onDrag }) => {
         y: resolvedY - BORDER_WIDTH,
       })
     }
-  }, [boundsApi, boundingCurves])
+  }, [boundingCurves])
 
   return (
     <Draggable
