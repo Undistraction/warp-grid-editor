@@ -132,6 +132,7 @@ const handleLinkControlPointsGlobal =
         isLinked,
       },
       bounds: {
+        ...config.bounds,
         [BOUNDS_POINT_IDS.TOP_LEFT]: {
           ...config.bounds[BOUNDS_POINT_IDS.TOP_LEFT],
           isLinked,
@@ -161,6 +162,7 @@ const handleMirrorControlPointsGlobal =
         isMirrored,
       },
       bounds: {
+        ...config.bounds,
         [BOUNDS_POINT_IDS.TOP_LEFT]: {
           ...config.bounds[BOUNDS_POINT_IDS.TOP_LEFT],
           isMirrored,
