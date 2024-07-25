@@ -1,3 +1,4 @@
+import memoize from 'fast-memoize'
 import { isNil } from 'ramda'
 import { BOUNDS_POINT_IDS, CURVE_NAMES, POINT_NAMES } from '../const'
 
@@ -257,7 +258,7 @@ const getCorners = (boundingCurves) => {
 // Exports
 // -----------------------------------------------------------------------------
 
-export const getBoundsApi = (boundingCurves, config) => {
+export const getBoundsApi = memoize((boundingCurves, config) => {
   const translateToPoint = (position) => ({
     top: {
       startPoint: {
@@ -737,4 +738,4 @@ export const getBoundsApi = (boundingCurves, config) => {
     getBoundsTranslatedOnOrigin,
     getBoundsDimensionsSimple,
   }
-}
+})

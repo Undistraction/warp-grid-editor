@@ -70,6 +70,7 @@
   },
   "dependencies": {
     "coons-patch": "^1.2.0",
+    "fast-memoize": "^2.5.2",
     "prop-types": "^15.8.1",
     "ramda": "^0.30.1",
     "ramda-adjunct": "^5.0.1",

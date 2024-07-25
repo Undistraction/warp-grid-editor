@@ -11,6 +11,9 @@ importers:
       coons-patch:
         specifier: ^1.2.0
         version: 1.2.0
+      fast-memoize:
+        specifier: ^2.5.2
+        version: 2.5.2
       prop-types:
         specifier: ^15.8.1
         version: 15.8.1
