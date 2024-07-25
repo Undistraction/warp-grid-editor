@@ -8,7 +8,7 @@ import { typePoint } from '../../../../../prop-types'
 // Const
 // -----------------------------------------------------------------------------
 
-const { WIDTH, HEIGHT } = METRICS.CORNER_NODE
+const { WIDTH, HEIGHT } = METRICS.CORNER_POINT
 
 // -----------------------------------------------------------------------------
 // Exports

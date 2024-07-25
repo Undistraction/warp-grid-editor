@@ -44,11 +44,11 @@ export const METRICS = {
     WIDTH: 12,
     HEIGHT: 12,
   },
-  CORNER_NODE: {
+  CORNER_POINT: {
     WIDTH: 24,
     HEIGHT: 24,
   },
   CANVAS: {
-    BORDER_WIDTH: 2,
+    BORDER_WIDTH: 1,
   },
 }

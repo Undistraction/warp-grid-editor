@@ -12,7 +12,7 @@ import { getBoundsApi } from '../../../../utils/boundsApi'
 const DEFAULT_CANVAS_SIZE = { width: 0, height: 0, x: 0, y: 0 }
 
 const BORDER_WIDTH = METRICS.CANVAS.BORDER_WIDTH
-const CORNER_POINT_RADIUS = METRICS.CONTROL_POINT.WIDTH * 0.5
+const CORNER_POINT_RADIUS = METRICS.CORNER_POINT.WIDTH * 0.5
 
 // -----------------------------------------------------------------------------
 // Utils
