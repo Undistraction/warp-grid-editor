@@ -1,8 +1,17 @@
+import { isNil } from 'ramda'
+import { isArray } from 'ramda-adjunct'
+
+// -----------------------------------------------------------------------------
+// Utils
+// -----------------------------------------------------------------------------
+
+const isCurve = (line) => {
+  return !isNil(line.controlPoint1) && !isNil(line.controlPoint2)
+}
+
 // -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
-
-import { isArray } from 'ramda-adjunct'
 
 const getCanvasApi = (context) => {
   const drawDot = ({ x, y }, { color = `black`, size = 2, text } = {}) => {
@@ -115,21 +124,12 @@ const getCanvasApi = (context) => {
     context.clearRect(0, 0, canvas.width, canvas.height)
   }
 
-  const drawGridCurve = (curve, { lineColor = `black` }) => {
-    // if (curve.original) {
-    //   drawDot(curve.startPoint, { color: `red`, size: 12 })
-    //   drawDot(curve.endPoint, { color: `blue`, size: 12 })
-    //   drawDot(curve.controlPoint1, { color: `green`, size: 12 })
-    //   drawDot(curve.controlPoint2, { color: `orange`, size: 12 })
-
-    //   curve.original.midPoints.map((point) => {
-    //     drawDot(point, { color: 'pink' })
-    //   })
-
-    //   // drawDot(curve.controlPoint2, { color: `yellow`, size: 12 })
-    // }
-
-    drawCurve(curve, { color: lineColor })
+  const drawGridCurve = (line, { lineColor = `black` }) => {
+    if (isCurve(line)) {
+      drawCurve(line, { color: lineColor })
+    } else {
+      drawStraightLine(line)
+    }
   }
 
   const drawCoonsPatch = (
@@ -140,10 +140,10 @@ const getCanvasApi = (context) => {
       drawBounds(coonsPatch.config.boundingCurves)
     }
 
-    const curves = coonsPatch.api.getCurves()
+    const lines = coonsPatch.api.getLines()
 
-    // Draw curves along x axis
-    curves.xAxis.map((curveSectionsOrCurve) => {
+    // Draw lines along x axis
+    lines.xAxis.map((curveSectionsOrCurve) => {
       if (isArray(curveSectionsOrCurve)) {
         curveSectionsOrCurve.map(drawGridCurve)
       } else {
@@ -151,8 +151,8 @@ const getCanvasApi = (context) => {
       }
     })
 
-    // Draw curves along y axis
-    curves.yAxis.map((curveSectionsOrCurve) => {
+    // Draw lines along y axis
+    lines.yAxis.map((curveSectionsOrCurve) => {
       if (isArray(curveSectionsOrCurve)) {
         curveSectionsOrCurve.map(drawGridCurve)
       } else {
@@ -174,7 +174,16 @@ const getCanvasApi = (context) => {
     drawPatchBounds(boundingCurves, { lineColor: `green`, lineWidth: 3 })
   }
 
-  function drawLineFromPoints(points) {
+  const drawStraightLine = (line, { color = `black`, lineWidth = 1 } = {}) => {
+    context.beginPath()
+    context.moveTo(line.startPoint.x, line.startPoint.y)
+    context.lineTo(line.endPoint.x, line.endPoint.y)
+    context.strokeStyle = color
+    context.lineWidth = lineWidth
+    context.stroke()
+  }
+
+  const drawLineFromPoints = (points) => {
     context.beginPath()
     context.moveTo(points[0].x, points[0].y)
 

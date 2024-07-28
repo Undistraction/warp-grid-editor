@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import { INTERPOLATION_STRATEGY } from './const'
 
 // -----------------------------------------------------------------------------
 // Exports
@@ -25,7 +26,8 @@ export const typeGridAxis = PropTypes.oneOfType([
 ])
 
 export const typeGrid = PropTypes.shape({
-  interpolationStrategy: PropTypes.oneOf([`linear`, `even`]).isRequired,
+  interpolationStrategy: PropTypes.oneOf(Object.values(INTERPOLATION_STRATEGY))
+    .isRequired,
   columns: typeGridAxis.isRequired,
   rows: typeGridAxis.isRequired,
 })

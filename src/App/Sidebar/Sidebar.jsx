@@ -9,6 +9,7 @@ import {
 import { getBoundsApi } from '../../utils/boundsApi'
 import BoundsEditor from '../controls/BoundsEditor'
 import Button from '../controls/Button'
+import ConfigEditor from '../controls/ConfigEditor'
 import ControlPointEditor from '../controls/ControlPointEditor'
 import GridEditor from '../controls/GridEditor'
 import SettingsLoader from '../controls/SettingsLoader'
@@ -16,21 +17,6 @@ import SettingsSaver from '../controls/SettingsSaver'
 import SteppedInput from '../controls/SteppedInput'
 import Switch from '../controls/Switch'
 import SidebarGroup from './SidebarGroup'
-
-// -----------------------------------------------------------------------------
-// Const
-// -----------------------------------------------------------------------------
-
-export const INTERPOLATION_STRATEGY_OPTIONS = [
-  {
-    label: `Even`,
-    value: `even`,
-  },
-  {
-    label: `Linear`,
-    value: `linear`,
-  },
-]
 
 // -----------------------------------------------------------------------------
 // Utils
@@ -88,17 +74,13 @@ const Sidebar = ({
           Github
         </a>
       </header>
-      <SidebarGroup title="Config">
-        <SteppedInput
-          label="Interpolation type"
-          value={grid.interpolationStrategy}
-          options={INTERPOLATION_STRATEGY_OPTIONS}
-          onChange={(interpolationStrategy) => {
-            setGrid({
-              ...grid,
-              interpolationStrategy,
-            })
-          }}
+      <SidebarGroup
+        title="Config"
+        hint="By default, all lines are straight, however you can switch to using curved lines which is significantly more memory intensive. When using curves, 'Even' is the default interpolation, and is much more accurate, especially with higher 'Precision' settings"
+      >
+        <ConfigEditor
+          grid={grid}
+          setGrid={setGrid}
         />
       </SidebarGroup>
       <SidebarGroup title="Bounds">

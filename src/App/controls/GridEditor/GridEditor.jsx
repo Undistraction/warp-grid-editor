@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import { isArray } from 'ramda-adjunct'
 import React from 'react'
 import { typeConfig, typeGrid } from '../../../prop-types'
+import NumericInput from '../NumericInput'
 import SteppedInput from '../SteppedInput'
 import Switch from '../Switch'
 import TextInput from '../TextInput'
@@ -48,7 +49,7 @@ const GridEditor = ({ grid, setGrid, config, setConfig }) => {
           })
         }
       />
-      {config.grid.shouldUseComplexColumnsRows ? (
+      {config.grid.shouldUseComplexColumnsRows && (
         <div className="flex flex-col items-stretch space-y-2">
           <TextInput
             label="Columns"
@@ -73,7 +74,9 @@ const GridEditor = ({ grid, setGrid, config, setConfig }) => {
             }}
           />
         </div>
-      ) : (
+      )}
+
+      {!config.grid.shouldUseComplexColumnsRows && (
         <div className="flex [&>*]:basis-1/2">
           <SteppedInput
             label="Columns"
@@ -99,6 +102,20 @@ const GridEditor = ({ grid, setGrid, config, setConfig }) => {
           />
         </div>
       )}
+      <div className="flex flex-col items-stretch space-y-2">
+        <NumericInput
+          label="Gutter"
+          value={grid.gutter}
+          min={0}
+          labelIsAfter
+          onChange={(value) => {
+            setGrid({
+              ...grid,
+              gutter: value,
+            })
+          }}
+        />
+      </div>
     </div>
   )
 }

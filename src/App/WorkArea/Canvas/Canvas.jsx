@@ -43,7 +43,7 @@ const Canvas = ({
         canvasApi.drawGridSquareBounds(gridSquareBounds)
       }
     }
-  }, [coonsPatch, gridSquare, surface, config])
+  }, [coonsPatch, gridSquare, surface, config, width, height])
 
   return (
     <div>

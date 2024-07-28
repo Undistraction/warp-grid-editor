@@ -1,7 +1,12 @@
 import getCoonsPatch from 'coons-patch'
 import React from 'react'
 import { useDebounce } from 'use-debounce'
-import { BOUNDS_POINT_IDS, CORNER_POINTS } from '../const'
+import {
+  BOUNDS_POINT_IDS,
+  CORNER_POINTS,
+  INTERPOLATION_STRATEGY,
+  LINE_STRATEGY,
+} from '../const'
 import { getRandomBoundingCurves } from '../utils'
 import { getBoundsApi } from '../utils/boundsApi'
 import localStorageApi from '../utils/localStorageApi'
@@ -15,9 +20,12 @@ import WorkArea from './WorkArea'
 const GRID_DEFAULT = {
   columns: 25,
   rows: 25,
+  gutter: 0,
   // columns: [5, 1, 5, 4, 5, 1, 5, 1, 5],
   // rows: [5, 1, 5, 3, 5, 1, 10],
-  interpolationStrategy: `even`,
+  lineStrategy: LINE_STRATEGY.CURVES,
+  interpolationStrategy: INTERPOLATION_STRATEGY.EVEN,
+  precision: 20,
 }
 
 const SURFACE_DEFAULT = { x: 0, y: 0 }
@@ -63,9 +71,7 @@ const handleShapeDrag =
   }
 
 const handleLinkControlPoints =
-  (boundsApi, setBoundingCurves, config, setConfig) =>
-  (cornerNodeId) =>
-  (isLinked) => {
+  (setBoundingCurves, config, setConfig) => (cornerNodeId) => (isLinked) => {
     if (isLinked) {
       const updatedBoundingCurves = boundsApi.expandControlPoints(cornerNodeId)
       setBoundingCurves(updatedBoundingCurves)
@@ -84,11 +90,10 @@ const handleLinkControlPoints =
     })
   }
 
-const handleZeroControlPoints =
-  (boundsApi, setBoundingCurves) => (cornerNodeId) => () => {
-    const updatedBoundingCurves = boundsApi.zeroControlPoints(cornerNodeId)
-    setBoundingCurves(updatedBoundingCurves)
-  }
+const handleZeroControlPoints = (setBoundingCurves) => (cornerNodeId) => () => {
+  const updatedBoundingCurves = boundsApi.zeroControlPoints(cornerNodeId)
+  setBoundingCurves(updatedBoundingCurves)
+}
 
 const handleMirrorControlPoints =
   (config, setConfig) => (cornerNodeId) => (isMirrored) => {
@@ -205,14 +210,14 @@ const App = () => {
     if (!boundingCurves && canvas && canvasSize.width > 0) {
       setBoundingCurves(getRandomBoundingCurves(canvas))
     }
+  }, [boundingCurves, canvas, canvasSize])
 
+  React.useLayoutEffect(() => {
     if (boundingCurvesDebounced) {
       const coonsPatch = getCoonsPatch(boundingCurvesDebounced, grid)
       setCoonsPatch(coonsPatch)
     }
-  }, [boundingCurvesDebounced, grid, boundingCurves, canvasSize, canvas])
-
-  const boundsApi = getBoundsApi(boundingCurves)
+  }, [boundingCurvesDebounced, grid])
 
   return (
     <div className="relative flex h-full w-screen flex-row space-x-5 p-5">
@@ -244,15 +249,11 @@ const App = () => {
             surface={surface}
             setSurface={setSurface}
             onLinkControlPoints={handleLinkControlPoints(
-              boundsApi,
               setBoundingCurves,
               config,
               setConfig
             )}
-            onZeroControlPoints={handleZeroControlPoints(
-              boundsApi,
-              setBoundingCurves
-            )}
+            onZeroControlPoints={handleZeroControlPoints(setBoundingCurves)}
             onMirrorControlPoints={handleMirrorControlPoints(config, setConfig)}
             onLinkControlPointsGlobal={handleLinkControlPointsGlobal(
               boundingCurves,

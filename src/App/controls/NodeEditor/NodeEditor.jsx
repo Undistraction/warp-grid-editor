@@ -41,12 +41,12 @@ const NodeEditor = ({
             onChange={onNodePositionChange(cornerPoint.id)}
           />
           <PositionInput
-            label="Control 1"
+            label="Ctrl 1"
             point={controlPoint1.point}
             onChange={onNodePositionChange(controlPoint1.id)}
           />
           <PositionInput
-            label="Control 2"
+            label="Ctrl 2"
             point={controlPoint2.point}
             onChange={onNodePositionChange(controlPoint2.id)}
           />

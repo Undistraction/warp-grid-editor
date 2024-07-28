@@ -52,3 +52,13 @@ export const METRICS = {
     BORDER_WIDTH: 1,
   },
 }
+
+export const INTERPOLATION_STRATEGY = {
+  EVEN: `even`,
+  LINEAR: `linear`,
+}
+
+export const LINE_STRATEGY = {
+  STRAIGHT_LINES: `straightLines`,
+  CURVES: `curves`,
+}
