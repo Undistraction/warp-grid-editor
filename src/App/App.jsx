@@ -71,7 +71,10 @@ const handleShapeDrag =
   }
 
 const handleLinkControlPoints =
-  (setBoundingCurves, config, setConfig) => (cornerNodeId) => (isLinked) => {
+  (boundingCurves, setBoundingCurves, config, setConfig) =>
+  (cornerNodeId) =>
+  (isLinked) => {
+    const boundsApi = getBoundsApi(boundingCurves, config)
     if (isLinked) {
       const updatedBoundingCurves = boundsApi.expandControlPoints(cornerNodeId)
       setBoundingCurves(updatedBoundingCurves)
@@ -90,10 +93,12 @@ const handleLinkControlPoints =
     })
   }
 
-const handleZeroControlPoints = (setBoundingCurves) => (cornerNodeId) => () => {
-  const updatedBoundingCurves = boundsApi.zeroControlPoints(cornerNodeId)
-  setBoundingCurves(updatedBoundingCurves)
-}
+const handleZeroControlPoints =
+  (boundingCurves, setBoundingCurves, config) => (cornerNodeId) => () => {
+    const boundsApi = getBoundsApi(boundingCurves, config)
+    const updatedBoundingCurves = boundsApi.zeroControlPoints(cornerNodeId)
+    setBoundingCurves(updatedBoundingCurves)
+  }
 
 const handleMirrorControlPoints =
   (config, setConfig) => (cornerNodeId) => (isMirrored) => {
@@ -249,11 +254,16 @@ const App = () => {
             surface={surface}
             setSurface={setSurface}
             onLinkControlPoints={handleLinkControlPoints(
+              boundingCurves,
               setBoundingCurves,
               config,
               setConfig
             )}
-            onZeroControlPoints={handleZeroControlPoints(setBoundingCurves)}
+            onZeroControlPoints={handleZeroControlPoints(
+              boundingCurves,
+              setBoundingCurves,
+              config
+            )}
             onMirrorControlPoints={handleMirrorControlPoints(config, setConfig)}
             onLinkControlPointsGlobal={handleLinkControlPointsGlobal(
               boundingCurves,

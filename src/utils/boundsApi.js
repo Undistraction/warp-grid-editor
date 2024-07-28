@@ -1,5 +1,5 @@
 import memoize from 'fast-memoize'
-import { isNil } from 'ramda'
+import { isNil, sort } from 'ramda'
 import { BOUNDS_POINT_IDS, CURVE_NAMES, POINT_NAMES } from '../const'
 
 // -----------------------------------------------------------------------------
@@ -718,14 +718,37 @@ export const getBoundsApi = memoize((boundingCurves, config) => {
     }
   }
 
+  const getCornerBounds = (points) => {
+    const left = sort((point1, point2) => {
+      return point1.x < point2.x ? -1 : 1
+    }, points)[0]
+    const top = sort((point1, point2) => {
+      return point1.y < point2.y ? -1 : 1
+    }, points)[0]
+    const right = sort((point1, point2) => {
+      return point1.x > point2.x ? -1 : 1
+    }, points)[0]
+    const bottom = sort((point1, point2) => {
+      return point1.y > point2.y ? -1 : 1
+    }, points)[0]
+
+    return { top, left, bottom, right }
+  }
+
   // These are calculated corner to corner and don't take account of curves that
   // might increase width past corners
-  const getBoundsDimensionsSimple = () => {
+  const getBoundsSimple = () => {
     const bounds = getBoundsTranslatedOnOrigin(boundingCurves.top.startPoint)
 
     return {
       width: bounds.right - bounds.left,
       height: bounds.bottom - bounds.top,
+      points: getCornerBounds([
+        boundingCurves.top.startPoint,
+        boundingCurves.top.endPoint,
+        boundingCurves.bottom.startPoint,
+        boundingCurves.bottom.endPoint,
+      ]),
     }
   }
 
@@ -736,6 +759,6 @@ export const getBoundsApi = memoize((boundingCurves, config) => {
     translateToPoint,
     getCorners: () => getCorners(boundingCurves),
     getBoundsTranslatedOnOrigin,
-    getBoundsDimensionsSimple,
+    getBoundsSimple,
   }
 })

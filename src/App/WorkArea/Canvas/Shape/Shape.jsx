@@ -66,6 +66,40 @@ const renderPath = ({ top, left, bottom, right }) => {
   )
 }
 
+const getCanvasBounds = (boundingBox, boundingCurves) => {
+  const boundsApi = getBoundsApi(boundingCurves)
+
+  const bounds = boundsApi.getBoundsSimple()
+
+  // TODO use the positions of the points to calculate the bounds
+
+  const resolvedX =
+    boundingBox.x > -CORNER_POINT_RADIUS ? -CORNER_POINT_RADIUS : boundingBox.x
+
+  const resolvedY =
+    boundingBox.y > -CORNER_POINT_RADIUS ? -CORNER_POINT_RADIUS : boundingBox.y
+
+  const resolvedWidth =
+    boundingBox.width < bounds.width - boundingBox.x + CORNER_POINT_RADIUS
+      ? bounds.width - boundingBox.x + CORNER_POINT_RADIUS
+      : boundingBox.width
+
+  const resolvedHeight =
+    boundingBox.height < bounds.height - boundingBox.y + CORNER_POINT_RADIUS
+      ? bounds.height - boundingBox.y + CORNER_POINT_RADIUS
+      : boundingBox.height
+
+  const addedWidth = boundingBox.x - resolvedX
+  const addedHeight = boundingBox.y - resolvedY
+
+  return {
+    width: resolvedWidth + addedWidth + BORDER_WIDTH * 2,
+    height: resolvedHeight + addedHeight + BORDER_WIDTH * 2,
+    x: resolvedX - BORDER_WIDTH,
+    y: resolvedY - BORDER_WIDTH,
+  }
+}
+
 // -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
@@ -79,42 +113,10 @@ const Shape = ({ boundingCurves, onDrag }) => {
   React.useLayoutEffect(() => {
     const svgElement = svgRef.current
     if (svgElement) {
+      const rect = svgElement.getBoundingClientRect()
       const boundingBox = svgElement.getBBox({ stroke: true })
-      const boundsApi = getBoundsApi(boundingCurves)
-
-      const dimensions = boundsApi.getBoundsDimensionsSimple()
-
-      const resolvedX =
-        boundingBox.x > -CORNER_POINT_RADIUS
-          ? -CORNER_POINT_RADIUS
-          : boundingBox.x
-
-      const resolvedY =
-        boundingBox.y > -CORNER_POINT_RADIUS
-          ? -CORNER_POINT_RADIUS
-          : boundingBox.y
-
-      const resolvedWidth =
-        boundingBox.width <
-        dimensions.width - boundingBox.x + CORNER_POINT_RADIUS
-          ? dimensions.width - boundingBox.x + CORNER_POINT_RADIUS
-          : boundingBox.width
-
-      const resolvedHeight =
-        boundingBox.height <
-        dimensions.height - boundingBox.y + CORNER_POINT_RADIUS
-          ? dimensions.height - boundingBox.y + CORNER_POINT_RADIUS
-          : boundingBox.height
-
-      const addedWidth = boundingBox.x - resolvedX
-      const addedHeight = boundingBox.y - resolvedY
-
-      setCanvasBounds({
-        width: resolvedWidth + addedWidth + BORDER_WIDTH * 2,
-        height: resolvedHeight + addedHeight + BORDER_WIDTH * 2,
-        x: resolvedX - BORDER_WIDTH,
-        y: resolvedY - BORDER_WIDTH,
-      })
+      const canvasBounds = getCanvasBounds(boundingBox, boundingCurves)
+      setCanvasBounds(canvasBounds)
     }
   }, [boundingCurves])
 
@@ -143,7 +145,7 @@ const Shape = ({ boundingCurves, onDrag }) => {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           overflow="visible"
-          viewBox={`${x} ${y} ${width} ${height}`}
+          viewBox={`0 0 ${width} ${height}`}
           width={width}
           height={height}
           ref={svgRef}
