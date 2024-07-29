@@ -9,6 +9,7 @@ const NumericInput = ({
   value,
   label,
   onChange,
+  step = 1,
   labelIsAfter = false,
   min = undefined,
 }) => {
@@ -25,6 +26,7 @@ const NumericInput = ({
         type="number"
         value={resolvedValue}
         min={min}
+        step={step}
         onChange={(event) => {
           const { value } = event.target
           if (value === ``) {
@@ -47,6 +49,7 @@ NumericInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   labelIsAfter: PropTypes.bool,
   min: PropTypes.number,
+  step: PropTypes.number,
 }
 
 export default NumericInput

@@ -1,4 +1,4 @@
-import getCoonsPatch from 'coons-patch'
+import getGrid from 'coons-patch'
 import React from 'react'
 import { useDebounce } from 'use-debounce'
 import {
@@ -21,8 +21,6 @@ const GRID_DEFAULT = {
   columns: 25,
   rows: 25,
   gutter: 0,
-  // columns: [5, 1, 5, 4, 5, 1, 5, 1, 5],
-  // rows: [5, 1, 5, 3, 5, 1, 10],
   lineStrategy: LINE_STRATEGY.CURVES,
   interpolationStrategy: INTERPOLATION_STRATEGY.EVEN,
   precision: 20,
@@ -219,7 +217,7 @@ const App = () => {
 
   React.useLayoutEffect(() => {
     if (boundingCurvesDebounced) {
-      const coonsPatch = getCoonsPatch(boundingCurvesDebounced, grid)
+      const coonsPatch = getGrid(boundingCurvesDebounced, grid)
       setCoonsPatch(coonsPatch)
     }
   }, [boundingCurvesDebounced, grid])

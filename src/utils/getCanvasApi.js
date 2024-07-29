@@ -151,7 +151,7 @@ const getCanvasApi = (context) => {
       }
     })
 
-    // Draw lines along y axis
+    //Draw lines along y axis
     lines.yAxis.map((curveSectionsOrCurve) => {
       if (isArray(curveSectionsOrCurve)) {
         curveSectionsOrCurve.map(drawGridCurve)

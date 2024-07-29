@@ -107,6 +107,7 @@ const GridEditor = ({ grid, setGrid, config, setConfig }) => {
           label="Gutter"
           value={grid.gutter}
           min={0}
+          step={0.1}
           labelIsAfter
           onChange={(value) => {
             setGrid({
