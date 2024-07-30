@@ -137,10 +137,10 @@ const getCanvasApi = (context) => {
     { shouldDrawIntersections, shouldDrawBounds }
   ) => {
     if (shouldDrawBounds) {
-      drawBounds(coonsPatch.config.boundingCurves)
+      drawBounds(coonsPatch.model.boundingCurves)
     }
 
-    const lines = coonsPatch.api.getLines()
+    const lines = coonsPatch.getLines()
 
     // Draw lines along x axis
     lines.xAxis.map((curveSectionsOrCurve) => {
@@ -162,7 +162,7 @@ const getCanvasApi = (context) => {
 
     if (shouldDrawIntersections) {
       // Draw intersections between grid boundingCurves
-      coonsPatch.api.getIntersections().map((point) => {
+      coonsPatch.getIntersections().map((point) => {
         drawDot(point, {
           size: 3,
         })

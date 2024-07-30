@@ -24,8 +24,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "build-package": "vite build",
-    "link": "pnpm link --global coons-patch"
+    "link": "pnpm link  --global coons-patch",
+    "unlink": "pnpm unlink --global coons-patch"
   },
   "keywords": [
     "coons patch",
