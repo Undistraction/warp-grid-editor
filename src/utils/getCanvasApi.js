@@ -141,7 +141,6 @@ const getCanvasApi = (context) => {
     }
 
     const lines = coonsPatch.getLines()
-
     // Draw lines along x axis
     lines.xAxis.map((curveSectionsOrCurve) => {
       if (isArray(curveSectionsOrCurve)) {
