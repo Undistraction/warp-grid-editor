@@ -113,7 +113,7 @@ const Shape = ({ boundingCurves, onDrag }) => {
   React.useLayoutEffect(() => {
     const svgElement = svgRef.current
     if (svgElement) {
-      const rect = svgElement.getBoundingClientRect()
+      // const rect = svgElement.getBoundingClientRect()
       const boundingBox = svgElement.getBBox({ stroke: true })
       const canvasBounds = getCanvasBounds(boundingBox, boundingCurves)
       setCanvasBounds(canvasBounds)

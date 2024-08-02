@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDebounce } from 'use-debounce'
-import getGrid from 'warp-grid'
+// eslint-disable-next-line import/no-unresolved
+import warpGrid from 'warp-grid'
 import {
   BOUNDS_POINT_IDS,
   CORNER_POINTS,
@@ -217,7 +218,7 @@ const App = () => {
 
   React.useLayoutEffect(() => {
     if (boundingCurvesDebounced) {
-      const coonsPatch = getGrid(boundingCurvesDebounced, grid)
+      const coonsPatch = warpGrid(boundingCurvesDebounced, grid)
       setCoonsPatch(coonsPatch)
     }
   }, [boundingCurvesDebounced, grid])
