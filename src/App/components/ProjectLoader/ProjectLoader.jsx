@@ -21,12 +21,12 @@ const renderOptions = (options) => {
 // Exports
 // -----------------------------------------------------------------------------
 
-const ProjectLoader = ({ loadProject, savedProjects }) => {
+const ProjectLoader = ({ loadProject, projects }) => {
   const [key, setKey] = React.useState(``)
 
   const options = [
     { id: `none`, value: `` },
-    ...savedProjects.map((project) => {
+    ...projects.map((project) => {
       return {
         id: project.id,
         name: project.name,
@@ -60,7 +60,7 @@ const ProjectLoader = ({ loadProject, savedProjects }) => {
 
 ProjectLoader.propTypes = {
   loadProject: PropTypes.func.isRequired,
-  savedProjects: PropTypes.array.isRequired,
+  projects: PropTypes.array.isRequired,
 }
 
 export default ProjectLoader

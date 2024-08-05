@@ -2,12 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import AppApiContext from '../../context/AppApiContext'
 import useObserveClientSize from '../../hooks/useObserveClientSize'
-import {
-  typeBoundingCurves,
-  typeConfig,
-  typeDimensions,
-  typeSurface,
-} from '../../prop-types'
+import { typeDimensions, typeProject, typeSurface } from '../../prop-types'
 import { clampGridSquareToGridDimensions } from '../../utils'
 import Canvas from './Canvas'
 import ControlNodes from './Canvas/ControlNodes'
@@ -29,21 +24,23 @@ const WorkArea = ({
   canvasSize,
   coonsPatch,
   surface,
-  config,
-  boundingCurves,
   setCanvasSize,
-  gridDefinition,
+  project = undefined,
 }) => {
   const displayRef = React.useRef(null)
 
-  const { updateBounds, updateBoundsPosition } = React.useContext(AppApiContext)
+  const { updateConfigBounds, updateConfigBoundsPosition } =
+    React.useContext(AppApiContext)
 
   const gridSquareClamped = React.useMemo(
     () =>
       surface.gridSquare
-        ? clampGridSquareToGridDimensions(surface.gridSquare, gridDefinition)
+        ? clampGridSquareToGridDimensions(
+            surface.gridSquare,
+            project.gridDefinition
+          )
         : surface.gridSquare,
-    [surface, gridDefinition]
+    [surface, project]
   )
 
   useObserveClientSize(displayRef, setCanvasSize, {
@@ -66,24 +63,24 @@ const WorkArea = ({
         coonsPatch={coonsPatch}
         gridSquare={gridSquareClamped}
         surface={surface}
-        config={config}
+        config={project?.config}
       />
-      {boundingCurves && (
+      {project && (
         <React.Fragment>
           <Shape
-            boundingCurves={boundingCurves}
-            onDrag={updateBoundsPosition}
+            boundingCurves={project.boundingCurves}
+            onDrag={updateConfigBoundsPosition}
           />
-          {config.bounds.shouldDrawCornerPoints && (
+          {project.config.bounds.shouldDrawCornerPoints && (
             <React.Fragment>
               <ControlPointStems
-                boundingCurves={boundingCurves}
+                boundingCurves={project.boundingCurves}
                 width={canvasSize.width}
                 height={canvasSize.height}
               />
               <ControlNodes
-                boundingCurves={boundingCurves}
-                updateBounds={updateBounds}
+                boundingCurves={project.boundingCurves}
+                updateConfigBounds={updateConfigBounds}
               />
             </React.Fragment>
           )}
@@ -98,11 +95,8 @@ WorkArea.propTypes = {
   canvasSize: typeDimensions.isRequired,
   coonsPatch: PropTypes.object,
   surface: typeSurface.isRequired,
-  config: typeConfig,
-  boundingCurves: typeBoundingCurves,
-  setBoundingCurves: PropTypes.func.isRequired,
+  project: typeProject,
   setCanvasSize: PropTypes.func.isRequired,
-  gridDefinition: PropTypes.object.isRequired,
 }
 
 export default WorkArea

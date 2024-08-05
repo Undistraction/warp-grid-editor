@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import { isInteger } from 'ramda-adjunct'
 import React from 'react'
-import { typeConfig, typePoint, typeSurface } from '../../../prop-types'
+import { typeConfig, typeGridSquare, typeSurface } from '../../../prop-types'
 import getCanvasApi from '../../../utils/getCanvasApi'
 
 // -----------------------------------------------------------------------------
@@ -15,7 +15,7 @@ const Canvas = ({
   coonsPatch,
   gridSquare,
   surface,
-  config,
+  config = undefined,
 }) => {
   const ref = React.useRef(null)
 
@@ -66,9 +66,9 @@ Canvas.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   coonsPatch: PropTypes.object,
-  gridSquare: typePoint,
+  gridSquare: typeGridSquare,
   surface: typeSurface,
-  config: typeConfig.isRequired,
+  config: typeConfig,
 }
 
 export default Canvas

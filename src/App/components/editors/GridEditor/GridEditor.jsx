@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import { isArray } from 'ramda-adjunct'
 import React from 'react'
-import { typeConfig, typeGrid } from '../../../../prop-types'
+import { typeProject } from '../../../../prop-types'
 import ControlGroup from '../../controls/ControlGroup'
 import NumericInput from '../../controls/NumericInput'
 import SteppedInput from '../../controls/SteppedInput'
@@ -33,51 +33,60 @@ const convertListIntoInputString = (listOrNumber) => {
 // Exports
 // -----------------------------------------------------------------------------
 
-const GridEditor = ({ grid, setGrid, config, setConfig }) => {
+const GridEditor = ({ project, setProject }) => {
   return (
     <div className="flex flex-col space-y-3">
       <Switch
         label="Advanced"
-        isSelected={config.grid.shouldUseComplexColumnsRows}
+        isSelected={project.config.grid.shouldUseComplexColumnsRows}
         onChange={() =>
-          setConfig({
-            ...config,
-            grid: {
-              ...config.grid,
-              shouldUseComplexColumnsRows:
-                !config.grid.shouldUseComplexColumnsRows,
+          setProject({
+            ...project,
+            config: {
+              ...project.config,
+              grid: {
+                ...project.config.grid,
+                shouldUseComplexColumnsRows:
+                  !project.config.grid.shouldUseComplexColumnsRows,
+              },
             },
           })
         }
       />
-      {config.grid.shouldUseComplexColumnsRows && (
+      {project.config.grid.shouldUseComplexColumnsRows && (
         <div className="flex flex-col items-stretch space-y-2">
           <TextInput
             label="Columns"
-            value={convertListIntoInputString(grid.columns)}
+            value={convertListIntoInputString(project.gridDefinition.columns)}
             onChange={(columnsString) => {
               const columns = getItemsFromString(columnsString)
-              setGrid({
-                ...grid,
-                columns: columns.map(parseFloat),
+              setProject({
+                ...project,
+                gridDefinition: {
+                  ...project.gridDefinition,
+                  columns: columns.map(parseFloat),
+                },
               })
             }}
           />
           <TextInput
             label="Rows"
-            value={convertListIntoInputString(grid.rows)}
+            value={convertListIntoInputString(project.gridDefinition.rows)}
             onChange={(rowsString) => {
               const rows = getItemsFromString(rowsString)
-              setGrid({
-                ...grid,
-                rows: rows.map(parseFloat),
+              setProject({
+                ...project,
+                gridDefinition: {
+                  ...project.gridDefinition,
+                  rows: rows.map(parseFloat),
+                },
               })
             }}
           />
         </div>
       )}
 
-      {!config.grid.shouldUseComplexColumnsRows && (
+      {!project.config.grid.shouldUseComplexColumnsRows && (
         <div className="flex space-x-3 [&>*]:basis-1/2">
           <ControlGroup
             direction="vertical"
@@ -85,12 +94,15 @@ const GridEditor = ({ grid, setGrid, config, setConfig }) => {
           >
             <SteppedInput
               name="columns"
-              value={grid.columns}
+              value={project.gridDefinition.columns}
               options={COLUMNS_OPTIONS}
               onChange={(columns) => {
-                setGrid({
-                  ...grid,
-                  columns: parseInt(columns),
+                setProject({
+                  ...project,
+                  gridDefinition: {
+                    ...project.gridDefinition,
+                    columns: parseInt(columns),
+                  },
                 })
               }}
             />
@@ -101,12 +113,15 @@ const GridEditor = ({ grid, setGrid, config, setConfig }) => {
           >
             <SteppedInput
               name="rows"
-              value={grid.rows}
+              value={project.gridDefinition.rows}
               options={ROWS_OPTIONS}
               onChange={(rows) => {
-                setGrid({
-                  ...grid,
-                  rows: parseInt(rows),
+                setProject({
+                  ...project,
+                  gridDefinition: {
+                    ...project.gridDefinition,
+                    rows: parseInt(rows),
+                  },
                 })
               }}
             />
@@ -124,9 +139,12 @@ const GridEditor = ({ grid, setGrid, config, setConfig }) => {
             step={0.1}
             labelIsAfter
             onChange={(value) => {
-              setGrid({
-                ...grid,
-                gutter: value,
+              setProject({
+                ...project,
+                gridDefinition: {
+                  ...project.gridDefinition,
+                  gutter: value,
+                },
               })
             }}
           />
@@ -137,10 +155,8 @@ const GridEditor = ({ grid, setGrid, config, setConfig }) => {
 }
 
 GridEditor.propTypes = {
-  grid: typeGrid.isRequired,
-  setGrid: PropTypes.func.isRequired,
-  config: typeConfig,
-  setConfig: PropTypes.func.isRequired,
+  project: typeProject.isRequired,
+  setProject: PropTypes.func.isRequired,
 }
 
 export default GridEditor

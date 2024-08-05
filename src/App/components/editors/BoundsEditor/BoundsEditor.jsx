@@ -30,7 +30,6 @@ const pointIsMirrored = (pointId, config) => {
 
 const getNode =
   (
-    updateBounds,
     zeroControlPoints,
     linkControlPoints,
     mirrorControlPoints,
@@ -48,7 +47,7 @@ const getNode =
     }
   }
 
-const renderNodes = (updateBounds, getNodeWithData) =>
+const renderNodes = (updateConfigBounds, getNodeWithData) =>
   map(({ id, title }) => {
     const node = getNodeWithData(id)
     return (
@@ -57,7 +56,7 @@ const renderNodes = (updateBounds, getNodeWithData) =>
         title={title}
         controlNodesAreLinked={node.pointIsLinked}
         controlNodesAreMirrored={node.pointIsMirrored}
-        updateBounds={updateBounds}
+        updateConfigBounds={updateConfigBounds}
         zeroControlPoints={node.zeroControlPoints}
         linkControlPoints={node.linkControlPoints}
         mirrorControlPoints={node.mirrorControlPoints}
@@ -71,15 +70,14 @@ const renderNodes = (updateBounds, getNodeWithData) =>
 // -----------------------------------------------------------------------------
 
 const BoundsEditor = ({
-  config,
+  updateConfigBounds,
   corners,
-  updateBounds,
   zeroControlPoints,
   linkControlPoints,
   mirrorControlPoints,
+  config,
 }) => {
   const getNodeWithData = getNode(
-    updateBounds,
     zeroControlPoints,
     linkControlPoints,
     mirrorControlPoints,
@@ -89,7 +87,7 @@ const BoundsEditor = ({
 
   return (
     <div className="flex flex-col divide-y divide-black border border-black">
-      {renderNodes(updateBounds, getNodeWithData)}
+      {renderNodes(updateConfigBounds, getNodeWithData)}
     </div>
   )
 }
@@ -97,7 +95,7 @@ const BoundsEditor = ({
 BoundsEditor.propTypes = {
   config: typeConfig.isRequired,
   corners: PropTypes.object.isRequired,
-  updateBounds: PropTypes.func.isRequired,
+  updateConfigBounds: PropTypes.func.isRequired,
   zeroControlPoints: PropTypes.func.isRequired,
   linkControlPoints: PropTypes.func.isRequired,
   mirrorControlPoints: PropTypes.func.isRequired,

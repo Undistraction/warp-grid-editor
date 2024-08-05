@@ -27,7 +27,7 @@ const GRID_DEFINITION_DEFAULT = {
   precision: 20,
 }
 
-const SURFACE_DEFAULT = { x: 0, y: 0 }
+const SURFACE_DEFAULT = { gridSquare: null }
 
 const CONFIG_DEFAULT = {
   global: {
@@ -48,48 +48,53 @@ const CONFIG_DEFAULT = {
   },
 }
 
+const PROJECT_DEFAULT = {
+  config: CONFIG_DEFAULT,
+  gridDefinition: GRID_DEFINITION_DEFAULT,
+  boundingCurves: null,
+}
+
 // -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
 
 const App = () => {
   const [canvas, setCanvas] = React.useState(null)
-  const [boundingCurves, setBoundingCurves] = React.useState(null)
   const [coonsPatch, setCoonsPatch] = React.useState(null)
-  const [config, setConfig] = React.useState(CONFIG_DEFAULT)
-  const [gridDefinition, setGridDefinition] = React.useState(
-    GRID_DEFINITION_DEFAULT
-  )
+  const [project, setProject] = React.useState(null)
   const [surface, setSurface] = React.useState(SURFACE_DEFAULT)
   const [canvasSize, setCanvasSize] = React.useState({ width: 0, height: 0 })
-  const [savedProjects, setSavedProjects] = React.useState(
-    localStorageApi.getProjects()
-  )
-  const [boundingCurvesDebounced] = useDebounce(boundingCurves, 5)
-  const [project, setProject] = React.useState(null)
+  const [projects, setProjects] = React.useState(localStorageApi.getProjects())
+  const [boundingCurvesDebounced] = useDebounce(project?.boundingCurves, 5)
+  console.log(`Surface`, surface)
+  const canvasIsReady = canvas && canvasSize.width > 0
 
-  // Create a random set of bounding curves on first render
+  // Create a random set of bounding curves on first render if no project is loaded
   React.useLayoutEffect(() => {
-    if (!boundingCurves && canvas && canvasSize.width > 0) {
-      setBoundingCurves(getRandomBoundingCurves(canvas))
+    const { lastProjectId } = localStorageApi.getMeta()
+    if (!project && lastProjectId) {
+      const lastProject = localStorageApi.loadProject(lastProjectId)
+      setProject(lastProject)
+    } else if (!project && canvasIsReady) {
+      setProject({
+        ...PROJECT_DEFAULT,
+        boundingCurves: getRandomBoundingCurves(canvas),
+      })
     }
-  }, [boundingCurves, canvas, canvasSize])
+  }, [project, canvas, canvasSize, canvasIsReady])
 
   React.useLayoutEffect(() => {
     if (boundingCurvesDebounced) {
-      const coonsPatch = warpGrid(boundingCurvesDebounced, gridDefinition)
+      const coonsPatch = warpGrid(
+        boundingCurvesDebounced,
+        project.gridDefinition
+      )
       setCoonsPatch(coonsPatch)
     }
-  }, [boundingCurvesDebounced, gridDefinition])
+  }, [boundingCurvesDebounced, project?.gridDefinition])
 
   const appApi = getAppApi({
-    boundingCurves,
-    setBoundingCurves,
-    config,
-    setConfig,
-    setSavedProjects,
-    gridDefinition,
-    setGridDefinition,
+    setProjects,
     setProject,
     project,
     coonsPatch,
@@ -99,35 +104,28 @@ const App = () => {
     <AppApiContext.Provider value={appApi}>
       <div className="relative flex h-full w-screen flex-row space-x-5 p-5">
         <WorkArea
-          boundingCurves={boundingCurves}
           setCanvas={setCanvas}
           canvasSize={canvasSize}
           coonsPatch={coonsPatch}
           surface={surface}
-          config={config}
-          setBoundingCurves={setBoundingCurves}
+          project={project}
           setCanvasSize={setCanvasSize}
-          gridDefinition={gridDefinition}
         />
         <div className="-my-5 w-[300px] flex-shrink-0 flex-grow-0 overflow-y-scroll">
-          {canvas && (
+          {canvas && project && (
             <Sidebar
-              grid={gridDefinition}
               canvas={canvas}
+              project={project}
               getRandomBoundingCurves={getRandomBoundingCurves}
-              setBoundingCurves={setBoundingCurves}
-              boundingCurves={boundingCurves}
-              config={config}
-              setConfig={setConfig}
-              setGrid={setGridDefinition}
-              savedProjects={savedProjects}
+              boundingCurves={project.boundingCurves}
+              projects={projects}
               surface={surface}
               setSurface={setSurface}
               saveProject={appApi.saveProject}
               loadProject={appApi.loadProject}
               exportBounds={appApi.exportBounds}
               exportCellBounds={appApi.exportCellBounds}
-              project={project}
+              setProject={setProject}
             />
           )}
         </div>

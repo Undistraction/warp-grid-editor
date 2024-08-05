@@ -1,12 +1,8 @@
 import PropTypes from 'prop-types'
+import pipe from 'ramda/src/pipe'
 import React from 'react'
 import AppApiContext from '../../context/AppApiContext'
-import {
-  typeBoundingCurves,
-  typeConfig,
-  typeGrid,
-  typeSurface,
-} from '../../prop-types'
+import { typeSurface } from '../../prop-types'
 import { getBoundsApi } from '../../utils/boundsApi'
 import { updateObject } from '../../utils/object'
 import Button from '../components/Button'
@@ -44,24 +40,19 @@ const getGridSquareOptions = (minNumber, maxNumberOrArray) => {
 // -----------------------------------------------------------------------------
 
 const Sidebar = ({
-  grid,
   canvas,
   surface,
   getRandomBoundingCurves,
-  setBoundingCurves,
-  setGrid,
-  savedProjects,
+  projects,
   setSurface,
-  boundingCurves,
-  config,
-  setConfig,
   saveProject,
   loadProject,
   exportBounds,
   exportCellBounds,
+  setProject,
   project,
 }) => {
-  const boundsApi = getBoundsApi(boundingCurves)
+  const boundsApi = getBoundsApi(project.boundingCurves)
   const corners = boundsApi.getCorners()
   const {
     linkControlPoints,
@@ -70,10 +61,10 @@ const Sidebar = ({
     linkControlPointsGlobal,
     zeroControlPointsGlobal,
     mirrorControlPointsGlobal,
-    updateBounds,
+    updateConfigBounds,
   } = React.useContext(AppApiContext)
 
-  const updateConfig = updateObject(config, setConfig)
+  const updateProject = updateObject(project, setProject)
   const updateSurface = updateObject(surface, setSurface)
 
   return (
@@ -88,7 +79,7 @@ const Sidebar = ({
           loadProject={loadProject}
           saveProject={saveProject}
           project={project}
-          savedProjects={savedProjects}
+          projects={projects}
         />
       </SidebarGroup>
       <SidebarGroup
@@ -96,8 +87,8 @@ const Sidebar = ({
         hint="By default, all lines are straight, however you can switch to using curved lines which is significantly more memory intensive. When using curves, 'Even' is the default interpolation, and is much more accurate, especially with higher 'Precision' settings"
       >
         <ConfigEditor
-          grid={grid}
-          setGrid={setGrid}
+          project={project}
+          setProject={setProject}
         />
       </SidebarGroup>
       <SidebarGroup title="Bounds">
@@ -106,7 +97,7 @@ const Sidebar = ({
             label="Randomise"
             onClick={() => {
               const boundingCurves = getRandomBoundingCurves(canvas)
-              setBoundingCurves(boundingCurves)
+              updateProject([`boundingCurves`], boundingCurves)
             }}
           />
           <Button
@@ -116,34 +107,40 @@ const Sidebar = ({
         </div>
         <Switch
           label="Draw intersections"
-          isSelected={config.grid.shouldDrawIntersections}
-          onChange={updateConfig([`grid`, `shouldDrawIntersections`])}
+          isSelected={project.config.grid.shouldDrawIntersections}
+          onChange={updateProject([
+            `config`,
+            `grid`,
+            `shouldDrawIntersections`,
+          ])}
         />
         <Switch
           label="Draw bounds"
-          isSelected={config.bounds.shouldDrawBounds}
-          onChange={updateConfig([`bounds`, `shouldDrawBounds`])}
+          isSelected={project.config.bounds.shouldDrawBounds}
+          onChange={updateProject([`config`, `bounds`, `shouldDrawBounds`])}
         />
         <Switch
           label="Draw corner points"
-          isSelected={config.bounds.shouldDrawCornerPoints}
-          onChange={updateConfig([`bounds`, `shouldDrawCornerPoints`])}
+          isSelected={project.config.bounds.shouldDrawCornerPoints}
+          onChange={updateProject([
+            `config`,
+            `bounds`,
+            `shouldDrawCornerPoints`,
+          ])}
         />
         <ControlPointEditor
           zeroControlPoints={zeroControlPointsGlobal}
           linkControlPoints={linkControlPointsGlobal}
           mirrorControlPoints={mirrorControlPointsGlobal}
-          controlNodesAreLinked={config.global.isLinked}
-          controlNodesAreMirrored={config.global.isMirrored}
+          controlNodesAreLinked={project.config.global.isLinked}
+          controlNodesAreMirrored={project.config.global.isMirrored}
         />
-        {boundingCurves && (
+        {project.boundingCurves && (
           <BoundsEditor
+            config={project.config}
             exportBounds={exportBounds}
             corners={corners}
-            setBoundingCurves={setBoundingCurves}
-            config={config}
-            setConfig={setConfig}
-            updateBounds={updateBounds}
+            updateConfigBounds={updateConfigBounds}
             linkControlPoints={linkControlPoints}
             zeroControlPoints={zeroControlPoints}
             mirrorControlPoints={mirrorControlPoints}
@@ -156,10 +153,8 @@ const Sidebar = ({
         hint="Switch to 'Advanced' mode to input a comma deliniated list of column or row ratios. Values will be totalled, and each row or column will act as a ratio of that total."
       >
         <GridEditor
-          grid={grid}
-          setGrid={setGrid}
-          config={config}
-          setConfig={setConfig}
+          setProject={setProject}
+          project={project}
         />
         <Button
           label="Export"
@@ -176,8 +171,8 @@ const Sidebar = ({
             <SteppedInput
               name="across"
               value={surface.gridSquare ? surface.gridSquare.x : ``}
-              options={getGridSquareOptions(0, grid.columns)}
-              onChange={updateSurface([`gridSquare`, `x`])}
+              options={getGridSquareOptions(0, project.gridDefinition.columns)}
+              onChange={pipe(parseInt, updateSurface([`gridSquare`, `x`]))}
             />
           </ControlGroup>
           <ControlGroup
@@ -187,8 +182,8 @@ const Sidebar = ({
             <SteppedInput
               name="down"
               value={surface.gridSquare ? surface.gridSquare.y : ``}
-              options={getGridSquareOptions(0, grid.rows)}
-              onChange={updateSurface([`gridSquare`, `y`])}
+              options={getGridSquareOptions(0, project.gridDefinition.rows)}
+              onChange={pipe(parseInt, updateSurface([`gridSquare`, `y`]))}
             />
           </ControlGroup>
         </div>
@@ -199,22 +194,17 @@ const Sidebar = ({
 }
 
 Sidebar.propTypes = {
-  grid: typeGrid.isRequired,
   canvas: PropTypes.object.isRequired,
   surface: typeSurface.isRequired,
   getRandomBoundingCurves: PropTypes.func.isRequired,
-  setBoundingCurves: PropTypes.func.isRequired,
-  setGrid: PropTypes.func.isRequired,
-  savedProjects: PropTypes.array.isRequired,
+  projects: PropTypes.array.isRequired,
   setSurface: PropTypes.func.isRequired,
-  boundingCurves: typeBoundingCurves,
-  config: typeConfig.isRequired,
-  setConfig: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
   loadProject: PropTypes.func.isRequired,
   exportBounds: PropTypes.func.isRequired,
   exportCellBounds: PropTypes.func.isRequired,
   project: PropTypes.object,
+  setProject: PropTypes.func.isRequired,
 }
 
 export default Sidebar

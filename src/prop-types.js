@@ -32,8 +32,13 @@ export const typeGrid = PropTypes.shape({
   rows: typeGridAxis.isRequired,
 })
 
+export const typeGridSquare = PropTypes.shape({
+  x: PropTypes.number,
+  y: PropTypes.number,
+})
+
 export const typeSurface = PropTypes.shape({
-  gridSquare: typePoint,
+  gridSquare: typeGridSquare,
 })
 
 export const typeConfig = PropTypes.shape({
@@ -71,4 +76,10 @@ export const typeBoundingCurves = PropTypes.shape({
     controlPoint1: typePoint.isRequired,
     controlPoint2: typePoint.isRequired,
   }).isRequired,
+})
+
+export const typeProject = PropTypes.shape({
+  config: typeConfig.isRequired,
+  boundingCurves: typeBoundingCurves,
+  gridDefinition: typeGrid.isRequired,
 })

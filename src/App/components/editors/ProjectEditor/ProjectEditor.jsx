@@ -11,13 +11,13 @@ const ProjectEditor = ({
   loadProject,
   saveProject,
   project = undefined,
-  savedProjects = undefined,
+  projects = undefined,
 }) => {
   return (
     <div className="flex flex-col space-y-1">
       <ProjectLoader
         loadProject={loadProject}
-        savedProjects={savedProjects}
+        projects={projects}
       />
       <ProjectSaver
         saveProject={saveProject}
@@ -31,7 +31,7 @@ ProjectEditor.propTypes = {
   loadProject: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
   project: PropTypes.object,
-  savedProjects: PropTypes.arrayOf(PropTypes.object),
+  projects: PropTypes.arrayOf(PropTypes.object),
 }
 
 export default ProjectEditor

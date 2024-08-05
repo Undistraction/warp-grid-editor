@@ -5,7 +5,12 @@ import React from 'react'
 // Exports
 // -----------------------------------------------------------------------------
 
-const NumericInput = ({ value, onChange, step = 1, min = undefined }) => {
+const NumericInput = ({
+  value = undefined,
+  onChange,
+  step = 1,
+  min = undefined,
+}) => {
   const [localValue, setLocalValue] = React.useState(null)
   const resolvedValue = localValue === `` ? localValue : value
 
@@ -31,7 +36,7 @@ const NumericInput = ({ value, onChange, step = 1, min = undefined }) => {
 }
 
 NumericInput.propTypes = {
-  value: PropTypes.number.isRequired,
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onChange: PropTypes.func.isRequired,
   min: PropTypes.number,
   step: PropTypes.number,

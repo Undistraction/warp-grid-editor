@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import { isInteger } from 'ramda-adjunct'
 import React from 'react'
 import { INTERPOLATION_STRATEGY, LINE_STRATEGY } from '../../../../const'
-import { typeGrid } from '../../../../prop-types'
+import { typeProject } from '../../../../prop-types'
 import ControlGroup from '../../controls/ControlGroup'
 import NumericInput from '../../controls/NumericInput'
 import SteppedInput from '../../controls/SteppedInput'
@@ -37,7 +37,7 @@ export const LINE_STRATEGY_OPTIONS = [
 // Utils
 // -----------------------------------------------------------------------------
 
-const renderCurvesConfig = (grid, setGrid) => {
+const renderCurvesConfig = (project, setProject) => {
   return (
     <React.Fragment>
       <ControlGroup
@@ -47,28 +47,38 @@ const renderCurvesConfig = (grid, setGrid) => {
       >
         <SteppedInput
           name="interpolation-type"
-          value={grid.interpolationStrategy}
+          value={project.gridDefinition.interpolationStrategy}
           options={INTERPOLATION_STRATEGY_OPTIONS}
           onChange={(interpolationStrategy) => {
-            setGrid({
-              ...grid,
-              interpolationStrategy,
+            setProject({
+              ...project,
+              gridDefinition: {
+                ...project.gridDefinition,
+                interpolationStrategy,
+              },
             })
           }}
         />
       </ControlGroup>
-      {grid.interpolationStrategy === INTERPOLATION_STRATEGY.EVEN && (
+      {project.gridDefinition.interpolationStrategy ===
+        INTERPOLATION_STRATEGY.EVEN && (
         <ControlGroup
           labelIsAfter
           label="Precision"
           isEven
         >
           <NumericInput
-            value={grid.precision}
+            value={project.gridDefinition.precision}
             min={1}
             onChange={(value) => {
               if (isInteger(value)) {
-                setGrid({ ...grid, precision: value })
+                setProject({
+                  ...project,
+                  gridDefinition: {
+                    ...project.gridDefinition,
+                    precision: value,
+                  },
+                })
               }
             }}
           />
@@ -82,7 +92,7 @@ const renderCurvesConfig = (grid, setGrid) => {
 // Exports
 // -----------------------------------------------------------------------------
 
-const ConfigEditor = ({ grid, setGrid }) => {
+const ConfigEditor = ({ project, setProject }) => {
   return (
     <div className="flex flex-col items-stretch space-y-3">
       <ControlGroup
@@ -92,25 +102,28 @@ const ConfigEditor = ({ grid, setGrid }) => {
       >
         <SteppedInput
           name="line-type"
-          value={grid.lineStrategy}
+          value={project.gridDefinition.lineStrategy}
           options={LINE_STRATEGY_OPTIONS}
           onChange={(lineStrategy) => {
-            setGrid({
-              ...grid,
-              lineStrategy,
+            setProject({
+              ...project,
+              gridDefinition: {
+                ...project.gridDefinition,
+                lineStrategy,
+              },
             })
           }}
         />
       </ControlGroup>
-      {grid.lineStrategy === LINE_STRATEGY.CURVES &&
-        renderCurvesConfig(grid, setGrid)}
+      {project.gridDefinition.lineStrategy === LINE_STRATEGY.CURVES &&
+        renderCurvesConfig(project, setProject)}
     </div>
   )
 }
 
 ConfigEditor.propTypes = {
-  grid: typeGrid.isRequired,
-  setGrid: PropTypes.func.isRequired,
+  project: typeProject.isRequired,
+  setProject: PropTypes.func.isRequired,
 }
 
 export default ConfigEditor

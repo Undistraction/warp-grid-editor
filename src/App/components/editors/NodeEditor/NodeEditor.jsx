@@ -13,7 +13,7 @@ const NodeEditor = ({
   cornerPoint,
   controlPoint1,
   controlPoint2,
-  updateBounds,
+  updateConfigBounds,
   zeroControlPoints,
   mirrorControlPoints,
   linkControlPoints,
@@ -38,17 +38,17 @@ const NodeEditor = ({
           <PositionInput
             label="Corner"
             point={cornerPoint.point}
-            onChange={updateBounds(cornerPoint.id)}
+            onChange={updateConfigBounds(cornerPoint.id)}
           />
           <PositionInput
             label="Ctrl 1"
             point={controlPoint1.point}
-            onChange={updateBounds(controlPoint1.id)}
+            onChange={updateConfigBounds(controlPoint1.id)}
           />
           <PositionInput
             label="Ctrl 2"
             point={controlPoint2.point}
-            onChange={updateBounds(controlPoint2.id)}
+            onChange={updateConfigBounds(controlPoint2.id)}
           />
         </div>
         <ControlPointEditor
@@ -74,7 +74,7 @@ NodeEditor.propTypes = {
     point: typePoint.isRequired,
     id: PropTypes.string.isRequired,
   }).isRequired,
-  updateBounds: PropTypes.func.isRequired,
+  updateConfigBounds: PropTypes.func.isRequired,
   zeroControlPoints: PropTypes.func.isRequired,
   mirrorControlPoints: PropTypes.func.isRequired,
   linkControlPoints: PropTypes.func.isRequired,
