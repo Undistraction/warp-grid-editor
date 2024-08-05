@@ -9,6 +9,7 @@ import {
 } from '../const'
 import AppApiContext from '../context/AppApiContext'
 import getAppApi from '../getAppApi'
+import useAppStore from '../state/useAppStore'
 import { getRandomBoundingCurves } from '../utils'
 import localStorageApi from '../utils/localStorageApi'
 import Sidebar from './Sidebar'
@@ -41,10 +42,12 @@ const CONFIG_DEFAULT = {
   bounds: {
     shouldDrawBounds: true,
     shouldDrawCornerPoints: true,
-    [BOUNDS_POINT_IDS.TOP_LEFT]: { isLinked: true, isMirrored: false },
-    [BOUNDS_POINT_IDS.TOP_RIGHT]: { isLinked: true, isMirrored: false },
-    [BOUNDS_POINT_IDS.BOTTOM_LEFT]: { isLinked: true, isMirrored: false },
-    [BOUNDS_POINT_IDS.BOTTOM_RIGHT]: { isLinked: true, isMirrored: false },
+    corners: {
+      [BOUNDS_POINT_IDS.TOP_LEFT]: { isLinked: true, isMirrored: false },
+      [BOUNDS_POINT_IDS.TOP_RIGHT]: { isLinked: true, isMirrored: false },
+      [BOUNDS_POINT_IDS.BOTTOM_LEFT]: { isLinked: true, isMirrored: false },
+      [BOUNDS_POINT_IDS.BOTTOM_RIGHT]: { isLinked: true, isMirrored: false },
+    },
   },
 }
 
@@ -61,26 +64,28 @@ const PROJECT_DEFAULT = {
 const App = () => {
   const [canvas, setCanvas] = React.useState(null)
   const [coonsPatch, setCoonsPatch] = React.useState(null)
-  const [project, setProject] = React.useState(null)
   const [surface, setSurface] = React.useState(SURFACE_DEFAULT)
   const [canvasSize, setCanvasSize] = React.useState({ width: 0, height: 0 })
   const [projects, setProjects] = React.useState(localStorageApi.getProjects())
-  const [boundingCurvesDebounced] = useDebounce(project?.boundingCurves, 5)
   const canvasIsReady = canvas && canvasSize.width > 0
+  const { project, setProject } = useAppStore((state) => state)
+  const [boundingCurvesDebounced] = useDebounce(project?.boundingCurves, 5)
 
   // Create a random set of bounding curves on first render if no project is loaded
   React.useLayoutEffect(() => {
     const { lastProjectId } = localStorageApi.getApp()
-    if (!project && lastProjectId) {
-      const lastProject = localStorageApi.loadProject(lastProjectId)
-      setProject(lastProject)
-    } else if (!project && canvasIsReady) {
-      setProject({
-        ...PROJECT_DEFAULT,
-        boundingCurves: getRandomBoundingCurves(canvas),
-      })
+    if (!project) {
+      if (lastProjectId) {
+        const lastProject = localStorageApi.loadProject(lastProjectId)
+        setProject(lastProject)
+      } else if (canvasIsReady) {
+        setProject({
+          ...PROJECT_DEFAULT,
+          boundingCurves: getRandomBoundingCurves(canvas),
+        })
+      }
     }
-  }, [project, canvas, canvasSize, canvasIsReady])
+  }, [project, setProject, canvas, canvasSize, canvasIsReady])
 
   React.useLayoutEffect(() => {
     if (boundingCurvesDebounced) {
@@ -94,8 +99,8 @@ const App = () => {
 
   const appApi = getAppApi({
     setProjects,
-    setProject,
-    project,
+    setProject: setProject,
+    project: project,
     coonsPatch,
   })
 
@@ -107,7 +112,6 @@ const App = () => {
           canvasSize={canvasSize}
           coonsPatch={coonsPatch}
           surface={surface}
-          project={project}
           setCanvasSize={setCanvasSize}
         />
         <div className="-my-5 w-[300px] flex-shrink-0 flex-grow-0 overflow-y-scroll">

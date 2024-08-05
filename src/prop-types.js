@@ -48,6 +48,12 @@ export const typeConfig = PropTypes.shape({
   bounds: PropTypes.shape({
     shouldDrawBounds: PropTypes.bool.isRequired,
     shouldDrawCornerPoints: PropTypes.bool.isRequired,
+    corners: PropTypes.objectOf(
+      PropTypes.shape({
+        isLinked: PropTypes.bool.isRequired,
+        isMirrored: PropTypes.bool.isRequired,
+      })
+    ).isRequired,
   }).isRequired,
   global: PropTypes.shape({
     isLinked: PropTypes.bool.isRequired,

@@ -3,6 +3,7 @@ import React from 'react'
 import AppApiContext from '../../context/AppApiContext'
 import useObserveClientSize from '../../hooks/useObserveClientSize'
 import { typeDimensions, typeProject, typeSurface } from '../../prop-types'
+import useAppStore from '../../state/useAppStore'
 import { clampGridSquareToGridDimensions } from '../../utils'
 import Canvas from './Canvas'
 import ControlNodes from './Canvas/ControlNodes'
@@ -25,9 +26,10 @@ const WorkArea = ({
   coonsPatch,
   surface,
   setCanvasSize,
-  project = undefined,
 }) => {
   const displayRef = React.useRef(null)
+
+  const project = useAppStore.use.project()
 
   const { updateConfigBounds, updateConfigBoundsPosition } =
     React.useContext(AppApiContext)

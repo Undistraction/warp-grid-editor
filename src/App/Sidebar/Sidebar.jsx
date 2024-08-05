@@ -3,6 +3,7 @@ import pipe from 'ramda/src/pipe'
 import React from 'react'
 import AppApiContext from '../../context/AppApiContext'
 import { typeSurface } from '../../prop-types'
+import useAppStore from '../../state/useAppStore'
 import { getBoundsApi } from '../../utils/boundsApi'
 import { updateObject } from '../../utils/object'
 import Button from '../components/Button'
@@ -58,11 +59,12 @@ const Sidebar = ({
     linkControlPoints,
     zeroControlPoints,
     mirrorControlPoints,
-    linkControlPointsGlobal,
-    zeroControlPointsGlobal,
-    mirrorControlPointsGlobal,
     updateConfigBounds,
   } = React.useContext(AppApiContext)
+
+  const zeroControlPointsGlobal = useAppStore.use.zeroControlPointsGlobal()
+  const linkControlPointsGlobal = useAppStore.use.linkControlPointsGlobal()
+  const mirrorControlPointsGlobal = useAppStore.use.mirrorControlPointsGlobal()
 
   const updateProject = updateObject(project, setProject)
   const updateSurface = updateObject(surface, setSurface)
@@ -128,6 +130,7 @@ const Sidebar = ({
             `shouldDrawCornerPoints`,
           ])}
         />
+        ')
         <ControlPointEditor
           zeroControlPoints={zeroControlPointsGlobal}
           linkControlPoints={linkControlPointsGlobal}

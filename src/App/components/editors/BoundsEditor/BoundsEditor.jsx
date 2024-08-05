@@ -21,11 +21,11 @@ const NODES = [
 // -----------------------------------------------------------------------------
 
 const pointIsLinked = (pointId, config) => {
-  return config.bounds[pointId].isLinked
+  return config.bounds.corners[pointId].isLinked
 }
 
 const pointIsMirrored = (pointId, config) => {
-  return config.bounds[pointId].isMirrored
+  return config.bounds.corners[pointId].isMirrored
 }
 
 const getNode =
