@@ -23,8 +23,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "link": "pnpm link --global warp-grid && pnpm link --global coons-patch",
-    "unlink": "pnpm unlink --global warp-grid && pnpm unlink --global coons-patch"
+    "link": "pnpm link ../warp-grid",
+    "unlink": "pnpm unlink ../warp-grid"
   },
   "keywords": [
     "coons patch",
@@ -79,6 +79,6 @@
     "react-draggable": "^4.4.6",
     "use-debounce": "^10.0.1",
     "uuid": "^10.0.0",
-    "warp-grid": "^1.2.1"
+    "warp-grid": "^1.3.0"
   }
 }

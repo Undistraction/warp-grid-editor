@@ -30,14 +30,14 @@ const renderNodes = (handleNodeDrag, nodes) => {
 // Exports
 // -----------------------------------------------------------------------------
 
-const ControlNodes = ({ boundingCurves, onNodePositionChange }) => {
+const ControlNodes = ({ boundingCurves, updateBounds }) => {
   const handleNodeDrag = (id) => (event, dragElement) => {
     const newPosition = {
       x: dragElement.x,
       y: dragElement.y,
     }
 
-    onNodePositionChange(id)(newPosition)
+    updateBounds(id)(newPosition)
   }
 
   return (
@@ -112,7 +112,7 @@ const ControlNodes = ({ boundingCurves, onNodePositionChange }) => {
 
 ControlNodes.propTypes = {
   boundingCurves: typeBoundingCurves,
-  onNodePositionChange: PropTypes.func.isRequired,
+  updateBounds: PropTypes.func.isRequired,
 }
 
 export default ControlNodes

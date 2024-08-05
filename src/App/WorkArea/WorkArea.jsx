@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import AppApiContext from '../../context/AppApiContext'
 import useObserveClientSize from '../../hooks/useObserveClientSize'
 import {
   typeBoundingCurves,
@@ -30,20 +31,19 @@ const WorkArea = ({
   surface,
   config,
   boundingCurves,
-  setBoundingCurves,
-  handleNodePositionChange,
-  handleShapeDrag,
   setCanvasSize,
-  grid,
+  gridDefinition,
 }) => {
   const displayRef = React.useRef(null)
+
+  const { updateBounds, updateBoundsPosition } = React.useContext(AppApiContext)
 
   const gridSquareClamped = React.useMemo(
     () =>
       surface.gridSquare
-        ? clampGridSquareToGridDimensions(surface.gridSquare, grid)
+        ? clampGridSquareToGridDimensions(surface.gridSquare, gridDefinition)
         : surface.gridSquare,
-    [surface, grid]
+    [surface, gridDefinition]
   )
 
   useObserveClientSize(displayRef, setCanvasSize, {
@@ -72,7 +72,7 @@ const WorkArea = ({
         <React.Fragment>
           <Shape
             boundingCurves={boundingCurves}
-            onDrag={handleShapeDrag(boundingCurves, setBoundingCurves, config)}
+            onDrag={updateBoundsPosition}
           />
           {config.bounds.shouldDrawCornerPoints && (
             <React.Fragment>
@@ -83,11 +83,7 @@ const WorkArea = ({
               />
               <ControlNodes
                 boundingCurves={boundingCurves}
-                onNodePositionChange={handleNodePositionChange(
-                  boundingCurves,
-                  setBoundingCurves,
-                  config
-                )}
+                updateBounds={updateBounds}
               />
             </React.Fragment>
           )}
@@ -105,10 +101,8 @@ WorkArea.propTypes = {
   config: typeConfig,
   boundingCurves: typeBoundingCurves,
   setBoundingCurves: PropTypes.func.isRequired,
-  handleNodePositionChange: PropTypes.func.isRequired,
-  handleShapeDrag: PropTypes.func.isRequired,
   setCanvasSize: PropTypes.func.isRequired,
-  grid: PropTypes.object.isRequired,
+  gridDefinition: PropTypes.object.isRequired,
 }
 
 export default WorkArea

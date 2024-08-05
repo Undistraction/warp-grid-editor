@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import AppApiContext from '../../context/AppApiContext'
 import {
   typeBoundingCurves,
   typeConfig,
@@ -7,16 +8,19 @@ import {
   typeSurface,
 } from '../../prop-types'
 import { getBoundsApi } from '../../utils/boundsApi'
-import BoundsEditor from '../controls/BoundsEditor'
-import Button from '../controls/Button'
-import ConfigEditor from '../controls/ConfigEditor'
-import ControlPointEditor from '../controls/ControlPointEditor'
-import GridEditor from '../controls/GridEditor'
-import SettingsLoader from '../controls/SettingsLoader'
-import SettingsSaver from '../controls/SettingsSaver'
-import SteppedInput from '../controls/SteppedInput'
-import Switch from '../controls/Switch'
+import { updateObject } from '../../utils/object'
+import Button from '../components/Button'
+import ControlGroup from '../components/controls/ControlGroup'
+import SteppedInput from '../components/controls/SteppedInput'
+import Switch from '../components/controls/Switch'
+import BoundsEditor from '../components/editors/BoundsEditor'
+import ConfigEditor from '../components/editors/ConfigEditor'
+import ControlPointEditor from '../components/editors/ControlPointEditor'
+import GridEditor from '../components/editors/GridEditor'
+import ProjectEditor from '../components/editors/ProjectEditor'
+import SidebarFooter from './SidebarFooter'
 import SidebarGroup from './SidebarGroup'
+import SidebarHeader from './SidebarHeader'
 
 // -----------------------------------------------------------------------------
 // Utils
@@ -51,29 +55,42 @@ const Sidebar = ({
   boundingCurves,
   config,
   setConfig,
-  onSave,
-  onLoad,
-  onNodePositionChange,
-  onLinkControlPoints,
-  onZeroControlPoints,
-  onMirrorControlPoints,
-  onZeroControlPointsGlobal,
-  onLinkControlPointsGlobal,
-  onMirrorControlPointsGlobal,
+  saveProject,
+  loadProject,
+  exportBounds,
+  exportCellBounds,
+  project,
 }) => {
   const boundsApi = getBoundsApi(boundingCurves)
   const corners = boundsApi.getCorners()
+  const {
+    linkControlPoints,
+    zeroControlPoints,
+    mirrorControlPoints,
+    linkControlPointsGlobal,
+    zeroControlPointsGlobal,
+    mirrorControlPointsGlobal,
+    updateBounds,
+  } = React.useContext(AppApiContext)
+
+  const updateConfig = updateObject(config, setConfig)
+  const updateSurface = updateObject(surface, setSurface)
+
   return (
     <div className="flex flex-col space-y-3 divide-y-2 py-5">
-      <header className="flex flex-row items-center justify-between">
-        <h1>warp-grid-editor</h1>
-        <a
-          className="underline"
-          href="https://github.com/Undistraction/warp-grid"
-        >
-          Github
-        </a>
-      </header>
+      <SidebarHeader />
+      <SidebarGroup
+        title="Project"
+        hint="You can save and load your settings from/to the local-storage of your machine."
+      >
+        {project ? project?.name : `Untitled`}
+        <ProjectEditor
+          loadProject={loadProject}
+          saveProject={saveProject}
+          project={project}
+          savedProjects={savedProjects}
+        />
+      </SidebarGroup>
       <SidebarGroup
         title="Config"
         hint="By default, all lines are straight, however you can switch to using curved lines which is significantly more memory intensive. When using curves, 'Even' is the default interpolation, and is much more accurate, especially with higher 'Precision' settings"
@@ -84,70 +101,52 @@ const Sidebar = ({
         />
       </SidebarGroup>
       <SidebarGroup title="Bounds">
-        <Button
-          label="Randomise"
-          onClick={() => {
-            const boundingCurves = getRandomBoundingCurves(canvas)
-            setBoundingCurves(boundingCurves)
-          }}
-        />
+        <div className="flex space-x-3 [&>*]:basis-1/2">
+          <Button
+            label="Randomise"
+            onClick={() => {
+              const boundingCurves = getRandomBoundingCurves(canvas)
+              setBoundingCurves(boundingCurves)
+            }}
+          />
+          <Button
+            label="Export"
+            onClick={exportBounds}
+          />
+        </div>
         <Switch
           label="Draw intersections"
           isSelected={config.grid.shouldDrawIntersections}
-          onChange={(value) =>
-            setConfig({
-              ...config,
-              grid: {
-                ...config.grid,
-                shouldDrawIntersections: value,
-              },
-            })
-          }
+          onChange={updateConfig([`grid`, `shouldDrawIntersections`])}
         />
         <Switch
           label="Draw bounds"
           isSelected={config.bounds.shouldDrawBounds}
-          onChange={(value) =>
-            setConfig({
-              ...config,
-              bounds: {
-                ...config.bounds,
-                shouldDrawBounds: value,
-              },
-            })
-          }
+          onChange={updateConfig([`bounds`, `shouldDrawBounds`])}
         />
         <Switch
           label="Draw corner points"
           isSelected={config.bounds.shouldDrawCornerPoints}
-          onChange={(value) =>
-            setConfig({
-              ...config,
-              bounds: {
-                ...config.bounds,
-                shouldDrawCornerPoints: value,
-              },
-            })
-          }
+          onChange={updateConfig([`bounds`, `shouldDrawCornerPoints`])}
         />
         <ControlPointEditor
-          onZeroControlPoints={onZeroControlPointsGlobal}
-          onLinkControlPoints={onLinkControlPointsGlobal}
-          onMirrorControlPoints={onMirrorControlPointsGlobal}
+          zeroControlPoints={zeroControlPointsGlobal}
+          linkControlPoints={linkControlPointsGlobal}
+          mirrorControlPoints={mirrorControlPointsGlobal}
           controlNodesAreLinked={config.global.isLinked}
           controlNodesAreMirrored={config.global.isMirrored}
         />
         {boundingCurves && (
           <BoundsEditor
+            exportBounds={exportBounds}
             corners={corners}
-            boundingCurves={boundingCurves}
             setBoundingCurves={setBoundingCurves}
             config={config}
             setConfig={setConfig}
-            onNodePositionChange={onNodePositionChange}
-            onLinkControlPoints={onLinkControlPoints}
-            onZeroControlPoints={onZeroControlPoints}
-            onMirrorControlPoints={onMirrorControlPoints}
+            updateBounds={updateBounds}
+            linkControlPoints={linkControlPoints}
+            zeroControlPoints={zeroControlPoints}
+            mirrorControlPoints={mirrorControlPoints}
           />
         )}
       </SidebarGroup>
@@ -162,59 +161,39 @@ const Sidebar = ({
           config={config}
           setConfig={setConfig}
         />
+        <Button
+          label="Export"
+          onClick={exportCellBounds}
+        />
       </SidebarGroup>
 
       <SidebarGroup title="Grid square">
-        <SteppedInput
-          label="Across"
-          value={surface.gridSquare ? surface.gridSquare.x : ``}
-          options={getGridSquareOptions(0, grid.columns)}
-          onChange={(x) => {
-            setSurface({
-              ...surface,
-              gridSquare: {
-                ...surface.gridSquare,
-                x,
-              },
-            })
-          }}
-        />
-        <SteppedInput
-          label="Down"
-          value={surface.gridSquare ? surface.gridSquare.y : ``}
-          options={getGridSquareOptions(0, grid.rows)}
-          onChange={(y) => {
-            setSurface({
-              ...surface,
-              gridSquare: {
-                ...surface.gridSquare,
-                y,
-              },
-            })
-          }}
-        />
-      </SidebarGroup>
-      <SidebarGroup
-        title="Load and save project"
-        hint="You can save and load your settings from/to the local-storage of your machine."
-      >
-        <SettingsLoader
-          onLoad={onLoad}
-          savedProjects={savedProjects}
-        />
-        <SettingsSaver onSave={onSave} />
-      </SidebarGroup>
-      <div className="flex justify-center pt-2 align-middle text-sm text-gray-500">
-        <div>
-          Built by{` `}
-          <a
-            className="text-black"
-            href="https://undistraction.com"
+        <div className="flex space-x-3 [&>*]:basis-1/2">
+          <ControlGroup
+            label="Across"
+            direction="vertical"
           >
-            Undistraction
-          </a>
+            <SteppedInput
+              name="across"
+              value={surface.gridSquare ? surface.gridSquare.x : ``}
+              options={getGridSquareOptions(0, grid.columns)}
+              onChange={updateSurface([`gridSquare`, `x`])}
+            />
+          </ControlGroup>
+          <ControlGroup
+            label="Down"
+            direction="vertical"
+          >
+            <SteppedInput
+              name="down"
+              value={surface.gridSquare ? surface.gridSquare.y : ``}
+              options={getGridSquareOptions(0, grid.rows)}
+              onChange={updateSurface([`gridSquare`, `y`])}
+            />
+          </ControlGroup>
         </div>
-      </div>
+      </SidebarGroup>
+      <SidebarFooter />
     </div>
   )
 }
@@ -231,15 +210,11 @@ Sidebar.propTypes = {
   boundingCurves: typeBoundingCurves,
   config: typeConfig.isRequired,
   setConfig: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired,
-  onLoad: PropTypes.func.isRequired,
-  onNodePositionChange: PropTypes.func.isRequired,
-  onLinkControlPoints: PropTypes.func.isRequired,
-  onZeroControlPoints: PropTypes.func.isRequired,
-  onMirrorControlPoints: PropTypes.func.isRequired,
-  onZeroControlPointsGlobal: PropTypes.func.isRequired,
-  onLinkControlPointsGlobal: PropTypes.func.isRequired,
-  onMirrorControlPointsGlobal: PropTypes.func.isRequired,
+  saveProject: PropTypes.func.isRequired,
+  loadProject: PropTypes.func.isRequired,
+  exportBounds: PropTypes.func.isRequired,
+  exportCellBounds: PropTypes.func.isRequired,
+  project: PropTypes.object,
 }
 
 export default Sidebar

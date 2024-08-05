@@ -1,18 +1,13 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Draggable from 'react-draggable'
-import { METRICS } from '../../../../const'
 import { typeBoundingCurves } from '../../../../prop-types'
-import { getBoundsApi } from '../../../../utils/boundsApi'
 
 // -----------------------------------------------------------------------------
 // Const
 // -----------------------------------------------------------------------------
 
 const DEFAULT_CANVAS_SIZE = { width: 0, height: 0, x: 0, y: 0 }
-
-const BORDER_WIDTH = METRICS.CANVAS.BORDER_WIDTH
-const CORNER_POINT_RADIUS = METRICS.CORNER_POINT.WIDTH * 0.5
 
 // -----------------------------------------------------------------------------
 // Utils
@@ -66,40 +61,6 @@ const renderPath = ({ top, left, bottom, right }) => {
   )
 }
 
-const getCanvasBounds = (boundingBox, boundingCurves) => {
-  const boundsApi = getBoundsApi(boundingCurves)
-
-  const bounds = boundsApi.getBoundsSimple()
-
-  // TODO use the positions of the points to calculate the bounds
-
-  const resolvedX =
-    boundingBox.x > -CORNER_POINT_RADIUS ? -CORNER_POINT_RADIUS : boundingBox.x
-
-  const resolvedY =
-    boundingBox.y > -CORNER_POINT_RADIUS ? -CORNER_POINT_RADIUS : boundingBox.y
-
-  const resolvedWidth =
-    boundingBox.width < bounds.width - boundingBox.x + CORNER_POINT_RADIUS
-      ? bounds.width - boundingBox.x + CORNER_POINT_RADIUS
-      : boundingBox.width
-
-  const resolvedHeight =
-    boundingBox.height < bounds.height - boundingBox.y + CORNER_POINT_RADIUS
-      ? bounds.height - boundingBox.y + CORNER_POINT_RADIUS
-      : boundingBox.height
-
-  const addedWidth = boundingBox.x - resolvedX
-  const addedHeight = boundingBox.y - resolvedY
-
-  return {
-    width: resolvedWidth + addedWidth + BORDER_WIDTH * 2,
-    height: resolvedHeight + addedHeight + BORDER_WIDTH * 2,
-    x: resolvedX - BORDER_WIDTH,
-    y: resolvedY - BORDER_WIDTH,
-  }
-}
-
 // -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
@@ -113,10 +74,8 @@ const Shape = ({ boundingCurves, onDrag }) => {
   React.useLayoutEffect(() => {
     const svgElement = svgRef.current
     if (svgElement) {
-      // const rect = svgElement.getBoundingClientRect()
       const boundingBox = svgElement.getBBox({ stroke: true })
-      const canvasBounds = getCanvasBounds(boundingBox, boundingCurves)
-      setCanvasBounds(canvasBounds)
+      setCanvasBounds(boundingBox)
     }
   }, [boundingCurves])
 
@@ -140,7 +99,7 @@ const Shape = ({ boundingCurves, onDrag }) => {
           left: x,
           top: y,
         }}
-        className={`shape-handle absolute cursor-move outline outline-transparent hover:outline-gray-200`}
+        className={`shape-handle absolute cursor-move`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

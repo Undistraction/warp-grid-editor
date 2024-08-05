@@ -20,6 +20,12 @@ module.exports = {
     react: {
       version: `18`,
     },
+    'import/resolver': {
+      node: {
+        extensions: [`.js`, `.jsx`, `mjs`, `ts`],
+        moduleDirectory: [`node_modules`, `src/`],
+      },
+    },
   },
 
   extends: [
