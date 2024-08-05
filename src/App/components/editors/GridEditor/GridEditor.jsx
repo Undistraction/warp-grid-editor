@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import { assocPath, map, pipe } from 'ramda'
 import { isArray } from 'ramda-adjunct'
 import React from 'react'
 import { typeProject } from '../../../../prop-types'
@@ -29,28 +30,27 @@ const convertListIntoInputString = (listOrNumber) => {
   return isArray(listOrNumber) ? listOrNumber.join(`, `) : listOrNumber
 }
 
+const stepsToInts = pipe(getItemsFromString, map(parseFloat))
+
 // -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
 
 const GridEditor = ({ project, setProject }) => {
+  const isAdvanced = project.config.grid.shouldUseComplexColumnsRows
   return (
     <div className="flex flex-col space-y-3">
       <Switch
         label="Advanced"
-        isSelected={project.config.grid.shouldUseComplexColumnsRows}
+        isSelected={isAdvanced}
         onChange={() =>
-          setProject({
-            ...project,
-            config: {
-              ...project.config,
-              grid: {
-                ...project.config.grid,
-                shouldUseComplexColumnsRows:
-                  !project.config.grid.shouldUseComplexColumnsRows,
-              },
-            },
-          })
+          setProject(
+            assocPath(
+              [`config`, `grid`, `shouldUseComplexColumnsRows`],
+              !isAdvanced,
+              project
+            )
+          )
         }
       />
       {project.config.grid.shouldUseComplexColumnsRows && (
@@ -59,28 +59,18 @@ const GridEditor = ({ project, setProject }) => {
             label="Columns"
             value={convertListIntoInputString(project.gridDefinition.columns)}
             onChange={(columnsString) => {
-              const columns = getItemsFromString(columnsString)
-              setProject({
-                ...project,
-                gridDefinition: {
-                  ...project.gridDefinition,
-                  columns: columns.map(parseFloat),
-                },
-              })
+              const columns = stepsToInts(columnsString)
+              setProject(
+                assocPath([`gridDefinition`, `columns`], columns, project)
+              )
             }}
           />
           <TextInput
             label="Rows"
             value={convertListIntoInputString(project.gridDefinition.rows)}
             onChange={(rowsString) => {
-              const rows = getItemsFromString(rowsString)
-              setProject({
-                ...project,
-                gridDefinition: {
-                  ...project.gridDefinition,
-                  rows: rows.map(parseFloat),
-                },
-              })
+              const rows = stepsToInts(rowsString)
+              setProject(assocPath([`gridDefinition`, `rows`], rows, project))
             }}
           />
         </div>
@@ -97,13 +87,13 @@ const GridEditor = ({ project, setProject }) => {
               value={project.gridDefinition.columns}
               options={COLUMNS_OPTIONS}
               onChange={(columns) => {
-                setProject({
-                  ...project,
-                  gridDefinition: {
-                    ...project.gridDefinition,
-                    columns: parseInt(columns),
-                  },
-                })
+                setProject(
+                  assocPath(
+                    [`gridDefinition`, `columns`],
+                    parseInt(columns),
+                    project
+                  )
+                )
               }}
             />
           </ControlGroup>
@@ -116,13 +106,9 @@ const GridEditor = ({ project, setProject }) => {
               value={project.gridDefinition.rows}
               options={ROWS_OPTIONS}
               onChange={(rows) => {
-                setProject({
-                  ...project,
-                  gridDefinition: {
-                    ...project.gridDefinition,
-                    rows: parseInt(rows),
-                  },
-                })
+                setProject(
+                  assocPath([`gridDefinition`, `rows`], parseInt(rows), project)
+                )
               }}
             />
           </ControlGroup>
@@ -139,13 +125,9 @@ const GridEditor = ({ project, setProject }) => {
             step={0.1}
             labelIsAfter
             onChange={(value) => {
-              setProject({
-                ...project,
-                gridDefinition: {
-                  ...project.gridDefinition,
-                  gutter: value,
-                },
-              })
+              setProject(
+                assocPath([`gridDefinition`, `gutter`], value, project)
+              )
             }}
           />
         </ControlGroup>

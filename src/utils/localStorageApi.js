@@ -24,13 +24,13 @@ const getProjects = () => {
   return isNil(projects) ? [] : JSON.parse(projects)
 }
 
-const saveMeta = (meta) => {
-  localStorage.setItem(`meta`, JSON.stringify(meta))
+const saveApp = (app) => {
+  localStorage.setItem(`app`, JSON.stringify(app))
 }
 
-const getMeta = () => {
-  const meta = localStorage.meta
-  return meta ? JSON.parse(meta) : {}
+const getApp = () => {
+  const app = localStorage.app
+  return app ? JSON.parse(app) : {}
 }
 
 const saveProject = (name, value) => {
@@ -42,13 +42,13 @@ const saveProject = (name, value) => {
     { ...value, id, version: VERSION, name, date: new Date().toUTCString() },
   ])
   localStorage.setItem(`projects`, updatedProjects)
-  saveMeta({ lastProjectId: id })
+  saveApp({ lastProjectId: id })
 }
 
 const loadProject = (id) => {
   const projects = getProjects()
   const project = findProject(id, projects)
-  saveMeta({ lastProjectId: id })
+  saveApp({ lastProjectId: id })
   return project
 }
 
@@ -56,6 +56,6 @@ export default {
   saveProject,
   loadProject,
   getProjects,
-  saveMeta,
-  getMeta,
+  saveApp,
+  getApp,
 }

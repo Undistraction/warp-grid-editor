@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { isInteger } from 'ramda-adjunct'
+import { assocPath } from 'ramda'
 import React from 'react'
 import { INTERPOLATION_STRATEGY, LINE_STRATEGY } from '../../../../const'
 import { typeProject } from '../../../../prop-types'
@@ -50,13 +50,13 @@ const renderCurvesConfig = (project, setProject) => {
           value={project.gridDefinition.interpolationStrategy}
           options={INTERPOLATION_STRATEGY_OPTIONS}
           onChange={(interpolationStrategy) => {
-            setProject({
-              ...project,
-              gridDefinition: {
-                ...project.gridDefinition,
+            setProject(
+              assocPath(
+                [`gridDefinition`, `interpolationStrategy`],
                 interpolationStrategy,
-              },
-            })
+                project
+              )
+            )
           }}
         />
       </ControlGroup>
@@ -70,16 +70,10 @@ const renderCurvesConfig = (project, setProject) => {
           <NumericInput
             value={project.gridDefinition.precision}
             min={1}
-            onChange={(value) => {
-              if (isInteger(value)) {
-                setProject({
-                  ...project,
-                  gridDefinition: {
-                    ...project.gridDefinition,
-                    precision: value,
-                  },
-                })
-              }
+            onChange={(precision) => {
+              setProject(
+                assocPath([`gridDefinition`, `precision`], precision, project)
+              )
             }}
           />
         </ControlGroup>
@@ -105,13 +99,13 @@ const ConfigEditor = ({ project, setProject }) => {
           value={project.gridDefinition.lineStrategy}
           options={LINE_STRATEGY_OPTIONS}
           onChange={(lineStrategy) => {
-            setProject({
-              ...project,
-              gridDefinition: {
-                ...project.gridDefinition,
+            setProject(
+              assocPath(
+                [`gridDefinition`, `lineStrategy`],
                 lineStrategy,
-              },
-            })
+                project
+              )
+            )
           }}
         />
       </ControlGroup>

@@ -66,12 +66,11 @@ const App = () => {
   const [canvasSize, setCanvasSize] = React.useState({ width: 0, height: 0 })
   const [projects, setProjects] = React.useState(localStorageApi.getProjects())
   const [boundingCurvesDebounced] = useDebounce(project?.boundingCurves, 5)
-  console.log(`Surface`, surface)
   const canvasIsReady = canvas && canvasSize.width > 0
 
   // Create a random set of bounding curves on first render if no project is loaded
   React.useLayoutEffect(() => {
-    const { lastProjectId } = localStorageApi.getMeta()
+    const { lastProjectId } = localStorageApi.getApp()
     if (!project && lastProjectId) {
       const lastProject = localStorageApi.loadProject(lastProjectId)
       setProject(lastProject)

@@ -164,11 +164,7 @@ const getAppApi = ({ setProjects, setProject, coonsPatch, project }) => {
 
   const loadProject = (id) => {
     const result = localStorageApi.loadProject(id)
-    if (!result.gridDefinition && result.grid) {
-      setProject({ ...result, gridDefinition: result.grid })
-    } else {
-      setProject(result)
-    }
+    setProject(result)
   }
 
   const exportBounds = () => {
