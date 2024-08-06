@@ -62,3 +62,5 @@ export const LINE_STRATEGY = {
   STRAIGHT_LINES: `straightLines`,
   CURVES: `curves`,
 }
+
+export const PROJECT_VERSION = 1

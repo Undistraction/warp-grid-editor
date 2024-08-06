@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import { typeProject } from '../../../../prop-types'
 import ProjectLoader from '../../ProjectLoader'
 import ProjectSaver from '../../ProjectSaver'
 
@@ -10,18 +11,23 @@ import ProjectSaver from '../../ProjectSaver'
 const ProjectEditor = ({
   loadProject,
   saveProject,
-  project = undefined,
-  projects = undefined,
+  saveProjectAs,
+  setProjectName,
+  project,
+  projects,
 }) => {
   return (
     <div className="flex flex-col space-y-1">
+      <ProjectSaver
+        saveProject={saveProject}
+        setProjectName={setProjectName}
+        saveProjectAs={saveProjectAs}
+        project={project}
+      />
+      {` `}
       <ProjectLoader
         loadProject={loadProject}
         projects={projects}
-      />
-      <ProjectSaver
-        saveProject={saveProject}
-        project={project}
       />
     </div>
   )
@@ -30,8 +36,10 @@ const ProjectEditor = ({
 ProjectEditor.propTypes = {
   loadProject: PropTypes.func.isRequired,
   saveProject: PropTypes.func.isRequired,
-  project: PropTypes.object,
-  projects: PropTypes.arrayOf(PropTypes.object),
+  saveProjectAs: PropTypes.func.isRequired,
+  setProjectName: PropTypes.func.isRequired,
+  project: typeProject.isRequired,
+  projects: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 export default ProjectEditor

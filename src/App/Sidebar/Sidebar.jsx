@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types'
 import pipe from 'ramda/src/pipe'
 import React from 'react'
-import AppApiContext from '../../context/AppApiContext'
-import { typeSurface } from '../../prop-types'
+import { typeProject, typeSurface } from '../../prop-types'
 import useAppStore from '../../state/useAppStore'
-import { getBoundsApi } from '../../utils/boundsApi'
+import { getBoundingCurvesApi } from '../../utils/boundingCurvesApi'
 import { updateObject } from '../../utils/object'
 import Button from '../components/Button'
 import ControlGroup from '../components/controls/ControlGroup'
@@ -44,27 +43,30 @@ const Sidebar = ({
   canvas,
   surface,
   getRandomBoundingCurves,
-  projects,
   setSurface,
-  saveProject,
-  loadProject,
   exportBounds,
   exportCellBounds,
-  setProject,
   project,
 }) => {
-  const boundsApi = getBoundsApi(project.boundingCurves)
+  const boundsApi = getBoundingCurvesApi(project.boundingCurves)
   const corners = boundsApi.getCorners()
-  const {
-    linkControlPoints,
-    zeroControlPoints,
-    mirrorControlPoints,
-    updateConfigBounds,
-  } = React.useContext(AppApiContext)
 
+  const zeroControlPoints = useAppStore.use.zeroControlPoints()
+  const linkControlPoints = useAppStore.use.linkControlPoints()
+  const mirrorControlPoints = useAppStore.use.mirrorControlPoints()
+  const saveProject = useAppStore.use.saveProject()
+  const saveProjectAs = useAppStore.use.saveProjectAs()
+  const loadProject = useAppStore.use.loadProject()
+  const setProjectName = useAppStore.use.setProjectName()
+
+  const projects = useAppStore.use.projects()
   const zeroControlPointsGlobal = useAppStore.use.zeroControlPointsGlobal()
   const linkControlPointsGlobal = useAppStore.use.linkControlPointsGlobal()
   const mirrorControlPointsGlobal = useAppStore.use.mirrorControlPointsGlobal()
+  const updateBoundingCurvesCornerNode =
+    useAppStore.use.updateBoundingCurvesCornerNode()
+
+  const setProject = () => {}
 
   const updateProject = updateObject(project, setProject)
   const updateSurface = updateObject(surface, setSurface)
@@ -80,6 +82,8 @@ const Sidebar = ({
         <ProjectEditor
           loadProject={loadProject}
           saveProject={saveProject}
+          saveProjectAs={saveProjectAs}
+          setProjectName={setProjectName}
           project={project}
           projects={projects}
         />
@@ -130,20 +134,20 @@ const Sidebar = ({
             `shouldDrawCornerPoints`,
           ])}
         />
-        ')
+
         <ControlPointEditor
           zeroControlPoints={zeroControlPointsGlobal}
           linkControlPoints={linkControlPointsGlobal}
           mirrorControlPoints={mirrorControlPointsGlobal}
-          controlNodesAreLinked={project.config.global.isLinked}
-          controlNodesAreMirrored={project.config.global.isMirrored}
+          controlNodesAreLinked={project.config.bounds.isLinked}
+          controlNodesAreMirrored={project.config.bounds.isMirrored}
         />
         {project.boundingCurves && (
           <BoundsEditor
             config={project.config}
             exportBounds={exportBounds}
             corners={corners}
-            updateConfigBounds={updateConfigBounds}
+            updateBoundingCurvesCornerNode={updateBoundingCurvesCornerNode}
             linkControlPoints={linkControlPoints}
             zeroControlPoints={zeroControlPoints}
             mirrorControlPoints={mirrorControlPoints}
@@ -200,13 +204,10 @@ Sidebar.propTypes = {
   canvas: PropTypes.object.isRequired,
   surface: typeSurface.isRequired,
   getRandomBoundingCurves: PropTypes.func.isRequired,
-  projects: PropTypes.array.isRequired,
   setSurface: PropTypes.func.isRequired,
-  saveProject: PropTypes.func.isRequired,
-  loadProject: PropTypes.func.isRequired,
   exportBounds: PropTypes.func.isRequired,
   exportCellBounds: PropTypes.func.isRequired,
-  project: PropTypes.object,
+  project: typeProject.isRequired,
   setProject: PropTypes.func.isRequired,
 }
 

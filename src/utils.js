@@ -1,6 +1,6 @@
 import { isInteger } from 'ramda-adjunct'
 import { CORNER_POINTS } from './const'
-import { getBoundsApi } from './utils/boundsApi'
+import { getBoundingCurvesApi } from './utils/boundingCurvesApi'
 import getCanvasApi from './utils/getCanvasApi'
 import { clampNumberBetween } from './utils/math'
 import { getRandomRectangleBounds } from './utils/random'
@@ -79,7 +79,7 @@ export const getRandomBoundingCurves = (canvas) => {
 
   // Loop through each corner and expand the control points
   return CORNER_POINTS.reduce((acc, name) => {
-    const boundsApi = getBoundsApi(acc)
+    const boundsApi = getBoundingCurvesApi(acc)
     return boundsApi.expandControlPoints(name)
   }, boundingCurves)
 }

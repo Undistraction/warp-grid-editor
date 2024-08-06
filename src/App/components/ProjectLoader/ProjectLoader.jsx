@@ -6,40 +6,39 @@ import Button from '../Button'
 // Utils
 // -----------------------------------------------------------------------------
 
-const renderOptions = (options) => {
-  return options.map(({ id, name }) => (
+const renderOptions = (options) =>
+  options.map(({ uuid, name, key }) => (
     <option
-      value={id}
-      key={id}
+      value={uuid}
+      key={uuid || key}
     >
       {name}
     </option>
   ))
-}
 
 // -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
 
 const ProjectLoader = ({ loadProject, projects }) => {
-  const [key, setKey] = React.useState(``)
+  const [uuid, setUuid] = React.useState(``)
 
   const options = [
-    { id: `none`, value: `` },
+    { id: `none`, name: `Choose project`, uuid: ``, key: `default` },
     ...projects.map((project) => {
-      return {
-        id: project.id,
-        name: project.name,
-      }
+      return project.meta
     }),
   ]
+
+  console.log(`Value`, uuid)
+  console.log(`isDisabled`, uuid === ``)
 
   return (
     <div className="flex flex-row items-stretch space-x-1">
       <select
         name="projects"
         onChange={(event) => {
-          setKey(event.target.value)
+          setUuid(event.target.value)
         }}
         className="min-w-14 flex-grow border border-black px-2 py-1"
       >
@@ -47,10 +46,10 @@ const ProjectLoader = ({ loadProject, projects }) => {
       </select>
       <Button
         label="Load"
-        disabled={key === ``}
+        isDisabled={uuid === ``}
         onClick={() => {
-          if (key !== ``) {
-            loadProject(key)
+          if (uuid !== ``) {
+            loadProject(uuid)
           }
         }}
       />

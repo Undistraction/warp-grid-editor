@@ -2,16 +2,10 @@ import React from 'react'
 import { useDebounce } from 'use-debounce'
 // eslint-disable-next-line import/no-unresolved
 import warpGrid from 'warp-grid'
-import {
-  BOUNDS_POINT_IDS,
-  INTERPOLATION_STRATEGY,
-  LINE_STRATEGY,
-} from '../const'
 import AppApiContext from '../context/AppApiContext'
 import getAppApi from '../getAppApi'
 import useAppStore from '../state/useAppStore'
 import { getRandomBoundingCurves } from '../utils'
-import localStorageApi from '../utils/localStorageApi'
 import Sidebar from './Sidebar'
 import WorkArea from './WorkArea'
 
@@ -19,73 +13,29 @@ import WorkArea from './WorkArea'
 // Const
 // -----------------------------------------------------------------------------
 
-const GRID_DEFINITION_DEFAULT = {
-  columns: 25,
-  rows: 25,
-  gutter: 0,
-  lineStrategy: LINE_STRATEGY.CURVES,
-  interpolationStrategy: INTERPOLATION_STRATEGY.EVEN,
-  precision: 20,
-}
-
 const SURFACE_DEFAULT = { gridSquare: null }
-
-const CONFIG_DEFAULT = {
-  global: {
-    isLinked: true,
-    isMirrored: false,
-  },
-  grid: {
-    shouldUseComplexColumnsRows: false,
-    shouldDrawIntersections: false,
-  },
-  bounds: {
-    shouldDrawBounds: true,
-    shouldDrawCornerPoints: true,
-    corners: {
-      [BOUNDS_POINT_IDS.TOP_LEFT]: { isLinked: true, isMirrored: false },
-      [BOUNDS_POINT_IDS.TOP_RIGHT]: { isLinked: true, isMirrored: false },
-      [BOUNDS_POINT_IDS.BOTTOM_LEFT]: { isLinked: true, isMirrored: false },
-      [BOUNDS_POINT_IDS.BOTTOM_RIGHT]: { isLinked: true, isMirrored: false },
-    },
-  },
-}
-
-const PROJECT_DEFAULT = {
-  config: CONFIG_DEFAULT,
-  gridDefinition: GRID_DEFINITION_DEFAULT,
-  boundingCurves: null,
-}
 
 // -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
 
+let e
 const App = () => {
   const [canvas, setCanvas] = React.useState(null)
   const [coonsPatch, setCoonsPatch] = React.useState(null)
   const [surface, setSurface] = React.useState(SURFACE_DEFAULT)
   const [canvasSize, setCanvasSize] = React.useState({ width: 0, height: 0 })
-  const [projects, setProjects] = React.useState(localStorageApi.getProjects())
   const canvasIsReady = canvas && canvasSize.width > 0
   const { project, setProject } = useAppStore((state) => state)
-  const [boundingCurvesDebounced] = useDebounce(project?.boundingCurves, 5)
+  const [boundingCurvesDebounced] = useDebounce(project?.boundingCurves, 3)
+  const setBoundingCurves = useAppStore.use.setBoundingCurves()
 
   // Create a random set of bounding curves on first render if no project is loaded
   React.useLayoutEffect(() => {
-    const { lastProjectId } = localStorageApi.getApp()
-    if (!project) {
-      if (lastProjectId) {
-        const lastProject = localStorageApi.loadProject(lastProjectId)
-        setProject(lastProject)
-      } else if (canvasIsReady) {
-        setProject({
-          ...PROJECT_DEFAULT,
-          boundingCurves: getRandomBoundingCurves(canvas),
-        })
-      }
+    if (canvasIsReady && !project.boundingCurves) {
+      setBoundingCurves(getRandomBoundingCurves(canvas))
     }
-  }, [project, setProject, canvas, canvasSize, canvasIsReady])
+  }, [canvas, setBoundingCurves, canvasIsReady, project.boundingCurves])
 
   React.useLayoutEffect(() => {
     if (boundingCurvesDebounced) {
@@ -98,8 +48,6 @@ const App = () => {
   }, [boundingCurvesDebounced, project?.gridDefinition])
 
   const appApi = getAppApi({
-    setProjects,
-    setProject: setProject,
     project: project,
     coonsPatch,
   })
@@ -121,7 +69,6 @@ const App = () => {
               project={project}
               getRandomBoundingCurves={getRandomBoundingCurves}
               boundingCurves={project.boundingCurves}
-              projects={projects}
               surface={surface}
               setSurface={setSurface}
               saveProject={appApi.saveProject}

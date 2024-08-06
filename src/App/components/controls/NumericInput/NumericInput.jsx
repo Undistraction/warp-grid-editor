@@ -16,7 +16,7 @@ const NumericInput = ({
 
   return (
     <input
-      className="min-h-8 min-w-14 border border-black px-1 py-0.5 font-mono text-sm"
+      className="min-width-0 min-h-8 w-full border border-black px-1 py-0.5 font-mono text-sm"
       type="number"
       value={resolvedValue}
       min={min}

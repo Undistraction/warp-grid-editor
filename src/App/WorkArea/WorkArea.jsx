@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import AppApiContext from '../../context/AppApiContext'
 import useObserveClientSize from '../../hooks/useObserveClientSize'
 import { typeDimensions, typeProject, typeSurface } from '../../prop-types'
 import useAppStore from '../../state/useAppStore'
@@ -30,9 +29,10 @@ const WorkArea = ({
   const displayRef = React.useRef(null)
 
   const project = useAppStore.use.project()
-
-  const { updateConfigBounds, updateConfigBoundsPosition } =
-    React.useContext(AppApiContext)
+  const updateBoundingCurvesCornerNode =
+    useAppStore.use.updateBoundingCurvesCornerNode()
+  const updateBoundingCurvesPosition =
+    useAppStore.use.updateBoundingCurvesPosition()
 
   const gridSquareClamped = React.useMemo(
     () =>
@@ -67,11 +67,11 @@ const WorkArea = ({
         surface={surface}
         config={project?.config}
       />
-      {project && (
+      {project.boundingCurves && (
         <React.Fragment>
           <Shape
             boundingCurves={project.boundingCurves}
-            onDrag={updateConfigBoundsPosition}
+            onDrag={updateBoundingCurvesPosition}
           />
           {project.config.bounds.shouldDrawCornerPoints && (
             <React.Fragment>
@@ -82,7 +82,7 @@ const WorkArea = ({
               />
               <ControlNodes
                 boundingCurves={project.boundingCurves}
-                updateConfigBounds={updateConfigBounds}
+                updateBoundingCurvesCornerNode={updateBoundingCurvesCornerNode}
               />
             </React.Fragment>
           )}

@@ -1,5 +1,5 @@
 import memoize from 'fast-memoize'
-import { isNil } from 'ramda'
+import { assocPath, isNil, pipe } from 'ramda'
 import { BOUNDS_POINT_IDS, CURVE_NAMES, POINT_NAMES } from '../const'
 
 // -----------------------------------------------------------------------------
@@ -258,7 +258,7 @@ const getCorners = (boundingCurves) => {
 // Exports
 // -----------------------------------------------------------------------------
 
-export const getBoundsApi = memoize((boundingCurves, config) => {
+export const getBoundingCurvesApi = memoize((boundingCurves, config) => {
   const translateToPoint = (position) => ({
     top: {
       startPoint: {
@@ -654,12 +654,16 @@ export const getBoundsApi = memoize((boundingCurves, config) => {
 
   const zeroControlPoints = (id) => {
     if (id === BOUNDS_POINT_IDS.TOP_LEFT) {
-      const cornerPoint = boundingCurves.top.startPoint
-      boundingCurves.top.controlPoint1.x = cornerPoint.x
-      boundingCurves.top.controlPoint1.y = cornerPoint.y
-      boundingCurves.left.controlPoint1.x = cornerPoint.x
-      boundingCurves.left.controlPoint1.y = cornerPoint.y
-      return { ...boundingCurves }
+      return pipe(
+        assocPath(
+          [CURVE_NAMES.TOP, POINT_NAMES.CONTROL_POINT_1],
+          boundingCurves.top.startPoint
+        ),
+        assocPath(
+          [CURVE_NAMES.LEFT, POINT_NAMES.CONTROL_POINT_1],
+          boundingCurves.top.startPoint
+        )
+      )(boundingCurves)
     } else if (id === BOUNDS_POINT_IDS.TOP_RIGHT) {
       const cornerPoint = boundingCurves.top.endPoint
       boundingCurves.top.controlPoint2.x = cornerPoint.x
