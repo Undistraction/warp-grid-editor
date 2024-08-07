@@ -182,36 +182,10 @@ const getCanvasApi = (context) => {
     context.stroke()
   }
 
-  const drawLineFromPoints = (points) => {
-    context.beginPath()
-    context.moveTo(points[0].x, points[0].y)
-
-    for (let i = 1; i < points.length; i += 3) {
-      context.bezierCurveTo(
-        // controlPoint 1
-        points[i].x,
-        points[i].y,
-        // controlPoint 2
-        points[i + 1].x,
-        points[i + 1].y,
-        // endPoint
-        points[i + 2].x,
-        points[i + 2].y
-      )
-    }
-
-    context.stroke()
-  }
-
   return {
-    drawDot,
-    drawCurve,
-    drawQuad,
-    drawBounds,
     clearCanvas,
     drawCoonsPatch,
     drawGridSquareBounds,
-    drawLineFromPoints,
   }
 }
 

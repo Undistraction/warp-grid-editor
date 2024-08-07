@@ -4,6 +4,7 @@
 
 import PropTypes from 'prop-types'
 import React from 'react'
+
 import { BOUNDS_POINT_IDS } from '../../../../const'
 import { typeBoundingCurves } from '../../../../prop-types'
 import ControlPointNode from './ControlPointNode'

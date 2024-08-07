@@ -3,28 +3,26 @@
 // -----------------------------------------------------------------------------
 
 module.exports = {
+  globals: {
+    vi: true,
+  },
+
   env: {
     browser: true,
-    jest: true,
-    node: true,
     es6: true,
-    'jest/globals': true,
+    node: true,
+    'vitest/env': true,
   },
 
   parserOptions: {
-    ecmaVersion: 2024,
+    ecmaVersion: 2020,
     sourceType: `module`,
   },
 
   settings: {
+    'import/extensions': [`.js`, `.jsx`, `.cjs`, `.mjs`],
     react: {
       version: `18`,
-    },
-    'import/resolver': {
-      node: {
-        extensions: [`.js`, `.jsx`, `mjs`, `ts`],
-        moduleDirectory: [`node_modules`, `src/`],
-      },
     },
   },
 
@@ -35,7 +33,7 @@ module.exports = {
     `plugin:react-hooks/recommended`,
   ],
 
-  plugins: [`tailwind`, `import`, `react`, `react-hooks`],
+  plugins: [`simple-import-sort`, `import`, `tailwind`, `react`, `react-hooks`],
 
   ignorePatterns: [`**/coverage/*`, `/node_modules/*`, `/dist/`],
 
@@ -60,6 +58,8 @@ module.exports = {
     // tweaks.
     // -------------------------------------------------------------------------
 
+    'simple-import-sort/imports': `error`,
+    'simple-import-sort/exports': `error`,
     'func-names': [`error`, `never`],
     'no-param-reassign': `off`,
     'no-confusing-arrow': `off`,
@@ -102,13 +102,50 @@ module.exports = {
     // Use function keyword instead of arrow function for non-anonymous
     // components
     'react/function-component-definition': `off`,
+
+    'vitest/consistent-test-filename': [
+      `error`,
+      {
+        pattern: `.*\\.unit\\.test\\.[tj]s?$`,
+      },
+    ],
+    'vitest/consistent-test-it': [
+      `error`,
+      {
+        fn: `it`,
+      },
+    ],
+    'vitest/expect-expect': `error`,
+    'vitest/no-commented-out-tests': `error`,
+    'vitest/no-disabled-tests': `error`,
+    'vitest/no-duplicate-hooks': `error`,
+    'vitest/no-focused-tests': `error`,
+    'vitest/no-identical-title': `error`,
+    'vitest/no-standalone-expect': `error`,
+    'vitest/no-test-return-statement': `error`,
+    'vitest/prefer-called-with': `error`,
+    'vitest/prefer-comparison-matcher': `error`,
+    'vitest/prefer-each': `error`,
+    'vitest/prefer-equality-matcher': `error`,
+    'vitest/prefer-hooks-in-order': `error`,
+    'vitest/prefer-hooks-on-top': `error`,
+    'vitest/prefer-lowercase-title': `error`,
+    'vitest/prefer-mock-promise-shorthand': `error`,
+    'vitest/prefer-spy-on': `error`,
+    'vitest/prefer-to-be-object': `error`,
+    'vitest/prefer-to-be': `error`,
+    'vitest/prefer-to-contain': `error`,
+    'vitest/prefer-to-have-length': `error`,
+    'vitest/require-to-throw-message': `error`,
+    'vitest/valid-describe-callback': `error`,
+    'vitest/valid-expect': `error`,
+    'vitest/valid-title': `error`,
   },
 
   overrides: [
     {
       files: [`tests/**/*.js`],
-      plugins: [`jest`],
-      extends: [`plugin:jest/recommended`],
+      plugins: [`vitest`],
     },
   ],
 }

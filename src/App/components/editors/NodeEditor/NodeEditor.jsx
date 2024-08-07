@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+
 import { typeCornerPoint, typePoint } from '../../../../prop-types'
 import ControlPointEditor from '../ControlPointEditor'
 import PositionInput from './PositionInput'

@@ -1,4 +1,4 @@
-import { copyToClipboard } from './utils/clipboard'
+import { copyObjToClipboard } from './utils/clipboard'
 
 // -----------------------------------------------------------------------------
 // Exports
@@ -6,16 +6,16 @@ import { copyToClipboard } from './utils/clipboard'
 
 const getAppApi = ({ coonsPatch, project }) => {
   const exportBounds = () => {
-    copyToClipboard(project.boundingCurves)
+    copyObjToClipboard(project.boundingCurves)
   }
 
   const exportCellBounds = () => {
     const cellBounds = coonsPatch.getAllCellBounds()
-    copyToClipboard(cellBounds)
+    copyObjToClipboard(cellBounds)
   }
 
   const exportGridDefinition = () => {
-    copyToClipboard(project.gridDefinition)
+    copyObjToClipboard(project.gridDefinition)
   }
 
   return {

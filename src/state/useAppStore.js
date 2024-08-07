@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+
 import createConfigSlice from './configSlice'
 import createSelectors from './createSelectors'
 import createProjectSlice from './projectSlice'

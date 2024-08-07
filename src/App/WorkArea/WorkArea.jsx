@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+
 import useObserveClientSize from '../../hooks/useObserveClientSize'
 import { typeDimensions, typeProject, typeSurface } from '../../prop-types'
 import useAppStore from '../../state/useAppStore'

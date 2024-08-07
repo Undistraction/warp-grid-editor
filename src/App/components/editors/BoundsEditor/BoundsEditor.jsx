@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import { map } from 'ramda'
 import React from 'react'
+
 import { BOUNDS_POINT_IDS } from '../../../../const'
 import { typeBoundingCurves, typeConfig } from '../../../../prop-types'
 import NodeEditor from '../NodeEditor'

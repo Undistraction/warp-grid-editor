@@ -6,7 +6,6 @@ import React from 'react'
 // -----------------------------------------------------------------------------
 
 const Button = ({ label, onClick, className = ``, isDisabled = false }) => {
-  console.log(`IS DIS`, label, isDisabled)
   return (
     <button
       disabled={isDisabled}

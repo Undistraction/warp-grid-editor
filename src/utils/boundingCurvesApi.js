@@ -1,6 +1,8 @@
 import memoize from 'fast-memoize'
-import { assocPath, isNil, pipe } from 'ramda'
+import { assocPath, pipe } from 'ramda'
+
 import { BOUNDS_POINT_IDS, CURVE_NAMES, POINT_NAMES } from '../const'
+import { getDistanceBetweenPoints, getPointAtDistanceAndAngle } from './trig'
 
 // -----------------------------------------------------------------------------
 // Const
@@ -11,16 +13,6 @@ const EXPANSION_DISTANCE = 30
 // -----------------------------------------------------------------------------
 // Utils
 // -----------------------------------------------------------------------------
-
-const getDistanceBetweenPoints = (point1, point2) =>
-  Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2))
-
-const getPointAtDistanceAndAngle = (origin, angleRads, distance) => {
-  return {
-    x: origin.x + Math.round(Math.cos(angleRads) * distance),
-    y: origin.y + Math.round(Math.sin(angleRads) * distance),
-  }
-}
 
 const getUpdatedLinkedControlPointPosition = (
   newPosition,
@@ -583,10 +575,10 @@ export const getBoundingCurvesApi = memoize((boundingCurves, config) => {
       return updateControlPointPositions(
         boundingCurves,
         CURVE_NAMES.TOP,
-        `controlPoint1`,
+        POINT_NAMES.CONTROL_POINT_1,
         curve1PointPosition,
         CURVE_NAMES.LEFT,
-        `controlPoint1`,
+        POINT_NAMES.CONTROL_POINT_1,
         curve2PointPosition
       )
     } else if (id === BOUNDS_POINT_IDS.TOP_RIGHT) {
@@ -603,10 +595,10 @@ export const getBoundingCurvesApi = memoize((boundingCurves, config) => {
       return updateControlPointPositions(
         boundingCurves,
         CURVE_NAMES.TOP,
-        `controlPoint2`,
+        POINT_NAMES.CONTROL_POINT_2,
         curve1PointPosition,
         CURVE_NAMES.RIGHT,
-        `controlPoint1`,
+        POINT_NAMES.CONTROL_POINT_1,
         curve2PointPosition
       )
     } else if (id === BOUNDS_POINT_IDS.BOTTOM_LEFT) {
@@ -623,10 +615,10 @@ export const getBoundingCurvesApi = memoize((boundingCurves, config) => {
       return updateControlPointPositions(
         boundingCurves,
         CURVE_NAMES.BOTTOM,
-        `controlPoint1`,
+        POINT_NAMES.CONTROL_POINT_1,
         curve1PointPosition,
         CURVE_NAMES.LEFT,
-        `controlPoint2`,
+        POINT_NAMES.CONTROL_POINT_2,
         curve2PointPosition
       )
     } else if (id === BOUNDS_POINT_IDS.BOTTOM_RIGHT) {
@@ -643,10 +635,10 @@ export const getBoundingCurvesApi = memoize((boundingCurves, config) => {
       return updateControlPointPositions(
         boundingCurves,
         CURVE_NAMES.BOTTOM,
-        `controlPoint2`,
+        POINT_NAMES.CONTROL_POINT_2,
         curve1PointPosition,
         CURVE_NAMES.RIGHT,
-        `controlPoint2`,
+        POINT_NAMES.CONTROL_POINT_2,
         curve2PointPosition
       )
     }
@@ -688,58 +680,11 @@ export const getBoundingCurvesApi = memoize((boundingCurves, config) => {
     }
   }
 
-  const getBoundsTranslatedOnOrigin = (origin) => {
-    const bounds = [
-      boundingCurves.top,
-      boundingCurves.left,
-      boundingCurves.bottom,
-      boundingCurves.right,
-    ].reduce((acc, { startPoint, endPoint }) => {
-      const left = startPoint.x < endPoint.x ? startPoint.x : endPoint.x
-      const top = startPoint.y < endPoint.y ? startPoint.y : endPoint.y
-      const right = startPoint.x > endPoint.x ? startPoint.x : endPoint.x
-      const bottom = startPoint.y > endPoint.y ? startPoint.y : endPoint.y
-      return isNil(acc)
-        ? {
-            top,
-            bottom,
-            left,
-            right,
-          }
-        : {
-            top: Math.min(acc.top, top),
-            left: Math.min(acc.left, left),
-            bottom: Math.max(acc.bottom, bottom),
-            right: Math.max(acc.right, right),
-          }
-    }, null)
-
-    return {
-      top: bounds.top - origin.y,
-      bottom: bounds.bottom - origin.y,
-      left: bounds.left - origin.x,
-      right: bounds.right - origin.x,
-    }
-  }
-
-  // These are calculated corner to corner and don't take account of curves that
-  // might increase width past corners
-  const getBoundsSimple = () => {
-    const bounds = getBoundsTranslatedOnOrigin(boundingCurves.top.startPoint)
-
-    return {
-      width: bounds.right - bounds.left,
-      height: bounds.bottom - bounds.top,
-    }
-  }
-
   return {
     expandControlPoints,
     zeroControlPoints,
     updateNodePosition,
     translateToPoint,
     getCorners: () => getCorners(boundingCurves),
-    getBoundsTranslatedOnOrigin,
-    getBoundsSimple,
   }
 })

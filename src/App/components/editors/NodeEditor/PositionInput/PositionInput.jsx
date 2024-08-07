@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import { isNumber } from 'ramda-adjunct'
 import React from 'react'
+
 import { typePoint } from '../../../../../prop-types'
 import { roundToTwoPlaces } from '../../../../../utils/math'
 import ControlGroup from '../../../controls/ControlGroup'

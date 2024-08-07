@@ -2,6 +2,7 @@ import React from 'react'
 import { useDebounce } from 'use-debounce'
 // eslint-disable-next-line import/no-unresolved
 import warpGrid from 'warp-grid'
+
 import AppApiContext from '../context/AppApiContext'
 import getAppApi from '../getAppApi'
 import useAppStore from '../state/useAppStore'
@@ -19,7 +20,6 @@ const SURFACE_DEFAULT = { gridSquare: null }
 // Exports
 // -----------------------------------------------------------------------------
 
-let e
 const App = () => {
   const [canvas, setCanvas] = React.useState(null)
   const [coonsPatch, setCoonsPatch] = React.useState(null)

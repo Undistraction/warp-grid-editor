@@ -1,5 +1,6 @@
 import { assocPath, curry, mapObjIndexed, modifyPath, pipe, when } from 'ramda'
 import { v4 } from 'uuid'
+
 import {
   BOUNDS_POINT_IDS,
   CORNER_POINTS,
@@ -102,9 +103,11 @@ const createProjectSlice = (set) => ({
   // ---------------------------------------------------------------------------
   // Global config
   // ---------------------------------------------------------------------------
+
   zeroControlPointsGlobal: () => {
     set(modifyPath([`project`, `boundingCurves`], zeroControlPoints))
   },
+
   mirrorControlPointsGlobal: (isMirrored) => {
     set(
       pipe(
@@ -116,6 +119,7 @@ const createProjectSlice = (set) => ({
       )
     )
   },
+
   linkControlPointsGlobal: (isLinked) => {
     set(
       pipe(
@@ -131,9 +135,11 @@ const createProjectSlice = (set) => ({
       )
     )
   },
+
   // ---------------------------------------------------------------------------
   // Bounding Curves
   // ---------------------------------------------------------------------------
+
   setBoundingCurves: (boundingCurves) => {
     set(assocPath([`project`, `boundingCurves`], boundingCurves))
   },
@@ -153,6 +159,10 @@ const createProjectSlice = (set) => ({
       }
     })
   },
+
+  // ---------------------------------------------------------------------------
+  // Other config
+  // ---------------------------------------------------------------------------
 
   updateBoundingCurvesCornerNode: curry((nodeId, newPosition) => {
     set(({ project }) => {
@@ -250,6 +260,18 @@ const createProjectSlice = (set) => ({
       }
     })
   },
+
+  setConfigValue: curry((pathToValue, value) => {
+    set(assocPath([`project`, `config`, ...pathToValue], value))
+  }),
+
+  // ---------------------------------------------------------------------------
+  // Grid defintion
+  // ---------------------------------------------------------------------------
+
+  setGridDefinitionValue: curry((pathToValue, value) => {
+    set(assocPath([`project`, `gridDefinition`, ...pathToValue], value))
+  }),
 })
 
 export default createProjectSlice

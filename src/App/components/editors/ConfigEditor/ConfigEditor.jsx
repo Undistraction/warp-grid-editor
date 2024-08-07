@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
-import { assocPath } from 'ramda'
 import React from 'react'
+
 import { INTERPOLATION_STRATEGY, LINE_STRATEGY } from '../../../../const'
 import { typeProject } from '../../../../prop-types'
 import ControlGroup from '../../controls/ControlGroup'
@@ -37,7 +37,7 @@ export const LINE_STRATEGY_OPTIONS = [
 // Utils
 // -----------------------------------------------------------------------------
 
-const renderCurvesConfig = (project, setProject) => {
+const renderCurvesConfig = (project, setGridDefinitionValue) => {
   return (
     <React.Fragment>
       <ControlGroup
@@ -50,12 +50,9 @@ const renderCurvesConfig = (project, setProject) => {
           value={project.gridDefinition.interpolationStrategy}
           options={INTERPOLATION_STRATEGY_OPTIONS}
           onChange={(interpolationStrategy) => {
-            setProject(
-              assocPath(
-                [`gridDefinition`, `interpolationStrategy`],
-                interpolationStrategy,
-                project
-              )
+            setGridDefinitionValue(
+              [`gridDefinition`, `interpolationStrategy`],
+              interpolationStrategy
             )
           }}
         />
@@ -71,9 +68,7 @@ const renderCurvesConfig = (project, setProject) => {
             value={project.gridDefinition.precision}
             min={1}
             onChange={(precision) => {
-              setProject(
-                assocPath([`gridDefinition`, `precision`], precision, project)
-              )
+              setGridDefinitionValue([`gridDefinition`, `precision`], precision)
             }}
           />
         </ControlGroup>
@@ -86,7 +81,7 @@ const renderCurvesConfig = (project, setProject) => {
 // Exports
 // -----------------------------------------------------------------------------
 
-const ConfigEditor = ({ project, setProject }) => {
+const ConfigEditor = ({ project, setGridDefinitionValue }) => {
   return (
     <div className="flex flex-col items-stretch space-y-3">
       <ControlGroup
@@ -99,25 +94,19 @@ const ConfigEditor = ({ project, setProject }) => {
           value={project.gridDefinition.lineStrategy}
           options={LINE_STRATEGY_OPTIONS}
           onChange={(lineStrategy) => {
-            setProject(
-              assocPath(
-                [`gridDefinition`, `lineStrategy`],
-                lineStrategy,
-                project
-              )
-            )
+            setGridDefinitionValue([`lineStrategy`], lineStrategy)
           }}
         />
       </ControlGroup>
       {project.gridDefinition.lineStrategy === LINE_STRATEGY.CURVES &&
-        renderCurvesConfig(project, setProject)}
+        renderCurvesConfig(project, setGridDefinitionValue)}
     </div>
   )
 }
 
 ConfigEditor.propTypes = {
   project: typeProject.isRequired,
-  setProject: PropTypes.func.isRequired,
+  setGridDefinitionValue: PropTypes.func.isRequired,
 }
 
 export default ConfigEditor

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+
 import Button from '../Button'
 
 // -----------------------------------------------------------------------------
@@ -29,9 +30,6 @@ const ProjectLoader = ({ loadProject, projects }) => {
       return project.meta
     }),
   ]
-
-  console.log(`Value`, uuid)
-  console.log(`isDisabled`, uuid === ``)
 
   return (
     <div className="flex flex-row items-stretch space-x-1">

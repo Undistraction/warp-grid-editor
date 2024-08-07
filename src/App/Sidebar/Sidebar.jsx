@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import pipe from 'ramda/src/pipe'
 import React from 'react'
+
 import { typeProject, typeSurface } from '../../prop-types'
 import useAppStore from '../../state/useAppStore'
 import { getBoundingCurvesApi } from '../../utils/boundingCurvesApi'
@@ -58,17 +59,16 @@ const Sidebar = ({
   const saveProjectAs = useAppStore.use.saveProjectAs()
   const loadProject = useAppStore.use.loadProject()
   const setProjectName = useAppStore.use.setProjectName()
-
+  const setBoundingCurves = useAppStore.use.setBoundingCurves()
   const projects = useAppStore.use.projects()
   const zeroControlPointsGlobal = useAppStore.use.zeroControlPointsGlobal()
   const linkControlPointsGlobal = useAppStore.use.linkControlPointsGlobal()
   const mirrorControlPointsGlobal = useAppStore.use.mirrorControlPointsGlobal()
   const updateBoundingCurvesCornerNode =
     useAppStore.use.updateBoundingCurvesCornerNode()
+  const setGridDefinitionValue = useAppStore.use.setGridDefinitionValue()
+  const setConfigValue = useAppStore.use.setConfigValue()
 
-  const setProject = () => {}
-
-  const updateProject = updateObject(project, setProject)
   const updateSurface = updateObject(surface, setSurface)
 
   return (
@@ -94,7 +94,7 @@ const Sidebar = ({
       >
         <ConfigEditor
           project={project}
-          setProject={setProject}
+          setGridDefinitionValue={setGridDefinitionValue}
         />
       </SidebarGroup>
       <SidebarGroup title="Bounds">
@@ -103,7 +103,7 @@ const Sidebar = ({
             label="Randomise"
             onClick={() => {
               const boundingCurves = getRandomBoundingCurves(canvas)
-              updateProject([`boundingCurves`], boundingCurves)
+              setBoundingCurves(boundingCurves)
             }}
           />
           <Button
@@ -114,25 +114,17 @@ const Sidebar = ({
         <Switch
           label="Draw intersections"
           isSelected={project.config.grid.shouldDrawIntersections}
-          onChange={updateProject([
-            `config`,
-            `grid`,
-            `shouldDrawIntersections`,
-          ])}
+          onChange={setConfigValue([`grid`, `shouldDrawIntersections`])}
         />
         <Switch
           label="Draw bounds"
           isSelected={project.config.bounds.shouldDrawBounds}
-          onChange={updateProject([`config`, `bounds`, `shouldDrawBounds`])}
+          onChange={setConfigValue([`bounds`, `shouldDrawBounds`])}
         />
         <Switch
           label="Draw corner points"
           isSelected={project.config.bounds.shouldDrawCornerPoints}
-          onChange={updateProject([
-            `config`,
-            `bounds`,
-            `shouldDrawCornerPoints`,
-          ])}
+          onChange={setConfigValue([`bounds`, `shouldDrawCornerPoints`])}
         />
 
         <ControlPointEditor
@@ -160,7 +152,8 @@ const Sidebar = ({
         hint="Switch to 'Advanced' mode to input a comma deliniated list of column or row ratios. Values will be totalled, and each row or column will act as a ratio of that total."
       >
         <GridEditor
-          setProject={setProject}
+          setConfigValue={setConfigValue}
+          setGridDefinitionValue={setGridDefinitionValue}
           project={project}
         />
         <Button

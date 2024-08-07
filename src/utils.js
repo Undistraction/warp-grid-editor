@@ -1,7 +1,7 @@
 import { isInteger } from 'ramda-adjunct'
+
 import { CORNER_POINTS } from './const'
 import { getBoundingCurvesApi } from './utils/boundingCurvesApi'
-import getCanvasApi from './utils/getCanvasApi'
 import { clampNumberBetween } from './utils/math'
 import { getRandomRectangleBounds } from './utils/random'
 
@@ -65,10 +65,6 @@ const getBoundingCurvesFromRectangularBounds = ({ x, y, width, height }) => {
 // -----------------------------------------------------------------------------
 
 export const getRandomBoundingCurves = (canvas) => {
-  const canvasContext = canvas.getContext(`2d`)
-  const canvasApi = getCanvasApi(canvasContext)
-  canvasApi.clearCanvas(canvas)
-
   const bounds = getRandomRectangleBounds(
     canvas.width,
     canvas.height,

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+
 import { typeProject } from '../../../prop-types'
 import Button from '../Button'
 
@@ -13,7 +14,6 @@ const ProjectSaver = ({
   setProjectName,
   project,
 }) => {
-  console.log(`Project name:`, project.meta.name)
   return (
     <div className="flex flex-row space-x-1">
       <div className="flex-grow">
@@ -41,6 +41,7 @@ const ProjectSaver = ({
 
 ProjectSaver.propTypes = {
   saveProject: PropTypes.func.isRequired,
+  saveProjectAs: PropTypes.func.isRequired,
   setProjectName: PropTypes.func.isRequired,
   project: typeProject.isRequired,
 }

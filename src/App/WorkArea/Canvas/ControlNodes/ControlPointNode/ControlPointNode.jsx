@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Draggable from 'react-draggable'
+
 import { METRICS } from '../../../../../const'
 import { typePoint } from '../../../../../prop-types'
 

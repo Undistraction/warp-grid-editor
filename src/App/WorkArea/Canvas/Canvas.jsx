@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import { isInteger } from 'ramda-adjunct'
 import React from 'react'
+
 import { typeConfig, typeGridSquare, typeSurface } from '../../../prop-types'
 import getCanvasApi from '../../../utils/getCanvasApi'
 
