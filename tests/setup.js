@@ -1,5 +1,4 @@
 import * as matchers from 'jest-extended'
-// eslint-disable-next-line import/named
-import { expect } from 'vitest'
 
+// Add additioanl matchers from jest-extended
 expect.extend(matchers)

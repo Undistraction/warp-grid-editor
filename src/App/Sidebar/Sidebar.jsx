@@ -2,10 +2,10 @@ import PropTypes from 'prop-types'
 import pipe from 'ramda/src/pipe'
 import React from 'react'
 
-import { typeProject, typeSurface } from '../../prop-types'
+import { typeProject } from '../../prop-types'
 import useAppStore from '../../state/useAppStore'
+import { getRandomBoundingCurves } from '../../utils'
 import { getBoundingCurvesApi } from '../../utils/boundingCurvesApi'
-import { updateObject } from '../../utils/object'
 import Button from '../components/Button'
 import ControlGroup from '../components/controls/ControlGroup'
 import SteppedInput from '../components/controls/SteppedInput'
@@ -40,15 +40,7 @@ const getGridSquareOptions = (minNumber, maxNumberOrArray) => {
 // Exports
 // -----------------------------------------------------------------------------
 
-const Sidebar = ({
-  canvas,
-  surface,
-  getRandomBoundingCurves,
-  setSurface,
-  exportBounds,
-  exportCellBounds,
-  project,
-}) => {
+const Sidebar = ({ canvas, exportBounds, exportCellBounds, project }) => {
   const boundsApi = getBoundingCurvesApi(project.boundingCurves)
   const corners = boundsApi.getCorners()
 
@@ -64,12 +56,10 @@ const Sidebar = ({
   const zeroControlPointsGlobal = useAppStore.use.zeroControlPointsGlobal()
   const linkControlPointsGlobal = useAppStore.use.linkControlPointsGlobal()
   const mirrorControlPointsGlobal = useAppStore.use.mirrorControlPointsGlobal()
-  const updateBoundingCurvesCornerNode =
-    useAppStore.use.updateBoundingCurvesCornerNode()
+  const updateBoundingCurvesNodePosition =
+    useAppStore.use.updateBoundingCurvesNodePosition()
   const setGridDefinitionValue = useAppStore.use.setGridDefinitionValue()
   const setConfigValue = useAppStore.use.setConfigValue()
-
-  const updateSurface = updateObject(surface, setSurface)
 
   return (
     <div className="flex flex-col space-y-3 divide-y-2 py-5">
@@ -139,7 +129,7 @@ const Sidebar = ({
             config={project.config}
             exportBounds={exportBounds}
             corners={corners}
-            updateBoundingCurvesCornerNode={updateBoundingCurvesCornerNode}
+            updateBoundingCurvesNodePosition={updateBoundingCurvesNodePosition}
             linkControlPoints={linkControlPoints}
             zeroControlPoints={zeroControlPoints}
             mirrorControlPoints={mirrorControlPoints}
@@ -170,9 +160,9 @@ const Sidebar = ({
           >
             <SteppedInput
               name="across"
-              value={surface.gridSquare ? surface.gridSquare.x : ``}
+              value={project.config.gridSquare?.x}
               options={getGridSquareOptions(0, project.gridDefinition.columns)}
-              onChange={pipe(parseInt, updateSurface([`gridSquare`, `x`]))}
+              onChange={pipe(parseInt, setConfigValue([`gridSquare`, `x`]))}
             />
           </ControlGroup>
           <ControlGroup
@@ -181,9 +171,9 @@ const Sidebar = ({
           >
             <SteppedInput
               name="down"
-              value={surface.gridSquare ? surface.gridSquare.y : ``}
+              value={project.config.gridSquare?.y}
               options={getGridSquareOptions(0, project.gridDefinition.rows)}
-              onChange={pipe(parseInt, updateSurface([`gridSquare`, `y`]))}
+              onChange={pipe(parseInt, setConfigValue([`gridSquare`, `y`]))}
             />
           </ControlGroup>
         </div>
@@ -195,13 +185,11 @@ const Sidebar = ({
 
 Sidebar.propTypes = {
   canvas: PropTypes.object.isRequired,
-  surface: typeSurface.isRequired,
   getRandomBoundingCurves: PropTypes.func.isRequired,
   setSurface: PropTypes.func.isRequired,
   exportBounds: PropTypes.func.isRequired,
   exportCellBounds: PropTypes.func.isRequired,
   project: typeProject.isRequired,
-  setProject: PropTypes.func.isRequired,
 }
 
 export default Sidebar

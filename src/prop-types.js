@@ -38,10 +38,6 @@ export const typeGridSquare = PropTypes.shape({
   y: PropTypes.number,
 })
 
-export const typeSurface = PropTypes.shape({
-  gridSquare: typeGridSquare,
-})
-
 export const typeConfig = PropTypes.shape({
   grid: PropTypes.shape({
     shouldDrawIntersections: PropTypes.bool.isRequired,

@@ -51,7 +51,7 @@ const renderCurvesConfig = (project, setGridDefinitionValue) => {
           options={INTERPOLATION_STRATEGY_OPTIONS}
           onChange={(interpolationStrategy) => {
             setGridDefinitionValue(
-              [`gridDefinition`, `interpolationStrategy`],
+              [`interpolationStrategy`],
               interpolationStrategy
             )
           }}
@@ -68,7 +68,7 @@ const renderCurvesConfig = (project, setGridDefinitionValue) => {
             value={project.gridDefinition.precision}
             min={1}
             onChange={(precision) => {
-              setGridDefinitionValue([`gridDefinition`, `precision`], precision)
+              setGridDefinitionValue([`precision`], precision)
             }}
           />
         </ControlGroup>

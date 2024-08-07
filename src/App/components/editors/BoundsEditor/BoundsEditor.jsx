@@ -48,7 +48,7 @@ const getNode =
     }
   }
 
-const renderNodes = (updateBoundingCurvesCornerNode, getNodeWithData) =>
+const renderNodes = (updateBoundingCurvesNodePosition, getNodeWithData) =>
   map(({ id, title }) => {
     const node = getNodeWithData(id)
     return (
@@ -57,7 +57,7 @@ const renderNodes = (updateBoundingCurvesCornerNode, getNodeWithData) =>
         title={title}
         controlNodesAreLinked={node.pointIsLinked}
         controlNodesAreMirrored={node.pointIsMirrored}
-        updateBoundingCurvesCornerNode={updateBoundingCurvesCornerNode}
+        updateBoundingCurvesNodePosition={updateBoundingCurvesNodePosition}
         zeroControlPoints={node.zeroControlPoints}
         linkControlPoints={node.linkControlPoints}
         mirrorControlPoints={node.mirrorControlPoints}
@@ -71,7 +71,7 @@ const renderNodes = (updateBoundingCurvesCornerNode, getNodeWithData) =>
 // -----------------------------------------------------------------------------
 
 const BoundsEditor = ({
-  updateBoundingCurvesCornerNode,
+  updateBoundingCurvesNodePosition,
   corners,
   zeroControlPoints,
   linkControlPoints,
@@ -88,7 +88,7 @@ const BoundsEditor = ({
 
   return (
     <div className="flex flex-col divide-y divide-black border border-black">
-      {renderNodes(updateBoundingCurvesCornerNode, getNodeWithData)}
+      {renderNodes(updateBoundingCurvesNodePosition, getNodeWithData)}
     </div>
   )
 }
@@ -96,7 +96,7 @@ const BoundsEditor = ({
 BoundsEditor.propTypes = {
   config: typeConfig.isRequired,
   corners: PropTypes.object.isRequired,
-  updateBoundingCurvesCornerNode: PropTypes.func.isRequired,
+  updateBoundingCurvesNodePosition: PropTypes.func.isRequired,
   zeroControlPoints: PropTypes.func.isRequired,
   linkControlPoints: PropTypes.func.isRequired,
   mirrorControlPoints: PropTypes.func.isRequired,

@@ -14,7 +14,7 @@ const NodeEditor = ({
   cornerPoint,
   controlPoint1,
   controlPoint2,
-  updateBoundingCurvesCornerNode,
+  updateBoundingCurvesNodePosition,
   zeroControlPoints,
   mirrorControlPoints,
   linkControlPoints,
@@ -39,17 +39,17 @@ const NodeEditor = ({
           <PositionInput
             label="Corner"
             point={cornerPoint.point}
-            onChange={updateBoundingCurvesCornerNode(cornerPoint.id)}
+            onChange={updateBoundingCurvesNodePosition(cornerPoint.id)}
           />
           <PositionInput
             label="Ctrl 1"
             point={controlPoint1.point}
-            onChange={updateBoundingCurvesCornerNode(controlPoint1.id)}
+            onChange={updateBoundingCurvesNodePosition(controlPoint1.id)}
           />
           <PositionInput
             label="Ctrl 2"
             point={controlPoint2.point}
-            onChange={updateBoundingCurvesCornerNode(controlPoint2.id)}
+            onChange={updateBoundingCurvesNodePosition(controlPoint2.id)}
           />
         </div>
         <ControlPointEditor
@@ -75,7 +75,7 @@ NodeEditor.propTypes = {
     point: typePoint.isRequired,
     id: PropTypes.string.isRequired,
   }).isRequired,
-  updateBoundingCurvesCornerNode: PropTypes.func.isRequired,
+  updateBoundingCurvesNodePosition: PropTypes.func.isRequired,
   zeroControlPoints: PropTypes.func.isRequired,
   mirrorControlPoints: PropTypes.func.isRequired,
   linkControlPoints: PropTypes.func.isRequired,

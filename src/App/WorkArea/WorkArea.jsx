@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import useObserveClientSize from '../../hooks/useObserveClientSize'
-import { typeDimensions, typeProject, typeSurface } from '../../prop-types'
+import { typeDimensions, typeProject } from '../../prop-types'
 import useAppStore from '../../state/useAppStore'
 import { clampGridSquareToGridDimensions } from '../../utils'
 import Canvas from './Canvas'
@@ -20,30 +20,24 @@ const BORDER_WIDTHS = 2
 // Exports
 // -----------------------------------------------------------------------------
 
-const WorkArea = ({
-  setCanvas,
-  canvasSize,
-  coonsPatch,
-  surface,
-  setCanvasSize,
-}) => {
+const WorkArea = ({ setCanvas, canvasSize, coonsPatch, setCanvasSize }) => {
   const displayRef = React.useRef(null)
 
   const project = useAppStore.use.project()
-  const updateBoundingCurvesCornerNode =
-    useAppStore.use.updateBoundingCurvesCornerNode()
+  const updateBoundingCurvesNodePosition =
+    useAppStore.use.updateBoundingCurvesNodePosition()
   const updateBoundingCurvesPosition =
     useAppStore.use.updateBoundingCurvesPosition()
 
   const gridSquareClamped = React.useMemo(
     () =>
-      surface.gridSquare
+      project.config.gridSquare
         ? clampGridSquareToGridDimensions(
-            surface.gridSquare,
+            project.config.gridSquare,
             project.gridDefinition
           )
-        : surface.gridSquare,
-    [surface, project]
+        : project.config.gridSquare,
+    [project.config.gridSquare, project.gridDefinition]
   )
 
   useObserveClientSize(displayRef, setCanvasSize, {
@@ -65,7 +59,6 @@ const WorkArea = ({
         height={canvasSize.height}
         coonsPatch={coonsPatch}
         gridSquare={gridSquareClamped}
-        surface={surface}
         config={project?.config}
       />
       {project.boundingCurves && (
@@ -83,7 +76,9 @@ const WorkArea = ({
               />
               <ControlNodes
                 boundingCurves={project.boundingCurves}
-                updateBoundingCurvesCornerNode={updateBoundingCurvesCornerNode}
+                updateBoundingCurvesNodePosition={
+                  updateBoundingCurvesNodePosition
+                }
               />
             </React.Fragment>
           )}
@@ -97,7 +92,6 @@ WorkArea.propTypes = {
   setCanvas: PropTypes.func.isRequired,
   canvasSize: typeDimensions.isRequired,
   coonsPatch: PropTypes.object,
-  surface: typeSurface.isRequired,
   project: typeProject,
   setCanvasSize: PropTypes.func.isRequired,
 }
