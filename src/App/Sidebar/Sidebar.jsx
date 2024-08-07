@@ -185,8 +185,6 @@ const Sidebar = ({ canvas, exportBounds, exportCellBounds, project }) => {
 
 Sidebar.propTypes = {
   canvas: PropTypes.object.isRequired,
-  getRandomBoundingCurves: PropTypes.func.isRequired,
-  setSurface: PropTypes.func.isRequired,
   exportBounds: PropTypes.func.isRequired,
   exportCellBounds: PropTypes.func.isRequired,
   project: typeProject.isRequired,

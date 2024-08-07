@@ -55,6 +55,7 @@ const GridEditor = ({ project, setGridDefinitionValue, setConfigValue }) => {
             value={convertListIntoInputString(project.gridDefinition.columns)}
             onChange={(columnsString) => {
               const columns = stepsToInts(columnsString)
+              console.log(`columns`, columns)
               setGridDefinitionValue([`columns`], columns)
             }}
           />
@@ -63,6 +64,7 @@ const GridEditor = ({ project, setGridDefinitionValue, setConfigValue }) => {
             value={convertListIntoInputString(project.gridDefinition.rows)}
             onChange={(rowsString) => {
               const rows = stepsToInts(rowsString)
+              console.log(`rows`, rows)
               setGridDefinitionValue([`rows`], rows)
             }}
           />

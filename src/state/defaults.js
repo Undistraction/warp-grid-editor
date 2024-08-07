@@ -21,7 +21,7 @@ const GRID_DEFINITION_DEFAULT = {
 }
 
 const CONFIG_DEFAULT = {
-  gridSquare: null,
+  gridSquare: { x: 0, y: 0 },
   grid: {
     shouldUseComplexColumnsRows: false,
     shouldDrawIntersections: false,

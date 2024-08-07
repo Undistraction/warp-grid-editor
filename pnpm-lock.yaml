@@ -36,8 +36,8 @@ importers:
         specifier: ^10.0.0
         version: 10.0.0
       warp-grid:
-        specifier: ^1.3.0
-        version: 1.3.0
+        specifier: ^1.5.1
+        version: 1.5.1
       zustand:
         specifier: ^4.5.4
         version: 4.5.4(react@18.3.1)
@@ -1581,8 +1581,8 @@ packages:
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
 
-  coons-patch@1.8.2:
-    resolution: {integrity: sha512-zsQegUqXU0miOByGMgwk3wvTuVGTZBHEzlLu57rM0n9udsis+kbkJB1QKzvm1AqJIwWb1mx1As5QJtv3G98gQQ==}
+  coons-patch@1.8.3:
+    resolution: {integrity: sha512-zEJvLbhcNTIaThOdNffWCfiwRxqLWFaHkdVIEvA00u9mvloQ6mYRKXk1kpWFygffC4hJO3R+OPNaZZMVESX5RQ==}
 
   core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
@@ -4456,8 +4456,8 @@ packages:
   walker@1.0.8:
     resolution: {integrity: sha512-ts/8E8l5b7kY0vlWLewOkDXMmPdLcVV4GmOQLyxuSswIJsweeFZtAsMF7k1Nszz+TYBQrlYRmzOnr398y1JemQ==}
 
-  warp-grid@1.3.0:
-    resolution: {integrity: sha512-F/TqsRajGu8iJUW9Vu2a1rzQjjz9oKHdfx91aoTCed8JF2//ozNZJ4Z/HgCvHEDvpXH+He3yVAjWPDvhp7vQ4g==}
+  warp-grid@1.5.1:
+    resolution: {integrity: sha512-fwTi0U7k3N91RTQ40QqjkVNxiM4l1a+caxGJkK+TDZp8W8PLa9RSgIQ8ySZ5q5nMrPXOiBIBO0MQD5Y/WMGpEg==}
 
   webidl-conversions@7.0.0:
     resolution: {integrity: sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==}
@@ -6297,7 +6297,7 @@ snapshots:
 
   convert-source-map@2.0.0: {}
 
-  coons-patch@1.8.2:
+  coons-patch@1.8.3:
     dependencies:
       fast-memoize: 2.5.2
       matrix-js: 1.7.1
@@ -9462,9 +9462,9 @@ snapshots:
     dependencies:
       makeerror: 1.0.12
 
-  warp-grid@1.3.0:
+  warp-grid@1.5.1:
     dependencies:
-      coons-patch: 1.8.2
+      coons-patch: 1.8.3
       fast-memoize: 2.5.2
 
   webidl-conversions@7.0.0: {}

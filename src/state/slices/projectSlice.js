@@ -3,14 +3,17 @@ import {
   curry,
   hasPath,
   join,
+  last,
   mapObjIndexed,
   modifyPath,
   pipe,
   unless,
   when,
 } from 'ramda'
+import { isNotNil } from 'ramda-adjunct'
 
 import { CORNER_POINTS } from '../../const'
+import { clampGridSquareToGridDimensions } from '../../utils'
 import { getBoundingCurvesApi } from '../../utils/boundingCurvesApi'
 import { PROJECT_DEFAULT } from '../defaults'
 
@@ -46,12 +49,21 @@ const throwError = (message) => () => {
 
 const joinWithPeriod = join(`.`)
 
-const updateValueAtPathOrThrow = curry((errorMessage, pathToValue, value) =>
+const updateIfItemExistsOrThrow = curry((errorMessage, pathToValue, value) =>
   pipe(
     unless(hasPath(pathToValue), throwError(errorMessage)),
     assocPath(pathToValue, value)
   )
 )
+
+const updateGridSquareIfStepUpdate = (state) =>
+  modifyPath(
+    [`project`, `config`, `gridSquare`],
+    when(
+      isNotNil,
+      clampGridSquareToGridDimensions(state.project.gridDefinition)
+    )
+  )(state)
 
 // -----------------------------------------------------------------------------
 // Exports
@@ -232,7 +244,7 @@ const createProjectSlice = (set) => ({
   setConfigValue: curry((pathToValue, value) => {
     const fullPathToValue = [`project`, `config`, ...pathToValue]
     set(
-      updateValueAtPathOrThrow(
+      updateIfItemExistsOrThrow(
         `Config item '${joinWithPeriod(pathToValue)}' does not exist`,
         fullPathToValue,
         value
@@ -246,13 +258,24 @@ const createProjectSlice = (set) => ({
 
   setGridDefinitionValue: curry((pathToValue, value) => {
     const fullPathToValue = [`project`, `gridDefinition`, ...pathToValue]
-    set(
-      updateValueAtPathOrThrow(
-        `Grid definition item '${joinWithPeriod(pathToValue)}' does not exist`,
-        fullPathToValue,
-        value
-      )
-    )
+
+    const isStepUpdate =
+      last(pathToValue) === `columns` || last(pathToValue) === `rows`
+
+    set((state) => {
+      return pipe(
+        updateIfItemExistsOrThrow(
+          `Grid definition item '${joinWithPeriod(pathToValue)}' does not exist`,
+          fullPathToValue,
+          value
+        ),
+
+        // If the number of rows or columns is updated, we need to ensure that
+        // the gridSquare x and y are clamped to the new number of rows or
+        // columns.
+        when(() => isStepUpdate, updateGridSquareIfStepUpdate)
+      )(state)
+    })
   }),
 })
 

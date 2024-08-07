@@ -4,7 +4,6 @@ import React from 'react'
 import useObserveClientSize from '../../hooks/useObserveClientSize'
 import { typeDimensions, typeProject } from '../../prop-types'
 import useAppStore from '../../state/useAppStore'
-import { clampGridSquareToGridDimensions } from '../../utils'
 import Canvas from './Canvas'
 import ControlNodes from './Canvas/ControlNodes'
 import ControlPointStems from './Canvas/ControlPointStems'
@@ -29,17 +28,6 @@ const WorkArea = ({ setCanvas, canvasSize, coonsPatch, setCanvasSize }) => {
   const updateBoundingCurvesPosition =
     useAppStore.use.updateBoundingCurvesPosition()
 
-  const gridSquareClamped = React.useMemo(
-    () =>
-      project.config.gridSquare
-        ? clampGridSquareToGridDimensions(
-            project.config.gridSquare,
-            project.gridDefinition
-          )
-        : project.config.gridSquare,
-    [project.config.gridSquare, project.gridDefinition]
-  )
-
   useObserveClientSize(displayRef, setCanvasSize, {
     // left + right border widths
     width: -BORDER_WIDTHS,
@@ -58,7 +46,7 @@ const WorkArea = ({ setCanvas, canvasSize, coonsPatch, setCanvasSize }) => {
         width={canvasSize.width}
         height={canvasSize.height}
         coonsPatch={coonsPatch}
-        gridSquare={gridSquareClamped}
+        gridSquare={project.config.gridSquare}
         config={project?.config}
       />
       {project.boundingCurves && (

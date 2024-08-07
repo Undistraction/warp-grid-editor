@@ -46,6 +46,8 @@ const App = () => {
     coonsPatch,
   })
 
+  console.log(project.config)
+
   return (
     <AppApiContext.Provider value={appApi}>
       <div className="relative flex h-full w-screen flex-row space-x-5 p-5">
