@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/named
+import { expect } from '@playwright/test'
+
 import { test } from '../fixtures'
 
 // -----------------------------------------------------------------------------
@@ -6,5 +9,6 @@ import { test } from '../fixtures'
 
 test(`Has header content`, async ({ homePage }) => {
   await homePage.goto(`/`)
-  await expect(homePage.sidebarTitle).toHaveText(`Sidebar`)
+  await expect(homePage.sidebarTitle).toHaveText(`WARP GRID EDITOR`)
+  await expect(homePage.sidebarRepoLink).toHaveText(`Github`)
 })

@@ -7,7 +7,6 @@ module.exports = {
     browser: true,
     es6: true,
     node: true,
-    'vitest/env': true,
   },
 
   parserOptions: {
@@ -93,7 +92,10 @@ module.exports = {
     // Unit tests
     // -------------------------------------------------------------------------
     {
-      files: [`tests/unit/**/*.unit.test.js`],
+      env: {
+        'vitest/env': true,
+      },
+      files: [`tests/unit/**/*.unit.test.js`, 'tests/unit/setup.js'],
       plugins: [`vitest`],
       rules: {
         'vitest/consistent-test-filename': [

@@ -1,6 +1,7 @@
 import {
   degreesToRadians,
   getDistanceBetweenPoints,
+  getDistanceBetweenPointsXY,
   getPointAtDistanceAndAngle,
   radiansToDegrees,
 } from '../../../src/utils/trig'
@@ -112,5 +113,25 @@ describe(`radiansToDegrees`, () => {
     expect(radiansToDegrees(`hello`)).toBeNaN()
     expect(radiansToDegrees(null)).toBeNaN()
     expect(radiansToDegrees(undefined)).toBeNaN()
+  })
+})
+
+describe(`getDistanceBetweenPointsXY`, () => {
+  it(`returns the x and y distances between two points in an array`, () => {
+    expect(
+      getDistanceBetweenPointsXY({ x: 0, y: 0 }, { x: 10, y: 20 })
+    ).toEqual([10, 20])
+  })
+
+  it(`handles negative values`, () => {
+    expect(
+      getDistanceBetweenPointsXY({ x: -10, y: 0 }, { x: -50, y: -20 })
+    ).toEqual([-40, -20])
+  })
+
+  it(`returns [0.0] if points have the same coordiantes`, () => {
+    expect(
+      getDistanceBetweenPointsXY({ x: 100, y: 30 }, { x: 100, y: 30 })
+    ).toEqual([0, 0])
   })
 })
