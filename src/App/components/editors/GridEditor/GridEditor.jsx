@@ -120,7 +120,8 @@ const GridEditor = ({
             min={0}
             step={0.1}
             labelIsAfter
-            onChange={setGridDefinitionValue([[`gutter`]])}
+            value={project.gridDefinition.gutter}
+            onChange={setGridDefinitionValue([`gutter`])}
           />
         </ControlGroup>
       </div>

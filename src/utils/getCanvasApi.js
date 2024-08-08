@@ -28,7 +28,7 @@ const getCanvasApi = (context) => {
 
   const drawCurve = (
     { controlPoint1, controlPoint2, startPoint, endPoint },
-    { color = `red`, lineWidth = 1 } = {}
+    { lineColor = `black`, lineWidth = 1 } = {}
   ) => {
     context.beginPath()
     context.moveTo(startPoint.x, startPoint.y)
@@ -43,7 +43,7 @@ const getCanvasApi = (context) => {
       endPoint.y
     )
 
-    context.strokeStyle = color
+    context.strokeStyle = lineColor
     context.lineWidth = lineWidth
     context.stroke()
   }
@@ -126,11 +126,11 @@ const getCanvasApi = (context) => {
     context.clearRect(0, 0, canvas.width, canvas.height)
   }
 
-  const drawGridCurve = (line, { lineColor = `black` }) => {
+  const drawGridCurve = (line, { lineColor = `black` } = {}) => {
     if (isCurve(line)) {
-      drawCurve(line, { color: lineColor })
+      drawCurve(line, { lineColor })
     } else {
-      drawStraightLine(line)
+      drawStraightLine(line, { lineColor })
     }
   }
 
@@ -146,18 +146,22 @@ const getCanvasApi = (context) => {
     // Draw lines along x axis
     lines.xAxis.map((curveSectionsOrCurve) => {
       if (isArray(curveSectionsOrCurve)) {
-        curveSectionsOrCurve.map(drawGridCurve)
+        curveSectionsOrCurve.map((curve) =>
+          drawGridCurve(curve, { lineColor: `rgba(0,0,0,0.7)` })
+        )
       } else {
-        drawGridCurve(curveSectionsOrCurve)
+        drawGridCurve(curveSectionsOrCurve, { lineColor: `rgba(0,0,0,0.7)` })
       }
     })
 
     //Draw lines along y axis
     lines.yAxis.map((curveSectionsOrCurve) => {
       if (isArray(curveSectionsOrCurve)) {
-        curveSectionsOrCurve.map(drawGridCurve)
+        curveSectionsOrCurve.map((curve) =>
+          drawGridCurve(curve, { lineColor: `rgba(0,0,0,0.7)` })
+        )
       } else {
-        drawGridCurve(curveSectionsOrCurve)
+        drawGridCurve(curveSectionsOrCurve, { lineColor: `rgba(0,0,0,0.7)` })
       }
     })
 
@@ -178,11 +182,14 @@ const getCanvasApi = (context) => {
     })
   }
 
-  const drawStraightLine = (line, { color = `black`, lineWidth = 1 } = {}) => {
+  const drawStraightLine = (
+    line,
+    { lineColor = `black`, lineWidth = 1 } = {}
+  ) => {
     context.beginPath()
     context.moveTo(line.startPoint.x, line.startPoint.y)
     context.lineTo(line.endPoint.x, line.endPoint.y)
-    context.strokeStyle = color
+    context.strokeStyle = lineColor
     context.lineWidth = lineWidth
     context.stroke()
   }

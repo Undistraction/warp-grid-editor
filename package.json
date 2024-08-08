@@ -14,7 +14,7 @@
   "type": "module",
   "scripts": {
     "prepare": "husky",
-    "test": "vitest run",
+    "test-unit": "vitest run",
     "test-unit-watch": "vitest",
     "test-coverage": "vitest --coverage",
     "test-ui": "ACTIVE_ENV=test playwright test",
