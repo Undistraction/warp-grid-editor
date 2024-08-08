@@ -5,7 +5,7 @@ import React from 'react'
 import { typeProject } from '../../prop-types'
 import useAppStore from '../../state/useAppStore'
 import { getRandomBoundingCurves } from '../../utils'
-import { getBoundingCurvesApi } from '../../utils/boundingCurvesApi'
+import { getBoundingCurvesCorners } from '../../utils/boundingCurvesApi'
 import Button from '../components/Button'
 import ControlGroup from '../components/controls/ControlGroup'
 import SteppedInput from '../components/controls/SteppedInput'
@@ -41,8 +41,7 @@ const getGridSquareOptions = (minNumber, maxNumberOrArray) => {
 // -----------------------------------------------------------------------------
 
 const Sidebar = ({ canvas, exportBounds, exportCellBounds, project }) => {
-  const boundsApi = getBoundingCurvesApi(project.boundingCurves)
-  const corners = boundsApi.getCorners()
+  const corners = getBoundingCurvesCorners(project.boundingCurves)
 
   const zeroControlPoints = useAppStore.use.zeroControlPoints()
   const linkControlPoints = useAppStore.use.linkControlPoints()

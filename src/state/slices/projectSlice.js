@@ -7,6 +7,7 @@ import {
   mapObjIndexed,
   modifyPath,
   pipe,
+  reduce,
   unless,
   when,
 } from 'ramda'
@@ -14,7 +15,12 @@ import { isNotNil } from 'ramda-adjunct'
 
 import { CORNER_POINTS } from '../../const'
 import { clampGridSquareToGridDimensions } from '../../utils'
-import { getBoundingCurvesApi } from '../../utils/boundingCurvesApi'
+import {
+  expandBoundingCurvesControlPoints,
+  translateBoundingCurves,
+  updateBoundingCurvesNodePosition,
+  zeroBoundingCurvesControlPoints,
+} from '../../utils/boundingCurvesApi'
 import { PROJECT_DEFAULT } from '../defaults'
 
 // -----------------------------------------------------------------------------
@@ -32,16 +38,22 @@ const updateCornerPoints = (name, value) => (corners) => ({
 })
 
 const expandControlPoints = (boundingCurves) =>
-  CORNER_POINTS.reduce((acc, id) => {
-    const boundsApi = getBoundingCurvesApi(acc)
-    return boundsApi.expandControlPoints(id)
-  }, boundingCurves)
+  reduce(
+    (acc, nodeId) => {
+      return expandBoundingCurvesControlPoints(acc, nodeId)
+    },
+    boundingCurves,
+    CORNER_POINTS
+  )
 
 const zeroControlPoints = (boundingCurves) =>
-  CORNER_POINTS.reduce((acc, name) => {
-    const boundsApi = getBoundingCurvesApi(acc)
-    return boundsApi.zeroControlPoints(name)
-  }, boundingCurves)
+  reduce(
+    (acc, nodeId) => {
+      return zeroBoundingCurvesControlPoints(acc, nodeId)
+    },
+    boundingCurves,
+    CORNER_POINTS
+  )
 
 const throwError = (message) => () => {
   throw new Error(message)
@@ -102,11 +114,11 @@ const createProjectSlice = (set) => ({
         throw new Error(`Project has no bounding curves`)
       }
 
-      const boundsApi = getBoundingCurvesApi(
+      const updatedBoundingCurves = translateBoundingCurves(
         project.boundingCurves,
-        project.config
+        position
       )
-      const updatedBoundingCurves = boundsApi.translateToPoint(position)
+
       return {
         project: {
           ...project,
@@ -118,11 +130,9 @@ const createProjectSlice = (set) => ({
 
   updateBoundingCurvesNodePosition: curry((nodeId, newPosition) => {
     set(({ project }) => {
-      const boundsApi = getBoundingCurvesApi(
+      const updatedBoundingCurves = updateBoundingCurvesNodePosition(
         project.boundingCurves,
-        project.config
-      )
-      const updatedBoundingCurves = boundsApi.updateNodePosition(
+        project.config,
         nodeId,
         newPosition
       )
@@ -177,12 +187,10 @@ const createProjectSlice = (set) => ({
 
   zeroControlPoints: (cornerNodeId) => () => {
     set(({ project }) => {
-      const boundsApi = getBoundingCurvesApi(
+      const updatedBoundingCurves = zeroControlPoints(
         project.boundingCurves,
-        project.config
+        cornerNodeId
       )
-
-      const updatedBoundingCurves = boundsApi.zeroControlPoints(cornerNodeId)
       return {
         project: {
           ...project,
@@ -193,20 +201,15 @@ const createProjectSlice = (set) => ({
   },
 
   linkControlPoints: curry((cornerNodeId, isLinked) => {
-    console.log(`@@SET`, isLinked)
     set((state) => {
       const { project } = state
-      const boundsApi = getBoundingCurvesApi(
-        project.boundingCurves,
-        project.config
-      )
 
       return pipe(
         modifyPath(
           [`project`, `boundingCurves`],
           when(
             () => isLinked,
-            () => boundsApi.expandControlPoints(cornerNodeId)
+            () => expandControlPoints(project.boundingCurves, cornerNodeId)
           )
         ),
         assocPath([`project`, `config`, `bounds`, `isLinked`], isLinked),

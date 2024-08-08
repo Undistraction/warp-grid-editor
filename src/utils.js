@@ -2,7 +2,7 @@ import { curry } from 'ramda'
 import { isInteger } from 'ramda-adjunct'
 
 import { CORNER_POINTS } from './const'
-import { getBoundingCurvesApi } from './utils/boundingCurvesApi'
+import { expandBoundingCurvesControlPoints } from './utils/boundingCurvesApi'
 import { clampNumberBetween } from './utils/math'
 import { getRandomRectangleBounds } from './utils/random'
 
@@ -76,8 +76,7 @@ export const getRandomBoundingCurves = (canvas) => {
 
   // Loop through each corner and expand the control points
   return CORNER_POINTS.reduce((acc, name) => {
-    const boundsApi = getBoundingCurvesApi(acc)
-    return boundsApi.expandControlPoints(name)
+    expandBoundingCurvesControlPoints(acc, name)
   }, boundingCurves)
 }
 
@@ -98,10 +97,6 @@ export const clampGridSquareToGridDimensions = curry(
     if (isInteger(yInt)) {
       gridSquare.y = clampNumberBetween(0, rowsTotal - 1, y)
     }
-
-    console.log(`@in`, { x, y })
-    console.log(`@lim`, { columns, rows })
-    console.log(`@out`, gridSquare)
 
     return gridSquare
   }
