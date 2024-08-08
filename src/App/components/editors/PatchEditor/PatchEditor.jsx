@@ -25,7 +25,7 @@ const PatchEditor = ({ project, canvas, exportBounds }) => {
   const mirrorControlPointsGlobal = useAppStore.use.mirrorControlPointsGlobal()
   const updateBoundingCurvesNodePosition =
     useAppStore.use.updateBoundingCurvesNodePosition()
-  const setConfigValue = useAppStore.use.setConfigValue()
+  const setProjectConfigValue = useAppStore.use.setProjectConfigValue()
 
   const corners = getBoundingCurvesCorners(project.boundingCurves)
   return (
@@ -49,7 +49,7 @@ const PatchEditor = ({ project, canvas, exportBounds }) => {
       >
         <Switch
           isSelected={project.config.grid.shouldDrawIntersections}
-          onChange={setConfigValue([`grid`, `shouldDrawIntersections`])}
+          onChange={setProjectConfigValue([`grid`, `shouldDrawIntersections`])}
         />
       </ControlGroup>
       <ControlGroup
@@ -58,7 +58,7 @@ const PatchEditor = ({ project, canvas, exportBounds }) => {
       >
         <Switch
           isSelected={project.config.bounds.shouldDrawBounds}
-          onChange={setConfigValue([`bounds`, `shouldDrawBounds`])}
+          onChange={setProjectConfigValue([`bounds`, `shouldDrawBounds`])}
         />
       </ControlGroup>
       <ControlGroup
@@ -67,7 +67,7 @@ const PatchEditor = ({ project, canvas, exportBounds }) => {
       >
         <Switch
           isSelected={project.config.bounds.shouldDrawCornerPoints}
-          onChange={setConfigValue([`bounds`, `shouldDrawCornerPoints`])}
+          onChange={setProjectConfigValue([`bounds`, `shouldDrawCornerPoints`])}
         />
       </ControlGroup>
       <ControlPointEditor

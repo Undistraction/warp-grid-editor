@@ -308,7 +308,7 @@ describe(`useAppStore projectSlide`, () => {
         const { result } = renderHook(() => useAppStore())
         const pathToParam = [`alpha`, `bravo`]
         expect(() => {
-          act(() => result.current.setConfigValue(pathToParam, 1))
+          act(() => result.current.setProjectConfigValue(pathToParam, 1))
         }).toThrow(`Config item 'alpha.bravo' does not exist`)
       })
 
@@ -316,7 +316,7 @@ describe(`useAppStore projectSlide`, () => {
         const { result } = renderHook(() => useAppStore())
         const pathToParam = [`bounds`, `shouldDrawBounds`]
         expect(result.current.project.config.bounds.shouldDrawBounds).toBeTrue()
-        act(() => result.current.setConfigValue(pathToParam, false))
+        act(() => result.current.setProjectConfigValue(pathToParam, false))
         expect(
           result.current.project.config.bounds.shouldDrawBounds
         ).toBeFalse()

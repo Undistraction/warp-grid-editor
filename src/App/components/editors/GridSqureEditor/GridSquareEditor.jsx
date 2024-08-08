@@ -32,7 +32,7 @@ const getGridSquareOptions = (minNumber, maxNumberOrArray) => {
 // -----------------------------------------------------------------------------
 
 const GridSquareEditor = ({ project }) => {
-  const setConfigValue = useAppStore.use.setConfigValue()
+  const setProjectConfigValue = useAppStore.use.setProjectConfigValue()
 
   return (
     <div className="flex flex-col space-y-3">
@@ -42,7 +42,7 @@ const GridSquareEditor = ({ project }) => {
       >
         <Switch
           isSelected={project.config.gridSquare.shouldShow}
-          onChange={setConfigValue([`gridSquare`, `shouldShow`])}
+          onChange={setProjectConfigValue([`gridSquare`, `shouldShow`])}
         />
       </ControlGroup>
       <div className="flex space-x-3 [&>*]:basis-1/2">
@@ -56,7 +56,7 @@ const GridSquareEditor = ({ project }) => {
             options={getGridSquareOptions(0, project.gridDefinition.columns)}
             onChange={pipe(
               parseInt,
-              setConfigValue([`gridSquare`, `value`, `x`])
+              setProjectConfigValue([`gridSquare`, `value`, `x`])
             )}
           />
         </ControlGroup>
@@ -70,7 +70,7 @@ const GridSquareEditor = ({ project }) => {
             options={getGridSquareOptions(0, project.gridDefinition.rows)}
             onChange={pipe(
               parseInt,
-              setConfigValue([`gridSquare`, `value`, `y`])
+              setProjectConfigValue([`gridSquare`, `value`, `y`])
             )}
           />
         </ControlGroup>

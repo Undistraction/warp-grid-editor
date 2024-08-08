@@ -37,7 +37,11 @@ const stepsToInts = pipe(getItemsFromString, map(parseFloat))
 // Exports
 // -----------------------------------------------------------------------------
 
-const GridEditor = ({ project, setGridDefinitionValue, setConfigValue }) => {
+const GridEditor = ({
+  project,
+  setGridDefinitionValue,
+  setProjectConfigValue,
+}) => {
   const isAdvanced = project.config.grid.shouldUseComplexColumnsRows
   return (
     <div className="flex flex-col space-y-3">
@@ -48,7 +52,10 @@ const GridEditor = ({ project, setGridDefinitionValue, setConfigValue }) => {
         <Switch
           isSelected={isAdvanced}
           onChange={() =>
-            setConfigValue([`grid`, `shouldUseComplexColumnsRows`], !isAdvanced)
+            setProjectConfigValue(
+              [`grid`, `shouldUseComplexColumnsRows`],
+              !isAdvanced
+            )
           }
         />
       </ControlGroup>
@@ -123,7 +130,7 @@ const GridEditor = ({ project, setGridDefinitionValue, setConfigValue }) => {
 
 GridEditor.propTypes = {
   project: typeProject.isRequired,
-  setConfigValue: PropTypes.func.isRequired,
+  setProjectConfigValue: PropTypes.func.isRequired,
   setGridDefinitionValue: PropTypes.func.isRequired,
 }
 

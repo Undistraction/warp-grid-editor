@@ -1,13 +1,10 @@
 import {
   assocPath,
   curry,
-  hasPath,
-  join,
   last,
   mapObjIndexed,
   modifyPath,
   pipe,
-  unless,
   when,
 } from 'ramda'
 
@@ -20,6 +17,8 @@ import {
   zeroAllBoundingCurvesControlPoints,
   zeroBoundingCurvesCornerControlPoints,
 } from '../../utils/boundingCurves'
+import { updateIfItemExistsOrThrow } from '../../utils/slices'
+import { joinWithPeriod } from '../../utils/string'
 import { PROJECT_DEFAULT } from '../defaults'
 
 // -----------------------------------------------------------------------------
@@ -35,19 +34,6 @@ const updateAllCornerPoints = (name, value) => (corners) => ({
     corners
   ),
 })
-
-const throwError = (message) => () => {
-  throw new Error(message)
-}
-
-const joinWithPeriod = join(`.`)
-
-const updateIfItemExistsOrThrow = curry((errorMessage, pathToValue, value) =>
-  pipe(
-    unless(hasPath(pathToValue), throwError(errorMessage)),
-    assocPath(pathToValue, value)
-  )
-)
 
 const updateGridSquareIfStepUpdate = (state) =>
   modifyPath(
@@ -231,7 +217,7 @@ const createProjectSlice = (set) => ({
   // Config
   // ---------------------------------------------------------------------------
 
-  setConfigValue: curry((pathToValue, value) => {
+  setProjectConfigValue: curry((pathToValue, value) => {
     const fullPathToValue = [`project`, `config`, ...pathToValue]
     set(
       updateIfItemExistsOrThrow(

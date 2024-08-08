@@ -6,6 +6,7 @@ import {
   LINE_STRATEGY,
   PROJECT_VERSION,
 } from '../const'
+import SIDBAR_SECTION_IDS from '../const/sidebarSections'
 
 // -----------------------------------------------------------------------------
 // Component
@@ -20,7 +21,7 @@ const GRID_DEFINITION_DEFAULT = {
   precision: 20,
 }
 
-const CONFIG_DEFAULT = {
+const PROJECT_CONFIG_DEFAULT = {
   gridSquare: {
     shouldShow: false,
     value: { x: 0, y: 0 },
@@ -43,6 +44,10 @@ const CONFIG_DEFAULT = {
   },
 }
 
+// -----------------------------------------------------------------------------
+// Exports
+// -----------------------------------------------------------------------------
+
 export const PROJECT_DEFAULT = {
   meta: {
     name: `New project`,
@@ -50,7 +55,31 @@ export const PROJECT_DEFAULT = {
     version: PROJECT_VERSION,
     uuid: v4(),
   },
-  config: CONFIG_DEFAULT,
+  config: PROJECT_CONFIG_DEFAULT,
   gridDefinition: GRID_DEFINITION_DEFAULT,
   boundingCurves: null,
+}
+
+export const APP_CONFIG_DEFAULT = {
+  ui: {
+    sidebar: {
+      sections: {
+        [SIDBAR_SECTION_IDS.PROJECT]: {
+          isMinimised: true,
+        },
+        [SIDBAR_SECTION_IDS.CONFIG]: {
+          isMinimised: true,
+        },
+        [SIDBAR_SECTION_IDS.BOUNDS]: {
+          isMinimised: true,
+        },
+        [SIDBAR_SECTION_IDS.GRID]: {
+          isMinimised: true,
+        },
+        [SIDBAR_SECTION_IDS.GRID_SQUARE]: {
+          isMinimised: true,
+        },
+      },
+    },
+  },
 }
