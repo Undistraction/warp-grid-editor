@@ -2,7 +2,7 @@
 // Const
 // -----------------------------------------------------------------------------
 
-import { BOUNDS_POINT_IDS } from '../../src/const'
+import { BOUNDS_POINT_IDS } from '../../../src/const'
 import {
   expandAllBoundingCurvesControlPoints,
   expandBoundingCurvesCornerControlPoints,
@@ -11,7 +11,7 @@ import {
   updateBoundingCurvesNodePosition,
   zeroAllBoundingCurvesControlPoints,
   zeroBoundingCurvesCornerControlPoints,
-} from '../../src/utils/boundingCurves'
+} from '../../../src/utils/boundingCurves'
 
 export const BOUNDING_CURVES = {
   top: {

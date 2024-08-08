@@ -81,8 +81,19 @@ module.exports = {
 
   // Use vitest when running on files in the tests directory
   overrides: [
+    // -------------------------------------------------------------------------
+    // E2E tests
+    // -------------------------------------------------------------------------
     {
-      files: [`tests/**/*.js`],
+      files: [`tests/ui/**/*.spec.js`],
+      plugins: [`playwright`],
+      extends: `plugin:playwright/recommended`,
+    },
+    // -------------------------------------------------------------------------
+    // Unit tests
+    // -------------------------------------------------------------------------
+    {
+      files: [`tests/unit/**/*.unit.test.js`],
       plugins: [`vitest`],
       rules: {
         'vitest/consistent-test-filename': [

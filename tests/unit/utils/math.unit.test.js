@@ -1,4 +1,4 @@
-import { clampNumberBetween, roundToTwoPlaces } from '../../src/utils/math'
+import { clampNumberBetween, roundToTwoPlaces } from '../../../src/utils/math'
 
 describe(`roundToTwoPlaces`, () => {
   it(`should round a number to two decimal places if it is longer than two decimal places`, () => {

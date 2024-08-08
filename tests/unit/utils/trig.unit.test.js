@@ -3,7 +3,7 @@ import {
   getDistanceBetweenPoints,
   getPointAtDistanceAndAngle,
   radiansToDegrees,
-} from '../../src/utils/trig'
+} from '../../../src/utils/trig'
 
 // -----------------------------------------------------------------------------
 // Tests

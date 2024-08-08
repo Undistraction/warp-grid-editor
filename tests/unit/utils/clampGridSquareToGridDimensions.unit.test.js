@@ -1,4 +1,4 @@
-import { clampGridSquareToGridDimensions } from '../../src/utils'
+import { clampGridSquareToGridDimensions } from '../../../src/utils'
 // -----------------------------------------------------------------------------
 // Tests
 // -----------------------------------------------------------------------------

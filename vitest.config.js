@@ -4,8 +4,8 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   test: {
     globals: true,
-    include: [`**/*.test.{js,ts}`],
-    setupFiles: [`./tests/setup.js`],
+    include: [`**/*.unit.test.{js,ts}`],
+    setupFiles: [`./tests/unit/setup.js`],
     environment: `jsdom`,
     coverage: {
       provider: `v8`,

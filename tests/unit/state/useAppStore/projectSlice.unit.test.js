@@ -2,9 +2,9 @@ import { act, renderHook } from '@testing-library/react'
 import { assocPath } from 'ramda'
 import { beforeEach, describe } from 'vitest'
 
-import { BOUNDS_POINT_IDS } from '../../../src/const'
-import { PROJECT_DEFAULT } from '../../../src/state/defaults'
-import useAppStore from '../../../src/state/useAppStore'
+import { BOUNDS_POINT_IDS } from '../../../../src/const'
+import { PROJECT_DEFAULT } from '../../../../src/state/defaults'
+import useAppStore from '../../../../src/state/useAppStore'
 
 // -----------------------------------------------------------------------------
 // Const

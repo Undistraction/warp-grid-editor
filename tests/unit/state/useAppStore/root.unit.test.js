@@ -1,8 +1,8 @@
 import { act, renderHook } from '@testing-library/react'
 import { beforeEach, describe } from 'vitest'
 
-import { PROJECT_DEFAULT } from '../../../src/state/defaults'
-import useAppStore from '../../../src/state/useAppStore'
+import { PROJECT_DEFAULT } from '../../../../src/state/defaults'
+import useAppStore from '../../../../src/state/useAppStore'
 
 // -----------------------------------------------------------------------------
 // Tests

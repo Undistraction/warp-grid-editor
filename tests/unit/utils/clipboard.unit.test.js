@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/named
 import { vi } from 'vitest'
 
-import { copyObjToClipboard } from '../../src/utils/clipboard'
+import { copyObjToClipboard } from '../../../src/utils/clipboard'
 
 // -----------------------------------------------------------------------------
 // Tests

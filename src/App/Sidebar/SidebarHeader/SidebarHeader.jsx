@@ -6,9 +6,10 @@ import React from 'react'
 
 const SidebarHeader = () => (
   <header className="flex flex-row items-center justify-between">
-    <h1>Warp Grid Editor</h1>
+    <h1 data-tid="sidebar-title">Warp Grid Editor</h1>
     <a
       className="underline"
+      data-tid="sidebar-repo-link"
       href="https://github.com/Undistraction/warp-grid"
     >
       Github
