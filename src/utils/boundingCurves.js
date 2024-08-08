@@ -716,9 +716,7 @@ export const zeroBoundingCurvesCornerControlPoints = (boundingCurves, id) => {
 
 export const expandAllBoundingCurvesControlPoints = (boundingCurves) =>
   reduce(
-    (acc, nodeId) => {
-      return expandBoundingCurvesCornerControlPoints(acc, nodeId)
-    },
+    (acc, nodeId) => expandBoundingCurvesCornerControlPoints(acc, nodeId),
     boundingCurves,
     CORNER_POINTS
   )

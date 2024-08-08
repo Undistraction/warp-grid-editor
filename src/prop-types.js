@@ -34,8 +34,8 @@ export const typeGrid = PropTypes.shape({
 })
 
 export const typeGridSquare = PropTypes.shape({
-  x: PropTypes.number,
-  y: PropTypes.number,
+  shouldShow: PropTypes.bool.isRequired,
+  value: typePoint.isRequired,
 })
 
 export const typeConfig = PropTypes.shape({

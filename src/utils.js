@@ -1,4 +1,4 @@
-import { curry } from 'ramda'
+import { curry, reduce } from 'ramda'
 import { isInteger } from 'ramda-adjunct'
 
 import { CORNER_POINTS } from './const'
@@ -75,9 +75,11 @@ export const getRandomBoundingCurves = (canvas) => {
   const boundingCurves = getBoundingCurvesFromRectangularBounds(bounds)
 
   // Loop through each corner and expand the control points
-  return CORNER_POINTS.reduce((acc, name) => {
-    expandBoundingCurvesCornerControlPoints(acc, name)
-  }, boundingCurves)
+  return reduce(
+    (acc, name) => expandBoundingCurvesCornerControlPoints(acc, name),
+    boundingCurves,
+    CORNER_POINTS
+  )
 }
 
 export const clampGridSquareToGridDimensions = curry(

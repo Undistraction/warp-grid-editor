@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types'
+import {times} from 'ramda'
 import pipe from 'ramda/src/pipe'
 import React from 'react'
 
-import { typeProject } from '../../prop-types'
+import {typeProject} from '../../prop-types'
 import useAppStore from '../../state/useAppStore'
-import { getRandomBoundingCurves } from '../../utils'
-import { getBoundingCurvesCorners } from '../../utils/boundingCurves'
+import {getRandomBoundingCurves} from '../../utils'
+import {getBoundingCurvesCorners} from '../../utils/boundingCurves'
 import Button from '../components/Button'
 import ControlGroup from '../components/controls/ControlGroup'
 import SteppedInput from '../components/controls/SteppedInput'
@@ -28,12 +29,14 @@ const getGridSquareOptions = (minNumber, maxNumberOrArray) => {
     ? maxNumberOrArray
     : maxNumberOrArray.length
 
-  const options = [``]
-  for (let i = minNumber; i < maxNumber; i++) {
-    options.push(i)
-  }
-
-  return options
+  // Columns and rows are zero-based but we show 1-based to the user
+  return times(
+    (n) => ({
+      value: n,
+      label: n + 1,
+    }),
+    maxNumber
+  )
 }
 
 // -----------------------------------------------------------------------------
@@ -152,6 +155,11 @@ const Sidebar = ({ canvas, exportBounds, exportCellBounds, project }) => {
       </SidebarGroup>
 
       <SidebarGroup title="Grid square">
+        <Switch
+          label="Show selected grid square"
+          isSelected={project.config.gridSquare.shouldShow}
+          onChange={setConfigValue([`gridSquare`, `shouldShow`])}
+        />
         <div className="flex space-x-3 [&>*]:basis-1/2">
           <ControlGroup
             label="Across"
@@ -159,9 +167,12 @@ const Sidebar = ({ canvas, exportBounds, exportCellBounds, project }) => {
           >
             <SteppedInput
               name="across"
-              value={project.config.gridSquare?.x}
+              value={project.config.gridSquare.value.x}
               options={getGridSquareOptions(0, project.gridDefinition.columns)}
-              onChange={pipe(parseInt, setConfigValue([`gridSquare`, `x`]))}
+              onChange={pipe(
+                parseInt,
+                setConfigValue([`gridSquare`, `value`, `x`])
+              )}
             />
           </ControlGroup>
           <ControlGroup
@@ -170,9 +181,12 @@ const Sidebar = ({ canvas, exportBounds, exportCellBounds, project }) => {
           >
             <SteppedInput
               name="down"
-              value={project.config.gridSquare?.y}
+              value={project.config.gridSquare.value.y}
               options={getGridSquareOptions(0, project.gridDefinition.rows)}
-              onChange={pipe(parseInt, setConfigValue([`gridSquare`, `y`]))}
+              onChange={pipe(
+                parseInt,
+                setConfigValue([`gridSquare`, `value`, `y`])
+              )}
             />
           </ControlGroup>
         </div>

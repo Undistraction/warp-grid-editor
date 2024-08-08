@@ -13,3 +13,11 @@ export const clampNumberBetween = (min, max, value) => {
   if (!isNumber(min) || !isNumber(max) || !isNumber(value)) return NaN
   return Math.min(Math.max(value, min), max)
 }
+
+export const getRandomValueBetween = (min, max) => {
+  return Math.random() * (max - min) + min
+}
+
+export const getRandomValueBetweenRounded = (min, max) => {
+  return Math.round(getRandomValueBetween(min, max))
+}

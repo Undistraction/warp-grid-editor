@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types'
-import { isInteger } from 'ramda-adjunct'
 import React from 'react'
 
 import { typeConfig, typeGridSquare } from '../../../prop-types'
@@ -35,10 +34,10 @@ const Canvas = ({
         shouldDrawIntersections: config.grid.shouldDrawIntersections,
       })
 
-      if (gridSquare && isInteger(gridSquare.x) && isInteger(gridSquare.y)) {
+      if (gridSquare.shouldShow) {
         const gridSquareBounds = coonsPatch.getCellBounds(
-          gridSquare.x,
-          gridSquare.y
+          gridSquare.value.x,
+          gridSquare.value.y
         )
         canvasApi.drawGridSquareBounds(gridSquareBounds)
       }

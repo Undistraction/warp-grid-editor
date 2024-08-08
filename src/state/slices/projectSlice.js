@@ -10,7 +10,6 @@ import {
   unless,
   when,
 } from 'ramda'
-import { isNotNil } from 'ramda-adjunct'
 
 import { clampGridSquareToGridDimensions } from '../../utils'
 import {
@@ -52,11 +51,8 @@ const updateIfItemExistsOrThrow = curry((errorMessage, pathToValue, value) =>
 
 const updateGridSquareIfStepUpdate = (state) =>
   modifyPath(
-    [`project`, `config`, `gridSquare`],
-    when(
-      isNotNil,
-      clampGridSquareToGridDimensions(state.project.gridDefinition)
-    )
+    [`project`, `config`, `gridSquare`, `value`],
+    clampGridSquareToGridDimensions(state.project.gridDefinition)
   )(state)
 
 // -----------------------------------------------------------------------------
