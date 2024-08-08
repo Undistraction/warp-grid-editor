@@ -1,76 +1,39 @@
 import PropTypes from 'prop-types'
-import {times} from 'ramda'
-import pipe from 'ramda/src/pipe'
 import React from 'react'
 
-import {typeProject} from '../../prop-types'
+import { typeProject } from '../../prop-types'
 import useAppStore from '../../state/useAppStore'
-import {getRandomBoundingCurves} from '../../utils'
-import {getBoundingCurvesCorners} from '../../utils/boundingCurves'
 import Button from '../components/Button'
-import ControlGroup from '../components/controls/ControlGroup'
-import SteppedInput from '../components/controls/SteppedInput'
-import Switch from '../components/controls/Switch'
-import BoundsEditor from '../components/editors/BoundsEditor'
 import ConfigEditor from '../components/editors/ConfigEditor'
-import ControlPointEditor from '../components/editors/ControlPointEditor'
 import GridEditor from '../components/editors/GridEditor'
+import GridSquareEditor from '../components/editors/GridSqureEditor'
+import PatchEditor from '../components/editors/PatchEditor'
 import ProjectEditor from '../components/editors/ProjectEditor'
 import SidebarFooter from './SidebarFooter'
 import SidebarGroup from './SidebarGroup'
 import SidebarHeader from './SidebarHeader'
 
 // -----------------------------------------------------------------------------
-// Utils
-// -----------------------------------------------------------------------------
-
-const getGridSquareOptions = (minNumber, maxNumberOrArray) => {
-  const maxNumber = Number.isInteger(maxNumberOrArray)
-    ? maxNumberOrArray
-    : maxNumberOrArray.length
-
-  // Columns and rows are zero-based but we show 1-based to the user
-  return times(
-    (n) => ({
-      value: n,
-      label: n + 1,
-    }),
-    maxNumber
-  )
-}
-
-// -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
 
 const Sidebar = ({ canvas, exportBounds, exportCellBounds, project }) => {
-  const corners = getBoundingCurvesCorners(project.boundingCurves)
-
-  const zeroControlPoints = useAppStore.use.zeroControlPoints()
-  const linkControlPoints = useAppStore.use.linkControlPoints()
-  const mirrorControlPoints = useAppStore.use.mirrorControlPoints()
   const saveProject = useAppStore.use.saveProject()
   const saveProjectAs = useAppStore.use.saveProjectAs()
   const loadProject = useAppStore.use.loadProject()
   const setProjectName = useAppStore.use.setProjectName()
-  const setBoundingCurves = useAppStore.use.setBoundingCurves()
   const projects = useAppStore.use.projects()
-  const zeroControlPointsGlobal = useAppStore.use.zeroControlPointsGlobal()
-  const linkControlPointsGlobal = useAppStore.use.linkControlPointsGlobal()
-  const mirrorControlPointsGlobal = useAppStore.use.mirrorControlPointsGlobal()
-  const updateBoundingCurvesNodePosition =
-    useAppStore.use.updateBoundingCurvesNodePosition()
   const setGridDefinitionValue = useAppStore.use.setGridDefinitionValue()
   const setConfigValue = useAppStore.use.setConfigValue()
 
   return (
     <div className="flex flex-col space-y-3 divide-y-2 py-5">
       <SidebarHeader />
+
       <SidebarGroup
         title="Project"
         hint="You can save and load your settings from/to the local-storage of your machine."
       >
-        {project ? project?.name : `Untitled`}
         <ProjectEditor
           loadProject={loadProject}
           saveProject={saveProject}
@@ -80,6 +43,7 @@ const Sidebar = ({ canvas, exportBounds, exportCellBounds, project }) => {
           projects={projects}
         />
       </SidebarGroup>
+
       <SidebarGroup
         title="Config"
         hint="By default, all lines are straight, however you can switch to using curved lines which is significantly more memory intensive. When using curves, 'Even' is the default interpolation, and is much more accurate, especially with higher 'Precision' settings"
@@ -89,54 +53,13 @@ const Sidebar = ({ canvas, exportBounds, exportCellBounds, project }) => {
           setGridDefinitionValue={setGridDefinitionValue}
         />
       </SidebarGroup>
-      <SidebarGroup title="Bounds">
-        <div className="flex space-x-3 [&>*]:basis-1/2">
-          <Button
-            label="Randomise"
-            onClick={() => {
-              const boundingCurves = getRandomBoundingCurves(canvas)
-              setBoundingCurves(boundingCurves)
-            }}
-          />
-          <Button
-            label="Export"
-            onClick={exportBounds}
-          />
-        </div>
-        <Switch
-          label="Draw intersections"
-          isSelected={project.config.grid.shouldDrawIntersections}
-          onChange={setConfigValue([`grid`, `shouldDrawIntersections`])}
-        />
-        <Switch
-          label="Draw bounds"
-          isSelected={project.config.bounds.shouldDrawBounds}
-          onChange={setConfigValue([`bounds`, `shouldDrawBounds`])}
-        />
-        <Switch
-          label="Draw corner points"
-          isSelected={project.config.bounds.shouldDrawCornerPoints}
-          onChange={setConfigValue([`bounds`, `shouldDrawCornerPoints`])}
-        />
 
-        <ControlPointEditor
-          zeroControlPoints={zeroControlPointsGlobal}
-          linkControlPoints={linkControlPointsGlobal}
-          mirrorControlPoints={mirrorControlPointsGlobal}
-          controlNodesAreLinked={project.config.bounds.isLinked}
-          controlNodesAreMirrored={project.config.bounds.isMirrored}
+      <SidebarGroup title="Bounds">
+        <PatchEditor
+          canvas={canvas}
+          project={project}
+          exportBounds={exportBounds}
         />
-        {project.boundingCurves && (
-          <BoundsEditor
-            config={project.config}
-            exportBounds={exportBounds}
-            corners={corners}
-            updateBoundingCurvesNodePosition={updateBoundingCurvesNodePosition}
-            linkControlPoints={linkControlPoints}
-            zeroControlPoints={zeroControlPoints}
-            mirrorControlPoints={mirrorControlPoints}
-          />
-        )}
       </SidebarGroup>
 
       <SidebarGroup
@@ -155,42 +78,9 @@ const Sidebar = ({ canvas, exportBounds, exportCellBounds, project }) => {
       </SidebarGroup>
 
       <SidebarGroup title="Grid square">
-        <Switch
-          label="Show selected grid square"
-          isSelected={project.config.gridSquare.shouldShow}
-          onChange={setConfigValue([`gridSquare`, `shouldShow`])}
-        />
-        <div className="flex space-x-3 [&>*]:basis-1/2">
-          <ControlGroup
-            label="Across"
-            direction="vertical"
-          >
-            <SteppedInput
-              name="across"
-              value={project.config.gridSquare.value.x}
-              options={getGridSquareOptions(0, project.gridDefinition.columns)}
-              onChange={pipe(
-                parseInt,
-                setConfigValue([`gridSquare`, `value`, `x`])
-              )}
-            />
-          </ControlGroup>
-          <ControlGroup
-            label="Down"
-            direction="vertical"
-          >
-            <SteppedInput
-              name="down"
-              value={project.config.gridSquare.value.y}
-              options={getGridSquareOptions(0, project.gridDefinition.rows)}
-              onChange={pipe(
-                parseInt,
-                setConfigValue([`gridSquare`, `value`, `y`])
-              )}
-            />
-          </ControlGroup>
-        </div>
+        <GridSquareEditor project={project} />
       </SidebarGroup>
+
       <SidebarFooter />
     </div>
   )

@@ -41,13 +41,17 @@ const GridEditor = ({ project, setGridDefinitionValue, setConfigValue }) => {
   const isAdvanced = project.config.grid.shouldUseComplexColumnsRows
   return (
     <div className="flex flex-col space-y-3">
-      <Switch
+      <ControlGroup
         label="Advanced"
-        isSelected={isAdvanced}
-        onChange={() =>
-          setConfigValue([`grid`, `shouldUseComplexColumnsRows`], !isAdvanced)
-        }
-      />
+        labelIsAfter
+      >
+        <Switch
+          isSelected={isAdvanced}
+          onChange={() =>
+            setConfigValue([`grid`, `shouldUseComplexColumnsRows`], !isAdvanced)
+          }
+        />
+      </ControlGroup>
       {project.config.grid.shouldUseComplexColumnsRows && (
         <div className="flex flex-col items-stretch space-y-2">
           <TextInput

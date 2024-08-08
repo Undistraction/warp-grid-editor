@@ -15,7 +15,7 @@ const ControlPointEditor = ({
   controlNodesAreMirrored,
 }) => {
   return (
-    <div className="flex flex-row items-start space-x-3 pl-3">
+    <div className="flex flex-row items-start space-x-3">
       <IconButton
         label="Ø"
         onClick={zeroControlPoints}
