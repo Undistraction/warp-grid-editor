@@ -1,11 +1,46 @@
+import { pipe } from 'ramda'
+import { isArray, isNumber, isPlainObj } from 'ramda-adjunct'
+
+// -----------------------------------------------------------------------------
+// Utils
+// -----------------------------------------------------------------------------
+
+const getPointFromArg = (numberOrPointOrArray) => {
+  if (isArray(numberOrPointOrArray)) {
+    return {
+      x: numberOrPointOrArray[0],
+      y: numberOrPointOrArray[1],
+    }
+  }
+
+  if (isPlainObj(numberOrPointOrArray)) {
+    return numberOrPointOrArray
+  }
+
+  return { x: numberOrPointOrArray, y: numberOrPointOrArray }
+}
+
 // -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
 
-import { isNumber } from 'ramda-adjunct'
-
 export const getDistanceBetweenPoints = (point1, point2) =>
   Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2))
+
+export const getDistanceBetweenPointsXY = (point1, point2) => [
+  point2.x - point1.x,
+  point2.y - point1.y,
+]
+
+export const getAngleOfTranslationRads = ([distanceX, distanceY]) =>
+  Math.atan2(distanceY, distanceX)
+
+export const getAngleBetweenPoints = pipe(
+  getDistanceBetweenPointsXY,
+  getAngleOfTranslationRads
+)
+
+export const getInverseAngleRads = (value) => value - Math.PI
 
 export const getPointAtDistanceAndAngle = (origin, angleRads, distance) => {
   return {
@@ -28,4 +63,22 @@ export const radiansToDegrees = (radians) => {
   }
 
   return radians * (180 / Math.PI)
+}
+
+export const pointAdd = (offsets, point) => {
+  const offsetsResolved = getPointFromArg(offsets)
+
+  return {
+    x: point.x + offsetsResolved.x,
+    y: point.y + offsetsResolved.y,
+  }
+}
+
+export const pointSubtract = (offsets, point) => {
+  const offsetsResolved = getPointFromArg(offsets)
+
+  return {
+    x: point.x - offsetsResolved.x,
+    y: point.y - offsetsResolved.y,
+  }
 }

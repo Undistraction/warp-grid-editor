@@ -2,7 +2,7 @@ import { curry } from 'ramda'
 import { isInteger } from 'ramda-adjunct'
 
 import { CORNER_POINTS } from './const'
-import { expandBoundingCurvesControlPoints } from './utils/boundingCurvesApi'
+import { expandBoundingCurvesCornerControlPoints } from './utils/boundingCurves'
 import { clampNumberBetween } from './utils/math'
 import { getRandomRectangleBounds } from './utils/random'
 
@@ -76,7 +76,7 @@ export const getRandomBoundingCurves = (canvas) => {
 
   // Loop through each corner and expand the control points
   return CORNER_POINTS.reduce((acc, name) => {
-    expandBoundingCurvesControlPoints(acc, name)
+    expandBoundingCurvesCornerControlPoints(acc, name)
   }, boundingCurves)
 }
 

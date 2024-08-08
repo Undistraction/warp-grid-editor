@@ -1,7 +1,19 @@
-import { assocPath, pipe } from 'ramda'
+import { assocPath, pipe, reduce } from 'ramda'
 
-import { BOUNDS_POINT_IDS, CURVE_NAMES, POINT_NAMES } from '../const'
-import { getDistanceBetweenPoints, getPointAtDistanceAndAngle } from './trig'
+import {
+  BOUNDS_POINT_IDS,
+  CORNER_POINTS,
+  CURVE_NAMES,
+  POINT_NAMES,
+} from '../const'
+import {
+  getAngleBetweenPoints,
+  getDistanceBetweenPoints,
+  getInverseAngleRads,
+  getPointAtDistanceAndAngle,
+  pointAdd,
+  pointSubtract,
+} from './trig'
 
 // -----------------------------------------------------------------------------
 // Const
@@ -20,14 +32,10 @@ const getUpdatedLinkedControlPointPosition = (
   { isMirrored }
 ) => {
   // Find the angle between the control point that has been moved and the corner
-  const deltasToCornerPointFromNewPosition = {
-    x: cornerPoint.x - newPosition.x,
-    y: cornerPoint.y - newPosition.y,
-  }
 
-  const angleToCornerPointFromNewPositionRads = Math.atan2(
-    deltasToCornerPointFromNewPosition.y,
-    deltasToCornerPointFromNewPosition.x
+  const angleToCornerPointFromNewPositionRads = getAngleBetweenPoints(
+    newPosition,
+    cornerPoint
   )
 
   const distanceToCornerFromNewPosition = getDistanceBetweenPoints(
@@ -35,25 +43,23 @@ const getUpdatedLinkedControlPointPosition = (
     newPosition
   )
 
-  // Find the distance between the linked control point and the corner
-
   // Find a new position for the linked control point that maintains the same
   // distance but is at the new angle
   const distanceToCornerFromLinkedPoint = getDistanceBetweenPoints(
     cornerPoint,
     linkedPoint
   )
-  const inverseAngle = angleToCornerPointFromNewPositionRads - Math.PI
+  const inverseAngle = getInverseAngleRads(
+    angleToCornerPointFromNewPositionRads
+  )
 
-  const linkedPointNew = getPointAtDistanceAndAngle(
+  return getPointAtDistanceAndAngle(
     cornerPoint,
     inverseAngle,
     -(isMirrored
       ? distanceToCornerFromNewPosition
       : distanceToCornerFromLinkedPoint)
   )
-
-  return linkedPointNew
 }
 
 const getLinkedControlPointPosition = (
@@ -155,20 +161,9 @@ const getUpdatedCornerPointPosition = (
   const controlPoint2StartPosition =
     boundingCurves[curve2Name][controlPointCurve2Name]
 
-  const deltas = {
-    x: newPosition.x - cornerPoint.x,
-    y: newPosition.y - cornerPoint.y,
-  }
-
-  const controlPointCurve1 = {
-    x: controlPoint1StartPosition.x + deltas.x,
-    y: controlPoint1StartPosition.y + deltas.y,
-  }
-
-  const controlPointCurve2 = {
-    x: controlPoint2StartPosition.x + deltas.x,
-    y: controlPoint2StartPosition.y + deltas.y,
-  }
+  const deltas = pointSubtract(cornerPoint, newPosition)
+  const controlPointCurve1 = pointAdd(deltas, controlPoint1StartPosition)
+  const controlPointCurve2 = pointAdd(deltas, controlPoint2StartPosition)
 
   return {
     ...boundingCurves,
@@ -250,7 +245,7 @@ export const getBoundingCurvesCorners = (boundingCurves) => {
   }
 }
 
-export const translateBoundingCurves = (boundingCurves, position) => ({
+export const moveBoundingCurves = (boundingCurves, position) => ({
   top: {
     startPoint: {
       x: position.x,
@@ -434,7 +429,9 @@ export const updateBoundingCurvesNodePosition = (
       POINT_NAMES.START_POINT,
       POINT_NAMES.CONTROL_POINT_1
     )
-  } else if (id === BOUNDS_POINT_IDS.TOP_LEFT_CONTROL_1) {
+  }
+
+  if (id === BOUNDS_POINT_IDS.TOP_LEFT_CONTROL_1) {
     return getUpdatedControlPointPositionsForCorner(
       newPosition,
       BOUNDS_POINT_IDS.TOP_LEFT,
@@ -445,7 +442,9 @@ export const updateBoundingCurvesNodePosition = (
       POINT_NAMES.CONTROL_POINT_1,
       config
     )
-  } else if (id === BOUNDS_POINT_IDS.TOP_LEFT_CONTROL_2) {
+  }
+
+  if (id === BOUNDS_POINT_IDS.TOP_LEFT_CONTROL_2) {
     return getUpdatedControlPointPositionsForCorner(
       newPosition,
       BOUNDS_POINT_IDS.TOP_LEFT,
@@ -456,8 +455,9 @@ export const updateBoundingCurvesNodePosition = (
       POINT_NAMES.CONTROL_POINT_1,
       config
     )
-    // Top Right
-  } else if (id === BOUNDS_POINT_IDS.TOP_RIGHT) {
+  }
+
+  if (id === BOUNDS_POINT_IDS.TOP_RIGHT) {
     return getUpdatedCornerPointPosition(
       newPosition,
       boundingCurves.top.endPoint,
@@ -469,7 +469,9 @@ export const updateBoundingCurvesNodePosition = (
       POINT_NAMES.START_POINT,
       POINT_NAMES.CONTROL_POINT_1
     )
-  } else if (id === BOUNDS_POINT_IDS.TOP_RIGHT_CONTROL_1) {
+  }
+
+  if (id === BOUNDS_POINT_IDS.TOP_RIGHT_CONTROL_1) {
     return getUpdatedControlPointPositionsForCorner(
       newPosition,
       BOUNDS_POINT_IDS.TOP_RIGHT,
@@ -480,7 +482,9 @@ export const updateBoundingCurvesNodePosition = (
       POINT_NAMES.CONTROL_POINT_1,
       config
     )
-  } else if (id === BOUNDS_POINT_IDS.TOP_RIGHT_CONTROL_2) {
+  }
+
+  if (id === BOUNDS_POINT_IDS.TOP_RIGHT_CONTROL_2) {
     return getUpdatedControlPointPositionsForCorner(
       newPosition,
       BOUNDS_POINT_IDS.TOP_RIGHT,
@@ -492,7 +496,9 @@ export const updateBoundingCurvesNodePosition = (
       config
     )
     // BOTTOM LEFT
-  } else if (id === BOUNDS_POINT_IDS.BOTTOM_LEFT) {
+  }
+
+  if (id === BOUNDS_POINT_IDS.BOTTOM_LEFT) {
     return getUpdatedCornerPointPosition(
       newPosition,
       boundingCurves.bottom.startPoint,
@@ -504,7 +510,9 @@ export const updateBoundingCurvesNodePosition = (
       POINT_NAMES.END_POINT,
       POINT_NAMES.CONTROL_POINT_2
     )
-  } else if (id === BOUNDS_POINT_IDS.BOTTOM_LEFT_CONTROL_1) {
+  }
+
+  if (id === BOUNDS_POINT_IDS.BOTTOM_LEFT_CONTROL_1) {
     return getUpdatedControlPointPositionsForCorner(
       newPosition,
       BOUNDS_POINT_IDS.BOTTOM_LEFT,
@@ -515,7 +523,9 @@ export const updateBoundingCurvesNodePosition = (
       POINT_NAMES.CONTROL_POINT_2,
       config
     )
-  } else if (id === BOUNDS_POINT_IDS.BOTTOM_LEFT_CONTROL_2) {
+  }
+
+  if (id === BOUNDS_POINT_IDS.BOTTOM_LEFT_CONTROL_2) {
     return getUpdatedControlPointPositionsForCorner(
       newPosition,
       BOUNDS_POINT_IDS.BOTTOM_LEFT,
@@ -527,7 +537,9 @@ export const updateBoundingCurvesNodePosition = (
       config
     )
     // BOTTOM RIGHT
-  } else if (id === BOUNDS_POINT_IDS.BOTTOM_RIGHT) {
+  }
+
+  if (id === BOUNDS_POINT_IDS.BOTTOM_RIGHT) {
     return getUpdatedCornerPointPosition(
       newPosition,
       boundingCurves.bottom.endPoint,
@@ -539,7 +551,9 @@ export const updateBoundingCurvesNodePosition = (
       POINT_NAMES.END_POINT,
       POINT_NAMES.CONTROL_POINT_2
     )
-  } else if (id === BOUNDS_POINT_IDS.BOTTOM_RIGHT_CONTROL_1) {
+  }
+
+  if (id === BOUNDS_POINT_IDS.BOTTOM_RIGHT_CONTROL_1) {
     return getUpdatedControlPointPositionsForCorner(
       newPosition,
       BOUNDS_POINT_IDS.BOTTOM_RIGHT,
@@ -550,7 +564,9 @@ export const updateBoundingCurvesNodePosition = (
       POINT_NAMES.CONTROL_POINT_2,
       config
     )
-  } else if (id === BOUNDS_POINT_IDS.BOTTOM_RIGHT_CONTROL_2) {
+  }
+
+  if (id === BOUNDS_POINT_IDS.BOTTOM_RIGHT_CONTROL_2) {
     return getUpdatedControlPointPositionsForCorner(
       newPosition,
       BOUNDS_POINT_IDS.BOTTOM_RIGHT,
@@ -562,19 +578,21 @@ export const updateBoundingCurvesNodePosition = (
       config
     )
   }
+
+  throw new Error(`Unrecognised point ID: ${id}`)
 }
 
-export const expandBoundingCurvesControlPoints = (boundingCurves, id) => {
+export const expandBoundingCurvesCornerControlPoints = (boundingCurves, id) => {
   if (id === BOUNDS_POINT_IDS.TOP_LEFT) {
     const cornerPoint = boundingCurves.top.startPoint
-    const curve1PointPosition = {
-      x: cornerPoint.x + EXPANSION_DISTANCE,
-      y: cornerPoint.y - EXPANSION_DISTANCE,
-    }
-    const curve2PointPosition = {
-      x: cornerPoint.x - EXPANSION_DISTANCE,
-      y: cornerPoint.y + EXPANSION_DISTANCE,
-    }
+    const curve1PointPosition = pointAdd(
+      [EXPANSION_DISTANCE, -EXPANSION_DISTANCE],
+      cornerPoint
+    )
+    const curve2PointPosition = pointAdd(
+      [-EXPANSION_DISTANCE, EXPANSION_DISTANCE],
+      cornerPoint
+    )
 
     return updateControlPointPositions(
       boundingCurves,
@@ -585,16 +603,19 @@ export const expandBoundingCurvesControlPoints = (boundingCurves, id) => {
       POINT_NAMES.CONTROL_POINT_1,
       curve2PointPosition
     )
-  } else if (id === BOUNDS_POINT_IDS.TOP_RIGHT) {
+  }
+
+  if (id === BOUNDS_POINT_IDS.TOP_RIGHT) {
     const cornerPoint = boundingCurves.top.endPoint
-    const curve1PointPosition = {
-      x: cornerPoint.x - EXPANSION_DISTANCE,
-      y: cornerPoint.y - EXPANSION_DISTANCE,
-    }
-    const curve2PointPosition = {
-      x: cornerPoint.x + EXPANSION_DISTANCE,
-      y: cornerPoint.y + EXPANSION_DISTANCE,
-    }
+    const curve1PointPosition = pointAdd(-EXPANSION_DISTANCE, cornerPoint)
+
+    const curve2PointPosition = pointAdd(
+      {
+        x: EXPANSION_DISTANCE,
+        y: EXPANSION_DISTANCE,
+      },
+      cornerPoint
+    )
 
     return updateControlPointPositions(
       boundingCurves,
@@ -605,16 +626,12 @@ export const expandBoundingCurvesControlPoints = (boundingCurves, id) => {
       POINT_NAMES.CONTROL_POINT_1,
       curve2PointPosition
     )
-  } else if (id === BOUNDS_POINT_IDS.BOTTOM_LEFT) {
+  }
+
+  if (id === BOUNDS_POINT_IDS.BOTTOM_LEFT) {
     const cornerPoint = boundingCurves.bottom.startPoint
-    const curve1PointPosition = {
-      x: cornerPoint.x + EXPANSION_DISTANCE,
-      y: cornerPoint.y + EXPANSION_DISTANCE,
-    }
-    const curve2PointPosition = {
-      x: cornerPoint.x - EXPANSION_DISTANCE,
-      y: cornerPoint.y - EXPANSION_DISTANCE,
-    }
+    const curve1PointPosition = pointAdd(EXPANSION_DISTANCE, cornerPoint)
+    const curve2PointPosition = pointAdd(-EXPANSION_DISTANCE, cornerPoint)
 
     return updateControlPointPositions(
       boundingCurves,
@@ -625,16 +642,19 @@ export const expandBoundingCurvesControlPoints = (boundingCurves, id) => {
       POINT_NAMES.CONTROL_POINT_2,
       curve2PointPosition
     )
-  } else if (id === BOUNDS_POINT_IDS.BOTTOM_RIGHT) {
+  }
+
+  if (id === BOUNDS_POINT_IDS.BOTTOM_RIGHT) {
     const cornerPoint = boundingCurves.bottom.endPoint
-    const curve1PointPosition = {
-      x: cornerPoint.x - EXPANSION_DISTANCE,
-      y: cornerPoint.y + EXPANSION_DISTANCE,
-    }
-    const curve2PointPosition = {
-      x: cornerPoint.x + EXPANSION_DISTANCE,
-      y: cornerPoint.y - EXPANSION_DISTANCE,
-    }
+    const curve1PointPosition = pointAdd(
+      [-EXPANSION_DISTANCE, EXPANSION_DISTANCE],
+      cornerPoint
+    )
+
+    const curve2PointPosition = pointAdd(
+      [EXPANSION_DISTANCE, -EXPANSION_DISTANCE],
+      cornerPoint
+    )
 
     return updateControlPointPositions(
       boundingCurves,
@@ -646,40 +666,68 @@ export const expandBoundingCurvesControlPoints = (boundingCurves, id) => {
       curve2PointPosition
     )
   }
+
+  throw new Error(`Unrecognised point ID: ${id}`)
 }
 
-export const zeroBoundingCurvesControlPoints = (boundingCurves, id) => {
+export const zeroBoundingCurvesCornerControlPoints = (boundingCurves, id) => {
   if (id === BOUNDS_POINT_IDS.TOP_LEFT) {
     return pipe(
       assocPath(
         [CURVE_NAMES.TOP, POINT_NAMES.CONTROL_POINT_1],
-        boundingCurves.top.startPoint
+        boundingCurves[CURVE_NAMES.TOP].startPoint
       ),
       assocPath(
         [CURVE_NAMES.LEFT, POINT_NAMES.CONTROL_POINT_1],
-        boundingCurves.top.startPoint
+        boundingCurves[CURVE_NAMES.TOP].startPoint
       )
     )(boundingCurves)
-  } else if (id === BOUNDS_POINT_IDS.TOP_RIGHT) {
-    const cornerPoint = boundingCurves.top.endPoint
-    boundingCurves.top.controlPoint2.x = cornerPoint.x
-    boundingCurves.top.controlPoint2.y = cornerPoint.y
-    boundingCurves.right.controlPoint1.x = cornerPoint.x
-    boundingCurves.right.controlPoint1.y = cornerPoint.y
-    return { ...boundingCurves }
-  } else if (id === BOUNDS_POINT_IDS.BOTTOM_LEFT) {
-    const cornerPoint = boundingCurves.bottom.startPoint
-    boundingCurves.bottom.controlPoint1.x = cornerPoint.x
-    boundingCurves.bottom.controlPoint1.y = cornerPoint.y
-    boundingCurves.left.controlPoint2.x = cornerPoint.x
-    boundingCurves.left.controlPoint2.y = cornerPoint.y
-    return { ...boundingCurves }
-  } else if (id === BOUNDS_POINT_IDS.BOTTOM_RIGHT) {
-    const cornerPoint = boundingCurves.bottom.endPoint
-    boundingCurves.bottom.controlPoint2.x = cornerPoint.x
-    boundingCurves.bottom.controlPoint2.y = cornerPoint.y
-    boundingCurves.right.controlPoint2.x = cornerPoint.x
-    boundingCurves.right.controlPoint2.y = cornerPoint.y
+  }
+
+  if (id === BOUNDS_POINT_IDS.TOP_RIGHT) {
+    const cornerPoint = boundingCurves[CURVE_NAMES.TOP].endPoint
+    boundingCurves[CURVE_NAMES.TOP].controlPoint2.x = cornerPoint.x
+    boundingCurves[CURVE_NAMES.TOP].controlPoint2.y = cornerPoint.y
+    boundingCurves[CURVE_NAMES.RIGHT].controlPoint1.x = cornerPoint.x
+    boundingCurves[CURVE_NAMES.RIGHT].controlPoint1.y = cornerPoint.y
     return { ...boundingCurves }
   }
+
+  if (id === BOUNDS_POINT_IDS.BOTTOM_LEFT) {
+    const cornerPoint = boundingCurves[CURVE_NAMES.BOTTOM].startPoint
+    boundingCurves[CURVE_NAMES.BOTTOM].controlPoint1.x = cornerPoint.x
+    boundingCurves[CURVE_NAMES.BOTTOM].controlPoint1.y = cornerPoint.y
+    boundingCurves[CURVE_NAMES.LEFT].controlPoint2.x = cornerPoint.x
+    boundingCurves[CURVE_NAMES.LEFT].controlPoint2.y = cornerPoint.y
+    return { ...boundingCurves }
+  }
+
+  if (id === BOUNDS_POINT_IDS.BOTTOM_RIGHT) {
+    const cornerPoint = boundingCurves[CURVE_NAMES.BOTTOM].endPoint
+    boundingCurves[CURVE_NAMES.BOTTOM].controlPoint2.x = cornerPoint.x
+    boundingCurves[CURVE_NAMES.BOTTOM].controlPoint2.y = cornerPoint.y
+    boundingCurves[CURVE_NAMES.RIGHT].controlPoint2.x = cornerPoint.x
+    boundingCurves[CURVE_NAMES.RIGHT].controlPoint2.y = cornerPoint.y
+    return { ...boundingCurves }
+  }
+
+  throw new Error(`Unrecognised point ID: ${id}`)
 }
+
+export const expandAllBoundingCurvesControlPoints = (boundingCurves) =>
+  reduce(
+    (acc, nodeId) => {
+      return expandBoundingCurvesCornerControlPoints(acc, nodeId)
+    },
+    boundingCurves,
+    CORNER_POINTS
+  )
+
+export const zeroAllBoundingCurvesControlPoints = (boundingCurves) =>
+  reduce(
+    (acc, nodeId) => {
+      return zeroBoundingCurvesCornerControlPoints(acc, nodeId)
+    },
+    boundingCurves,
+    CORNER_POINTS
+  )

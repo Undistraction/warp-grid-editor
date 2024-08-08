@@ -7,27 +7,27 @@ import {
   mapObjIndexed,
   modifyPath,
   pipe,
-  reduce,
   unless,
   when,
 } from 'ramda'
 import { isNotNil } from 'ramda-adjunct'
 
-import { CORNER_POINTS } from '../../const'
 import { clampGridSquareToGridDimensions } from '../../utils'
 import {
-  expandBoundingCurvesControlPoints,
-  translateBoundingCurves,
+  expandAllBoundingCurvesControlPoints,
+  expandBoundingCurvesCornerControlPoints,
+  moveBoundingCurves,
   updateBoundingCurvesNodePosition,
-  zeroBoundingCurvesControlPoints,
-} from '../../utils/boundingCurvesApi'
+  zeroAllBoundingCurvesControlPoints,
+  zeroBoundingCurvesCornerControlPoints,
+} from '../../utils/boundingCurves'
 import { PROJECT_DEFAULT } from '../defaults'
 
 // -----------------------------------------------------------------------------
 // Utils
 // -----------------------------------------------------------------------------
 
-const updateCornerPoints = (name, value) => (corners) => ({
+const updateAllCornerPoints = (name, value) => (corners) => ({
   ...mapObjIndexed(
     (corner) => ({
       ...corner,
@@ -36,24 +36,6 @@ const updateCornerPoints = (name, value) => (corners) => ({
     corners
   ),
 })
-
-const expandControlPoints = (boundingCurves) =>
-  reduce(
-    (acc, nodeId) => {
-      return expandBoundingCurvesControlPoints(acc, nodeId)
-    },
-    boundingCurves,
-    CORNER_POINTS
-  )
-
-const zeroControlPoints = (boundingCurves) =>
-  reduce(
-    (acc, nodeId) => {
-      return zeroBoundingCurvesControlPoints(acc, nodeId)
-    },
-    boundingCurves,
-    CORNER_POINTS
-  )
 
 const throwError = (message) => () => {
   throw new Error(message)
@@ -114,7 +96,7 @@ const createProjectSlice = (set) => ({
         throw new Error(`Project has no bounding curves`)
       }
 
-      const updatedBoundingCurves = translateBoundingCurves(
+      const updatedBoundingCurves = moveBoundingCurves(
         project.boundingCurves,
         position
       )
@@ -150,7 +132,12 @@ const createProjectSlice = (set) => ({
   // ---------------------------------------------------------------------------
 
   zeroControlPointsGlobal: () => {
-    set(modifyPath([`project`, `boundingCurves`], zeroControlPoints))
+    set(
+      modifyPath(
+        [`project`, `boundingCurves`],
+        zeroAllBoundingCurvesControlPoints
+      )
+    )
   },
 
   mirrorControlPointsGlobal: (isMirrored) => {
@@ -159,7 +146,7 @@ const createProjectSlice = (set) => ({
         assocPath([`project`, `config`, `bounds`, `isMirrored`], isMirrored),
         modifyPath(
           [`project`, `config`, `bounds`, `corners`],
-          updateCornerPoints(`isMirrored`, isMirrored)
+          updateAllCornerPoints(`isMirrored`, isMirrored)
         )
       )
     )
@@ -171,11 +158,11 @@ const createProjectSlice = (set) => ({
         assocPath([`project`, `config`, `bounds`, `isLinked`], isLinked),
         modifyPath(
           [`project`, `config`, `bounds`, `corners`],
-          updateCornerPoints(`isLinked`, isLinked)
+          updateAllCornerPoints(`isLinked`, isLinked)
         ),
         modifyPath(
           [`project`, `boundingCurves`],
-          when(() => isLinked, expandControlPoints)
+          when(() => isLinked, expandAllBoundingCurvesControlPoints)
         )
       )
     )
@@ -187,7 +174,7 @@ const createProjectSlice = (set) => ({
 
   zeroControlPoints: (cornerNodeId) => () => {
     set(({ project }) => {
-      const updatedBoundingCurves = zeroControlPoints(
+      const updatedBoundingCurves = zeroBoundingCurvesCornerControlPoints(
         project.boundingCurves,
         cornerNodeId
       )
@@ -209,7 +196,11 @@ const createProjectSlice = (set) => ({
           [`project`, `boundingCurves`],
           when(
             () => isLinked,
-            () => expandControlPoints(project.boundingCurves, cornerNodeId)
+            () =>
+              expandBoundingCurvesCornerControlPoints(
+                project.boundingCurves,
+                cornerNodeId
+              )
           )
         ),
         assocPath([`project`, `config`, `bounds`, `isLinked`], isLinked),
