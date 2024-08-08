@@ -31,6 +31,7 @@ const SidebarHeader = () => {
         label="Close"
         className="pr-2 pt-1 text-sm"
         onClick={() => setAppConfigValue([`ui`, `sidebar`, `isHidden`], true)}
+        testId="sidebar-close-button"
       />
     </header>
   )

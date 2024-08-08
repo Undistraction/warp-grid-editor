@@ -11,11 +11,15 @@ const SidebarGroup = ({
   hint,
   isMinimised = false,
   onToggleMinimise,
+  testId = ``,
 }) => {
   const icon = isMinimised ? `+` : `–`
 
   return (
-    <div className="flex flex-col space-y-2 pt-3">
+    <div
+      className="flex flex-col space-y-2 pt-3"
+      data-tid={testId}
+    >
       <header
         onClick={() => onToggleMinimise(!isMinimised)}
         className="flex cursor-pointer flex-row items-center justify-between"
@@ -39,6 +43,7 @@ SidebarGroup.propTypes = {
   hint: PropTypes.string,
   isMinimised: PropTypes.bool,
   onToggleMinimise: PropTypes.func.isRequired,
+  testId: PropTypes.string,
 }
 
 export default SidebarGroup

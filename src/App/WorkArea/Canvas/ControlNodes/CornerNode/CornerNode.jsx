@@ -30,6 +30,7 @@ const CornerNode = ({ id, position, onDrag }) => {
         className="corner-handle group pointer-events-auto absolute -left-[12px] -top-[12px] cursor-move"
         ref={nodeRef}
         id={id}
+        data-tid={`corner-point-${id}`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

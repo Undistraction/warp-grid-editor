@@ -13,6 +13,7 @@ const ButtonLink = ({
   isSelectable = false,
   isDisabled = false,
   className = ``,
+  testId = ``,
 }) => {
   return (
     <button
@@ -24,6 +25,7 @@ const ButtonLink = ({
           onClick()
         }
       }}
+      data-tid={testId}
     >
       {isSelected ? labelSelected : label}
     </button>
@@ -38,6 +40,7 @@ ButtonLink.propTypes = {
   isSelectable: PropTypes.bool,
   isDisabled: PropTypes.bool,
   className: PropTypes.string,
+  testId: PropTypes.string,
 }
 
 export default ButtonLink

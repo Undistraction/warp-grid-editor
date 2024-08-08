@@ -28,7 +28,7 @@ export const LINE_STRATEGY_OPTIONS = [
     value: LINE_STRATEGY.CURVES,
   },
   {
-    label: `Straight lines`,
+    label: `Straight`,
     value: LINE_STRATEGY.STRAIGHT_LINES,
   },
 ]

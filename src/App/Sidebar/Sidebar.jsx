@@ -41,7 +41,7 @@ const Sidebar = ({ canvas, exportBounds, exportCellBounds, project }) => {
 
       <SidebarGroup
         title="Project"
-        tid="sidebar-group-project"
+        testId="sidebar-group-project"
         hint="You can save and load your settings from/to the local-storage of your machine."
         isMinimised={getAppConfigSectionIsMinimised(SIDBAR_SECTION_IDS.PROJECT)}
         onToggleMinimise={setAppConfigSectionIsMinimised(
@@ -60,7 +60,7 @@ const Sidebar = ({ canvas, exportBounds, exportCellBounds, project }) => {
 
       <SidebarGroup
         title="Config"
-        tid="sidebar-group-config"
+        testId="sidebar-group-config"
         hint="By default, all lines are straight, however you can switch to using curved lines which is significantly more memory intensive. When using curves, 'Even' is the default interpolation, and is much more accurate, especially with higher 'Precision' settings"
         isMinimised={getAppConfigSectionIsMinimised(SIDBAR_SECTION_IDS.CONFIG)}
         onToggleMinimise={setAppConfigSectionIsMinimised(
@@ -75,7 +75,7 @@ const Sidebar = ({ canvas, exportBounds, exportCellBounds, project }) => {
 
       <SidebarGroup
         title="Bounds"
-        tid="sidebar-group-bounds"
+        testId="sidebar-group-bounds"
         isMinimised={getAppConfigSectionIsMinimised(SIDBAR_SECTION_IDS.BOUNDS)}
         onToggleMinimise={setAppConfigSectionIsMinimised(
           SIDBAR_SECTION_IDS.BOUNDS
@@ -90,7 +90,7 @@ const Sidebar = ({ canvas, exportBounds, exportCellBounds, project }) => {
 
       <SidebarGroup
         title="Grid"
-        tid="sidebar-group-grid"
+        testId="sidebar-group-grid"
         hint="Switch to 'Advanced' mode to input a comma deliniated list of column or row ratios. Values will be totalled, and each row or column will act as a ratio of that total."
         isMinimised={getAppConfigSectionIsMinimised(SIDBAR_SECTION_IDS.GRID)}
         onToggleMinimise={setAppConfigSectionIsMinimised(
@@ -110,7 +110,7 @@ const Sidebar = ({ canvas, exportBounds, exportCellBounds, project }) => {
 
       <SidebarGroup
         title="Grid square"
-        tid="sidebar-group-grid-squre"
+        testId="sidebar-group-grid-squre"
         isMinimised={getAppConfigSectionIsMinimised(
           SIDBAR_SECTION_IDS.GRID_SQUARE
         )}

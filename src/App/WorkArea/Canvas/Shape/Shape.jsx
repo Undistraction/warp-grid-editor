@@ -109,6 +109,7 @@ const Shape = ({ boundingCurves, onDrag }) => {
           width={width}
           height={height}
           ref={svgRef}
+          data-tid="patch-shape"
         >
           {renderPath(boundingCurves)}
         </svg>
