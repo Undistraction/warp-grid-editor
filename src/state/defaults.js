@@ -63,6 +63,7 @@ export const PROJECT_DEFAULT = {
 export const APP_CONFIG_DEFAULT = {
   ui: {
     sidebar: {
+      isHidden: false,
       sections: {
         [SIDBAR_SECTION_IDS.PROJECT]: {
           isMinimised: true,

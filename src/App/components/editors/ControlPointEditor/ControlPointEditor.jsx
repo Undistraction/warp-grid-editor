@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import IconButton from '../../IconButton'
+import ButtonLink from '../../ButtonLink'
 
 // -----------------------------------------------------------------------------
 // Exports
@@ -16,18 +16,18 @@ const ControlPointEditor = ({
 }) => {
   return (
     <div className="flex flex-row items-start space-x-3">
-      <IconButton
+      <ButtonLink
         label="Ø"
         onClick={zeroControlPoints}
       />
-      <IconButton
+      <ButtonLink
         label="Link"
         labelSelected="Unlink"
         isSelectable
         onClick={linkControlPoints}
         isSelected={controlNodesAreLinked}
       />
-      <IconButton
+      <ButtonLink
         label="Mirror"
         labelSelected="UnMirror"
         isDisabled={!controlNodesAreLinked}

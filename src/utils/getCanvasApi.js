@@ -50,7 +50,7 @@ const getCanvasApi = (context) => {
 
   const drawQuad = (
     boundingCurves,
-    { color = `green`, lineWidth = 1 } = {}
+    { color = `black`, lineWidth = 1, fill = `transparent` } = {}
   ) => {
     context.beginPath()
     context.moveTo(
@@ -102,15 +102,17 @@ const getCanvasApi = (context) => {
 
     context.closePath()
     context.strokeStyle = color
+    context.fillStyle = fill
     context.lineWidth = lineWidth
+    context.fill()
     context.stroke()
   }
 
   const drawPatchBounds = (
     boundingCurves,
-    { lineColor = `green`, lineWidth = 3 } = {}
+    { lineColor = `black`, lineWidth = 3, fill = `transparent` } = {}
   ) => {
-    drawQuad(boundingCurves, { color: lineColor, lineWidth })
+    drawQuad(boundingCurves, { color: lineColor, lineWidth, fill })
   }
 
   const drawBounds = (
@@ -170,7 +172,10 @@ const getCanvasApi = (context) => {
   }
 
   const drawGridSquareBounds = (boundingCurves) => {
-    drawPatchBounds(boundingCurves, { lineColor: `green`, lineWidth: 3 })
+    drawPatchBounds(boundingCurves, {
+      fill: `black`,
+      lineWidth: 0,
+    })
   }
 
   const drawStraightLine = (line, { color = `black`, lineWidth = 1 } = {}) => {

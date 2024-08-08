@@ -9,7 +9,7 @@ const Button = ({ label, onClick, className = ``, isDisabled = false }) => {
   return (
     <button
       disabled={isDisabled}
-      className={`rounded-md p-2 ${className} ${isDisabled ? `bg-gray-400 text-gray-200` : `bg-black text-white`} `}
+      className={`rounded-md p-2 ${isDisabled ? `bg-gray-400 text-gray-200` : `bg-black text-white`} ${className} `}
       onClick={onClick}
     >
       {label}

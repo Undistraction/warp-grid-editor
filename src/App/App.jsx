@@ -3,10 +3,10 @@ import { useDebounce } from 'use-debounce'
 // eslint-disable-next-line import/no-unresolved
 import warpGrid from 'warp-grid'
 
-import AppApiContext from '../context/AppApiContext'
 import getAppApi from '../getAppApi'
 import useAppStore from '../state/useAppStore'
 import { getRandomBoundingCurves } from '../utils'
+import ButtonLink from './components/ButtonLink'
 import Sidebar from './Sidebar'
 import WorkArea from './WorkArea'
 
@@ -21,6 +21,8 @@ const App = () => {
   const { project } = useAppStore((state) => state)
   const [boundingCurvesDebounced] = useDebounce(project?.boundingCurves, 3)
   const setBoundingCurves = useAppStore.use.setBoundingCurves()
+  const config = useAppStore.use.config()
+  const setAppConfigValue = useAppStore.use.setAppConfigValue()
 
   const canvasIsReady = canvas && canvasSize.width > 0
 
@@ -46,8 +48,10 @@ const App = () => {
     coonsPatch,
   })
 
+  const { isHidden: sidebarIsHidden } = config.ui.sidebar
+
   return (
-    <AppApiContext.Provider value={appApi}>
+    <div className="h-full w-screen">
       <div className="relative flex h-full w-screen flex-row space-x-5 p-5">
         <WorkArea
           setCanvas={setCanvas}
@@ -55,21 +59,32 @@ const App = () => {
           coonsPatch={coonsPatch}
           setCanvasSize={setCanvasSize}
         />
-        <div className="-my-5 w-[300px] flex-shrink-0 flex-grow-0 overflow-y-scroll">
-          {canvas && project && (
-            <Sidebar
-              canvas={canvas}
-              project={project}
-              boundingCurves={project.boundingCurves}
-              saveProject={appApi.saveProject}
-              loadProject={appApi.loadProject}
-              exportBounds={appApi.exportBounds}
-              exportCellBounds={appApi.exportCellBounds}
-            />
-          )}
-        </div>
+        {!sidebarIsHidden && (
+          <div className="-my-5 w-[300px] flex-shrink-0 flex-grow-0 overflow-y-scroll">
+            {canvas && project && (
+              <Sidebar
+                canvas={canvas}
+                project={project}
+                boundingCurves={project.boundingCurves}
+                saveProject={appApi.saveProject}
+                loadProject={appApi.loadProject}
+                exportBounds={appApi.exportBounds}
+                exportCellBounds={appApi.exportCellBounds}
+              />
+            )}
+          </div>
+        )}
       </div>
-    </AppApiContext.Provider>
+      {sidebarIsHidden && (
+        <ButtonLink
+          label="Open"
+          className="absolute right-7 top-6 text-sm"
+          onClick={() =>
+            setAppConfigValue([`ui`, `sidebar`, `isHidden`], false)
+          }
+        />
+      )}
+    </div>
   )
 }
 
