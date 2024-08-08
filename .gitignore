@@ -9,9 +9,6 @@ node_modules/
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
-# Jest
-/coverage/
-
 # Mac
 .DS_Store
 
@@ -22,3 +19,14 @@ node_modules/
 # Local files
 
 TODO.md
+
+# Playwright specific
+
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# Vitest
+
+/coverage/
