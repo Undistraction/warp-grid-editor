@@ -13,6 +13,7 @@ import {
   expandAllBoundingCurvesControlPoints,
   expandBoundingCurvesCornerControlPoints,
   moveBoundingCurves,
+  toggleZeroExpandBoundingCurvesControlPoints,
   updateBoundingCurvesNodePosition,
   zeroAllBoundingCurvesControlPoints,
   zeroBoundingCurvesCornerControlPoints,
@@ -166,6 +167,33 @@ const createProjectSlice = (set) => ({
           boundingCurves: updatedBoundingCurves,
         },
       }
+    })
+  },
+
+  expandControlPoints: (cornerNodeId) => () => {
+    set((state) => {
+      const { project } = state
+
+      return modifyPath(
+        [`project`, `boundingCurves`],
+        expandBoundingCurvesCornerControlPoints(
+          project.boundingCurves,
+          cornerNodeId
+        )
+      )(state)
+    })
+  },
+
+  toggleZeroExpandControlPoints: (cornerNodeId) => () => {
+    set((state) => {
+      const { project } = state
+
+      return modifyPath([`project`, `boundingCurves`], () =>
+        toggleZeroExpandBoundingCurvesControlPoints(
+          project.boundingCurves,
+          cornerNodeId
+        )
+      )(state)
     })
   },
 

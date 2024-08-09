@@ -15,7 +15,7 @@ const { WIDTH, HEIGHT } = METRICS.CORNER_POINT
 // Exports
 // -----------------------------------------------------------------------------
 
-const CornerNode = ({ id, position, onDrag }) => {
+const CornerNode = ({ id, position, onDrag, onDoubleClick }) => {
   const nodeRef = React.useRef(null)
 
   return (
@@ -31,6 +31,7 @@ const CornerNode = ({ id, position, onDrag }) => {
         ref={nodeRef}
         id={id}
         data-tid={`corner-point-${id}`}
+        onDoubleClick={onDoubleClick(id)}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -64,6 +65,7 @@ CornerNode.propTypes = {
   id: PropTypes.string.isRequired,
   position: typePoint.isRequired,
   onDrag: PropTypes.func.isRequired,
+  onDoubleClick: PropTypes.func.isRequired,
 }
 
 export default CornerNode

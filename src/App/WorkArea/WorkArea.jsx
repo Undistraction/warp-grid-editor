@@ -5,6 +5,7 @@ import useObserveClientSize from '../../hooks/useObserveClientSize'
 import { typeProject } from '../../prop-types'
 import useAppStore from '../../state/useAppStore'
 import { getBounds } from '../../utils/bezier'
+import { reduceMax } from '../../utils/math'
 import Canvas from './Canvas'
 import ControlNodes from './Canvas/ControlNodes'
 import ControlPointStems from './Canvas/ControlPointStems'
@@ -16,6 +17,35 @@ import Shape from './Canvas/Shape'
 
 const BORDER_WIDTHS = 2
 
+const CANVAS_MIN_DIMENSIONS = {
+  WIDTH: 280,
+  HEIGHT: 0,
+}
+
+// -----------------------------------------------------------------------------
+// Utils
+// -----------------------------------------------------------------------------
+
+const calculateCanvasDimensions = (boundingCurves, dimensions) => {
+  if (!boundingCurves) {
+    return dimensions
+  }
+  // Calculate true bounds of curves.
+  const bounds = getBounds(boundingCurves)
+
+  return {
+    width: reduceMax([dimensions.width, bounds.x, CANVAS_MIN_DIMENSIONS.WIDTH]),
+    height: reduceMax([
+      dimensions.height,
+      bounds.y,
+      CANVAS_MIN_DIMENSIONS.HEIGHT,
+    ]),
+  }
+}
+
+const getDimensionsSumamry = ({ width, height }) =>
+  `${Math.round(width)}×${Math.round(height)}`
+
 // -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
@@ -24,8 +54,6 @@ const WorkArea = ({ setCanvas, coonsPatch, dimensions, setDimensions }) => {
   const displayRef = React.useRef(null)
 
   const project = useAppStore.use.project()
-  const updateBoundingCurvesNodePosition =
-    useAppStore.use.updateBoundingCurvesNodePosition()
   const updateBoundingCurvesPosition =
     useAppStore.use.updateBoundingCurvesPosition()
 
@@ -36,18 +64,10 @@ const WorkArea = ({ setCanvas, coonsPatch, dimensions, setDimensions }) => {
     height: -BORDER_WIDTHS,
   })
 
-  // Calculate true bounds of curves.
-  const bounds = project.boundingCurves && getBounds(project.boundingCurves)
+  const { width: canvasWidth, height: canvasHeight } =
+    calculateCanvasDimensions(project.boundingCurves, dimensions)
 
-  // Use whatever is greatest, the available space or the bounds
-  const canvasWidth = bounds
-    ? Math.max(dimensions.width, bounds.x)
-    : dimensions.width
-  const canvasHeight = bounds
-    ? Math.max(dimensions.height, bounds.y)
-    : dimensions.height
-
-  const dimensionsSummary = `${Math.round(dimensions.width)} x ${Math.round(dimensions.height)}`
+  const dimensionsSummary = getDimensionsSumamry(dimensions)
 
   return (
     <div
@@ -66,7 +86,7 @@ const WorkArea = ({ setCanvas, coonsPatch, dimensions, setDimensions }) => {
             height={canvasHeight}
             coonsPatch={coonsPatch}
             gridSquare={project.config.gridSquare}
-            config={project?.config}
+            config={project.config}
           />
           {project.boundingCurves && (
             <React.Fragment>
@@ -81,12 +101,7 @@ const WorkArea = ({ setCanvas, coonsPatch, dimensions, setDimensions }) => {
                     width={canvasWidth}
                     height={canvasHeight}
                   />
-                  <ControlNodes
-                    boundingCurves={project.boundingCurves}
-                    updateBoundingCurvesNodePosition={
-                      updateBoundingCurvesNodePosition
-                    }
-                  />
+                  <ControlNodes boundingCurves={project.boundingCurves} />
                 </React.Fragment>
               )}
             </React.Fragment>
@@ -102,6 +117,7 @@ const WorkArea = ({ setCanvas, coonsPatch, dimensions, setDimensions }) => {
 
 WorkArea.propTypes = {
   setCanvas: PropTypes.func.isRequired,
+  setDimensions: PropTypes.func.isRequired,
   coonsPatch: PropTypes.object,
   project: typeProject,
   dimensions: PropTypes.shape({

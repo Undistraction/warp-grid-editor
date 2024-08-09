@@ -2,11 +2,11 @@
 // Exports
 // -----------------------------------------------------------------------------
 
-import PropTypes from 'prop-types'
 import React from 'react'
 
 import { BOUNDS_POINT_IDS } from '../../../../const'
 import { typeBoundingCurves } from '../../../../prop-types'
+import useAppStore from '../../../../state/useAppStore'
 import ControlPointNode from './ControlPointNode'
 import CornerNode from './CornerNode'
 
@@ -14,13 +14,17 @@ import CornerNode from './CornerNode'
 // Utils
 // -----------------------------------------------------------------------------
 
-const renderNodes = (handleNodeDrag, nodes) => {
+const renderNodes = (
+  { handleNodeDrag, toggleZeroExpandControlPoints },
+  nodes
+) => {
   return nodes.map(({ id, position, Component }) => {
     return (
       <Component
         id={id}
         key={id}
         onDrag={handleNodeDrag}
+        onDoubleClick={toggleZeroExpandControlPoints}
         position={position}
         S
       />
@@ -32,7 +36,13 @@ const renderNodes = (handleNodeDrag, nodes) => {
 // Exports
 // -----------------------------------------------------------------------------
 
-const ControlNodes = ({ boundingCurves, updateBoundingCurvesNodePosition }) => {
+const ControlNodes = ({ boundingCurves }) => {
+  const updateBoundingCurvesNodePosition =
+    useAppStore.use.updateBoundingCurvesNodePosition()
+
+  const toggleZeroExpandControlPoints =
+    useAppStore.use.toggleZeroExpandControlPoints()
+
   const handleNodeDrag = (id) => (event, dragElement) => {
     const newPosition = {
       x: dragElement.x,
@@ -44,28 +54,7 @@ const ControlNodes = ({ boundingCurves, updateBoundingCurvesNodePosition }) => {
 
   return (
     <div className="pointer-events-none absolute bottom-0 left-0 right-0 top-0">
-      {renderNodes(handleNodeDrag, [
-        {
-          id: BOUNDS_POINT_IDS.TOP_LEFT,
-          position: boundingCurves.top.startPoint,
-          Component: CornerNode,
-        },
-        {
-          id: BOUNDS_POINT_IDS.TOP_RIGHT,
-          position: boundingCurves.top.endPoint,
-          Component: CornerNode,
-        },
-        {
-          id: BOUNDS_POINT_IDS.BOTTOM_LEFT,
-          position: boundingCurves.bottom.startPoint,
-          Component: CornerNode,
-        },
-        {
-          id: BOUNDS_POINT_IDS.BOTTOM_RIGHT,
-          position: boundingCurves.bottom.endPoint,
-          Component: CornerNode,
-        },
-
+      {renderNodes({ handleNodeDrag, toggleZeroExpandControlPoints }, [
         {
           id: BOUNDS_POINT_IDS.TOP_LEFT_CONTROL_1,
           position: boundingCurves.top.controlPoint1,
@@ -107,6 +96,26 @@ const ControlNodes = ({ boundingCurves, updateBoundingCurvesNodePosition }) => {
           position: boundingCurves.right.controlPoint2,
           Component: ControlPointNode,
         },
+        {
+          id: BOUNDS_POINT_IDS.TOP_LEFT,
+          position: boundingCurves.top.startPoint,
+          Component: CornerNode,
+        },
+        {
+          id: BOUNDS_POINT_IDS.TOP_RIGHT,
+          position: boundingCurves.top.endPoint,
+          Component: CornerNode,
+        },
+        {
+          id: BOUNDS_POINT_IDS.BOTTOM_LEFT,
+          position: boundingCurves.bottom.startPoint,
+          Component: CornerNode,
+        },
+        {
+          id: BOUNDS_POINT_IDS.BOTTOM_RIGHT,
+          position: boundingCurves.bottom.endPoint,
+          Component: CornerNode,
+        },
       ])}
     </div>
   )
@@ -114,7 +123,6 @@ const ControlNodes = ({ boundingCurves, updateBoundingCurvesNodePosition }) => {
 
 ControlNodes.propTypes = {
   boundingCurves: typeBoundingCurves,
-  updateBoundingCurvesNodePosition: PropTypes.func.isRequired,
 }
 
 export default ControlNodes

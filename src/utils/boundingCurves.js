@@ -1,4 +1,4 @@
-import { assocPath, pipe, reduce } from 'ramda'
+import { reduce } from 'ramda'
 
 import {
   BOUNDS_POINT_IDS,
@@ -12,6 +12,7 @@ import {
   getInverseAngleRads,
   getPointAtDistanceAndAngle,
   pointAdd,
+  pointsAreEqual,
   pointSubtract,
 } from './trig'
 
@@ -672,16 +673,12 @@ export const expandBoundingCurvesCornerControlPoints = (boundingCurves, id) => {
 
 export const zeroBoundingCurvesCornerControlPoints = (boundingCurves, id) => {
   if (id === BOUNDS_POINT_IDS.TOP_LEFT) {
-    return pipe(
-      assocPath(
-        [CURVE_NAMES.TOP, POINT_NAMES.CONTROL_POINT_1],
-        boundingCurves[CURVE_NAMES.TOP].startPoint
-      ),
-      assocPath(
-        [CURVE_NAMES.LEFT, POINT_NAMES.CONTROL_POINT_1],
-        boundingCurves[CURVE_NAMES.TOP].startPoint
-      )
-    )(boundingCurves)
+    const cornerPoint = boundingCurves[CURVE_NAMES.TOP].startPoint
+    boundingCurves[CURVE_NAMES.TOP].controlPoint1.x = cornerPoint.x
+    boundingCurves[CURVE_NAMES.TOP].controlPoint1.y = cornerPoint.y
+    boundingCurves[CURVE_NAMES.LEFT].controlPoint1.x = cornerPoint.x
+    boundingCurves[CURVE_NAMES.LEFT].controlPoint1.y = cornerPoint.y
+    return { ...boundingCurves }
   }
 
   if (id === BOUNDS_POINT_IDS.TOP_RIGHT) {
@@ -709,6 +706,65 @@ export const zeroBoundingCurvesCornerControlPoints = (boundingCurves, id) => {
     boundingCurves[CURVE_NAMES.RIGHT].controlPoint2.x = cornerPoint.x
     boundingCurves[CURVE_NAMES.RIGHT].controlPoint2.y = cornerPoint.y
     return { ...boundingCurves }
+  }
+
+  throw new Error(`Unrecognised point ID: ${id}`)
+}
+
+export const toggleZeroExpandBoundingCurvesControlPoints = (
+  boundingCurves,
+  id
+) => {
+  if (id === BOUNDS_POINT_IDS.TOP_LEFT) {
+    const top = boundingCurves[CURVE_NAMES.TOP]
+    const left = boundingCurves[CURVE_NAMES.LEFT]
+
+    if (
+      pointsAreEqual(top.startPoint, top.controlPoint1) &&
+      pointsAreEqual(left.startPoint, left.controlPoint1)
+    ) {
+      return expandBoundingCurvesCornerControlPoints(boundingCurves, id)
+    }
+    return zeroBoundingCurvesCornerControlPoints(boundingCurves, id)
+  }
+
+  if (id === BOUNDS_POINT_IDS.TOP_RIGHT) {
+    const top = boundingCurves[CURVE_NAMES.TOP]
+    const right = boundingCurves[CURVE_NAMES.RIGHT]
+
+    if (
+      pointsAreEqual(top.endPoint, top.controlPoint2) &&
+      pointsAreEqual(right.startPoint, right.controlPoint1)
+    ) {
+      return expandBoundingCurvesCornerControlPoints(boundingCurves, id)
+    }
+    return zeroBoundingCurvesCornerControlPoints(boundingCurves, id)
+  }
+
+  if (id === BOUNDS_POINT_IDS.BOTTOM_LEFT) {
+    const bottom = boundingCurves[CURVE_NAMES.BOTTOM]
+    const left = boundingCurves[CURVE_NAMES.LEFT]
+
+    if (
+      pointsAreEqual(bottom.startPoint, bottom.controlPoint1) &&
+      pointsAreEqual(left.endPoint, left.controlPoint2)
+    ) {
+      return expandBoundingCurvesCornerControlPoints(boundingCurves, id)
+    }
+    return zeroBoundingCurvesCornerControlPoints(boundingCurves, id)
+  }
+
+  if (id === BOUNDS_POINT_IDS.BOTTOM_RIGHT) {
+    const bottom = boundingCurves[CURVE_NAMES.BOTTOM]
+    const right = boundingCurves[CURVE_NAMES.RIGHT]
+
+    if (
+      pointsAreEqual(bottom.endPoint, bottom.controlPoint2) &&
+      pointsAreEqual(right.endPoint, right.controlPoint2)
+    ) {
+      return expandBoundingCurvesCornerControlPoints(boundingCurves, id)
+    }
+    return zeroBoundingCurvesCornerControlPoints(boundingCurves, id)
   }
 
   throw new Error(`Unrecognised point ID: ${id}`)

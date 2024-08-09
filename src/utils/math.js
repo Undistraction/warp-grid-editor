@@ -1,3 +1,4 @@
+import { reduce } from 'ramda'
 import { isNumber } from 'ramda-adjunct'
 
 // -----------------------------------------------------------------------------
@@ -21,3 +22,5 @@ export const getRandomValueBetween = (min, max) => {
 export const getRandomValueBetweenRounded = (min, max) => {
   return Math.round(getRandomValueBetween(min, max))
 }
+
+export const reduceMax = reduce(Math.max, 0)
