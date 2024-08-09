@@ -84,7 +84,7 @@ const Shape = ({ boundingCurves, onDrag }) => {
     <Draggable
       nodeRef={nodeRef}
       position={boundingCurves.top.startPoint}
-      bounds="#work-area"
+      bounds="#scroll-inner"
       onDrag={(event, dragElement) => {
         const newPosition = {
           x: dragElement.x,

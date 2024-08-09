@@ -1,3 +1,4 @@
+import { isNotNil } from 'ramda-adjunct'
 import React from 'react'
 import { useDebounce } from 'use-debounce'
 // eslint-disable-next-line import/no-unresolved
@@ -17,15 +18,17 @@ import WorkArea from './WorkArea'
 const App = () => {
   const [canvas, setCanvas] = React.useState(null)
   const [coonsPatch, setCoonsPatch] = React.useState(null)
-  const [canvasSize, setCanvasSize] = React.useState({ width: 0, height: 0 })
   const { project } = useAppStore((state) => state)
   const [boundingCurvesDebounced] = useDebounce(project?.boundingCurves, 3)
   const setBoundingCurves = useAppStore.use.setBoundingCurves()
   const config = useAppStore.use.config()
   const setAppConfigValue = useAppStore.use.setAppConfigValue()
+  const [workAreaDimensions, setWorkAreaDimensions] = React.useState({
+    width: 0,
+    height: 0,
+  })
 
-  const canvasIsReady = canvas && canvasSize.width > 0
-
+  const canvasIsReady = isNotNil(canvas) && workAreaDimensions.width > 0
   // Create a random set of bounding curves on first render if no project is loaded
   React.useLayoutEffect(() => {
     if (canvasIsReady && !project.boundingCurves) {
@@ -52,12 +55,12 @@ const App = () => {
 
   return (
     <div className="h-full w-screen">
-      <div className="relative flex h-full w-screen flex-row space-x-5 p-5">
+      <div className="flex-shrink-1 relative flex h-full w-screen flex-row space-x-5 p-5">
         <WorkArea
           setCanvas={setCanvas}
-          canvasSize={canvasSize}
           coonsPatch={coonsPatch}
-          setCanvasSize={setCanvasSize}
+          dimensions={workAreaDimensions}
+          setDimensions={setWorkAreaDimensions}
         />
         {!sidebarIsHidden && (
           <div className="-my-5 w-[300px] flex-shrink-0 flex-grow-0 overflow-y-scroll">

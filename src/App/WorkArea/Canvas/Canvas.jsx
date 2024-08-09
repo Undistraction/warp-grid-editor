@@ -45,18 +45,13 @@ const Canvas = ({
   }, [coonsPatch, gridSquare, config, width, height])
 
   return (
-    <div>
-      <canvas
-        id="canvas"
-        className="relative rounded-lg border border-gray-300"
-        ref={ref}
-        width={width}
-        height={height}
-      />
-      <div className="absolute bottom-2 left-3 font-mono text-xs text-gray-400">
-        {width} x {height}
-      </div>
-    </div>
+    <canvas
+      id="canvas"
+      className="relative"
+      ref={ref}
+      width={width}
+      height={height}
+    />
   )
 }
 

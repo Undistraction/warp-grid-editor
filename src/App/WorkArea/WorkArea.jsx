@@ -2,8 +2,9 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import useObserveClientSize from '../../hooks/useObserveClientSize'
-import { typeDimensions, typeProject } from '../../prop-types'
+import { typeProject } from '../../prop-types'
 import useAppStore from '../../state/useAppStore'
+import { getBounds } from '../../utils/bezier'
 import Canvas from './Canvas'
 import ControlNodes from './Canvas/ControlNodes'
 import ControlPointStems from './Canvas/ControlPointStems'
@@ -19,7 +20,7 @@ const BORDER_WIDTHS = 2
 // Exports
 // -----------------------------------------------------------------------------
 
-const WorkArea = ({ setCanvas, canvasSize, coonsPatch, setCanvasSize }) => {
+const WorkArea = ({ setCanvas, coonsPatch, dimensions, setDimensions }) => {
   const displayRef = React.useRef(null)
 
   const project = useAppStore.use.project()
@@ -28,60 +29,85 @@ const WorkArea = ({ setCanvas, canvasSize, coonsPatch, setCanvasSize }) => {
   const updateBoundingCurvesPosition =
     useAppStore.use.updateBoundingCurvesPosition()
 
-  useObserveClientSize(displayRef, setCanvasSize, {
+  useObserveClientSize(displayRef, setDimensions, {
     // left + right border widths
     width: -BORDER_WIDTHS,
     // top + bottom border widths
     height: -BORDER_WIDTHS,
   })
 
+  // Calculate true bounds of curves.
+  const bounds = project.boundingCurves && getBounds(project.boundingCurves)
+
+  // Use whatever is greatest, the available space or the bounds
+  const canvasWidth = bounds
+    ? Math.max(dimensions.width, bounds.x)
+    : dimensions.width
+  const canvasHeight = bounds
+    ? Math.max(dimensions.height, bounds.y)
+    : dimensions.height
+
+  const dimensionsSummary = `${Math.round(dimensions.width)} x ${Math.round(dimensions.height)}`
+
   return (
     <div
-      className="relative h-full flex-grow overflow-hidden"
+      className="width-full relative h-full min-w-0 flex-grow overflow-hidden rounded-lg border border-gray-300"
       id="work-area"
       ref={displayRef}
     >
-      <Canvas
-        setCanvas={setCanvas}
-        width={canvasSize.width}
-        height={canvasSize.height}
-        coonsPatch={coonsPatch}
-        gridSquare={project.config.gridSquare}
-        config={project?.config}
-      />
-      {project.boundingCurves && (
-        <React.Fragment>
-          <Shape
-            boundingCurves={project.boundingCurves}
-            onDrag={updateBoundingCurvesPosition}
+      <div className="width-full height-full absolute inset-0 overflow-auto">
+        <div
+          id="scroll-inner"
+          className="w-max"
+        >
+          <Canvas
+            setCanvas={setCanvas}
+            width={canvasWidth}
+            height={canvasHeight}
+            coonsPatch={coonsPatch}
+            gridSquare={project.config.gridSquare}
+            config={project?.config}
           />
-          {project.config.bounds.shouldDrawCornerPoints && (
+          {project.boundingCurves && (
             <React.Fragment>
-              <ControlPointStems
+              <Shape
                 boundingCurves={project.boundingCurves}
-                width={canvasSize.width}
-                height={canvasSize.height}
+                onDrag={updateBoundingCurvesPosition}
               />
-              <ControlNodes
-                boundingCurves={project.boundingCurves}
-                updateBoundingCurvesNodePosition={
-                  updateBoundingCurvesNodePosition
-                }
-              />
+              {project.config.bounds.shouldDrawCornerPoints && (
+                <React.Fragment>
+                  <ControlPointStems
+                    boundingCurves={project.boundingCurves}
+                    width={canvasWidth}
+                    height={canvasHeight}
+                  />
+                  <ControlNodes
+                    boundingCurves={project.boundingCurves}
+                    updateBoundingCurvesNodePosition={
+                      updateBoundingCurvesNodePosition
+                    }
+                  />
+                </React.Fragment>
+              )}
             </React.Fragment>
           )}
-        </React.Fragment>
-      )}
+        </div>
+      </div>
+      <div className="absolute bottom-2 left-3 font-mono text-xs text-gray-400">
+        {dimensionsSummary}
+      </div>
     </div>
   )
 }
 
 WorkArea.propTypes = {
   setCanvas: PropTypes.func.isRequired,
-  canvasSize: typeDimensions.isRequired,
   coonsPatch: PropTypes.object,
   project: typeProject,
-  setCanvasSize: PropTypes.func.isRequired,
+  dimensions: PropTypes.shape({
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+  }),
 }
 
 export default WorkArea
