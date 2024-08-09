@@ -100,7 +100,7 @@ describe(`moveBoundingCurves`, () => {
         controlPoint2: { x: 260, y: 190 },
       },
     }
-    expect(moveBoundingCurves(BOUNDING_CURVES, { x: 150, y: 80 })).toEqual(
+    expect(moveBoundingCurves({ x: 150, y: 80 }, BOUNDING_CURVES)).toEqual(
       expected
     )
   })
@@ -132,7 +132,7 @@ describe(`moveBoundingCurves`, () => {
         controlPoint2: { x: -40, y: 30 },
       },
     }
-    expect(moveBoundingCurves(BOUNDING_CURVES, { x: -150, y: -80 })).toEqual(
+    expect(moveBoundingCurves({ x: -150, y: -80 }, BOUNDING_CURVES)).toEqual(
       expected
     )
   })
@@ -181,10 +181,10 @@ describe(`updateBoundingCurvesNodePosition`, () => {
 
     expect(
       updateBoundingCurvesNodePosition(
-        BOUNDING_CURVES,
         CONFIG,
         BOUNDS_POINT_IDS.BOTTOM_RIGHT,
-        NEW_POINT
+        NEW_POINT,
+        BOUNDING_CURVES
       )
     ).toEqual(expected)
   })
@@ -216,10 +216,10 @@ describe(`updateBoundingCurvesNodePosition`, () => {
 
     expect(
       updateBoundingCurvesNodePosition(
-        BOUNDING_CURVES,
         CONFIG,
         BOUNDS_POINT_IDS.TOP_RIGHT_CONTROL_1,
-        NEW_POINT
+        NEW_POINT,
+        BOUNDING_CURVES
       )
     ).toEqual(expected)
   })
@@ -255,10 +255,10 @@ describe(`updateBoundingCurvesNodePosition`, () => {
 
     expect(
       updateBoundingCurvesNodePosition(
-        BOUNDING_CURVES,
         CONFIG,
         BOUNDS_POINT_IDS.BOTTOM_LEFT_CONTROL_1,
-        NEW_POINT
+        NEW_POINT,
+        BOUNDING_CURVES
       )
     ).toEqual(expected)
   })
@@ -294,10 +294,10 @@ describe(`updateBoundingCurvesNodePosition`, () => {
 
     expect(
       updateBoundingCurvesNodePosition(
-        BOUNDING_CURVES,
         CONFIG,
         BOUNDS_POINT_IDS.BOTTOM_LEFT_CONTROL_1,
-        NEW_POINT
+        NEW_POINT,
+        BOUNDING_CURVES
       )
     ).toEqual(expected)
   })
@@ -334,8 +334,8 @@ describe(`expandBoundingCurvesCornerControlPoints`, () => {
 
     expect(
       expandBoundingCurvesCornerControlPoints(
-        BOUNDING_CURVES,
-        BOUNDS_POINT_IDS.BOTTOM_LEFT
+        BOUNDS_POINT_IDS.BOTTOM_LEFT,
+        BOUNDING_CURVES
       )
     ).toEqual(expected)
   })
@@ -372,8 +372,8 @@ describe(`zeroBoundingCurvesCornerControlPoints`, () => {
 
     expect(
       zeroBoundingCurvesCornerControlPoints(
-        BOUNDING_CURVES,
-        BOUNDS_POINT_IDS.BOTTOM_LEFT
+        BOUNDS_POINT_IDS.BOTTOM_LEFT,
+        BOUNDING_CURVES
       )
     ).toEqual(expected)
   })

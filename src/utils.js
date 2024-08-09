@@ -76,7 +76,7 @@ export const getRandomBoundingCurves = (canvas) => {
 
   // Loop through each corner and expand the control points
   return reduce(
-    (acc, name) => expandBoundingCurvesCornerControlPoints(acc, name),
+    (acc, nodeId) => expandBoundingCurvesCornerControlPoints(nodeId, acc),
     boundingCurves,
     CORNER_POINTS
   )

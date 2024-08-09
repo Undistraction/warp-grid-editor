@@ -74,32 +74,16 @@ const createProjectSlice = (set) => ({
   },
 
   updateBoundingCurvesPosition: (position) => {
-    set(({ project }) => {
-      if (!project.boundingCurves) {
-        throw new Error(`Project has no bounding curves`)
-      }
-
-      const updatedBoundingCurves = moveBoundingCurves(
-        project.boundingCurves,
-        position
-      )
-
-      return {
-        project: {
-          ...project,
-          boundingCurves: updatedBoundingCurves,
-        },
-      }
-    })
+    set(modifyPath([`project`, `boundingCurves`], moveBoundingCurves(position)))
   },
 
   updateBoundingCurvesNodePosition: curry((nodeId, newPosition) => {
     set(({ project }) => {
       const updatedBoundingCurves = updateBoundingCurvesNodePosition(
-        project.boundingCurves,
         project.config,
         nodeId,
-        newPosition
+        newPosition,
+        project.boundingCurves
       )
       return {
         project: {
@@ -156,18 +140,30 @@ const createProjectSlice = (set) => ({
   // ---------------------------------------------------------------------------
 
   zeroControlPoints: (cornerNodeId) => () => {
-    set(({ project }) => {
-      const updatedBoundingCurves = zeroBoundingCurvesCornerControlPoints(
-        project.boundingCurves,
-        cornerNodeId
+    set(
+      modifyPath(
+        [`project`, `boundingCurves`],
+        zeroBoundingCurvesCornerControlPoints(cornerNodeId)
       )
-      return {
-        project: {
-          ...project,
-          boundingCurves: updatedBoundingCurves,
-        },
-      }
-    })
+    )
+  },
+
+  expandControlPoints: (cornerNodeId) => () => {
+    set(
+      modifyPath(
+        [`project`, `boundingCurves`],
+        expandBoundingCurvesCornerControlPoints(cornerNodeId)
+      )
+    )
+  },
+
+  toggleZeroExpandControlPoints: (cornerNodeId) => () => {
+    set(
+      modifyPath(
+        [`project`, `boundingCurves`],
+        toggleZeroExpandBoundingCurvesControlPoints(cornerNodeId)
+      )
+    )
   },
 
   expandControlPoints: (cornerNodeId) => () => {
@@ -198,19 +194,13 @@ const createProjectSlice = (set) => ({
   },
 
   linkControlPoints: curry((cornerNodeId, isLinked) => {
-    set((state) => {
-      const { project } = state
-
-      return pipe(
+    set(
+      pipe(
         modifyPath(
           [`project`, `boundingCurves`],
           when(
             () => isLinked,
-            () =>
-              expandBoundingCurvesCornerControlPoints(
-                project.boundingCurves,
-                cornerNodeId
-              )
+            expandBoundingCurvesCornerControlPoints(cornerNodeId)
           )
         ),
         assocPath([`project`, `config`, `bounds`, `isLinked`], isLinked),
@@ -218,8 +208,8 @@ const createProjectSlice = (set) => ({
           [`project`, `config`, `bounds`, `corners`, cornerNodeId, `isLinked`],
           isLinked
         )
-      )(state)
-    })
+      )
+    )
   }),
 
   mirrorControlPoints: (cornerNodeId) => (isMirrored) => {
@@ -266,8 +256,8 @@ const createProjectSlice = (set) => ({
     const isStepUpdate =
       last(pathToValue) === `columns` || last(pathToValue) === `rows`
 
-    set((state) => {
-      return pipe(
+    set(
+      pipe(
         updateIfItemExistsOrThrow(
           `Grid definition item '${joinWithPeriod(pathToValue)}' does not exist`,
           fullPathToValue,
@@ -278,8 +268,8 @@ const createProjectSlice = (set) => ({
         // the gridSquare x and y are clamped to the new number of rows or
         // columns.
         when(() => isStepUpdate, updateGridSquareIfStepUpdate)
-      )(state)
-    })
+      )
+    )
   }),
 })
 

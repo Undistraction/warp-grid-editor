@@ -93,14 +93,6 @@ describe(`useAppStore projectSlide`, () => {
     })
 
     describe(`updateBoundingCurvesPosition`, () => {
-      it(`throws if bounding curves haven't been set`, () => {
-        const { result } = renderHook(() => useAppStore())
-        const newPosition = { x: 50, y: 50 }
-        expect(() => {
-          act(() => result.current.updateBoundingCurvesPosition(newPosition))
-        }).toThrow(`Project has no bounding curves`)
-      })
-
       it(`updates the position of the bounding curves`, () => {
         const { result } = renderHook(() => useAppStore())
         const newPosition = { x: 50, y: 50 }
