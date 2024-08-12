@@ -8,6 +8,8 @@ import getAppApi from '../getAppApi'
 import useAppStore from '../state/useAppStore'
 import { getRandomBoundingCurves } from '../utils'
 import ButtonLink from './components/ButtonLink'
+import ExportModalContent from './components/modals/content/ExportModalContent'
+import Modal from './components/modals/Modal'
 import Sidebar from './Sidebar'
 import WorkArea from './WorkArea'
 
@@ -27,6 +29,7 @@ const App = () => {
     width: 0,
     height: 0,
   })
+  const [modalIsOpen, setModalIsOpen] = React.useState(false)
 
   const canvasIsReady = isNotNil(canvas) && workAreaDimensions.width > 0
   // Create a random set of bounding curves on first render if no project is loaded
@@ -71,8 +74,6 @@ const App = () => {
                 boundingCurves={project.boundingCurves}
                 saveProject={appApi.saveProject}
                 loadProject={appApi.loadProject}
-                exportBounds={appApi.exportBounds}
-                exportCellBounds={appApi.exportCellBounds}
               />
             )}
           </div>
@@ -86,6 +87,11 @@ const App = () => {
             setAppConfigValue([`ui`, `sidebar`, `isHidden`], false)
           }
         />
+      )}
+      {modalIsOpen && (
+        <Modal>
+          <ExportModalContent onClose={() => setModalIsOpen(false)} />
+        </Modal>
       )}
     </div>
   )

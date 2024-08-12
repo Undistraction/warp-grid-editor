@@ -34,10 +34,14 @@ const calculateCanvasDimensions = (boundingCurves, dimensions) => {
   const bounds = getBounds(boundingCurves)
 
   return {
-    width: reduceMax([dimensions.width, bounds.x, CANVAS_MIN_DIMENSIONS.WIDTH]),
+    width: reduceMax([
+      dimensions.width,
+      bounds.xMax,
+      CANVAS_MIN_DIMENSIONS.WIDTH,
+    ]),
     height: reduceMax([
       dimensions.height,
-      bounds.y,
+      bounds.yMax,
       CANVAS_MIN_DIMENSIONS.HEIGHT,
     ]),
   }

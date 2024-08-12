@@ -4,7 +4,6 @@ import React from 'react'
 import SIDBAR_SECTION_IDS from '../../const/sidebarSections'
 import { typeProject } from '../../prop-types'
 import useAppStore from '../../state/useAppStore'
-import Button from '../components/Button'
 import ConfigEditor from '../components/editors/ConfigEditor'
 import GridEditor from '../components/editors/GridEditor'
 import GridSquareEditor from '../components/editors/GridSqureEditor'
@@ -18,7 +17,7 @@ import SidebarHeader from './SidebarHeader'
 // Exports
 // -----------------------------------------------------------------------------
 
-const Sidebar = ({ canvas, exportBounds, exportCellBounds, project }) => {
+const Sidebar = ({ canvas, project }) => {
   const saveProject = useAppStore.use.saveProject()
   const saveProjectAs = useAppStore.use.saveProjectAs()
   const loadProject = useAppStore.use.loadProject()
@@ -84,7 +83,6 @@ const Sidebar = ({ canvas, exportBounds, exportCellBounds, project }) => {
         <PatchEditor
           canvas={canvas}
           project={project}
-          exportBounds={exportBounds}
         />
       </SidebarGroup>
 
@@ -101,10 +99,6 @@ const Sidebar = ({ canvas, exportBounds, exportCellBounds, project }) => {
           setProjectConfigValue={setProjectConfigValue}
           setGridDefinitionValue={setGridDefinitionValue}
           project={project}
-        />
-        <Button
-          label="Export"
-          onClick={exportCellBounds}
         />
       </SidebarGroup>
 
@@ -128,8 +122,6 @@ const Sidebar = ({ canvas, exportBounds, exportCellBounds, project }) => {
 
 Sidebar.propTypes = {
   canvas: PropTypes.object.isRequired,
-  exportBounds: PropTypes.func.isRequired,
-  exportCellBounds: PropTypes.func.isRequired,
   project: typeProject.isRequired,
 }
 

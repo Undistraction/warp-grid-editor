@@ -30,10 +30,12 @@ export const getBounds = pipe(
     (acc, curve) => {
       const bounds = getBezier(curve).bbox()
       return {
-        x: Math.max(acc.x, bounds.x.max),
-        y: Math.max(acc.y, bounds.y.max),
+        xMax: Math.max(acc.xMax, bounds.x.max),
+        yMax: Math.max(acc.yMax, bounds.y.max),
+        xMin: Math.min(acc.xMin, bounds.x.min),
+        yMin: Math.min(acc.yMin, bounds.y.min),
       }
     },
-    { x: 0, y: 0 }
+    { xMax: 0, yMax: 0, xMin: Infinity, yMin: Infinity }
   )
 )

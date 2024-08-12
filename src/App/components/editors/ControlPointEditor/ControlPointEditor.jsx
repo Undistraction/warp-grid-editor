@@ -23,7 +23,6 @@ const ControlPointEditor = ({
       <ButtonLink
         label="Link"
         labelSelected="Unlink"
-        isSelectable
         onClick={linkControlPoints}
         isSelected={controlNodesAreLinked}
       />
@@ -31,7 +30,6 @@ const ControlPointEditor = ({
         label="Mirror"
         labelSelected="UnMirror"
         isDisabled={!controlNodesAreLinked}
-        isSelectable
         onClick={mirrorControlPoints}
         isSelected={controlNodesAreMirrored}
       />

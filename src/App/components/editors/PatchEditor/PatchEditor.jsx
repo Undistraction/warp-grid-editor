@@ -15,7 +15,7 @@ import ControlPointEditor from '../ControlPointEditor'
 // Exports
 // -----------------------------------------------------------------------------
 
-const PatchEditor = ({ project, canvas, exportBounds }) => {
+const PatchEditor = ({ project, canvas }) => {
   const setBoundingCurves = useAppStore.use.setBoundingCurves()
   const zeroControlPoints = useAppStore.use.zeroControlPoints()
   const linkControlPoints = useAppStore.use.linkControlPoints()
@@ -29,7 +29,7 @@ const PatchEditor = ({ project, canvas, exportBounds }) => {
 
   const corners = getBoundingCurvesCorners(project.boundingCurves)
   return (
-    <div className="flex flex-col space-y-3 p-2">
+    <div className="flex flex-col space-y-3">
       <div className="flex space-x-3 [&>*]:basis-1/2">
         <Button
           label="Randomise"
@@ -37,10 +37,6 @@ const PatchEditor = ({ project, canvas, exportBounds }) => {
             const boundingCurves = getRandomBoundingCurves(canvas)
             setBoundingCurves(boundingCurves)
           }}
-        />
-        <Button
-          label="Export"
-          onClick={exportBounds}
         />
       </div>
       <ControlGroup
@@ -80,7 +76,6 @@ const PatchEditor = ({ project, canvas, exportBounds }) => {
       {project.boundingCurves && (
         <BoundsEditor
           config={project.config}
-          exportBounds={exportBounds}
           corners={corners}
           updateBoundingCurvesNodePosition={updateBoundingCurvesNodePosition}
           linkControlPoints={linkControlPoints}
@@ -95,7 +90,6 @@ const PatchEditor = ({ project, canvas, exportBounds }) => {
 PatchEditor.propTypes = {
   project: typeProject,
   canvas: PropTypes.object.isRequired,
-  exportBounds: PropTypes.func.isRequired,
 }
 
 export default PatchEditor

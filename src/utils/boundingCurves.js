@@ -411,6 +411,8 @@ export const moveBoundingCurves = curry((position, boundingCurves) => ({
   },
 }))
 
+export const moveBoundingCurvesToOrigin = moveBoundingCurves({ x: 0, y: 0 })
+
 export const updateBoundingCurvesNodePosition = curry(
   (config, id, newPosition, boundingCurves) => {
     // Top Left
@@ -714,7 +716,6 @@ export const zeroBoundingCurvesCornerControlPoints = curry(
 
 export const toggleZeroExpandBoundingCurvesControlPoints = curry(
   (id, boundingCurves) => {
-    console.log(`BOUND`, boundingCurves)
     if (id === BOUNDS_POINT_IDS.TOP_LEFT) {
       const top = boundingCurves[CURVE_NAMES.TOP]
       const left = boundingCurves[CURVE_NAMES.LEFT]
