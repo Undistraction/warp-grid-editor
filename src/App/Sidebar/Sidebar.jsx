@@ -41,7 +41,7 @@ const Sidebar = ({ canvas, project }) => {
       <SidebarGroup
         title="Project"
         testId="sidebar-group-project"
-        hint="You can save and load your settings from/to the local-storage of your machine."
+        hint="Save, load or export you grid"
         isMinimised={getAppConfigSectionIsMinimised(SIDBAR_SECTION_IDS.PROJECT)}
         onToggleMinimise={setAppConfigSectionIsMinimised(
           SIDBAR_SECTION_IDS.PROJECT
@@ -58,22 +58,8 @@ const Sidebar = ({ canvas, project }) => {
       </SidebarGroup>
 
       <SidebarGroup
-        title="Config"
-        testId="sidebar-group-config"
-        hint="By default, all lines are straight, however you can switch to using curved lines which is significantly more memory intensive. When using curves, 'Even' is the default interpolation, and is much more accurate, especially with higher 'Precision' settings"
-        isMinimised={getAppConfigSectionIsMinimised(SIDBAR_SECTION_IDS.CONFIG)}
-        onToggleMinimise={setAppConfigSectionIsMinimised(
-          SIDBAR_SECTION_IDS.CONFIG
-        )}
-      >
-        <ConfigEditor
-          project={project}
-          setGridDefinitionValue={setGridDefinitionValue}
-        />
-      </SidebarGroup>
-
-      <SidebarGroup
         title="Bounds"
+        hint="Edit the shape of your grid"
         testId="sidebar-group-bounds"
         isMinimised={getAppConfigSectionIsMinimised(SIDBAR_SECTION_IDS.BOUNDS)}
         onToggleMinimise={setAppConfigSectionIsMinimised(
@@ -89,7 +75,7 @@ const Sidebar = ({ canvas, project }) => {
       <SidebarGroup
         title="Grid"
         testId="sidebar-group-grid"
-        hint="Switch to 'Advanced' mode to input a comma deliniated list of column or row ratios. Values will be totalled, and each row or column will act as a ratio of that total."
+        hint="Edit your grid's columns, rows, and gutter"
         isMinimised={getAppConfigSectionIsMinimised(SIDBAR_SECTION_IDS.GRID)}
         onToggleMinimise={setAppConfigSectionIsMinimised(
           SIDBAR_SECTION_IDS.GRID
@@ -103,7 +89,23 @@ const Sidebar = ({ canvas, project }) => {
       </SidebarGroup>
 
       <SidebarGroup
-        title="Grid square"
+        title="Config"
+        testId="sidebar-group-config"
+        hint="Configure how your grid is calculated"
+        isMinimised={getAppConfigSectionIsMinimised(SIDBAR_SECTION_IDS.CONFIG)}
+        onToggleMinimise={setAppConfigSectionIsMinimised(
+          SIDBAR_SECTION_IDS.CONFIG
+        )}
+      >
+        <ConfigEditor
+          project={project}
+          setGridDefinitionValue={setGridDefinitionValue}
+        />
+      </SidebarGroup>
+
+      <SidebarGroup
+        title="Debug"
+        hint="Debug your grid"
         testId="sidebar-group-grid-squre"
         isMinimised={getAppConfigSectionIsMinimised(
           SIDBAR_SECTION_IDS.GRID_SQUARE

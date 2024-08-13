@@ -1,3 +1,4 @@
+import { MinusIcon, PlusIcon } from '@heroicons/react/16/solid'
 import PropTypes from 'prop-types'
 import React from 'react'
 
@@ -13,7 +14,7 @@ const SidebarGroup = ({
   onToggleMinimise,
   testId = ``,
 }) => {
-  const icon = isMinimised ? `+` : `–`
+  const icon = isMinimised ? <PlusIcon /> : <MinusIcon />
 
   return (
     <div
@@ -24,8 +25,8 @@ const SidebarGroup = ({
         onClick={() => onToggleMinimise(!isMinimised)}
         className="flex cursor-pointer flex-row items-center justify-between"
       >
-        <h2 className="text-sm font-bold">{title}</h2>
-        <div>{icon}</div>
+        <h2 className="text-base font-bold">{title}</h2>
+        <div className="h-[16px] w-[16px]">{icon}</div>
       </header>
       <div className="flex flex-col space-y-3">
         {hint && <div className="-m2-2 text-sm italic">{hint}</div>}

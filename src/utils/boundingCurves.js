@@ -1,4 +1,4 @@
-import { reduce } from 'ramda'
+import { curry, reduce } from 'ramda'
 
 import {
   BOUNDS_POINT_IDS,
@@ -771,65 +771,6 @@ export const toggleZeroExpandBoundingCurvesControlPoints = curry(
     throw new Error(`Unrecognised point ID: ${id}`)
   }
 )
-
-export const toggleZeroExpandBoundingCurvesControlPoints = (
-  boundingCurves,
-  id
-) => {
-  if (id === BOUNDS_POINT_IDS.TOP_LEFT) {
-    const top = boundingCurves[CURVE_NAMES.TOP]
-    const left = boundingCurves[CURVE_NAMES.LEFT]
-
-    if (
-      pointsAreEqual(top.startPoint, top.controlPoint1) &&
-      pointsAreEqual(left.startPoint, left.controlPoint1)
-    ) {
-      return expandBoundingCurvesCornerControlPoints(boundingCurves, id)
-    }
-    return zeroBoundingCurvesCornerControlPoints(boundingCurves, id)
-  }
-
-  if (id === BOUNDS_POINT_IDS.TOP_RIGHT) {
-    const top = boundingCurves[CURVE_NAMES.TOP]
-    const right = boundingCurves[CURVE_NAMES.RIGHT]
-
-    if (
-      pointsAreEqual(top.endPoint, top.controlPoint2) &&
-      pointsAreEqual(right.startPoint, right.controlPoint1)
-    ) {
-      return expandBoundingCurvesCornerControlPoints(boundingCurves, id)
-    }
-    return zeroBoundingCurvesCornerControlPoints(boundingCurves, id)
-  }
-
-  if (id === BOUNDS_POINT_IDS.BOTTOM_LEFT) {
-    const bottom = boundingCurves[CURVE_NAMES.BOTTOM]
-    const left = boundingCurves[CURVE_NAMES.LEFT]
-
-    if (
-      pointsAreEqual(bottom.startPoint, bottom.controlPoint1) &&
-      pointsAreEqual(left.endPoint, left.controlPoint2)
-    ) {
-      return expandBoundingCurvesCornerControlPoints(boundingCurves, id)
-    }
-    return zeroBoundingCurvesCornerControlPoints(boundingCurves, id)
-  }
-
-  if (id === BOUNDS_POINT_IDS.BOTTOM_RIGHT) {
-    const bottom = boundingCurves[CURVE_NAMES.BOTTOM]
-    const right = boundingCurves[CURVE_NAMES.RIGHT]
-
-    if (
-      pointsAreEqual(bottom.endPoint, bottom.controlPoint2) &&
-      pointsAreEqual(right.endPoint, right.controlPoint2)
-    ) {
-      return expandBoundingCurvesCornerControlPoints(boundingCurves, id)
-    }
-    return zeroBoundingCurvesCornerControlPoints(boundingCurves, id)
-  }
-
-  throw new Error(`Unrecognised point ID: ${id}`)
-}
 
 export const expandAllBoundingCurvesControlPoints = (boundingCurves) =>
   reduce(
