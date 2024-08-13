@@ -166,33 +166,6 @@ const createProjectSlice = (set) => ({
     )
   },
 
-  expandControlPoints: (cornerNodeId) => () => {
-    set((state) => {
-      const { project } = state
-
-      return modifyPath(
-        [`project`, `boundingCurves`],
-        expandBoundingCurvesCornerControlPoints(
-          project.boundingCurves,
-          cornerNodeId
-        )
-      )(state)
-    })
-  },
-
-  toggleZeroExpandControlPoints: (cornerNodeId) => () => {
-    set((state) => {
-      const { project } = state
-
-      return modifyPath([`project`, `boundingCurves`], () =>
-        toggleZeroExpandBoundingCurvesControlPoints(
-          project.boundingCurves,
-          cornerNodeId
-        )
-      )(state)
-    })
-  },
-
   linkControlPoints: curry((cornerNodeId, isLinked) => {
     set(
       pipe(

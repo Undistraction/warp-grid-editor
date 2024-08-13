@@ -95,7 +95,7 @@ module.exports = {
       env: {
         'vitest/env': true,
       },
-      files: [`tests/unit/**/*.unit.test.js`, 'tests/unit/setup.js'],
+      files: [`tests/unit/**/*.unit.test.js`, `tests/unit/setup.js`],
       plugins: [`vitest`],
       rules: {
         'vitest/consistent-test-filename': [
