@@ -4,7 +4,6 @@ import { useDebounce } from 'use-debounce'
 // eslint-disable-next-line import/no-unresolved
 import warpGrid from 'warp-grid'
 
-import getAppApi from '../getAppApi'
 import useAppStore from '../state/useAppStore'
 import { getRandomBoundingCurves } from '../utils'
 import ButtonLink from './components/ButtonLink'
@@ -49,11 +48,6 @@ const App = () => {
     }
   }, [boundingCurvesDebounced, project?.gridDefinition])
 
-  const appApi = getAppApi({
-    project: project,
-    coonsPatch,
-  })
-
   const { isHidden: sidebarIsHidden } = config.ui.sidebar
 
   return (
@@ -71,9 +65,6 @@ const App = () => {
               <Sidebar
                 canvas={canvas}
                 project={project}
-                boundingCurves={project.boundingCurves}
-                saveProject={appApi.saveProject}
-                loadProject={appApi.loadProject}
               />
             )}
           </div>
