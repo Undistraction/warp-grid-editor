@@ -2,7 +2,10 @@ import { act, renderHook } from '@testing-library/react'
 import { assocPath } from 'ramda'
 import { beforeEach, describe } from 'vitest'
 
-import { PROJECT_DEFAULT } from '../../../../src/state/defaults'
+import {
+  APP_CONFIG_DEFAULT,
+  PROJECT_DEFAULT,
+} from '../../../../src/state/defaults'
 import useAppStore from '../../../../src/state/useAppStore'
 
 // -----------------------------------------------------------------------------
@@ -32,7 +35,7 @@ describe(`useAppStore`, () => {
         act(() => result.current.reset())
 
         // Check it has reverted to default
-        expect(result.current.config).toBeNull()
+        expect(result.current.config).toEqual(APP_CONFIG_DEFAULT)
         expect(result.current.project).toEqual(PROJECT_DEFAULT)
         expect(result.current.projects).toEqual([])
       })

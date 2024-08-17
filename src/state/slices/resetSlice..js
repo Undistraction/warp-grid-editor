@@ -2,13 +2,13 @@
 // Exports
 // -----------------------------------------------------------------------------
 
-import { PROJECT_DEFAULT } from '../defaults'
+import { APP_CONFIG_DEFAULT, PROJECT_DEFAULT } from '../defaults'
 
 const createResetSlice = (set) => ({
   reset: () => {
     set(() => ({
       projects: [],
-      config: null,
+      config: APP_CONFIG_DEFAULT,
       project: PROJECT_DEFAULT,
     }))
   },

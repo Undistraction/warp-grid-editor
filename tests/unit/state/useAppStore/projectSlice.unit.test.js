@@ -41,7 +41,7 @@ export const BOUNDING_CURVES = {
 // Tests
 // -----------------------------------------------------------------------------
 
-describe(`useAppStore projectSlide`, () => {
+describe(`useAppStore projectSlice`, () => {
   beforeEach(() => {
     const { result } = renderHook(() => useAppStore())
 
@@ -52,9 +52,7 @@ describe(`useAppStore projectSlide`, () => {
 
   it(`should return the initial state`, () => {
     const { result } = renderHook(() => useAppStore())
-    expect(result.current.config).toBeNull()
     expect(result.current.project).toEqual(PROJECT_DEFAULT)
-    expect(result.current.projects).toEqual([])
   })
 
   describe(`api`, () => {
@@ -227,13 +225,46 @@ describe(`useAppStore projectSlide`, () => {
     // -------------------------------------------------------------------------
 
     describe(`zeroControlPoints`, () => {
+      // eslint-disable-next-line
       it(`should zero out control points for supplied corner`, () => {
         const { result } = renderHook(() => useAppStore())
         act(() => result.current.setBoundingCurves(BOUNDING_CURVES))
-        act(() => result.current.zeroControlPoints(BOUNDS_POINT_IDS.TOP_RIGHT))
+        act(() =>
+          result.current.zeroControlPoints(BOUNDS_POINT_IDS.TOP_RIGHT)()
+        )
         const { top, right } = result.current.project.boundingCurves
         expect(top.controlPoint2).toEqual(top.endPoint)
         expect(right.controlPoint1).toEqual(right.startPoint)
+      })
+    })
+
+    describe(`expandControlPoints`, () => {
+      // eslint-disable-next-line
+      it(`should expand control points for the supplied corner`, () => {
+        const { result } = renderHook(() => useAppStore())
+        act(() =>
+          result.current.setBoundingCurves({
+            ...BOUNDING_CURVES,
+            top: {
+              ...BOUNDING_CURVES.top,
+              controlPoint1: {
+                ...BOUNDING_CURVES.top.startPoint,
+              },
+            },
+            left: {
+              ...BOUNDING_CURVES.left,
+              controlPoint1: {
+                ...BOUNDING_CURVES.left.startPoint,
+              },
+            },
+          })
+        )
+        act(() =>
+          result.current.expandControlPoints(BOUNDS_POINT_IDS.TOP_LEFT)()
+        )
+        const { top, left } = result.current.project.boundingCurves
+        expect(top.controlPoint2).toEqual({ x: 90, y: -10 })
+        expect(left.controlPoint1).toEqual({ x: -30, y: 30 })
       })
     })
 

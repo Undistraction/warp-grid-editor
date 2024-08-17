@@ -3,8 +3,8 @@ import React from 'react'
 
 import { typeProject } from '../../../../prop-types'
 import useAppStore from '../../../../state/useAppStore'
-import { getRandomBoundingCurves } from '../../../../utils'
 import { getBoundingCurvesCorners } from '../../../../utils/boundingCurves'
+import { getRandomBoundingCurves } from '../../../../utils/random'
 import Button from '../../Button'
 import ControlGroup from '../../controls/ControlGroup'
 import Switch from '../../controls/Switch'
@@ -26,8 +26,8 @@ const PatchEditor = ({ project, canvas }) => {
   const updateBoundingCurvesNodePosition =
     useAppStore.use.updateBoundingCurvesNodePosition()
   const setProjectConfigValue = useAppStore.use.setProjectConfigValue()
-
   const corners = getBoundingCurvesCorners(project.boundingCurves)
+
   return (
     <div className="flex flex-col space-y-3">
       <div className="flex space-x-3 [&>*]:basis-1/2">

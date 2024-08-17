@@ -17,6 +17,11 @@ describe(`useAppStore`, () => {
     })
   })
 
+  it(`should return the initial state`, () => {
+    const { result } = renderHook(() => useAppStore())
+    expect(result.current.projects).toEqual([])
+  })
+
   describe(`api`, () => {
     describe(`saveProject`, () => {
       it(`adds project to projects`, () => {

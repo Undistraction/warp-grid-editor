@@ -5,7 +5,7 @@ import { useDebounce } from 'use-debounce'
 import warpGrid from 'warp-grid'
 
 import useAppStore from '../state/useAppStore'
-import { getRandomBoundingCurves } from '../utils'
+import { getRandomBoundingCurves } from '../utils/random'
 import ButtonLink from './components/ButtonLink'
 import ExportModalContent from './components/modals/content/ExportModalContent'
 import Modal from './components/modals/Modal'

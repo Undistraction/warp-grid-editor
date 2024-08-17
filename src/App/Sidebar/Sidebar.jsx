@@ -66,10 +66,12 @@ const Sidebar = ({ canvas, project }) => {
           SIDBAR_SECTION_IDS.BOUNDS
         )}
       >
-        <PatchEditor
-          canvas={canvas}
-          project={project}
-        />
+        {project.boundingCurves && (
+          <PatchEditor
+            canvas={canvas}
+            project={project}
+          />
+        )}
       </SidebarGroup>
 
       <SidebarGroup

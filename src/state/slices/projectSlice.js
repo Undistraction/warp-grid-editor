@@ -8,7 +8,6 @@ import {
   when,
 } from 'ramda'
 
-import { clampGridSquareToGridDimensions } from '../../utils'
 import {
   expandAllBoundingCurvesControlPoints,
   expandBoundingCurvesCornerControlPoints,
@@ -18,6 +17,7 @@ import {
   zeroAllBoundingCurvesControlPoints,
   zeroBoundingCurvesCornerControlPoints,
 } from '../../utils/boundingCurves'
+import { clampGridSquareToGridDimensions } from '../../utils/grid'
 import { updateIfItemExistsOrThrow } from '../../utils/slices'
 import { joinWithPeriod } from '../../utils/string'
 import { PROJECT_DEFAULT } from '../defaults'

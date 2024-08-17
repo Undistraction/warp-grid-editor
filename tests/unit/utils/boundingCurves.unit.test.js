@@ -8,12 +8,17 @@ import {
   expandBoundingCurvesCornerControlPoints,
   getBoundingCurvesCorners,
   moveBoundingCurves,
+  moveBoundingCurvesToOrigin,
   updateBoundingCurvesNodePosition,
   zeroAllBoundingCurvesControlPoints,
   zeroBoundingCurvesCornerControlPoints,
 } from '../../../src/utils/boundingCurves'
 
-export const BOUNDING_CURVES = {
+// -----------------------------------------------------------------------------
+// Const
+// -----------------------------------------------------------------------------
+
+export const BOUNDING_CURVES = Object.freeze({
   top: {
     startPoint: { x: 0, y: 0 },
     endPoint: { x: 100, y: 0 },
@@ -38,7 +43,7 @@ export const BOUNDING_CURVES = {
     controlPoint1: { x: 110, y: -10 },
     controlPoint2: { x: 110, y: 110 },
   },
-}
+})
 
 // -----------------------------------------------------------------------------
 // Tests
@@ -135,6 +140,39 @@ describe(`moveBoundingCurves`, () => {
     expect(moveBoundingCurves({ x: -150, y: -80 }, BOUNDING_CURVES)).toEqual(
       expected
     )
+  })
+})
+
+describe(`moveBoundingCurvesToOrigin`, () => {
+  it(`moves the bounding curves to point 0,0`, () => {
+    const expected = {
+      top: {
+        startPoint: { x: 0, y: 0 },
+        endPoint: { x: 100, y: 0 },
+        controlPoint1: { x: 10, y: -10 },
+        controlPoint2: { x: 90, y: -10 },
+      },
+      bottom: {
+        startPoint: { x: 0, y: 100 },
+        endPoint: { x: 100, y: 100 },
+        controlPoint1: { x: -10, y: 110 },
+        controlPoint2: { x: 110, y: 110 },
+      },
+      left: {
+        startPoint: { x: 0, y: 0 },
+        endPoint: { x: 0, y: 100 },
+        controlPoint1: { x: -10, y: -10 },
+        controlPoint2: { x: -10, y: 110 },
+      },
+      right: {
+        startPoint: { x: 100, y: 0 },
+        endPoint: { x: 100, y: 100 },
+        controlPoint1: { x: 110, y: -10 },
+        controlPoint2: { x: 110, y: 110 },
+      },
+    }
+
+    expect(moveBoundingCurvesToOrigin(BOUNDING_CURVES)).toEqual(expected)
   })
 })
 
@@ -307,26 +345,22 @@ describe(`expandBoundingCurvesCornerControlPoints`, () => {
   it(`offsets the control points of the corner with the supplied ID from the corner point`, () => {
     const expected = {
       top: {
-        startPoint: { x: 0, y: 0 },
-        endPoint: { x: 100, y: 0 },
+        ...BOUNDING_CURVES.top,
         controlPoint1: { x: 10, y: -10 },
         controlPoint2: { x: 90, y: -10 },
       },
       bottom: {
-        startPoint: { x: 0, y: 100 },
-        endPoint: { x: 100, y: 100 },
+        ...BOUNDING_CURVES.bottom,
         controlPoint1: { x: 30, y: 130 },
         controlPoint2: { x: 110, y: 110 },
       },
       left: {
-        startPoint: { x: 0, y: 0 },
-        endPoint: { x: 0, y: 100 },
+        ...BOUNDING_CURVES.left,
         controlPoint1: { x: -10, y: -10 },
         controlPoint2: { x: -30, y: 70 },
       },
       right: {
-        startPoint: { x: 100, y: 0 },
-        endPoint: { x: 100, y: 100 },
+        ...BOUNDING_CURVES.right,
         controlPoint1: { x: 110, y: -10 },
         controlPoint2: { x: 110, y: 110 },
       },
@@ -342,40 +376,88 @@ describe(`expandBoundingCurvesCornerControlPoints`, () => {
 })
 
 describe(`zeroBoundingCurvesCornerControlPoints`, () => {
-  it(`sets the control points of the corner with the supplied ID to the same point as the corner point`, () => {
+  it(`zeros the control points of the top left corner`, () => {
     const expected = {
+      ...BOUNDING_CURVES,
       top: {
-        startPoint: { x: 0, y: 0 },
-        endPoint: { x: 100, y: 0 },
-        controlPoint1: { x: 10, y: -10 },
-        controlPoint2: { x: 90, y: -10 },
-      },
-      bottom: {
-        startPoint: { x: 0, y: 100 },
-        endPoint: { x: 100, y: 100 },
-        controlPoint1: { x: 0, y: 100 },
-        controlPoint2: { x: 110, y: 110 },
+        ...BOUNDING_CURVES.top,
+        controlPoint1: { x: 0, y: 0 },
       },
       left: {
-        startPoint: { x: 0, y: 0 },
-        endPoint: { x: 0, y: 100 },
-        controlPoint1: { x: -10, y: -10 },
-        controlPoint2: { x: 0, y: 100 },
-      },
-      right: {
-        startPoint: { x: 100, y: 0 },
-        endPoint: { x: 100, y: 100 },
-        controlPoint1: { x: 110, y: -10 },
-        controlPoint2: { x: 110, y: 110 },
+        ...BOUNDING_CURVES.left,
+        controlPoint1: { x: 0, y: 0 },
       },
     }
 
-    expect(
-      zeroBoundingCurvesCornerControlPoints(
-        BOUNDS_POINT_IDS.BOTTOM_LEFT,
-        BOUNDING_CURVES
-      )
-    ).toEqual(expected)
+    const result = zeroBoundingCurvesCornerControlPoints(
+      BOUNDS_POINT_IDS.TOP_LEFT,
+      BOUNDING_CURVES
+    )
+
+    expect(result).toEqual(expected)
+  })
+
+  it(`zeros the control points of the bottom left corner`, () => {
+    const expected = {
+      ...BOUNDING_CURVES,
+      bottom: {
+        ...BOUNDING_CURVES.bottom,
+        controlPoint1: { x: 0, y: 100 },
+      },
+      left: {
+        ...BOUNDING_CURVES.left,
+        controlPoint2: { x: 0, y: 100 },
+      },
+    }
+
+    const result = zeroBoundingCurvesCornerControlPoints(
+      BOUNDS_POINT_IDS.BOTTOM_LEFT,
+      BOUNDING_CURVES
+    )
+
+    expect(result).toEqual(expected)
+  })
+
+  it(`zeros the control points of the top right corner`, () => {
+    const expected = {
+      ...BOUNDING_CURVES,
+      top: {
+        ...BOUNDING_CURVES.top,
+        controlPoint2: { x: 100, y: 0 },
+      },
+      right: {
+        ...BOUNDING_CURVES.right,
+        controlPoint1: { x: 100, y: 0 },
+      },
+    }
+
+    const result = zeroBoundingCurvesCornerControlPoints(
+      BOUNDS_POINT_IDS.TOP_RIGHT,
+      BOUNDING_CURVES
+    )
+
+    expect(result).toEqual(expected)
+  })
+
+  it(`zeros the control points of the bottom right corner`, () => {
+    const expected = {
+      ...BOUNDING_CURVES,
+      bottom: {
+        ...BOUNDING_CURVES.bottom,
+        controlPoint2: { x: 100, y: 100 },
+      },
+      right: {
+        ...BOUNDING_CURVES.right,
+        controlPoint2: { x: 100, y: 100 },
+      },
+    }
+
+    const result = zeroBoundingCurvesCornerControlPoints(
+      BOUNDS_POINT_IDS.BOTTOM_RIGHT,
+      BOUNDING_CURVES
+    )
+
+    expect(result).toEqual(expected)
   })
 })
 

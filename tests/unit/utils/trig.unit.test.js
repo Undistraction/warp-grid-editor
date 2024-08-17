@@ -3,6 +3,9 @@ import {
   getDistanceBetweenPoints,
   getDistanceBetweenPointsXY,
   getPointAtDistanceAndAngle,
+  pointAdd,
+  pointsAreEqual,
+  pointSubtract,
   radiansToDegrees,
 } from '../../../src/utils/trig'
 
@@ -133,5 +136,65 @@ describe(`getDistanceBetweenPointsXY`, () => {
     expect(
       getDistanceBetweenPointsXY({ x: 100, y: 30 }, { x: 100, y: 30 })
     ).toEqual([0, 0])
+  })
+})
+
+describe(`pointAdd`, () => {
+  it(`adds the position of one point to another`, () => {
+    expect(pointAdd({ x: 10, y: 20 }, { x: 50, y: 100 })).toEqual({
+      x: 60,
+      y: 120,
+    })
+    expect(pointAdd({ x: -10, y: -20 }, { x: 50, y: 100 })).toEqual({
+      x: 40,
+      y: 80,
+    })
+  })
+
+  it(`supports array values`, () => {
+    expect(pointAdd([10, 20], { x: 50, y: 100 })).toEqual({
+      x: 60,
+      y: 120,
+    })
+  })
+})
+
+describe(`pointSubtract`, () => {
+  it(`adds the position of one point to another`, () => {
+    expect(pointSubtract({ x: 10, y: 20 }, { x: 50, y: 100 })).toEqual({
+      x: 40,
+      y: 80,
+    })
+    expect(pointSubtract({ x: -40, y: -20 }, { x: 50, y: 100 })).toEqual({
+      x: 90,
+      y: 120,
+    })
+  })
+
+  it(`supports array values`, () => {
+    expect(pointSubtract([10, 20], { x: 50, y: 100 })).toEqual({
+      x: 40,
+      y: 80,
+    })
+  })
+})
+
+describe(`pointsAreEqual`, () => {
+  it(`returns false if supplied points do not have the same coordinates`, () => {
+    expect(pointsAreEqual({ x: 100, y: 100 }, { x: 100, y: 200 })).toBeFalse()
+    expect(pointsAreEqual({ x: 100, y: 100 }, { x: 200, y: 100 })).toBeFalse()
+    expect(pointsAreEqual({ x: 100, y: 100 }, { x: -100, y: -100 })).toBeFalse()
+    expect(
+      pointsAreEqual({ x: 100, y: 100 }, { x: 100.01, y: 99.9999 })
+    ).toBeFalse()
+    expect(pointsAreEqual({ x: 100, y: 100 }, {})).toBeFalse()
+  })
+
+  it(`returns true if supplied points have the same coordinates`, () => {
+    expect(pointsAreEqual({ x: 0, y: 0 }, { x: 0, y: 0 })).toBeTrue()
+    expect(pointsAreEqual({ x: 0, y: 0 }, { x: 0, y: 0 })).toBeTrue()
+    expect(
+      pointsAreEqual({ x: -100, y: -200 }, { x: -100, y: -200 })
+    ).toBeTrue()
   })
 })
