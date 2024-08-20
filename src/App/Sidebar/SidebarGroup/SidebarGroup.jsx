@@ -29,7 +29,9 @@ const SidebarGroup = ({
         <div className="h-[16px] w-[16px]">{icon}</div>
       </header>
       <div className="flex flex-col space-y-3">
-        {hint && <div className="-m2-2 text-sm italic">{hint}</div>}
+        {hint && (
+          <div className="-m2-2 text-sm italic text-gray-500">{hint}</div>
+        )}
         <div className={`flex flex-col space-y-3 ${isMinimised && `hidden`}`}>
           {children}
         </div>

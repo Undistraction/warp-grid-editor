@@ -15,7 +15,7 @@ import SIDBAR_SECTION_IDS from '../const/sidebarSections'
 const GRID_DEFINITION_DEFAULT = {
   columns: 25,
   rows: 25,
-  gutter: 0,
+  gutter: [0, 0],
   lineStrategy: LINE_STRATEGY.CURVES,
   interpolationStrategy: INTERPOLATION_STRATEGY.EVEN,
   precision: 20,

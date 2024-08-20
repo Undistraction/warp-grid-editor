@@ -110,18 +110,39 @@ const GridEditor = ({
           </ControlGroup>
         </div>
       )}
-      <div className="flex flex-col items-stretch space-y-2">
+      <div className="flex space-x-3 [&>*]:basis-1/2">
         <ControlGroup
-          labelIsAfter
-          label="Gutter"
-          isEven
+          label="Gutter horizontal"
+          direction="vertical"
         >
           <NumericInput
             min={0}
             step={0.1}
             labelIsAfter
-            value={project.gridDefinition.gutter}
-            onChange={setGridDefinitionValue([`gutter`])}
+            value={project.gridDefinition.gutter[0]}
+            onChange={(value) => {
+              setGridDefinitionValue(
+                [`gutter`],
+                [value, project.gridDefinition.gutter[1]]
+              )
+            }}
+          />
+        </ControlGroup>
+        <ControlGroup
+          label="Gutter vertical"
+          direction="vertical"
+        >
+          <NumericInput
+            min={0}
+            step={0.1}
+            labelIsAfter
+            value={project.gridDefinition.gutter[1]}
+            onChange={(value) => {
+              setGridDefinitionValue(
+                [`gutter`],
+                [project.gridDefinition.gutter[0], value]
+              )
+            }}
           />
         </ControlGroup>
       </div>

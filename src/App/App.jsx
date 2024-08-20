@@ -39,6 +39,7 @@ const App = () => {
   }, [canvas, setBoundingCurves, canvasIsReady, project.boundingCurves])
 
   React.useLayoutEffect(() => {
+    console.log(`@@`, project.gridDefinition)
     if (boundingCurvesDebounced) {
       const coonsPatch = warpGrid(
         boundingCurvesDebounced,
@@ -46,7 +47,7 @@ const App = () => {
       )
       setCoonsPatch(coonsPatch)
     }
-  }, [boundingCurvesDebounced, project?.gridDefinition])
+  }, [boundingCurvesDebounced, project.gridDefinition])
 
   const { isHidden: sidebarIsHidden } = config.ui.sidebar
 
