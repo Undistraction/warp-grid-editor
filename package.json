@@ -24,8 +24,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "link": "pnpm link ../warp-grid",
-    "unlink": "pnpm unlink ../warp-grid"
+    "link": "pnpm link ../warp-grid && pnpm link ../coons-patch",
+    "unlink": "pnpm unlink ../warp-grid && pnpm unlink ../coons-patch"
   },
   "keywords": [
     "coons patch",
@@ -81,6 +81,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",
+    "bezier-easing": "^2.1.0",
     "bezier-js": "^6.1.4",
     "classnames": "^2.5.1",
     "fast-memoize": "^2.5.2",

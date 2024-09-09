@@ -19,6 +19,10 @@ const GRID_DEFINITION_DEFAULT = {
   lineStrategy: LINE_STRATEGY.CURVES,
   interpolationStrategy: INTERPOLATION_STRATEGY.EVEN,
   precision: 20,
+  bezierEasing: {
+    u: [0, 0, 1, 1],
+    v: [0, 0, 1, 1],
+  },
 }
 
 const PROJECT_CONFIG_DEFAULT = {

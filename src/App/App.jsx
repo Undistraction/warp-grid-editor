@@ -39,7 +39,6 @@ const App = () => {
   }, [canvas, setBoundingCurves, canvasIsReady, project.boundingCurves])
 
   React.useLayoutEffect(() => {
-    console.log(`@@`, project.gridDefinition)
     if (boundingCurvesDebounced) {
       const coonsPatch = warpGrid(
         boundingCurvesDebounced,

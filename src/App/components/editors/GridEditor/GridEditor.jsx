@@ -9,6 +9,7 @@ import NumericInput from '../../controls/NumericInput'
 import SteppedInput from '../../controls/SteppedInput'
 import Switch from '../../controls/Switch'
 import TextInput from '../../controls/TextInput'
+import EasingEditor from '../EasingEditor'
 
 // -----------------------------------------------------------------------------
 // Const
@@ -118,7 +119,6 @@ const GridEditor = ({
           <NumericInput
             min={0}
             step={0.1}
-            labelIsAfter
             value={project.gridDefinition.gutter[0]}
             onChange={(value) => {
               setGridDefinitionValue(
@@ -135,7 +135,6 @@ const GridEditor = ({
           <NumericInput
             min={0}
             step={0.1}
-            labelIsAfter
             value={project.gridDefinition.gutter[1]}
             onChange={(value) => {
               setGridDefinitionValue(
@@ -145,6 +144,28 @@ const GridEditor = ({
             }}
           />
         </ControlGroup>
+      </div>
+      <div className="flex space-x-3 [&>*]:basis-1/2">
+        <EasingEditor
+          title="Easing horizontal"
+          easing={project.gridDefinition.bezierEasing.u}
+          setEasing={(easing) => {
+            setGridDefinitionValue([`bezierEasing`], {
+              u: easing,
+              v: project.gridDefinition.bezierEasing.v,
+            })
+          }}
+        />
+        <EasingEditor
+          title="Easing vertical"
+          easing={project.gridDefinition.bezierEasing.v}
+          setEasing={(easing) => {
+            setGridDefinitionValue([`bezierEasing`], {
+              u: project.gridDefinition.bezierEasing.u,
+              v: easing,
+            })
+          }}
+        />
       </div>
     </div>
   )

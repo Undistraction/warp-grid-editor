@@ -10,6 +10,7 @@ const NumericInput = ({
   onChange,
   step = 1,
   min = undefined,
+  max = undefined,
 }) => {
   const [localValue, setLocalValue] = React.useState(null)
   const resolvedValue = localValue === `` ? localValue : value
@@ -20,6 +21,7 @@ const NumericInput = ({
       type="number"
       value={resolvedValue}
       min={min}
+      max={max}
       step={step}
       onChange={(event) => {
         const { value } = event.target
@@ -39,6 +41,7 @@ NumericInput.propTypes = {
   value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onChange: PropTypes.func.isRequired,
   min: PropTypes.number,
+  max: PropTypes.number,
   step: PropTypes.number,
 }
 
