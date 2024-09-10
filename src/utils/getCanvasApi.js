@@ -136,34 +136,36 @@ const getCanvasApi = (context) => {
 
   const drawCoonsPatch = (
     coonsPatch,
-    { shouldDrawIntersections, shouldDrawBounds }
+    { shouldDrawIntersections, shouldDrawBounds, shouldDrawGrid }
   ) => {
     if (shouldDrawBounds) {
       drawBounds(coonsPatch.model.boundingCurves)
     }
 
-    const lines = coonsPatch.getLines()
-    // Draw lines along x axis
-    lines.xAxis.map((curveSectionsOrCurve) => {
-      if (isArray(curveSectionsOrCurve)) {
-        curveSectionsOrCurve.map((curve) =>
-          drawGridCurve(curve, { lineColor: `rgba(0,0,0,0.7)` })
-        )
-      } else {
-        drawGridCurve(curveSectionsOrCurve, { lineColor: `rgba(0,0,0,0.7)` })
-      }
-    })
+    if (shouldDrawGrid) {
+      const lines = coonsPatch.getLines()
+      // Draw lines along x axis
+      lines.xAxis.map((curveSectionsOrCurve) => {
+        if (isArray(curveSectionsOrCurve)) {
+          curveSectionsOrCurve.map((curve) =>
+            drawGridCurve(curve, { lineColor: `rgba(0,0,0,0.7)` })
+          )
+        } else {
+          drawGridCurve(curveSectionsOrCurve, { lineColor: `rgba(0,0,0,0.7)` })
+        }
+      })
 
-    //Draw lines along y axis
-    lines.yAxis.map((curveSectionsOrCurve) => {
-      if (isArray(curveSectionsOrCurve)) {
-        curveSectionsOrCurve.map((curve) =>
-          drawGridCurve(curve, { lineColor: `rgba(0,0,0,0.7)` })
-        )
-      } else {
-        drawGridCurve(curveSectionsOrCurve, { lineColor: `rgba(0,0,0,0.7)` })
-      }
-    })
+      //Draw lines along y axis
+      lines.yAxis.map((curveSectionsOrCurve) => {
+        if (isArray(curveSectionsOrCurve)) {
+          curveSectionsOrCurve.map((curve) =>
+            drawGridCurve(curve, { lineColor: `rgba(0,0,0,0.7)` })
+          )
+        } else {
+          drawGridCurve(curveSectionsOrCurve, { lineColor: `rgba(0,0,0,0.7)` })
+        }
+      })
+    }
 
     if (shouldDrawIntersections) {
       // Draw intersections between grid boundingCurves

@@ -32,6 +32,7 @@ const Canvas = ({
       canvasApi.drawCoonsPatch(coonsPatch, {
         shouldDrawBounds: config.bounds.shouldDrawBounds,
         shouldDrawIntersections: config.grid.shouldDrawIntersections,
+        shouldDrawGrid: config.grid.shouldDrawGrid,
       })
 
       if (gridSquare.shouldShow) {

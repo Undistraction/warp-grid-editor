@@ -33,6 +33,7 @@ const PROJECT_CONFIG_DEFAULT = {
   grid: {
     shouldUseComplexColumnsRows: false,
     shouldDrawIntersections: false,
+    shouldDrawGrid: true,
   },
   bounds: {
     shouldDrawBounds: true,

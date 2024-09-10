@@ -40,15 +40,6 @@ const PatchEditor = ({ project, canvas }) => {
         />
       </div>
       <ControlGroup
-        label="Show intersections"
-        labelIsAfter
-      >
-        <Switch
-          isSelected={project.config.grid.shouldDrawIntersections}
-          onChange={setProjectConfigValue([`grid`, `shouldDrawIntersections`])}
-        />
-      </ControlGroup>
-      <ControlGroup
         label="Show Bounds"
         labelIsAfter
       >
@@ -64,6 +55,24 @@ const PatchEditor = ({ project, canvas }) => {
         <Switch
           isSelected={project.config.bounds.shouldDrawCornerPoints}
           onChange={setProjectConfigValue([`bounds`, `shouldDrawCornerPoints`])}
+        />
+      </ControlGroup>
+      <ControlGroup
+        label="Show intersections"
+        labelIsAfter
+      >
+        <Switch
+          isSelected={project.config.grid.shouldDrawIntersections}
+          onChange={setProjectConfigValue([`grid`, `shouldDrawIntersections`])}
+        />
+      </ControlGroup>
+      <ControlGroup
+        label="Show grid"
+        labelIsAfter
+      >
+        <Switch
+          isSelected={project.config.grid.shouldDrawGrid}
+          onChange={setProjectConfigValue([`grid`, `shouldDrawGrid`])}
         />
       </ControlGroup>
       <ControlPointEditor

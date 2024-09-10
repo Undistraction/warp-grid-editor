@@ -41,6 +41,7 @@ export const typeGridSquare = PropTypes.shape({
 export const typeConfig = PropTypes.shape({
   grid: PropTypes.shape({
     shouldDrawIntersections: PropTypes.bool.isRequired,
+    shouldDrawGrid: PropTypes.bool.isRequired,
   }).isRequired,
   bounds: PropTypes.shape({
     shouldDrawBounds: PropTypes.bool.isRequired,
