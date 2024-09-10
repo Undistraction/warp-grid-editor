@@ -1,7 +1,6 @@
-import { MinusIcon, PlusIcon } from '@heroicons/react/16/solid'
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/16/solid'
 import PropTypes from 'prop-types'
 import React from 'react'
-
 // -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
@@ -14,7 +13,7 @@ const SidebarGroup = ({
   onToggleMinimise,
   testId = ``,
 }) => {
-  const icon = isMinimised ? <PlusIcon /> : <MinusIcon />
+  const icon = isMinimised ? <ChevronDownIcon /> : <ChevronUpIcon />
 
   return (
     <div
