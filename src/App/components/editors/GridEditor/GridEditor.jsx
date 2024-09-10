@@ -148,21 +148,21 @@ const GridEditor = ({
       <div className="flex space-x-3 [&>*]:basis-1/2">
         <EasingEditor
           title="Easing horizontal"
-          easing={project.gridDefinition.bezierEasing.u}
+          easing={project.gridDefinition.bezierEasing.xAxis}
           setEasing={(easing) => {
             setGridDefinitionValue([`bezierEasing`], {
-              u: easing,
-              v: project.gridDefinition.bezierEasing.v,
+              xAxis: easing,
+              yAxis: project.gridDefinition.bezierEasing.yAxis,
             })
           }}
         />
         <EasingEditor
           title="Easing vertical"
-          easing={project.gridDefinition.bezierEasing.v}
+          easing={project.gridDefinition.bezierEasing.yAxis}
           setEasing={(easing) => {
             setGridDefinitionValue([`bezierEasing`], {
-              u: project.gridDefinition.bezierEasing.u,
-              v: easing,
+              xAxis: project.gridDefinition.bezierEasing.xAxis,
+              yAxis: easing,
             })
           }}
         />

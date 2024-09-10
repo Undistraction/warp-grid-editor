@@ -20,8 +20,8 @@ const GRID_DEFINITION_DEFAULT = {
   interpolationStrategy: INTERPOLATION_STRATEGY.EVEN,
   precision: 20,
   bezierEasing: {
-    u: [0, 0, 1, 1],
-    v: [0, 0, 1, 1],
+    xAxis: [0, 0, 1, 1],
+    yAxis: [0, 0, 1, 1],
   },
 }
 
