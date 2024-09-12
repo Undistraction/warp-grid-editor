@@ -16,6 +16,7 @@ const Button = ({
   isSelected = false,
   testId = ``,
   icon = undefined,
+  iconSelected = undefined,
 }) => {
   const classNamesUnmerged = cls(
     `rounded-md px-4 py-2 border text-white flex flex-row space-x-2 items-center flex justify-center`,
@@ -27,6 +28,8 @@ const Button = ({
   )
   const classNamesMerged = twMerge(className, classNamesUnmerged)
 
+  const iconResolved = isSelected ? iconSelected : icon
+
   return (
     <button
       disabled={isDisabled}
@@ -34,7 +37,7 @@ const Button = ({
       onClick={onClick}
       data-tid={testId}
     >
-      {icon && <div className="h-[16px] w-[16px]">{icon}</div>}
+      {iconResolved && <div className="h-[16px] w-[16px]">{iconResolved}</div>}
       <div>{isSelected ? labelSelected : label}</div>
     </button>
   )
@@ -49,6 +52,7 @@ Button.propTypes = {
   isSelected: PropTypes.bool,
   testId: PropTypes.string,
   icon: PropTypes.node,
+  iconSelected: PropTypes.node,
 }
 
 export default Button

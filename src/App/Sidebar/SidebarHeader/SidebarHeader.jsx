@@ -1,5 +1,7 @@
+import { ChevronDoubleRightIcon } from '@heroicons/react/16/solid'
 import React from 'react'
 
+import Logo from '../../../images/Logo.svg'
 import useAppStore from '../../../state/useAppStore'
 import ButtonLink from '../../components/ButtonLink'
 
@@ -17,19 +19,16 @@ const SidebarHeader = () => {
           data-tid="sidebar-title"
           className="text-base font-bold"
         >
-          WARP GRID EDITOR
+          <img
+            src={Logo}
+            className="w-1/2"
+            alt="Warp Grid logo"
+          />
         </h1>
-        <a
-          className="underline"
-          data-tid="sidebar-repo-link"
-          href="https://github.com/Undistraction/warp-grid"
-        >
-          Github
-        </a>
       </div>
       <ButtonLink
-        label="Close"
-        className="pr-2 pt-1 text-sm"
+        icon={<ChevronDoubleRightIcon />}
+        className="relative top-2 text-sm"
         onClick={() => setAppConfigValue([`ui`, `sidebar`, `isHidden`], true)}
         testId="sidebar-close-button"
       />

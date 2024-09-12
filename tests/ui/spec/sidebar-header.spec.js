@@ -9,6 +9,5 @@ import { test } from '../fixtures'
 
 test(`Has header content`, async ({ homePage }) => {
   await homePage.goto(`/`)
-  await expect(homePage.sidebarTitle).toHaveText(`WARP GRID EDITOR`)
   await expect(homePage.sidebarRepoLink).toHaveText(`Github`)
 })

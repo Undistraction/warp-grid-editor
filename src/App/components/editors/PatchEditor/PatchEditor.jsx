@@ -6,8 +6,6 @@ import useAppStore from '../../../../state/useAppStore'
 import { getBoundingCurvesCorners } from '../../../../utils/boundingCurves'
 import { getRandomBoundingCurves } from '../../../../utils/random'
 import Button from '../../Button'
-import ControlGroup from '../../controls/ControlGroup'
-import Switch from '../../controls/Switch'
 import BoundsEditor from '../BoundsEditor'
 import ControlPointEditor from '../ControlPointEditor'
 
@@ -25,7 +23,6 @@ const PatchEditor = ({ project, canvas }) => {
   const mirrorControlPointsGlobal = useAppStore.use.mirrorControlPointsGlobal()
   const updateBoundingCurvesNodePosition =
     useAppStore.use.updateBoundingCurvesNodePosition()
-  const setProjectConfigValue = useAppStore.use.setProjectConfigValue()
   const corners = getBoundingCurvesCorners(project.boundingCurves)
 
   return (
@@ -39,42 +36,6 @@ const PatchEditor = ({ project, canvas }) => {
           }}
         />
       </div>
-      <ControlGroup
-        label="Show Bounds"
-        labelIsAfter
-      >
-        <Switch
-          isSelected={project.config.bounds.shouldDrawBounds}
-          onChange={setProjectConfigValue([`bounds`, `shouldDrawBounds`])}
-        />
-      </ControlGroup>
-      <ControlGroup
-        label="Show corner points"
-        labelIsAfter
-      >
-        <Switch
-          isSelected={project.config.bounds.shouldDrawCornerPoints}
-          onChange={setProjectConfigValue([`bounds`, `shouldDrawCornerPoints`])}
-        />
-      </ControlGroup>
-      <ControlGroup
-        label="Show intersections"
-        labelIsAfter
-      >
-        <Switch
-          isSelected={project.config.grid.shouldDrawIntersections}
-          onChange={setProjectConfigValue([`grid`, `shouldDrawIntersections`])}
-        />
-      </ControlGroup>
-      <ControlGroup
-        label="Show grid"
-        labelIsAfter
-      >
-        <Switch
-          isSelected={project.config.grid.shouldDrawGrid}
-          onChange={setProjectConfigValue([`grid`, `shouldDrawGrid`])}
-        />
-      </ControlGroup>
       <ControlPointEditor
         zeroControlPoints={zeroControlPointsGlobal}
         linkControlPoints={linkControlPointsGlobal}

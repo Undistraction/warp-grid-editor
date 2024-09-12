@@ -14,7 +14,10 @@ const ButtonLink = ({
   className = ``,
   testId = ``,
   icon = undefined,
+  iconSelected = undefined,
 }) => {
+  const iconResolved = isSelected ? iconSelected : icon
+
   return (
     <button
       className={`blockfont-bold space-x -2 flex flex-row items-center justify-center ${isDisabled && `text-gray-300`} ${className}`}
@@ -23,7 +26,7 @@ const ButtonLink = ({
       }}
       data-tid={testId}
     >
-      {icon && <div className="h-[16px] w-[16px]">{icon}</div>}
+      {iconResolved && <div className="h-[16px] w-[16px]">{iconResolved}</div>}
       <div>{isSelected ? labelSelected : label}</div>
     </button>
   )
@@ -38,6 +41,7 @@ ButtonLink.propTypes = {
   className: PropTypes.string,
   testId: PropTypes.string,
   icon: PropTypes.node,
+  iconSelected: PropTypes.node,
 }
 
 export default ButtonLink

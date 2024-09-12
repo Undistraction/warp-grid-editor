@@ -79,6 +79,9 @@ export const APP_CONFIG_DEFAULT = {
         [SIDBAR_SECTION_IDS.BOUNDS]: {
           isMinimised: true,
         },
+        [SIDBAR_SECTION_IDS.VISIBILITY]: {
+          isMinimised: true,
+        },
         [SIDBAR_SECTION_IDS.GRID]: {
           isMinimised: true,
         },

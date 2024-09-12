@@ -1,3 +1,4 @@
+import { ChevronDoubleLeftIcon } from '@heroicons/react/16/solid'
 import { isNotNil } from 'ramda-adjunct'
 import React from 'react'
 import { useDebounce } from 'use-debounce'
@@ -52,7 +53,9 @@ const App = () => {
 
   return (
     <div className="h-full w-screen">
-      <div className="flex-shrink-1 relative flex h-full w-screen flex-row space-x-5 p-5">
+      <div
+        className={`flex-shrink-1 relative flex h-full w-screen flex-row space-x-5 p-5 ${sidebarIsHidden && `pr-8`}`}
+      >
         <WorkArea
           setCanvas={setCanvas}
           coonsPatch={coonsPatch}
@@ -72,8 +75,8 @@ const App = () => {
       </div>
       {sidebarIsHidden && (
         <ButtonLink
-          label="Open"
-          className="absolute right-7 top-6 text-sm"
+          icon={<ChevronDoubleLeftIcon />}
+          className="absolute right-3 top-7 text-sm"
           onClick={() =>
             setAppConfigValue([`ui`, `sidebar`, `isHidden`], false)
           }

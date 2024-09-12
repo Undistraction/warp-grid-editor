@@ -17,7 +17,7 @@ const SidebarGroup = ({
 
   return (
     <div
-      className="flex flex-col space-y-2 pt-3"
+      className="flex flex-col pt-3"
       data-tid={testId}
     >
       <header

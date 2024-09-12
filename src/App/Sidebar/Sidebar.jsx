@@ -7,8 +7,9 @@ import useAppStore from '../../state/useAppStore'
 import ConfigEditor from '../components/editors/ConfigEditor'
 import GridEditor from '../components/editors/GridEditor'
 import GridSquareEditor from '../components/editors/GridSqureEditor'
-import PatchEditor from '../components/editors/PatchEditor'
+import BoundsEditor from '../components/editors/PatchEditor'
 import ProjectEditor from '../components/editors/ProjectEditor'
+import VisibilityEditor from '../components/editors/VisibilityEditor'
 import SidebarFooter from './SidebarFooter'
 import SidebarGroup from './SidebarGroup'
 import SidebarHeader from './SidebarHeader'
@@ -67,11 +68,25 @@ const Sidebar = ({ canvas, project }) => {
         )}
       >
         {project.boundingCurves && (
-          <PatchEditor
+          <BoundsEditor
             canvas={canvas}
             project={project}
           />
         )}
+      </SidebarGroup>
+
+      <SidebarGroup
+        title="Visibility"
+        testId="sidebar-group-visibility"
+        hint="Hide or show parts of the grid"
+        isMinimised={getAppConfigSectionIsMinimised(
+          SIDBAR_SECTION_IDS.VISIBILITY
+        )}
+        onToggleMinimise={setAppConfigSectionIsMinimised(
+          SIDBAR_SECTION_IDS.VISIBILITY
+        )}
+      >
+        <VisibilityEditor project={project} />
       </SidebarGroup>
 
       <SidebarGroup
