@@ -42,6 +42,22 @@ module.exports = {
       { avoidEscape: true, allowTemplateLiterals: true },
     ],
 
+    // ---------------------------------------------------------------------
+    // Unused imports
+    // ---------------------------------------------------------------------
+
+    'no-unused-vars': `off`,
+    'unused-imports/no-unused-imports': `error`,
+    'unused-imports/no-unused-vars': [
+      `warn`,
+      {
+        vars: `all`,
+        varsIgnorePattern: `^_`,
+        args: `after-used`,
+        argsIgnorePattern: `^_`,
+      },
+    ],
+
     // -------------------------------------------------------------------------
     // Imports
     // -------------------------------------------------------------------------
@@ -98,17 +114,6 @@ module.exports = {
       files: [`tests/unit/**/*.unit.test.js`, `tests/unit/setup.js`],
       plugins: [`vitest`],
       rules: {
-        'no-unused-vars': `off`,
-        'unused-imports/no-unused-imports': `error`,
-        'unused-imports/no-unused-vars': [
-          `warn`,
-          {
-            vars: `all`,
-            varsIgnorePattern: `^_`,
-            args: `after-used`,
-            argsIgnorePattern: `^_`,
-          },
-        ],
         'vitest/consistent-test-filename': [
           `error`,
           {
