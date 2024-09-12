@@ -55,7 +55,7 @@ importers:
         version: 10.0.0
       warp-grid:
         specifier: ^1.6.0
-        version: link:../warp-grid
+        version: 1.6.0
       zustand:
         specifier: ^4.5.4
         version: 4.5.4(react@18.3.1)
@@ -135,6 +135,9 @@ importers:
       eslint-plugin-tailwind:
         specifier: ^0.2.1
         version: 0.2.1(eslint@8.57.0)
+      eslint-plugin-unused-imports:
+        specifier: ^3.2.0
+        version: 3.2.0(@typescript-eslint/eslint-plugin@7.18.0(@typescript-eslint/parser@8.0.1(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)
       eslint-plugin-vitest:
         specifier: ^0.5.4
         version: 0.5.4(@typescript-eslint/eslint-plugin@7.18.0(@typescript-eslint/parser@8.0.1(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4)(vitest@2.0.5(@types/node@20.14.10)(jsdom@20.0.3))
@@ -1642,6 +1645,9 @@ packages:
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
 
+  coons-patch@1.8.3:
+    resolution: {integrity: sha512-zEJvLbhcNTIaThOdNffWCfiwRxqLWFaHkdVIEvA00u9mvloQ6mYRKXk1kpWFygffC4hJO3R+OPNaZZMVESX5RQ==}
+
   core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
 
@@ -2053,6 +2059,16 @@ packages:
     peerDependencies:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
 
+  eslint-plugin-unused-imports@3.2.0:
+    resolution: {integrity: sha512-6uXyn6xdINEpxE1MtDjxQsyXB37lfyO2yKGVVgtD7WEWQGORSOZjgrD6hBhvGv4/SO+TOlS+UnC6JppRqbuwGQ==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    peerDependencies:
+      '@typescript-eslint/eslint-plugin': 6 - 7
+      eslint: '8'
+    peerDependenciesMeta:
+      '@typescript-eslint/eslint-plugin':
+        optional: true
+
   eslint-plugin-vitest@0.5.4:
     resolution: {integrity: sha512-um+odCkccAHU53WdKAw39MY61+1x990uXjSPguUCq3VcEHdqJrOb8OTMrbYlY6f9jAKx7x98kLVlIe3RJeJqoQ==}
     engines: {node: ^18.0.0 || >= 20.0.0}
@@ -2065,6 +2081,10 @@ packages:
         optional: true
       vitest:
         optional: true
+
+  eslint-rule-composer@0.3.0:
+    resolution: {integrity: sha512-bt+Sh8CtDmn2OajxvNO+BX7Wn4CIWMpTRm3MaiKPCQcnnlm0CS2mhui6QaoeQugs+3Kj2ESKEEGJUdVafwhiCg==}
+    engines: {node: '>=4.0.0'}
 
   eslint-scope@4.0.3:
     resolution: {integrity: sha512-p7VutNr1O/QrxysMo3E45FjYDTeXBy0iTltPFNSqKAIfjDSXC+4dj+qfyuD8bfAXrW/y6lW3O76VaYNPKfpKrg==}
@@ -3170,6 +3190,9 @@ packages:
     resolution: {integrity: sha512-qXUm7e/YKFoqFPYPa3Ukg9xlI5cyAtGmyEIzMfW//m6kXwCy2Ps9DYf5ioijFKQ8qyuscrHoY04iJGctu2Kg0Q==}
     engines: {node: '>= 18'}
     hasBin: true
+
+  matrix-js@1.7.1:
+    resolution: {integrity: sha512-1s2aiQeSqtD3UjLiL/V6Bxd4x/AjZ4E79vI2DQzaAFPV6bi66vk9URZb2T5ZklK9MnFAF00vlZO0qo+D07jdsg==}
 
   meow@12.1.1:
     resolution: {integrity: sha512-BhXM0Au22RwUneMPwSCnyhTOizdWoIEPU9sp0Aqa1PnDMR5Wv2FGXYDjuzJEIX+Eo2Rb8xuYe5jrnm5QowQFkw==}
@@ -4591,6 +4614,9 @@ packages:
 
   walker@1.0.8:
     resolution: {integrity: sha512-ts/8E8l5b7kY0vlWLewOkDXMmPdLcVV4GmOQLyxuSswIJsweeFZtAsMF7k1Nszz+TYBQrlYRmzOnr398y1JemQ==}
+
+  warp-grid@1.6.0:
+    resolution: {integrity: sha512-e9m0IUuwX9Cd1vvc+d7UaT+m1Z0ojxk1m0Lfi0qLDki4WGyBnC7BwDhZStfc4w8cNU65Fg86ZwXE1jirK/h6eg==}
 
   webidl-conversions@7.0.0:
     resolution: {integrity: sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==}
@@ -6458,6 +6484,11 @@ snapshots:
 
   convert-source-map@2.0.0: {}
 
+  coons-patch@1.8.3:
+    dependencies:
+      fast-memoize: 2.5.2
+      matrix-js: 1.7.1
+
   core-util-is@1.0.3: {}
 
   cosmiconfig-typescript-loader@5.0.0(@types/node@20.14.10)(cosmiconfig@9.0.0(typescript@5.5.4))(typescript@5.5.4):
@@ -6937,6 +6968,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  eslint-plugin-unused-imports@3.2.0(@typescript-eslint/eslint-plugin@7.18.0(@typescript-eslint/parser@8.0.1(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0):
+    dependencies:
+      eslint: 8.57.0
+      eslint-rule-composer: 0.3.0
+    optionalDependencies:
+      '@typescript-eslint/eslint-plugin': 7.18.0(@typescript-eslint/parser@8.0.1(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4)
+
   eslint-plugin-vitest@0.5.4(@typescript-eslint/eslint-plugin@7.18.0(@typescript-eslint/parser@8.0.1(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4)(vitest@2.0.5(@types/node@20.14.10)(jsdom@20.0.3)):
     dependencies:
       '@typescript-eslint/utils': 7.18.0(eslint@8.57.0)(typescript@5.5.4)
@@ -6947,6 +6985,8 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
       - typescript
+
+  eslint-rule-composer@0.3.0: {}
 
   eslint-scope@4.0.3:
     dependencies:
@@ -8382,6 +8422,8 @@ snapshots:
 
   marked@12.0.2: {}
 
+  matrix-js@1.7.1: {}
+
   meow@12.1.1: {}
 
   meow@13.2.0: {}
@@ -9701,6 +9743,11 @@ snapshots:
   walker@1.0.8:
     dependencies:
       makeerror: 1.0.12
+
+  warp-grid@1.6.0:
+    dependencies:
+      coons-patch: 1.8.3
+      fast-memoize: 2.5.2
 
   webidl-conversions@7.0.0: {}
 
