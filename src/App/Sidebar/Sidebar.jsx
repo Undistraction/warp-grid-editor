@@ -36,7 +36,10 @@ const Sidebar = ({ canvas, project }) => {
     config.ui.sidebar.sections[id].isMinimised
 
   return (
-    <div className="flex flex-col space-y-3 divide-y-2 py-5">
+    <div
+      className="flex flex-col space-y-3 divide-y-2 py-5"
+      data-tid="sidebar"
+    >
       <SidebarHeader />
 
       <SidebarGroup
@@ -123,7 +126,7 @@ const Sidebar = ({ canvas, project }) => {
       <SidebarGroup
         title="Debug"
         hint="Debug your grid"
-        testId="sidebar-group-grid-squre"
+        testId="sidebar-group-grid-square"
         isMinimised={getAppConfigSectionIsMinimised(
           SIDBAR_SECTION_IDS.GRID_SQUARE
         )}

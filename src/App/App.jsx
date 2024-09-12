@@ -77,6 +77,7 @@ const App = () => {
         <ButtonLink
           icon={<ChevronDoubleLeftIcon />}
           className="absolute right-3 top-7 text-sm"
+          testId="sidebar-open-button"
           onClick={() =>
             setAppConfigValue([`ui`, `sidebar`, `isHidden`], false)
           }

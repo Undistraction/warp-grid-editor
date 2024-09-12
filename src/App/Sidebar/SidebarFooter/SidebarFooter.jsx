@@ -6,10 +6,14 @@ import React from 'react'
 
 const SidebarFooter = () => (
   <div className="flex flex-col space-y-1 pt-2 align-middle">
-    <p className="self-center text-sm text-gray-500">
+    <p
+      className="self-center text-sm text-gray-500"
+      data-tid="sidebar-credit"
+    >
       Built by{` `}
       <a
         className="text-black"
+        data-tid="sidebar-credit-link"
         href="https://undistraction.com"
       >
         Undistraction
