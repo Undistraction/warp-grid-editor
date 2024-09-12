@@ -1,3 +1,4 @@
+import dasherize from 'dasherize'
 import PropTypes from 'prop-types'
 import React from 'react'
 import Draggable from 'react-draggable'
@@ -17,6 +18,7 @@ const { WIDTH, HEIGHT } = METRICS.CORNER_POINT
 
 const CornerNode = ({ id, position, onDrag, onDoubleClick }) => {
   const nodeRef = React.useRef(null)
+  const testId = `corner-node-${dasherize(id)}`
 
   return (
     <Draggable
@@ -30,8 +32,8 @@ const CornerNode = ({ id, position, onDrag, onDoubleClick }) => {
         className="corner-handle group pointer-events-auto absolute -left-[12px] -top-[12px] cursor-move"
         ref={nodeRef}
         id={id}
-        data-tid={`corner-point-${id}`}
         onDoubleClick={onDoubleClick(id)}
+        data-tid={testId}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -66,6 +68,7 @@ CornerNode.propTypes = {
   position: typePoint.isRequired,
   onDrag: PropTypes.func.isRequired,
   onDoubleClick: PropTypes.func.isRequired,
+  testId: PropTypes.string.isRequired,
 }
 
 export default CornerNode

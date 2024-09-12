@@ -28,7 +28,7 @@ const ControlGroup = ({
   const className =
     direction === `vertical`
       ? `flex flex-col items-stretch space-y-1`
-      : `flex cursor-pointer flex-row items-center space-x-2 ${isEven && `[&>*]:basis-1/2`}`
+      : `flex flex-row items-center space-x-2 ${isEven && `[&>*]:basis-1/2`}`
 
   return <div className={className}>{labelAndControl}</div>
 }

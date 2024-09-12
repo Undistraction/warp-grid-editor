@@ -1,3 +1,4 @@
+import dasherize from 'dasherize'
 import PropTypes from 'prop-types'
 import React from 'react'
 import Draggable from 'react-draggable'
@@ -17,6 +18,7 @@ const { WIDTH, HEIGHT } = METRICS.CONTROL_POINT
 
 const ControlPointNode = ({ position, onDrag, id }) => {
   const nodeRef = React.useRef(null)
+  const testId = `control-point-node-${dasherize(id)}`
   return (
     <Draggable
       nodeRef={nodeRef}
@@ -29,7 +31,7 @@ const ControlPointNode = ({ position, onDrag, id }) => {
         id={id}
         ref={nodeRef}
         className="control-point-handle group pointer-events-auto absolute -left-[6px] -top-[6px] cursor-move"
-        data-tid={`corner-point-${id}`}
+        data-tid={testId}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

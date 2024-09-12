@@ -1,4 +1,4 @@
-import { curry, reduce } from 'ramda'
+import { curry, pipe, reduce } from 'ramda'
 
 import {
   BOUNDS_POINT_IDS,
@@ -21,6 +21,8 @@ import {
 // -----------------------------------------------------------------------------
 
 const EXPANSION_DISTANCE = 30
+
+const INSET_DEFAULT = 50
 
 // -----------------------------------------------------------------------------
 // Utils
@@ -181,6 +183,12 @@ const getUpdatedCornerPointPosition = (
   }
 }
 
+const getDefaultBoundsForCanvas = (canvas) => ({
+  width: canvas.width - INSET_DEFAULT * 2,
+  height: canvas.height - INSET_DEFAULT * 2,
+  x: INSET_DEFAULT,
+  y: INSET_DEFAULT,
+})
 // -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
@@ -694,7 +702,6 @@ export const zeroBoundingCurvesCornerControlPoints = curry(
     }
 
     if (id === BOUNDS_POINT_IDS.TOP_RIGHT) {
-      console.log(`@@TOPRIGHT`)
       return {
         ...boundingCurves,
         top: {
@@ -713,7 +720,7 @@ export const zeroBoundingCurvesCornerControlPoints = curry(
     }
 
     if (id === BOUNDS_POINT_IDS.BOTTOM_LEFT) {
-      const r = {
+      return {
         ...boundingCurves,
         bottom: {
           ...boundingCurves.bottom,
@@ -728,8 +735,6 @@ export const zeroBoundingCurvesCornerControlPoints = curry(
           },
         },
       }
-      console.log(`@@ret`, r.left)
-      return r
     }
 
     if (id === BOUNDS_POINT_IDS.BOTTOM_RIGHT) {
@@ -827,3 +832,59 @@ export const zeroAllBoundingCurvesControlPoints = (boundingCurves) =>
     boundingCurves,
     CORNER_POINTS
   )
+
+export const getCornerPoints = (x, y, width, height) => {
+  const rightBounds = x + width
+  const bottomBounds = y + height
+
+  return {
+    topLeft: { x, y },
+    topRight: { x: rightBounds, y },
+    bottomRight: { x: rightBounds, y: bottomBounds },
+    bottomLeft: { x, y: bottomBounds },
+  }
+}
+
+export const getBoundingCurvesFromRectangularBounds = ({
+  x,
+  y,
+  width,
+  height,
+}) => {
+  const corners = getCornerPoints(x, y, width, height)
+
+  const boundingCurves = {
+    top: {
+      startPoint: corners.topLeft,
+      controlPoint1: corners.topLeft,
+      controlPoint2: corners.topRight,
+      endPoint: corners.topRight,
+    },
+    right: {
+      startPoint: corners.topRight,
+      controlPoint1: corners.topRight,
+      controlPoint2: corners.bottomRight,
+      endPoint: corners.bottomRight,
+    },
+    bottom: {
+      startPoint: corners.bottomLeft,
+      controlPoint1: corners.bottomLeft,
+      controlPoint2: corners.bottomRight,
+      endPoint: corners.bottomRight,
+    },
+    left: {
+      startPoint: corners.topLeft,
+      controlPoint1: corners.topLeft,
+      controlPoint2: corners.bottomLeft,
+      endPoint: corners.bottomLeft,
+    },
+  }
+
+  return boundingCurves
+}
+
+export const getDefaultBoundingCurves = pipe(
+  getDefaultBoundsForCanvas,
+  getBoundingCurvesFromRectangularBounds,
+  expandAllBoundingCurvesControlPoints
+)

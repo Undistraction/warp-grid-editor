@@ -6,7 +6,7 @@ import { useDebounce } from 'use-debounce'
 import warpGrid from 'warp-grid'
 
 import useAppStore from '../state/useAppStore'
-import { getRandomBoundingCurves } from '../utils/random'
+import { getDefaultBoundingCurves } from '../utils/boundingCurves'
 import ButtonLink from './components/ButtonLink'
 import ExportModalContent from './components/modals/content/ExportModalContent'
 import Modal from './components/modals/Modal'
@@ -35,7 +35,8 @@ const App = () => {
   // Create a random set of bounding curves on first render if no project is loaded
   React.useLayoutEffect(() => {
     if (canvasIsReady && !project.boundingCurves) {
-      setBoundingCurves(getRandomBoundingCurves(canvas))
+      const boundingCurvesNew = getDefaultBoundingCurves(canvas)
+      setBoundingCurves(boundingCurvesNew)
     }
   }, [canvas, setBoundingCurves, canvasIsReady, project.boundingCurves])
 

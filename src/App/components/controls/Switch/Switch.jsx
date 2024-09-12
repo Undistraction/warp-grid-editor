@@ -5,14 +5,21 @@ import React from 'react'
 // Exports
 // -----------------------------------------------------------------------------
 
-const Switch = ({ isSelected, onChange }) => {
+const Switch = ({ isSelected, onChange, testId = undefined }) => {
   return (
     <div
-      className="relative h-8 w-16 bg-black"
+      className="relative h-8 w-16 cursor-pointer bg-black"
       onClick={() => {
         onChange(!isSelected)
       }}
+      data-tid={testId}
     >
+      <input
+        className="hidden"
+        type="checkbox"
+        checked={isSelected}
+        readOnly
+      />
       <div
         className={`absolute top-0 h-full w-1/2 border border-black bg-white ${isSelected ? `right-0` : `left-0`} flex flex-col items-center justify-center`}
       >
@@ -25,6 +32,7 @@ const Switch = ({ isSelected, onChange }) => {
 Switch.propTypes = {
   isSelected: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
+  testId: PropTypes.string,
 }
 
 export default Switch

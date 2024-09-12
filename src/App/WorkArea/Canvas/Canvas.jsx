@@ -49,6 +49,7 @@ const Canvas = ({
     <canvas
       id="canvas"
       className="relative"
+      data-tid="grid-canvas"
       ref={ref}
       width={width}
       height={height}

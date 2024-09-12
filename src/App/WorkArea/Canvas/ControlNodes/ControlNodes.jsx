@@ -2,6 +2,7 @@
 // Exports
 // -----------------------------------------------------------------------------
 
+import dasherize from 'dasherize'
 import React from 'react'
 
 import { BOUNDS_POINT_IDS } from '../../../../const'
@@ -19,6 +20,8 @@ const renderNodes = (
   nodes
 ) => {
   return nodes.map(({ id, position, Component }) => {
+    const tid = dasherize(id)
+    console.log(id, tid)
     return (
       <Component
         id={id}
@@ -26,7 +29,7 @@ const renderNodes = (
         onDrag={handleNodeDrag}
         onDoubleClick={toggleZeroExpandControlPoints}
         position={position}
-        S
+        testId={tid}
       />
     )
   })

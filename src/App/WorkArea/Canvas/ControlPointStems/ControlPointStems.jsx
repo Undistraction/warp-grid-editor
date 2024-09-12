@@ -45,6 +45,7 @@ const ControlPointStems = ({ boundingCurves, width, height }) => {
         viewBox={`0 0 ${width} ${height}`}
         width={width}
         height={height}
+        data-tid="control-point-stems"
       >
         {renderStems(points)}
       </svg>

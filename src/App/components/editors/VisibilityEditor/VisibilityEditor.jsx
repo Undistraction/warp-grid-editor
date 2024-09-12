@@ -19,6 +19,7 @@ const VisibilityEditor = ({ project }) => {
       >
         <Switch
           isSelected={project.config.bounds.shouldDrawBounds}
+          testId="show-bounds-switch"
           onChange={setProjectConfigValue([`bounds`, `shouldDrawBounds`])}
         />
       </ControlGroup>
@@ -28,6 +29,7 @@ const VisibilityEditor = ({ project }) => {
       >
         <Switch
           isSelected={project.config.bounds.shouldDrawCornerPoints}
+          testId="show-corner-points-switch"
           onChange={setProjectConfigValue([`bounds`, `shouldDrawCornerPoints`])}
         />
       </ControlGroup>
@@ -37,6 +39,7 @@ const VisibilityEditor = ({ project }) => {
       >
         <Switch
           isSelected={project.config.grid.shouldDrawIntersections}
+          testId="show-intersections-switch"
           onChange={setProjectConfigValue([`grid`, `shouldDrawIntersections`])}
         />
       </ControlGroup>
@@ -46,6 +49,7 @@ const VisibilityEditor = ({ project }) => {
       >
         <Switch
           isSelected={project.config.grid.shouldDrawGrid}
+          testId="show-grid-switch"
           onChange={setProjectConfigValue([`grid`, `shouldDrawGrid`])}
         />
       </ControlGroup>

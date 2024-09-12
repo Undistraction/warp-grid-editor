@@ -20,6 +20,9 @@ importers:
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
+      dasherize:
+        specifier: ^2.0.0
+        version: 2.0.0
       fast-memoize:
         specifier: ^2.5.2
         version: 2.5.2
@@ -1703,6 +1706,9 @@ packages:
   dargs@8.1.0:
     resolution: {integrity: sha512-wAV9QHOsNbwnWdNW2FYvE1P56wtgSbM+3SZcdGiWQILwVjACCXDCI3Ai8QlCjMDB8YK5zySiXZYBiwGmNY3lnw==}
     engines: {node: '>=12'}
+
+  dasherize@2.0.0:
+    resolution: {integrity: sha512-APql/TZ6FdLEpf2z7/X2a2zyqK8juYtqaSVqxw9mYoQ64CXkfU15AeLh8pUszT8+fnYjgm6t0aIYpWKJbnLkuA==}
 
   data-urls@3.0.2:
     resolution: {integrity: sha512-Jy/tj3ldjZJo63sVAvg6LHt2mHvl4V6AgRAmNDtLdm7faqtsx+aJG42rsyCo9JCoRVKwPFzKlIPx3DIibwSIaQ==}
@@ -6551,6 +6557,8 @@ snapshots:
       cssom: 0.3.8
 
   dargs@8.1.0: {}
+
+  dasherize@2.0.0: {}
 
   data-urls@3.0.2:
     dependencies:
