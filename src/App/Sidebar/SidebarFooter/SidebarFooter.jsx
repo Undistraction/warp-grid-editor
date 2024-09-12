@@ -6,7 +6,7 @@ import React from 'react'
 
 const SidebarFooter = () => (
   <div className="flex flex-col space-y-1 pt-2 align-middle">
-    <div className="flex justify-center align-middle text-sm text-gray-500">
+    <p className="self-center text-sm text-gray-500">
       Built by{` `}
       <a
         className="text-black"
@@ -14,7 +14,7 @@ const SidebarFooter = () => (
       >
         Undistraction
       </a>
-    </div>
+    </p>
     <a
       className="center self-center underline"
       data-tid="sidebar-repo-link"

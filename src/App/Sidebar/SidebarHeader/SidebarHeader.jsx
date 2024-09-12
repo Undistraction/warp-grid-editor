@@ -14,14 +14,14 @@ const SidebarHeader = () => {
 
   return (
     <header className="flex flex-row items-start justify-between">
-      <div className="flex flex-col justify-between">
+      <div className="flex flex-col justify-between pt-2">
         <h1
           data-tid="sidebar-title"
           className="text-base font-bold"
         >
           <img
             src={Logo}
-            className="w-1/2"
+            className="w-1/3"
             alt="Warp Grid logo"
           />
         </h1>
