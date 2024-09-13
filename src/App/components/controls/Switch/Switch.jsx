@@ -8,7 +8,7 @@ import React from 'react'
 const Switch = ({ isSelected, onChange, testId = undefined }) => {
   return (
     <div
-      className="relative h-8 w-16 cursor-pointer bg-black"
+      className="relative h-8 w-16 cursor-pointer border border-black"
       onClick={() => {
         onChange(!isSelected)
       }}
@@ -21,7 +21,7 @@ const Switch = ({ isSelected, onChange, testId = undefined }) => {
         readOnly
       />
       <div
-        className={`absolute top-0 h-full w-1/2 border border-black bg-white ${isSelected ? `right-0` : `left-0`} flex flex-col items-center justify-center`}
+        className={`absolute top-0 h-full w-1/2 border bg-white ${isSelected ? `right-0 border-l-black` : `left-0 border-r-black`} flex flex-col items-center justify-center`}
       >
         <div className="h-1/3 w-1/4 border border-l-black border-r-black"></div>
       </div>

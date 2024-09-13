@@ -45,7 +45,7 @@ const Sidebar = ({ canvas, project }) => {
       <SidebarGroup
         title="Project"
         testId="sidebar-group-project"
-        hint="Save, load or export you grid"
+        hint="Save, load or export your grid"
         isMinimised={getAppConfigSectionIsMinimised(SIDBAR_SECTION_IDS.PROJECT)}
         onToggleMinimise={setAppConfigSectionIsMinimised(
           SIDBAR_SECTION_IDS.PROJECT
@@ -81,7 +81,7 @@ const Sidebar = ({ canvas, project }) => {
       <SidebarGroup
         title="Visibility"
         testId="sidebar-group-visibility"
-        hint="Hide or show parts of the grid"
+        hint="Hide or show parts of your grid"
         isMinimised={getAppConfigSectionIsMinimised(
           SIDBAR_SECTION_IDS.VISIBILITY
         )}

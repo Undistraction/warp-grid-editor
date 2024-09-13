@@ -40,23 +40,6 @@ export const LINE_STRATEGY_OPTIONS = [
 const renderCurvesConfig = (project, setGridDefinitionValue) => {
   return (
     <React.Fragment>
-      <ControlGroup
-        label="Interpolation type"
-        labelIsAfter
-        isEven
-      >
-        <SteppedInput
-          name="interpolation-type"
-          value={project.gridDefinition.interpolationStrategy}
-          options={INTERPOLATION_STRATEGY_OPTIONS}
-          onChange={(interpolationStrategy) => {
-            setGridDefinitionValue(
-              [`interpolationStrategy`],
-              interpolationStrategy
-            )
-          }}
-        />
-      </ControlGroup>
       {project.gridDefinition.interpolationStrategy ===
         INTERPOLATION_STRATEGY.EVEN && (
         <ControlGroup
@@ -65,6 +48,7 @@ const renderCurvesConfig = (project, setGridDefinitionValue) => {
           isEven
         >
           <NumericInput
+            testId="precision-input"
             value={project.gridDefinition.precision}
             min={1}
             onChange={(precision) => {
@@ -93,8 +77,27 @@ const ConfigEditor = ({ project, setGridDefinitionValue }) => {
           name="line-type"
           value={project.gridDefinition.lineStrategy}
           options={LINE_STRATEGY_OPTIONS}
+          testId="line-type-select"
           onChange={(lineStrategy) => {
             setGridDefinitionValue([`lineStrategy`], lineStrategy)
+          }}
+        />
+      </ControlGroup>
+      <ControlGroup
+        label="Interpolation type"
+        labelIsAfter
+        isEven
+      >
+        <SteppedInput
+          name="interpolation-type"
+          value={project.gridDefinition.interpolationStrategy}
+          options={INTERPOLATION_STRATEGY_OPTIONS}
+          testId="interpolation-type-select"
+          onChange={(interpolationStrategy) => {
+            setGridDefinitionValue(
+              [`interpolationStrategy`],
+              interpolationStrategy
+            )
           }}
         />
       </ControlGroup>

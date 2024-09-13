@@ -21,7 +21,6 @@ const renderNodes = (
 ) => {
   return nodes.map(({ id, position, Component }) => {
     const tid = dasherize(id)
-    console.log(id, tid)
     return (
       <Component
         id={id}

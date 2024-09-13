@@ -22,6 +22,10 @@ const getHomePage = ({ page }) => {
   const showCornerPointsSwitch = page.getByTestId(`show-corner-points-switch`)
   const showIntersectionsSwitch = page.getByTestId(`show-intersections-switch`)
   const showGridSwitch = page.getByTestId(`show-grid-switch`)
+  // Config Editor
+  const lineTypeSelect = page.getByTestId(`line-type-select`)
+  const interpolationTypeSelect = page.getByTestId(`interpolation-type-select`)
+  const precisionInput = page.getByTestId(`precision-input`)
   // Grid UI
   const gridCanvas = page.getByTestId(`grid-canvas`)
   const topLeftCornerNode = page.getByTestId(`corner-node-top-left`)
@@ -61,6 +65,9 @@ const getHomePage = ({ page }) => {
     bottomLeftCornerNode,
     bottomRightCornerNode,
     gridCanvas,
+    lineTypeSelect,
+    interpolationTypeSelect,
+    precisionInput,
   }
 }
 

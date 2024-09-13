@@ -41,9 +41,16 @@ const renderOptions = (options) => {
 // Exports
 // -----------------------------------------------------------------------------
 
-const SteppedInput = ({ onChange, value = undefined, options, name }) => {
+const SteppedInput = ({
+  onChange,
+  value = undefined,
+  options,
+  name,
+  testId = undefined,
+}) => {
   return (
     <select
+      data-tid={testId}
       name={name}
       onChange={(event) => {
         const objectOrString = event.target.value
@@ -65,6 +72,7 @@ SteppedInput.propTypes = {
   value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   options: PropTypes.array.isRequired,
   name: PropTypes.string.isRequired,
+  testId: PropTypes.string,
 }
 
 export default SteppedInput

@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/named
 import { expect } from '@playwright/test'
 
-import { test } from '../fixtures'
+import { test } from '../../fixtures'
 
 // -----------------------------------------------------------------------------
 // Utils
@@ -28,15 +28,14 @@ const verifyCornerNodesAreHidden = async (homePage) => {
 test.beforeEach(async ({ homePage }) => {
   await homePage.goto(`/`)
   await expect(homePage.gridCanvas).toHaveScreenshot(`grid-default.png`)
+  // Open the sidebar group
+  const group = await homePage.getSidebarGroup(`visibility`)
+  const groupHeader = group.getByTestId(`sidebar-group-header`)
+  await groupHeader.click()
 })
 
 test.describe(`Bounds`, () => {
   test(`Hides/shows`, async ({ homePage }) => {
-    // Open the sidebar group
-    const group = await homePage.getSidebarGroup(`visibility`)
-    const groupHeader = group.getByTestId(`sidebar-group-header`)
-    await groupHeader.click()
-    // Hide bounds
     await homePage.showBoundsSwitch.click()
     await expect(homePage.gridCanvas).toHaveScreenshot(
       `grid-default-bounds-hidden.png`
@@ -46,16 +45,12 @@ test.describe(`Bounds`, () => {
   })
 
   test(`Saves state when page is reloaded`, async ({ homePage, page }) => {
-    // Open the sidebar group
-    const group = await homePage.getSidebarGroup(`visibility`)
-    const groupHeader = group.getByTestId(`sidebar-group-header`)
-    // Hide bounds
-    await groupHeader.click()
     await homePage.showBoundsSwitch.click()
     await page.reload()
     await expect(homePage.gridCanvas).toHaveScreenshot(
       `grid-default-bounds-hidden.png`
     )
+
     await homePage.showBoundsSwitch.click()
     await page.reload()
     await expect(homePage.gridCanvas).toHaveScreenshot(`grid-default.png`)
@@ -66,10 +61,6 @@ test.describe(`Corner points`, () => {
   // eslint-disable-next-line playwright/expect-expect
   test(`Hides/shows`, async ({ homePage }) => {
     await verifyCornerNodesAreVisible(homePage)
-    // Open the sidebar group
-    const group = await homePage.getSidebarGroup(`visibility`)
-    const groupHeader = group.getByTestId(`sidebar-group-header`)
-    await groupHeader.click()
     // Hide the corner points
     await homePage.showCornerPointsSwitch.click()
     await verifyCornerNodesAreHidden(homePage)
@@ -80,10 +71,6 @@ test.describe(`Corner points`, () => {
 
   // eslint-disable-next-line playwright/expect-expect
   test(`Saves state when page is reloaded`, async ({ homePage, page }) => {
-    // Open the sidebar group
-    const group = await homePage.getSidebarGroup(`visibility`)
-    const groupHeader = group.getByTestId(`sidebar-group-header`)
-    await groupHeader.click()
     // Hide the corner points
     await homePage.showCornerPointsSwitch.click()
     page.reload()
@@ -97,11 +84,6 @@ test.describe(`Corner points`, () => {
 
 test.describe(`Intersections`, () => {
   test(`Hides/shows`, async ({ homePage }) => {
-    // Open the sidebar group
-    const group = await homePage.getSidebarGroup(`visibility`)
-    const groupHeader = group.getByTestId(`sidebar-group-header`)
-    await groupHeader.click()
-    // Hide bounds
     await homePage.showIntersectionsSwitch.click()
     await expect(homePage.gridCanvas).toHaveScreenshot(
       `grid-default-intersections-hidden.png`
@@ -111,11 +93,6 @@ test.describe(`Intersections`, () => {
   })
 
   test(`Saves state when page is reloaded`, async ({ homePage, page }) => {
-    // Open the sidebar group
-    const group = await homePage.getSidebarGroup(`visibility`)
-    const groupHeader = group.getByTestId(`sidebar-group-header`)
-    // Hide bounds
-    await groupHeader.click()
     await homePage.showIntersectionsSwitch.click()
     await page.reload()
     await expect(homePage.gridCanvas).toHaveScreenshot(
@@ -129,11 +106,6 @@ test.describe(`Intersections`, () => {
 
 test.describe(`Grid`, () => {
   test(`Hides/shows`, async ({ homePage }) => {
-    // Open the sidebar group
-    const group = await homePage.getSidebarGroup(`visibility`)
-    const groupHeader = group.getByTestId(`sidebar-group-header`)
-    await groupHeader.click()
-    // Hide bounds
     await homePage.showGridSwitch.click()
     await expect(homePage.gridCanvas).toHaveScreenshot(
       `grid-default-grid-hidden.png`
@@ -143,11 +115,6 @@ test.describe(`Grid`, () => {
   })
 
   test(`Saves state when page is reloaded`, async ({ homePage, page }) => {
-    // Open the sidebar group
-    const group = await homePage.getSidebarGroup(`visibility`)
-    const groupHeader = group.getByTestId(`sidebar-group-header`)
-    // Hide bounds
-    await groupHeader.click()
     await homePage.showGridSwitch.click()
     await page.reload()
     await expect(homePage.gridCanvas).toHaveScreenshot(
