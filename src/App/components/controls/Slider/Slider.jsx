@@ -5,10 +5,18 @@ import React from 'react'
 // Exports
 // -----------------------------------------------------------------------------
 
-const Slider = ({ value, name, min = 0, max = 1, onChange }) => {
+const Slider = ({
+  value,
+  name,
+  min = 0,
+  max = 1,
+  onChange,
+  testId = undefined,
+}) => {
   return (
     <input
       className="flex-grow"
+      data-tid={testId}
       type="range"
       name={name}
       value={value}
@@ -26,6 +34,7 @@ Slider.propTypes = {
   onChange: PropTypes.func.isRequired,
   min: PropTypes.number,
   max: PropTypes.number,
+  testId: PropTypes.string,
 }
 
 export default Slider

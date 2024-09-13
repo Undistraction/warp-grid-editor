@@ -6,17 +6,9 @@ import React from 'react'
 import { typeProject } from '../../../../prop-types'
 import ControlGroup from '../../controls/ControlGroup'
 import NumericInput from '../../controls/NumericInput'
-import SteppedInput from '../../controls/SteppedInput'
 import Switch from '../../controls/Switch'
 import TextInput from '../../controls/TextInput'
 import EasingEditor from '../EasingEditor'
-
-// -----------------------------------------------------------------------------
-// Const
-// -----------------------------------------------------------------------------
-
-const COLUMNS_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 25, 50]
-const ROWS_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 25, 50]
 
 // -----------------------------------------------------------------------------
 // Utils
@@ -52,6 +44,7 @@ const GridEditor = ({
       >
         <Switch
           isSelected={isAdvanced}
+          testId="grid-advanced-switch"
           onChange={() =>
             setProjectConfigValue(
               [`grid`, `shouldUseComplexColumnsRows`],
@@ -64,6 +57,7 @@ const GridEditor = ({
         <div className="flex flex-col items-stretch space-y-2">
           <TextInput
             label="Columns"
+            testId="grid-advanced-columns-input"
             value={convertListIntoInputString(project.gridDefinition.columns)}
             onChange={(columnsString) => {
               const columns = stepsToInts(columnsString)
@@ -72,6 +66,7 @@ const GridEditor = ({
           />
           <TextInput
             label="Rows"
+            testId="grid-advanced-rows-input"
             value={convertListIntoInputString(project.gridDefinition.rows)}
             onChange={(rowsString) => {
               const rows = stepsToInts(rowsString)
@@ -87,10 +82,10 @@ const GridEditor = ({
             direction="vertical"
             label="Columns"
           >
-            <SteppedInput
+            <NumericInput
               name="columns"
+              testId="grid-columns-input"
               value={project.gridDefinition.columns}
-              options={COLUMNS_OPTIONS}
               onChange={(columns) => {
                 setGridDefinitionValue([`columns`], parseInt(columns))
               }}
@@ -100,10 +95,10 @@ const GridEditor = ({
             direction="vertical"
             label="Rows"
           >
-            <SteppedInput
+            <NumericInput
               name="rows"
+              testId="grid-rows-input"
               value={project.gridDefinition.rows}
-              options={ROWS_OPTIONS}
               onChange={(rows) => {
                 setGridDefinitionValue([`rows`], parseInt(rows))
               }}
@@ -117,6 +112,7 @@ const GridEditor = ({
           direction="vertical"
         >
           <NumericInput
+            testId="grid-gutter-horizontal-input"
             min={0}
             step={0.1}
             value={project.gridDefinition.gutter[0]}
@@ -133,6 +129,7 @@ const GridEditor = ({
           direction="vertical"
         >
           <NumericInput
+            testId="grid-gutter-vertical-input"
             min={0}
             step={0.1}
             value={project.gridDefinition.gutter[1]}
@@ -148,6 +145,7 @@ const GridEditor = ({
       <div className="flex space-x-3 [&>*]:basis-1/2">
         <EasingEditor
           title="Easing horizontal"
+          testId="grid-easing-horizontal-group"
           easing={project.gridDefinition.bezierEasing.xAxis}
           setEasing={(easing) => {
             setGridDefinitionValue([`bezierEasing`], {
@@ -158,6 +156,7 @@ const GridEditor = ({
         />
         <EasingEditor
           title="Easing vertical"
+          testId="grid-easing-vertical-group"
           easing={project.gridDefinition.bezierEasing.yAxis}
           setEasing={(easing) => {
             setGridDefinitionValue([`bezierEasing`], {

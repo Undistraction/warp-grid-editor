@@ -28,7 +28,7 @@ test.describe(`Line-type`, () => {
     await expect(homePage.gridCanvas).toHaveScreenshot(`grid-default.png`)
   })
 
-  test(`Saves state when page is reloaded`, async ({ homePage, page }) => {
+  test(`State is saved on page reload`, async ({ homePage, page }) => {
     await homePage.lineTypeSelect.selectOption({ label: `Straight` })
     page.reload()
     await expect(homePage.gridCanvas).toHaveScreenshot(
@@ -54,7 +54,7 @@ test.describe(`Interpolation-type`, () => {
     await expect(homePage.gridCanvas).toHaveScreenshot(`grid-default.png`)
   })
 
-  test(`Saves state when page is reloaded`, async ({ homePage, page }) => {
+  test(`State is saved on page reload`, async ({ homePage, page }) => {
     await homePage.interpolationTypeSelect.selectOption({ label: `Linear` })
     page.reload()
     await expect(homePage.gridCanvas).toHaveScreenshot(
@@ -77,7 +77,7 @@ test.describe(`Precision`, () => {
     await expect(homePage.gridCanvas).toHaveScreenshot(`grid-default.png`)
   })
 
-  test(`Saves state when page is reloaded`, async ({ homePage, page }) => {
+  test(`State is saved on page reload`, async ({ homePage, page }) => {
     await homePage.precisionInput.fill(`5`)
     page.reload()
     await expect(homePage.gridCanvas).toHaveScreenshot(`grid-precision-5.png`)

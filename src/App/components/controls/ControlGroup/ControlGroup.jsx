@@ -11,6 +11,7 @@ const ControlGroup = ({
   labelIsAfter = false,
   direction = `horizontal`,
   isEven = false,
+  testId = undefined,
 }) => {
   const labelChild = (
     <div
@@ -30,7 +31,14 @@ const ControlGroup = ({
       ? `flex flex-col items-stretch space-y-1`
       : `flex flex-row items-center space-x-2 ${isEven && `[&>*]:basis-1/2`}`
 
-  return <div className={className}>{labelAndControl}</div>
+  return (
+    <div
+      data-tid={testId}
+      className={className}
+    >
+      {labelAndControl}
+    </div>
+  )
 }
 
 ControlGroup.propTypes = {
@@ -39,6 +47,7 @@ ControlGroup.propTypes = {
   labelIsAfter: PropTypes.bool,
   direction: PropTypes.string,
   isEven: PropTypes.bool,
+  testId: PropTypes.string,
 }
 
 export default ControlGroup

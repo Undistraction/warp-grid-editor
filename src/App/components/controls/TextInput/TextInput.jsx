@@ -6,7 +6,7 @@ import React from 'react'
 // Exports
 // -----------------------------------------------------------------------------
 
-const TextInput = ({ value, label, onChange }) => {
+const TextInput = ({ value, label, onChange, testId = undefined }) => {
   const [localValue, setLocalValue] = React.useState(null)
   const resolvedValue = !isNil(localValue) ? localValue : value
   return (
@@ -15,6 +15,7 @@ const TextInput = ({ value, label, onChange }) => {
         className="min-w-12 flex-grow border border-black px-2 py-1 font-mono"
         type="text"
         value={resolvedValue}
+        data-tid={testId}
         onChange={(event) => {
           const { value } = event.target
           if (value === `` || value.endsWith(`,`) || value.endsWith(` `)) {
@@ -34,6 +35,7 @@ TextInput.propTypes = {
   value: PropTypes.string,
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  testId: PropTypes.string,
 }
 
 export default TextInput

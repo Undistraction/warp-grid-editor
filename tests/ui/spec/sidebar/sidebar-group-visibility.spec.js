@@ -44,7 +44,7 @@ test.describe(`Bounds`, () => {
     await expect(homePage.gridCanvas).toHaveScreenshot(`grid-default.png`)
   })
 
-  test(`Saves state when page is reloaded`, async ({ homePage, page }) => {
+  test(`State is saved on page reload`, async ({ homePage, page }) => {
     await homePage.showBoundsSwitch.click()
     await page.reload()
     await expect(homePage.gridCanvas).toHaveScreenshot(
@@ -70,7 +70,7 @@ test.describe(`Corner points`, () => {
   })
 
   // eslint-disable-next-line playwright/expect-expect
-  test(`Saves state when page is reloaded`, async ({ homePage, page }) => {
+  test(`State is saved on page reload`, async ({ homePage, page }) => {
     // Hide the corner points
     await homePage.showCornerPointsSwitch.click()
     page.reload()
@@ -92,7 +92,7 @@ test.describe(`Intersections`, () => {
     await expect(homePage.gridCanvas).toHaveScreenshot(`grid-default.png`)
   })
 
-  test(`Saves state when page is reloaded`, async ({ homePage, page }) => {
+  test(`State is saved on page reload`, async ({ homePage, page }) => {
     await homePage.showIntersectionsSwitch.click()
     await page.reload()
     await expect(homePage.gridCanvas).toHaveScreenshot(
@@ -114,7 +114,7 @@ test.describe(`Grid`, () => {
     await expect(homePage.gridCanvas).toHaveScreenshot(`grid-default.png`)
   })
 
-  test(`Saves state when page is reloaded`, async ({ homePage, page }) => {
+  test(`State is saved on page reload`, async ({ homePage, page }) => {
     await homePage.showGridSwitch.click()
     await page.reload()
     await expect(homePage.gridCanvas).toHaveScreenshot(

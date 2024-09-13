@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/named
+import { expect } from '@playwright/test'
+
 // -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
@@ -26,6 +29,22 @@ const getHomePage = ({ page }) => {
   const lineTypeSelect = page.getByTestId(`line-type-select`)
   const interpolationTypeSelect = page.getByTestId(`interpolation-type-select`)
   const precisionInput = page.getByTestId(`precision-input`)
+  // Grid Editor
+  const gridAdvancedModeSwitch = page.getByTestId(`grid-advanced-switch`)
+  const gridRowsInput = page.getByTestId(`grid-rows-input`)
+  const gridColumnsInput = page.getByTestId(`grid-columns-input`)
+  const gridAdvancedRowsInput = page.getByTestId(`grid-advanced-rows-input`)
+  const gridAdvancedColumnsInput = page.getByTestId(
+    `grid-advanced-columns-input`
+  )
+  const gridGutterHorizontalInput = page.getByTestId(
+    `grid-gutter-horizontal-input`
+  )
+  const gridGutterVerticalInput = page.getByTestId(`grid-gutter-vertical-input`)
+  const gridEasingHorizontalGroup = page.getByTestId(
+    `grid-easing-horizontal-group`
+  )
+  const gridEasingVerticalGroup = page.getByTestId(`grid-easing-vertical-group`)
   // Grid UI
   const gridCanvas = page.getByTestId(`grid-canvas`)
   const topLeftCornerNode = page.getByTestId(`corner-node-top-left`)
@@ -42,12 +61,36 @@ const getHomePage = ({ page }) => {
     return page.getByTestId(`sidebar-group-${group}`)
   }
 
+  const setBezierEasingForAxisGroup = async (group, values) => {
+    await group.getByTestId(`bezier-easing-1-slider`).fill(values[0])
+    await group.getByTestId(`bezier-easing-2-slider`).fill(values[1])
+    await group.getByTestId(`bezier-easing-3-slider`).fill(values[2])
+    await group.getByTestId(`bezier-easing-4-slider`).fill(values[3])
+  }
+
+  const verifyBezierEasingForAxisGroup = async (group, values) => {
+    await expect(group.getByTestId(`bezier-easing-1-slider`)).toHaveValue(
+      values[0]
+    )
+    await expect(group.getByTestId(`bezier-easing-2-slider`)).toHaveValue(
+      values[1]
+    )
+    await expect(group.getByTestId(`bezier-easing-3-slider`)).toHaveValue(
+      values[2]
+    )
+    await expect(group.getByTestId(`bezier-easing-4-slider`)).toHaveValue(
+      values[3]
+    )
+  }
+
   // ---------------------------------------------------------------------------
   // Export
   // ---------------------------------------------------------------------------
   return {
     goto,
     getSidebarGroup,
+    setBezierEasingForAxisGroup,
+    verifyBezierEasingForAxisGroup,
     sidebar,
     sidebarTitle,
     sidebarRepoLink,
@@ -68,6 +111,15 @@ const getHomePage = ({ page }) => {
     lineTypeSelect,
     interpolationTypeSelect,
     precisionInput,
+    gridRowsInput,
+    gridColumnsInput,
+    gridGutterHorizontalInput,
+    gridGutterVerticalInput,
+    gridEasingHorizontalGroup,
+    gridEasingVerticalGroup,
+    gridAdvancedModeSwitch,
+    gridAdvancedRowsInput,
+    gridAdvancedColumnsInput,
   }
 }
 
