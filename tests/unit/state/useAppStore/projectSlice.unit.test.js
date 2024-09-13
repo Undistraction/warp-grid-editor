@@ -168,26 +168,34 @@ describe(`useAppStore projectSlice`, () => {
         act(() => result.current.setBoundingCurves(BOUNDING_CURVES))
         act(() => result.current.linkControlPointsGlobal(false))
         act(() => result.current.linkControlPointsGlobal(true))
-        const { topLeft, topRight, bottomLeft, bottomRight } =
-          result.current.project.config.bounds.corners
+        const {
+          cornerTopLeft,
+          cornerTopRight,
+          cornerBottomLeft,
+          cornerBottomRight,
+        } = result.current.project.config.bounds.corners
         expect(result.current.project.config.bounds.isLinked).toBeTrue()
-        expect(topLeft.isLinked).toBeTrue()
-        expect(topRight.isLinked).toBeTrue()
-        expect(bottomLeft.isLinked).toBeTrue()
-        expect(bottomRight.isLinked).toBeTrue()
+        expect(cornerTopLeft.isLinked).toBeTrue()
+        expect(cornerTopRight.isLinked).toBeTrue()
+        expect(cornerBottomLeft.isLinked).toBeTrue()
+        expect(cornerBottomRight.isLinked).toBeTrue()
       })
 
       it(`should unlink all control points`, () => {
         const { result } = renderHook(() => useAppStore())
         act(() => result.current.setBoundingCurves(BOUNDING_CURVES))
         act(() => result.current.linkControlPointsGlobal(false))
-        const { topLeft, topRight, bottomLeft, bottomRight } =
-          result.current.project.config.bounds.corners
+        const {
+          cornerTopLeft,
+          cornerTopRight,
+          cornerBottomLeft,
+          cornerBottomRight,
+        } = result.current.project.config.bounds.corners
         expect(result.current.project.config.bounds.isLinked).toBeFalse()
-        expect(topLeft.isLinked).toBeFalse()
-        expect(topRight.isLinked).toBeFalse()
-        expect(bottomLeft.isLinked).toBeFalse()
-        expect(bottomRight.isLinked).toBeFalse()
+        expect(cornerTopLeft.isLinked).toBeFalse()
+        expect(cornerTopRight.isLinked).toBeFalse()
+        expect(cornerBottomLeft.isLinked).toBeFalse()
+        expect(cornerBottomRight.isLinked).toBeFalse()
       })
     })
 
@@ -197,26 +205,34 @@ describe(`useAppStore projectSlice`, () => {
         act(() => result.current.setBoundingCurves(BOUNDING_CURVES))
         act(() => result.current.mirrorControlPointsGlobal(false))
         act(() => result.current.mirrorControlPointsGlobal(true))
-        const { topLeft, topRight, bottomLeft, bottomRight } =
-          result.current.project.config.bounds.corners
+        const {
+          cornerTopLeft,
+          cornerTopRight,
+          cornerBottomLeft,
+          cornerBottomRight,
+        } = result.current.project.config.bounds.corners
         expect(result.current.project.config.bounds.isMirrored).toBeTrue()
-        expect(topLeft.isMirrored).toBeTrue()
-        expect(topRight.isMirrored).toBeTrue()
-        expect(bottomLeft.isMirrored).toBeTrue()
-        expect(bottomRight.isMirrored).toBeTrue()
+        expect(cornerTopLeft.isMirrored).toBeTrue()
+        expect(cornerTopRight.isMirrored).toBeTrue()
+        expect(cornerBottomLeft.isMirrored).toBeTrue()
+        expect(cornerBottomRight.isMirrored).toBeTrue()
       })
 
       it(`should unlink all control points`, () => {
         const { result } = renderHook(() => useAppStore())
         act(() => result.current.setBoundingCurves(BOUNDING_CURVES))
         act(() => result.current.mirrorControlPointsGlobal(false))
-        const { topLeft, topRight, bottomLeft, bottomRight } =
-          result.current.project.config.bounds.corners
+        const {
+          cornerTopLeft,
+          cornerTopRight,
+          cornerBottomLeft,
+          cornerBottomRight,
+        } = result.current.project.config.bounds.corners
         expect(result.current.project.config.bounds.isMirrored).toBeFalse()
-        expect(topLeft.isMirrored).toBeFalse()
-        expect(topRight.isMirrored).toBeFalse()
-        expect(bottomLeft.isMirrored).toBeFalse()
-        expect(bottomRight.isMirrored).toBeFalse()
+        expect(cornerTopLeft.isMirrored).toBeFalse()
+        expect(cornerTopRight.isMirrored).toBeFalse()
+        expect(cornerBottomLeft.isMirrored).toBeFalse()
+        expect(cornerBottomRight.isMirrored).toBeFalse()
       })
     })
 
@@ -278,8 +294,9 @@ describe(`useAppStore projectSlice`, () => {
         act(() =>
           result.current.linkControlPoints(BOUNDS_POINT_IDS.BOTTOM_LEFT, `ccc`)
         )
-        const { bottomRight } = result.current.project.config.bounds.corners
-        expect(bottomRight.isLinked).toBeTrue()
+        const { cornerBottomRight } =
+          result.current.project.config.bounds.corners
+        expect(cornerBottomRight.isLinked).toBeTrue()
       })
 
       it(`should unlink all control points`, () => {
@@ -288,8 +305,9 @@ describe(`useAppStore projectSlice`, () => {
         act(() =>
           result.current.linkControlPoints(BOUNDS_POINT_IDS.BOTTOM_LEFT, false)
         )
-        const { bottomLeft } = result.current.project.config.bounds.corners
-        expect(bottomLeft.isLinked).toBeFalse()
+        const { cornerBottomLeft } =
+          result.current.project.config.bounds.corners
+        expect(cornerBottomLeft.isLinked).toBeFalse()
       })
     })
 
@@ -299,26 +317,34 @@ describe(`useAppStore projectSlice`, () => {
         act(() => result.current.setBoundingCurves(BOUNDING_CURVES))
         act(() => result.current.mirrorControlPointsGlobal(false))
         act(() => result.current.mirrorControlPointsGlobal(true))
-        const { topLeft, topRight, bottomLeft, bottomRight } =
-          result.current.project.config.bounds.corners
+        const {
+          cornerTopLeft,
+          cornerTopRight,
+          cornerBottomLeft,
+          cornerBottomRight,
+        } = result.current.project.config.bounds.corners
         expect(result.current.project.config.bounds.isMirrored).toBeTrue()
-        expect(topLeft.isMirrored).toBeTrue()
-        expect(topRight.isMirrored).toBeTrue()
-        expect(bottomLeft.isMirrored).toBeTrue()
-        expect(bottomRight.isMirrored).toBeTrue()
+        expect(cornerTopLeft.isMirrored).toBeTrue()
+        expect(cornerTopRight.isMirrored).toBeTrue()
+        expect(cornerBottomLeft.isMirrored).toBeTrue()
+        expect(cornerBottomRight.isMirrored).toBeTrue()
       })
 
       it(`should unlink all control points`, () => {
         const { result } = renderHook(() => useAppStore())
         act(() => result.current.setBoundingCurves(BOUNDING_CURVES))
         act(() => result.current.mirrorControlPointsGlobal(false))
-        const { topLeft, topRight, bottomLeft, bottomRight } =
-          result.current.project.config.bounds.corners
+        const {
+          cornerTopLeft,
+          cornerTopRight,
+          cornerBottomLeft,
+          cornerBottomRight,
+        } = result.current.project.config.bounds.corners
         expect(result.current.project.config.bounds.isMirrored).toBeFalse()
-        expect(topLeft.isMirrored).toBeFalse()
-        expect(topRight.isMirrored).toBeFalse()
-        expect(bottomLeft.isMirrored).toBeFalse()
-        expect(bottomRight.isMirrored).toBeFalse()
+        expect(cornerTopLeft.isMirrored).toBeFalse()
+        expect(cornerTopRight.isMirrored).toBeFalse()
+        expect(cornerBottomLeft.isMirrored).toBeFalse()
+        expect(cornerBottomRight.isMirrored).toBeFalse()
       })
     })
 

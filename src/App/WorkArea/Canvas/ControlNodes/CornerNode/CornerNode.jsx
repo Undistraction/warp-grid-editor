@@ -18,7 +18,7 @@ const { WIDTH, HEIGHT } = METRICS.CORNER_POINT
 
 const CornerNode = ({ id, position, onDrag, onDoubleClick }) => {
   const nodeRef = React.useRef(null)
-  const testId = `corner-node-${dasherize(id)}`
+  const testId = dasherize(id)
 
   return (
     <Draggable

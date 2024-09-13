@@ -8,17 +8,17 @@ import { test } from '../../fixtures'
 // -----------------------------------------------------------------------------
 
 const verifyCornerNodesAreVisible = async (homePage) => {
-  await expect(homePage.topLeftCornerNode).toBeVisible()
-  await expect(homePage.topRightCornerNode).toBeVisible()
-  await expect(homePage.bottomLeftCornerNode).toBeVisible()
-  await expect(homePage.bottomRightCornerNode).toBeVisible()
+  await expect(homePage.cornerPointTopLeft).toBeVisible()
+  await expect(homePage.cornerPointTopRight).toBeVisible()
+  await expect(homePage.cornerPointBottomLeft).toBeVisible()
+  await expect(homePage.cornerPointBottomRight).toBeVisible()
 }
 
 const verifyCornerNodesAreHidden = async (homePage) => {
-  await expect(homePage.topLeftCornerNode).toBeHidden()
-  await expect(homePage.topRightCornerNode).toBeHidden()
-  await expect(homePage.bottomLeftCornerNode).toBeHidden()
-  await expect(homePage.bottomRightCornerNode).toBeHidden()
+  await expect(homePage.cornerPointTopLeft).toBeHidden()
+  await expect(homePage.cornerPointTopRight).toBeHidden()
+  await expect(homePage.cornerPointBottomLeft).toBeHidden()
+  await expect(homePage.cornerPointBottomRight).toBeHidden()
 }
 
 // -----------------------------------------------------------------------------

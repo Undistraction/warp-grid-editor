@@ -52,25 +52,25 @@ export const BOUNDING_CURVES = Object.freeze({
 describe(`getBoundingCurvesCorners`, () => {
   it(`returns the corners of the bounding curves`, () => {
     const expected = {
-      topLeft: {
-        cornerPoint: { id: `topLeft`, point: { x: 0, y: 0 } },
-        controlPoint1: { id: `topLeftControl1`, point: { x: 10, y: -10 } },
-        controlPoint2: { id: `topLeftControl2`, point: { x: -10, y: -10 } },
+      cornerTopLeft: {
+        cornerPoint: { id: `cornerTopLeft`, point: { x: 0, y: 0 } },
+        controlPoint1: { id: `controlTopLeft1`, point: { x: 10, y: -10 } },
+        controlPoint2: { id: `controlTopLeft2`, point: { x: -10, y: -10 } },
       },
-      topRight: {
-        cornerPoint: { id: `topRight`, point: { x: 100, y: 0 } },
-        controlPoint1: { id: `topRightControl1`, point: { x: 90, y: -10 } },
-        controlPoint2: { id: `topRightControl2`, point: { x: 110, y: -10 } },
+      cornerTopRight: {
+        cornerPoint: { id: `cornerTopRight`, point: { x: 100, y: 0 } },
+        controlPoint1: { id: `controlTopRight1`, point: { x: 90, y: -10 } },
+        controlPoint2: { id: `controlTopRight2`, point: { x: 110, y: -10 } },
       },
-      bottomLeft: {
-        cornerPoint: { id: `bottomLeft`, point: { x: 0, y: 100 } },
-        controlPoint1: { id: `bottomLeftControl1`, point: { x: -10, y: 110 } },
-        controlPoint2: { id: `bottomLeftControl2`, point: { x: -10, y: 110 } },
+      cornerBottomLeft: {
+        cornerPoint: { id: `cornerBottomLeft`, point: { x: 0, y: 100 } },
+        controlPoint1: { id: `controlBottomLeft1`, point: { x: -10, y: 110 } },
+        controlPoint2: { id: `controlBottomLeft2`, point: { x: -10, y: 110 } },
       },
-      bottomRight: {
-        cornerPoint: { id: `bottomRight`, point: { x: 100, y: 100 } },
-        controlPoint1: { id: `bottomRightControl1`, point: { x: 110, y: 110 } },
-        controlPoint2: { id: `bottomRightControl2`, point: { x: 110, y: 110 } },
+      cornerBottomRight: {
+        cornerPoint: { id: `cornerBottomRight`, point: { x: 100, y: 100 } },
+        controlPoint1: { id: `controlBottomRight1`, point: { x: 110, y: 110 } },
+        controlPoint2: { id: `controlBottomRight2`, point: { x: 110, y: 110 } },
       },
     }
     expect(getBoundingCurvesCorners(BOUNDING_CURVES)).toEqual(expected)

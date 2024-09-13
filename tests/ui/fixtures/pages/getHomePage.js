@@ -47,15 +47,32 @@ const getHomePage = ({ page }) => {
   const gridEasingVerticalGroup = page.getByTestId(`grid-easing-vertical-group`)
   // Grid UI
   const gridCanvas = page.getByTestId(`grid-canvas`)
-  const topLeftCornerNode = page.getByTestId(`corner-node-top-left`)
-  const topRightCornerNode = page.getByTestId(`corner-node-top-right`)
-  const bottomLeftCornerNode = page.getByTestId(`corner-node-bottom-left`)
-  const bottomRightCornerNode = page.getByTestId(`corner-node-bottom-right`)
+  // Corner Nodes
+  const cornerPointTopLeft = page.getByTestId(`corner-top-left`)
+  const cornerPointTopRight = page.getByTestId(`corner-top-right`)
+  const cornerPointBottomLeft = page.getByTestId(`corner-bottom-left`)
+  const cornerPointBottomRight = page.getByTestId(`corner-bottom-right`)
+  // Control point nodes
+  const controlPointTopLeft1 = page.getByTestId(`control-top-left1`)
+  const controlPointTopLeft2 = page.getByTestId(`control-top-left2`)
+  const controlPointTopRight1 = page.getByTestId(`control-top-right1`)
+  const controlPointTopRight2 = page.getByTestId(`control-top-right2`)
+  const controlPointBottomLeft1 = page.getByTestId(`control-bottom-left1`)
+  const controlPointBottomLeft2 = page.getByTestId(`control-bottom-left2`)
+  const controlPointBottomRight1 = page.getByTestId(`control-bottom-right1`)
+  const controlPointBottomRight2 = page.getByTestId(`control-bottom-right2`)
 
   // ---------------------------------------------------------------------------
   // Actions
   // ---------------------------------------------------------------------------
   const goto = async () => await page.goto(`/`)
+
+  const dragNode = async (node, x, y) => {
+    await node.hover()
+    await page.mouse.down()
+    await page.mouse.move(x, y)
+    page.mouse.up()
+  }
 
   const getSidebarGroup = async (group) => {
     return page.getByTestId(`sidebar-group-${group}`)
@@ -88,6 +105,7 @@ const getHomePage = ({ page }) => {
   // ---------------------------------------------------------------------------
   return {
     goto,
+    dragNode,
     getSidebarGroup,
     setBezierEasingForAxisGroup,
     verifyBezierEasingForAxisGroup,
@@ -103,10 +121,18 @@ const getHomePage = ({ page }) => {
     showCornerPointsSwitch,
     showIntersectionsSwitch,
     showGridSwitch,
-    topLeftCornerNode,
-    topRightCornerNode,
-    bottomLeftCornerNode,
-    bottomRightCornerNode,
+    cornerPointTopLeft,
+    cornerPointTopRight,
+    cornerPointBottomLeft,
+    cornerPointBottomRight,
+    controlPointTopLeft1,
+    controlPointTopLeft2,
+    controlPointTopRight1,
+    controlPointTopRight2,
+    controlPointBottomLeft1,
+    controlPointBottomLeft2,
+    controlPointBottomRight1,
+    controlPointBottomRight2,
     gridCanvas,
     lineTypeSelect,
     interpolationTypeSelect,

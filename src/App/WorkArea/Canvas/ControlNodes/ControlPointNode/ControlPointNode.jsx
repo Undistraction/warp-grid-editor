@@ -18,7 +18,7 @@ const { WIDTH, HEIGHT } = METRICS.CONTROL_POINT
 
 const ControlPointNode = ({ position, onDrag, id }) => {
   const nodeRef = React.useRef(null)
-  const testId = `control-point-node-${dasherize(id)}`
+  const testId = dasherize(id)
   return (
     <Draggable
       nodeRef={nodeRef}
