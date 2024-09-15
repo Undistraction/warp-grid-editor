@@ -1,8 +1,8 @@
 import React from 'react'
 
-import { typeProject } from '../../../../../prop-types'
-import { moveBoundingCurvesToOrigin } from '../../../../../utils/boundingCurves'
-import CodeBlock from '../../../CodeBlock'
+import { typeProject } from '../../../../../../../prop-types'
+import { moveBoundingCurvesToOrigin } from '../../../../../../../utils/boundingCurves'
+import CodeBlock from '../../../../../CodeBlock'
 
 // -----------------------------------------------------------------------------
 // Const

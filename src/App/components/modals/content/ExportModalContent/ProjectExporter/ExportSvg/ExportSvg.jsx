@@ -3,15 +3,15 @@ import React from 'react'
 // eslint-disable-next-line import/no-unresolved
 import warpGrid from 'warp-grid'
 
-import { typeProject } from '../../../../../prop-types'
-import { getBounds } from '../../../../../utils/bezier'
+import { typeProject } from '../../../../../../../prop-types'
+import { getBounds } from '../../../../../../../utils/bezier'
 import {
   moveBoundingCurves,
   moveBoundingCurvesToOrigin,
-} from '../../../../../utils/boundingCurves'
-import { roundToTwoPlaces } from '../../../../../utils/math'
-import { getSvgForGrid } from '../../../../../utils/svg'
-import CodeBlock from '../../../CodeBlock'
+} from '../../../../../../../utils/boundingCurves'
+import { roundToTwoPlaces } from '../../../../../../../utils/math'
+import { getSvgForGrid } from '../../../../../../../utils/svg'
+import CodeBlock from '../../../../../CodeBlock'
 
 // -----------------------------------------------------------------------------
 // Utils

@@ -13,6 +13,8 @@ const ROOT = `http://localhost:5173`
  */
 export default defineConfig({
   testDir: `tests/ui/`,
+  /* Reduce timeout so we fail fast */
+  timeout: 10000,
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -30,6 +32,7 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: `on-first-retry`,
     testIdAttribute: `data-tid`,
+    permissions: [`clipboard-read`, `clipboard-write`],
   },
 
   /* Configure projects for major browsers */

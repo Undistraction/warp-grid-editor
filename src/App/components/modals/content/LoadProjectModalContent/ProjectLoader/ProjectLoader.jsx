@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import Button from '../Button'
+import useAppStore from '../../../../../../state/useAppStore'
+import Button from '../../../../Button'
 
 // -----------------------------------------------------------------------------
 // Utils
@@ -21,8 +22,10 @@ const renderOptions = (options) =>
 // Exports
 // -----------------------------------------------------------------------------
 
-const ProjectLoader = ({ loadProject, projects }) => {
+const ProjectLoader = ({ onLoad }) => {
   const [uuid, setUuid] = React.useState(``)
+  const loadProject = useAppStore.use.loadProject()
+  const projects = useAppStore.use.projects()
 
   const options = [
     { id: `none`, name: `Choose project`, uuid: ``, key: `default` },
@@ -35,6 +38,7 @@ const ProjectLoader = ({ loadProject, projects }) => {
     <div className="flex flex-row items-stretch space-x-1">
       <select
         name="projects"
+        data-tid="project-loader-select"
         onChange={(event) => {
           setUuid(event.target.value)
         }}
@@ -43,11 +47,13 @@ const ProjectLoader = ({ loadProject, projects }) => {
         {renderOptions(options)}
       </select>
       <Button
-        label="Load"
+        label="Open"
+        testId="project-loader-load-button"
         isDisabled={uuid === ``}
         onClick={() => {
           if (uuid !== ``) {
             loadProject(uuid)
+            onLoad()
           }
         }}
       />
@@ -56,8 +62,7 @@ const ProjectLoader = ({ loadProject, projects }) => {
 }
 
 ProjectLoader.propTypes = {
-  loadProject: PropTypes.func.isRequired,
-  projects: PropTypes.array.isRequired,
+  onLoad: PropTypes.func.isRequired,
 }
 
 export default ProjectLoader

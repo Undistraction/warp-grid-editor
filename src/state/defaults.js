@@ -59,6 +59,7 @@ export const PROJECT_DEFAULT = {
     date: new Date().toUTCString(),
     version: PROJECT_VERSION,
     uuid: v4(),
+    isSaved: false,
   },
   config: PROJECT_CONFIG_DEFAULT,
   gridDefinition: GRID_DEFINITION_DEFAULT,
@@ -70,9 +71,6 @@ export const APP_CONFIG_DEFAULT = {
     sidebar: {
       isHidden: false,
       sections: {
-        [SIDBAR_SECTION_IDS.PROJECT]: {
-          isMinimised: true,
-        },
         [SIDBAR_SECTION_IDS.CONFIG]: {
           isMinimised: true,
         },

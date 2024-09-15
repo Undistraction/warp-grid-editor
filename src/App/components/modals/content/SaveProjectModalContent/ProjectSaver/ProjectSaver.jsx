@@ -1,26 +1,26 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { typeProject } from '../../../prop-types'
-import Button from '../Button'
+import useAppStore from '../../../../../../state/useAppStore'
+import Button from '../../../../Button'
 
 // -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
 
-const ProjectSaver = ({
-  saveProject,
-  saveProjectAs,
-  setProjectName,
-  project,
-}) => {
+const ProjectSaver = ({ onSave }) => {
+  const saveProjectAs = useAppStore.use.saveProjectAs()
+  const setName = useAppStore.use.setName()
+  const project = useAppStore.use.project()
+
   return (
     <div className="flex flex-row space-x-1">
       <div className="flex-grow">
         <input
           className="h-full w-full min-w-0 border border-black px-2 py-1"
+          data-tid="project-saver-name-input"
           type="text"
-          onChange={(event) => setProjectName(event.target.value)}
+          onChange={(event) => setName(event.target.value)}
           value={project.meta.name}
           placeholder="Name"
         />
@@ -28,22 +28,18 @@ const ProjectSaver = ({
       <Button
         label="Save"
         className="flex-shrink-0"
-        onClick={() => saveProject(project)}
-      />
-      <Button
-        label="Save As"
-        className="flex-shrink-0"
-        onClick={() => saveProjectAs(project)}
+        testId="project-saver-save-button"
+        onClick={() => {
+          saveProjectAs(project)
+          onSave()
+        }}
       />
     </div>
   )
 }
 
 ProjectSaver.propTypes = {
-  saveProject: PropTypes.func.isRequired,
-  saveProjectAs: PropTypes.func.isRequired,
-  setProjectName: PropTypes.func.isRequired,
-  project: typeProject.isRequired,
+  onSave: PropTypes.func.isRequired,
 }
 
 export default ProjectSaver

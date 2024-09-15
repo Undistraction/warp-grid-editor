@@ -8,7 +8,6 @@ import ConfigEditor from '../components/editors/ConfigEditor'
 import GridEditor from '../components/editors/GridEditor'
 import GridSquareEditor from '../components/editors/GridSqureEditor'
 import BoundsEditor from '../components/editors/PatchEditor'
-import ProjectEditor from '../components/editors/ProjectEditor'
 import VisibilityEditor from '../components/editors/VisibilityEditor'
 import SidebarFooter from './SidebarFooter'
 import SidebarGroup from './SidebarGroup'
@@ -19,11 +18,6 @@ import SidebarHeader from './SidebarHeader'
 // -----------------------------------------------------------------------------
 
 const Sidebar = ({ canvas, project }) => {
-  const saveProject = useAppStore.use.saveProject()
-  const saveProjectAs = useAppStore.use.saveProjectAs()
-  const loadProject = useAppStore.use.loadProject()
-  const setProjectName = useAppStore.use.setProjectName()
-  const projects = useAppStore.use.projects()
   const setGridDefinitionValue = useAppStore.use.setGridDefinitionValue()
   const setProjectConfigValue = useAppStore.use.setProjectConfigValue()
   const setAppConfigValue = useAppStore.use.setAppConfigValue()
@@ -37,27 +31,39 @@ const Sidebar = ({ canvas, project }) => {
 
   return (
     <div
-      className="flex flex-col space-y-3 divide-y-2 py-5"
+      className={`flex flex-col space-y-3 divide-y-2 pr-5`}
       data-tid="sidebar"
     >
       <SidebarHeader />
 
       <SidebarGroup
-        title="Project"
-        testId="sidebar-group-project"
-        hint="Save, load or export your grid"
-        isMinimised={getAppConfigSectionIsMinimised(SIDBAR_SECTION_IDS.PROJECT)}
+        title="Grid"
+        testId="sidebar-group-grid"
+        hint="Edit your grid's columns, rows, and gutter"
+        isMinimised={getAppConfigSectionIsMinimised(SIDBAR_SECTION_IDS.GRID)}
         onToggleMinimise={setAppConfigSectionIsMinimised(
-          SIDBAR_SECTION_IDS.PROJECT
+          SIDBAR_SECTION_IDS.GRID
         )}
       >
-        <ProjectEditor
-          loadProject={loadProject}
-          saveProject={saveProject}
-          saveProjectAs={saveProjectAs}
-          setProjectName={setProjectName}
+        <GridEditor
+          setProjectConfigValue={setProjectConfigValue}
+          setGridDefinitionValue={setGridDefinitionValue}
           project={project}
-          projects={projects}
+        />
+      </SidebarGroup>
+
+      <SidebarGroup
+        title="Config"
+        testId="sidebar-group-config"
+        hint="Configure how your grid is calculated"
+        isMinimised={getAppConfigSectionIsMinimised(SIDBAR_SECTION_IDS.CONFIG)}
+        onToggleMinimise={setAppConfigSectionIsMinimised(
+          SIDBAR_SECTION_IDS.CONFIG
+        )}
+      >
+        <ConfigEditor
+          project={project}
+          setGridDefinitionValue={setGridDefinitionValue}
         />
       </SidebarGroup>
 
@@ -90,37 +96,6 @@ const Sidebar = ({ canvas, project }) => {
         )}
       >
         <VisibilityEditor project={project} />
-      </SidebarGroup>
-
-      <SidebarGroup
-        title="Grid"
-        testId="sidebar-group-grid"
-        hint="Edit your grid's columns, rows, and gutter"
-        isMinimised={getAppConfigSectionIsMinimised(SIDBAR_SECTION_IDS.GRID)}
-        onToggleMinimise={setAppConfigSectionIsMinimised(
-          SIDBAR_SECTION_IDS.GRID
-        )}
-      >
-        <GridEditor
-          setProjectConfigValue={setProjectConfigValue}
-          setGridDefinitionValue={setGridDefinitionValue}
-          project={project}
-        />
-      </SidebarGroup>
-
-      <SidebarGroup
-        title="Config"
-        testId="sidebar-group-config"
-        hint="Configure how your grid is calculated"
-        isMinimised={getAppConfigSectionIsMinimised(SIDBAR_SECTION_IDS.CONFIG)}
-        onToggleMinimise={setAppConfigSectionIsMinimised(
-          SIDBAR_SECTION_IDS.CONFIG
-        )}
-      >
-        <ConfigEditor
-          project={project}
-          setGridDefinitionValue={setGridDefinitionValue}
-        />
       </SidebarGroup>
 
       <SidebarGroup

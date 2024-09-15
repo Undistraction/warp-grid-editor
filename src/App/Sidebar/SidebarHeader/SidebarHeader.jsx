@@ -1,7 +1,6 @@
 import { ChevronDoubleRightIcon } from '@heroicons/react/16/solid'
 import React from 'react'
 
-import Logo from '../../../images/Logo.svg'
 import useAppStore from '../../../state/useAppStore'
 import ButtonLink from '../../components/ButtonLink'
 
@@ -11,21 +10,16 @@ import ButtonLink from '../../components/ButtonLink'
 
 const SidebarHeader = () => {
   const setAppConfigValue = useAppStore.use.setAppConfigValue()
+  const project = useAppStore.use.project()
 
   return (
-    <header className="flex flex-row items-start justify-between">
-      <div className="flex flex-col justify-between pt-2">
-        <h1
-          data-tid="sidebar-title"
-          className="text-base font-bold"
-        >
-          <img
-            src={Logo}
-            className="w-1/3"
-            alt="Warp Grid logo"
-          />
-        </h1>
-      </div>
+    <header className="flex flex-row items-start justify-between pt-4">
+      <h2
+        data-tid="project-name"
+        className="Class Properties truncate text-lg font-bold"
+      >
+        {project.meta.name}
+      </h2>
       <ButtonLink
         icon={<ChevronDoubleRightIcon />}
         className="relative top-2 text-sm"

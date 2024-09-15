@@ -10,9 +10,11 @@ const getHomePage = ({ page }) => {
   // Locators
   // ---------------------------------------------------------------------------
 
+  //Header
+  const headerTitle = page.getByTestId(`header-title`)
   // Sidebar
   const sidebar = page.getByTestId(`sidebar`)
-  const sidebarTitle = page.getByTestId(`sidebar-title`)
+  const projectName = page.getByTestId(`project-name`)
   const sidebarRepoLink = page.getByTestId(`sidebar-repo-link`)
   const sidebarCredit = page.getByTestId(`sidebar-credit`)
   const sidebarCreditLink = page.getByTestId(`sidebar-credit-link`)
@@ -61,6 +63,34 @@ const getHomePage = ({ page }) => {
   const controlPointBottomLeft2 = page.getByTestId(`control-bottom-left2`)
   const controlPointBottomRight1 = page.getByTestId(`control-bottom-right1`)
   const controlPointBottomRight2 = page.getByTestId(`control-bottom-right2`)
+  // Header menu
+  const saveProjectButton = page.getByTestId(`save-project-button`)
+  const saveProjectAsButton = page.getByTestId(`save-project-as-button`)
+  const loadProjectButton = page.getByTestId(`load-project-button`)
+  const exportProjectButton = page.getByTestId(`export-project-button`)
+  // Modal content
+  const saveProjectModalContent = page.getByTestId(`save-project-modal-content`)
+  const loadProjectModalContent = page.getByTestId(`load-project-modal-content`)
+  const exportProjectModalContent = page.getByTestId(
+    `export-project-modal-content`
+  )
+  // Project loader
+  const projectLoaderSelect = page.getByTestId(`project-loader-select`)
+  const projectLoaderLoadButton = page.getByTestId(`project-loader-load-button`)
+  // Project saver
+  const projectSaverNameInput = page.getByTestId(`project-saver-name-input`)
+  const projectSaverSaveButton = page.getByTestId(`project-saver-save-button`)
+  // Project exporter
+  const exportCodeTab = page.getByTestId(`export-code-tab`)
+  const exportSvgTab = page.getByTestId(`export-svg-tab`)
+  // Export
+  const exportCodeBlock = page.getByTestId(`export-code-block`)
+  const copyCodeButton = page.getByTestId(`copy-code-button`)
+  const copySvgButton = page.getByTestId(`copy-svg-button`)
+  // Modal
+  const modal = page.getByTestId(`modal`)
+  const modalOverlay = page.getByTestId(`modal-overlay`)
+  const modalCloseButton = page.getByTestId(`modal-close-button`)
 
   // ---------------------------------------------------------------------------
   // Actions
@@ -85,6 +115,18 @@ const getHomePage = ({ page }) => {
     await group.getByTestId(`bezier-easing-4-slider`).fill(values[3])
   }
 
+  const saveUnsavedProject = async (name) => {
+    await saveProjectButton.click()
+    await projectSaverNameInput.fill(name)
+    await projectSaverSaveButton.click()
+  }
+
+  const saveProjectAs = async (name) => {
+    await saveProjectAsButton.click()
+    await projectSaverNameInput.fill(name)
+    await projectSaverSaveButton.click()
+  }
+
   const verifyBezierEasingForAxisGroup = async (group, values) => {
     await expect(group.getByTestId(`bezier-easing-1-slider`)).toHaveValue(
       values[0]
@@ -104,13 +146,18 @@ const getHomePage = ({ page }) => {
   // Export
   // ---------------------------------------------------------------------------
   return {
+    // Actions
     goto,
     dragNode,
     getSidebarGroup,
     setBezierEasingForAxisGroup,
+    saveUnsavedProject,
+    saveProjectAs,
+    // Assertions
     verifyBezierEasingForAxisGroup,
+    // Elements
+    headerTitle,
     sidebar,
-    sidebarTitle,
     sidebarRepoLink,
     sidebarCredit,
     sidebarCreditLink,
@@ -146,6 +193,25 @@ const getHomePage = ({ page }) => {
     gridAdvancedModeSwitch,
     gridAdvancedRowsInput,
     gridAdvancedColumnsInput,
+    saveProjectButton,
+    saveProjectAsButton,
+    loadProjectButton,
+    exportProjectButton,
+    saveProjectModalContent,
+    loadProjectModalContent,
+    exportProjectModalContent,
+    projectSaverNameInput,
+    projectSaverSaveButton,
+    modal,
+    modalOverlay,
+    modalCloseButton,
+    projectName,
+    projectLoaderSelect,
+    projectLoaderLoadButton,
+    exportCodeBlock,
+    exportCodeTab,
+    exportSvgTab,
+    copyCodeButton,
   }
 }
 

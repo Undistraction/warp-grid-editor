@@ -50,14 +50,7 @@ test.describe(`Opening and closing`, () => {
 })
 
 test.describe(`Sidebar sections`, () => {
-  const GROUP_IDS = [
-    `project`,
-    `bounds`,
-    `visibility`,
-    `grid`,
-    `config`,
-    `grid-square`,
-  ]
+  const GROUP_IDS = [`bounds`, `visibility`, `grid`, `config`, `grid-square`]
 
   for (const groupId of GROUP_IDS) {
     test.describe(`Toggling`, () => {

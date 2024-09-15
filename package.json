@@ -19,6 +19,7 @@
     "test-coverage": "vitest --coverage",
     "test-ui": "ACTIVE_ENV=test playwright test",
     "test-ui-ui": "ACTIVE_ENV=test playwright test --ui",
+    "test-ui-update-screenshots": "ACTIVE_ENV=test playwright test --update-snapshots",
     "lint": "pnpm run lint-prettier && pnpm run lint-eslint",
     "lint-prettier": "prettier . --write",
     "lint-eslint": "eslint  --fix './**/*.{js,jsx,cjs}'",

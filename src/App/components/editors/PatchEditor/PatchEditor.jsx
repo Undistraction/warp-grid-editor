@@ -27,15 +27,6 @@ const PatchEditor = ({ project, canvas }) => {
 
   return (
     <div className="flex flex-col space-y-3">
-      <div className="flex space-x-3 [&>*]:basis-1/2">
-        <Button
-          label="Randomise"
-          onClick={() => {
-            const boundingCurves = getRandomBoundingCurves(canvas)
-            setBoundingCurves(boundingCurves)
-          }}
-        />
-      </div>
       <ControlPointEditor
         zeroControlPoints={zeroControlPointsGlobal}
         linkControlPoints={linkControlPointsGlobal}
@@ -53,6 +44,15 @@ const PatchEditor = ({ project, canvas }) => {
           mirrorControlPoints={mirrorControlPoints}
         />
       )}
+      <div className="flex space-x-3 [&>*]:basis-1/2">
+        <Button
+          label="Randomise"
+          onClick={() => {
+            const boundingCurves = getRandomBoundingCurves(canvas)
+            setBoundingCurves(boundingCurves)
+          }}
+        />
+      </div>
     </div>
   )
 }

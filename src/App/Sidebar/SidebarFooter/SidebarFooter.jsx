@@ -5,7 +5,7 @@ import React from 'react'
 // -----------------------------------------------------------------------------
 
 const SidebarFooter = () => (
-  <div className="flex flex-col space-y-1 pt-2 align-middle">
+  <div className="flex flex-col space-y-1 pb-4 pt-2 align-middle">
     <p
       className="self-center text-sm text-gray-500"
       data-tid="sidebar-credit"

@@ -68,13 +68,22 @@ describe(`useAppStore projectSlice`, () => {
         expect(result.current.project).toEqual(newProject)
       })
     })
+    describe(`meta`, () => {
+      describe(`setName`, () => {
+        it(`replaces the project name`, () => {
+          const { result } = renderHook(() => useAppStore())
+          const NAME = `Alpha`
+          act(() => result.current.setName(NAME))
+          expect(result.current.project.meta.name).toEqual(NAME)
+        })
+      })
 
-    describe(`setProjectName`, () => {
-      it(`replaces the project name`, () => {
-        const { result } = renderHook(() => useAppStore())
-        const NAME = `Alpha`
-        act(() => result.current.setProjectName(NAME))
-        expect(result.current.project.meta.name).toEqual(NAME)
+      describe(`setProjectIsSaved`, () => {
+        it(`sets 'isSaved' to 'true`, () => {
+          const { result } = renderHook(() => useAppStore())
+          act(() => result.current.setIsSaved())
+          expect(result.current.project.meta.isSaved).toBeTrue()
+        })
       })
     })
 

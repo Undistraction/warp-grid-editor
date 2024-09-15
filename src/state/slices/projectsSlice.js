@@ -25,6 +25,10 @@ const updateUuid = curry((uuid, item) =>
   assocPath([`meta`, `uuid`], uuid, item)
 )
 
+const setIsSavedToTrue = curry((item) =>
+  assocPath([`meta`, `isSaved`], true, item)
+)
+
 // -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
@@ -47,6 +51,7 @@ const createProjectsSlice = (set) => ({
       const newProject = updateUuid(v4(), project)
       return {
         projects: append(newProject, projects),
+        project: setIsSavedToTrue(project),
       }
     }),
   loadProject: (uuid) => {

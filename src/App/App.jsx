@@ -8,8 +8,7 @@ import warpGrid from 'warp-grid'
 import useAppStore from '../state/useAppStore'
 import { getDefaultBoundingCurves } from '../utils/boundingCurves'
 import ButtonLink from './components/ButtonLink'
-import ExportModalContent from './components/modals/content/ExportModalContent'
-import Modal from './components/modals/Modal'
+import Header from './Header'
 import Sidebar from './Sidebar'
 import WorkArea from './WorkArea'
 
@@ -55,14 +54,17 @@ const App = () => {
   return (
     <div className="h-full w-screen">
       <div
-        className={`flex-shrink-1 relative flex h-full w-screen flex-row space-x-5 p-5 ${sidebarIsHidden && `pr-8`}`}
+        className={`flex-shrink-1 relative flex h-full w-screen flex-row space-x-5 p-5 ${!sidebarIsHidden && `pr-0`}`}
       >
-        <WorkArea
-          setCanvas={setCanvas}
-          coonsPatch={coonsPatch}
-          dimensions={workAreaDimensions}
-          setDimensions={setWorkAreaDimensions}
-        />
+        <div className="flex-grow-2 flex w-full flex-col">
+          <Header />
+          <WorkArea
+            setCanvas={setCanvas}
+            coonsPatch={coonsPatch}
+            dimensions={workAreaDimensions}
+            setDimensions={setWorkAreaDimensions}
+          />
+        </div>
         {!sidebarIsHidden && (
           <div className="-my-5 w-[300px] flex-shrink-0 flex-grow-0 overflow-y-scroll">
             {canvas && project && (
@@ -77,17 +79,12 @@ const App = () => {
       {sidebarIsHidden && (
         <ButtonLink
           icon={<ChevronDoubleLeftIcon />}
-          className="absolute right-3 top-7 text-sm"
+          className="absolute right-5 top-6 text-sm"
           testId="sidebar-open-button"
           onClick={() =>
             setAppConfigValue([`ui`, `sidebar`, `isHidden`], false)
           }
         />
-      )}
-      {modalIsOpen && (
-        <Modal>
-          <ExportModalContent onClose={() => setModalIsOpen(false)} />
-        </Modal>
       )}
     </div>
   )

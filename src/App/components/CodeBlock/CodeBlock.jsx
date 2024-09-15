@@ -10,9 +10,12 @@ import Button from '../Button'
 // Exports
 // -----------------------------------------------------------------------------
 
-const CodeBlock = ({ codeString, language }) => {
+const CodeBlock = ({ codeString, language, testId = undefined }) => {
   return (
-    <div className="relative">
+    <div
+      className="relative"
+      data-tid={testId}
+    >
       <SyntaxHighlighter
         language={language}
         style={docco}
@@ -23,8 +26,12 @@ const CodeBlock = ({ codeString, language }) => {
       <header className="absolute right-3 top-3">
         <Button
           icon={<ClipboardIcon />}
+          testId="copy-code-button"
           label="Copy"
-          onClick={() => navigator.clipboard.writeText(codeString)}
+          onClick={() => {
+            console.log(`WROTE`)
+            navigator.clipboard.writeText(codeString)
+          }}
         />
       </header>
     </div>
@@ -34,6 +41,7 @@ const CodeBlock = ({ codeString, language }) => {
 CodeBlock.propTypes = {
   codeString: PropTypes.string.isRequired,
   language: PropTypes.oneOf(SyntaxHighlighter.supportedLanguages),
+  testId: PropTypes.string,
 }
 
 export default CodeBlock

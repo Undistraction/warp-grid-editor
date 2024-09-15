@@ -7,7 +7,7 @@ import React from 'react'
 
 const SidebarGroup = ({
   title,
-  children,
+  children = undefined,
   hint,
   isMinimised = false,
   onToggleMinimise,
@@ -51,7 +51,7 @@ const SidebarGroup = ({
 
 SidebarGroup.propTypes = {
   title: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   hint: PropTypes.string,
   isMinimised: PropTypes.bool,
   onToggleMinimise: PropTypes.func.isRequired,

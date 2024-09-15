@@ -1,36 +1,19 @@
 import React from 'react'
 
 import { typeProject } from '../../../../../prop-types'
-import Tab from '../../../Tab'
-import ExportCode from '../ExportCode'
-import ExportSVG from '../ExportSvg'
+import ProjectExporter from './ProjectExporter'
 
 // -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
 
-const ExportModalContent = ({ project }) => {
-  const [selectedIdx, setSelectedIdx] = React.useState(0)
+const ExportModalContent = () => {
   return (
-    <div className="p-5">
-      <div className="flex flex-col">
-        <header className="z-10 flex flex-row">
-          <Tab
-            label="Export code"
-            isSelected={selectedIdx === 0}
-            onClick={() => setSelectedIdx(0)}
-          />
-          <Tab
-            label="Export SVG"
-            isSelected={selectedIdx === 1}
-            onClick={() => setSelectedIdx(1)}
-          />
-        </header>
-        <div className="z-0 border pt-5">
-          {selectedIdx === 0 && <ExportCode project={project} />}
-          {selectedIdx === 1 && <ExportSVG project={project} />}
-        </div>
-      </div>
+    <div
+      className="p-5"
+      data-tid="export-project-modal-content"
+    >
+      <ProjectExporter />
     </div>
   )
 }
