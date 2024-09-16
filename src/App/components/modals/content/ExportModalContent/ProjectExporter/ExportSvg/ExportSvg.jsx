@@ -50,11 +50,6 @@ const ExportSVG = ({ project }) => {
   const codeString = getSVG(project)
   return (
     <div className="flex flex-col space-y-3">
-      <p className="px-3">
-        To generate the grid in JavasScript or Typescript, copy the code below.
-        You’ll need to install the warp-grid package using your package manager
-        too.
-      </p>
       <CodeBlock
         codeString={codeString}
         language="xml"

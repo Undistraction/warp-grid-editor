@@ -1,18 +1,20 @@
 import React from 'react'
 
+import packageJson from '../../../../package.json'
+
 // -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
 
 const SidebarFooter = () => (
-  <div className="flex flex-col space-y-1 pb-4 pt-2 align-middle">
+  <div className="flex flex-col items-center space-y-1 pb-4 pt-4">
     <p
-      className="self-center text-sm text-gray-500"
+      className="text-sm text-gray-500"
       data-tid="sidebar-credit"
     >
       Built by{` `}
       <a
-        className="text-black"
+        className="text-sm text-black"
         data-tid="sidebar-credit-link"
         href="https://undistraction.com"
       >
@@ -20,12 +22,13 @@ const SidebarFooter = () => (
       </a>
     </p>
     <a
-      className="center self-center underline"
+      className="block text-sm underline"
       data-tid="sidebar-repo-link"
       href="https://github.com/Undistraction/warp-grid"
     >
       Github
     </a>
+    <p className="text-sm text-gray-400">Version {packageJson.version}</p>
   </div>
 )
 

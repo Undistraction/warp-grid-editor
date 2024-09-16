@@ -19,7 +19,7 @@ const Button = ({
   iconSelected = undefined,
 }) => {
   const classNamesUnmerged = cls(
-    `rounded-md px-4 py-2 border flex flex-row space-x-2 items-center flex justify-center`,
+    `rounded-md px-2 py-1 border flex flex-row space-x-2 items-center flex justify-center`,
     {
       'bg-white text-gray-400 border-gray-400': isDisabled,
       'bg-white text-black border-black ': !isDisabled && !isSelected,
