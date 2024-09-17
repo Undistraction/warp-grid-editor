@@ -9,6 +9,8 @@ import { test } from '../../fixtures'
 
 test.beforeEach(async ({ homePage }) => {
   await homePage.goto(`/`)
+  // Close the welcome modal
+  await homePage.modalCloseButton.click()
 })
 
 test.describe(`'Export' button`, () => {
@@ -40,19 +42,19 @@ const grid = warpGrid({
   "bottom": {
     "startPoint": {
       "x": 0,
-      "y": 539
+      "y": 534
     },
     "endPoint": {
       "x": 836,
-      "y": 539
+      "y": 534
     },
     "controlPoint1": {
       "x": 30,
-      "y": 569
+      "y": 564
     },
     "controlPoint2": {
       "x": 806,
-      "y": 569
+      "y": 564
     }
   },
   "left": {
@@ -62,7 +64,7 @@ const grid = warpGrid({
     },
     "endPoint": {
       "x": 0,
-      "y": 539
+      "y": 534
     },
     "controlPoint1": {
       "x": -30,
@@ -70,7 +72,7 @@ const grid = warpGrid({
     },
     "controlPoint2": {
       "x": -30,
-      "y": 509
+      "y": 504
     }
   },
   "right": {
@@ -80,7 +82,7 @@ const grid = warpGrid({
     },
     "endPoint": {
       "x": 836,
-      "y": 539
+      "y": 534
     },
     "controlPoint1": {
       "x": 866,
@@ -88,7 +90,7 @@ const grid = warpGrid({
     },
     "controlPoint2": {
       "x": 866,
-      "y": 509
+      "y": 504
     }
   }
 }, {

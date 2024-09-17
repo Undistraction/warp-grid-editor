@@ -46,9 +46,12 @@ const renderCurvesConfig = (project, setGridDefinitionValue) => {
           labelIsAfter
           label="Precision"
           isEven
+          htmlFor="precision"
+          tooltipText="How precise the curves are. Higher values will result in more accuracy at the expense of performance."
         >
           <NumericInput
             testId="precision-input"
+            id="precision"
             value={project.gridDefinition.precision}
             min={1}
             onChange={(precision) => {
@@ -72,6 +75,8 @@ const ConfigEditor = ({ project, setGridDefinitionValue }) => {
         label="Line type"
         labelIsAfter
         isEven
+        htmlFor="line-type"
+        tooltipText="The type of lines used to draw the grid. Straight lines are more performant, but curves are more accurate."
       >
         <SteppedInput
           name="line-type"
@@ -87,6 +92,8 @@ const ConfigEditor = ({ project, setGridDefinitionValue }) => {
         label="Interpolation type"
         labelIsAfter
         isEven
+        htmlFor="interpolation-type"
+        tooltipText="The type of interpolation used to draw the grid. Even interpolation will result in a more uniform grid at the expense of performance."
       >
         <SteppedInput
           name="interpolation-type"

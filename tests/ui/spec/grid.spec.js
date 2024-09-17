@@ -9,6 +9,8 @@ import { test } from '../fixtures'
 
 test.beforeEach(async ({ homePage }) => {
   await homePage.goto(`/`)
+  // Close the welcome modal
+  await homePage.modalCloseButton.click()
   await expect(homePage.gridCanvas).toHaveScreenshot(`grid-default.png`)
 })
 

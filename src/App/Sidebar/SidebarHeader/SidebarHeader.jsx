@@ -13,7 +13,7 @@ const SidebarHeader = () => {
   const project = useAppStore.use.project()
 
   return (
-    <header className="flex flex-row items-start justify-between pt-4">
+    <header className="flex flex-row items-start justify-between pt-5">
       <h2
         data-tid="project-name"
         className="Class Properties truncate text-lg font-bold"

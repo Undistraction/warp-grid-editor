@@ -5,7 +5,11 @@ import React from 'react'
 // -----------------------------------------------------------------------------
 
 // See: https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserverEntry
-const useObserveClientSize = (ref, callback, modify) => {
+const useObserveClientSize = (
+  ref,
+  callback,
+  modify = { width: 0, height: 0 }
+) => {
   // We don't wan to trigger state change
   let size = React.useRef({ width: 0, height: 0 })
 

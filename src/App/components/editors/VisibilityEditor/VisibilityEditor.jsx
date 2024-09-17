@@ -15,6 +15,7 @@ const VisibilityEditor = ({ project }) => {
     <div className="flex flex-col space-y-3">
       <ControlGroup
         label="Show Bounds"
+        tooltipText="Display the outline of the grid"
         labelIsAfter
       >
         <Switch
@@ -25,6 +26,7 @@ const VisibilityEditor = ({ project }) => {
       </ControlGroup>
       <ControlGroup
         label="Show corner points"
+        tooltipText="Display the corner points of the grid"
         labelIsAfter
       >
         <Switch
@@ -35,6 +37,7 @@ const VisibilityEditor = ({ project }) => {
       </ControlGroup>
       <ControlGroup
         label="Show intersections"
+        tooltipText="Display the intersections between the grid lines"
         labelIsAfter
       >
         <Switch
@@ -45,6 +48,7 @@ const VisibilityEditor = ({ project }) => {
       </ControlGroup>
       <ControlGroup
         label="Show grid"
+        tooltipText="Display the grid itself"
         labelIsAfter
       >
         <Switch

@@ -30,7 +30,7 @@ const ControlPointNode = ({ position, onDrag, id }) => {
       <div
         id={id}
         ref={nodeRef}
-        className="control-point-handle group pointer-events-auto absolute -left-[6px] -top-[6px] cursor-move"
+        className={`control-point-handle group pointer-events-auto absolute -left-[${WIDTH * 0.5}px] -top-[${HEIGHT * 0.5}px] cursor-move`}
         data-tid={testId}
       >
         <svg

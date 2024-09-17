@@ -4,8 +4,6 @@ import React from 'react'
 import { typeProject } from '../../../../prop-types'
 import useAppStore from '../../../../state/useAppStore'
 import { getBoundingCurvesCorners } from '../../../../utils/boundingCurves'
-import { getRandomBoundingCurves } from '../../../../utils/random'
-import Button from '../../Button'
 import BoundsEditor from '../BoundsEditor'
 import ControlPointEditor from '../ControlPointEditor'
 
@@ -44,15 +42,6 @@ const PatchEditor = ({ project, canvas }) => {
           mirrorControlPoints={mirrorControlPoints}
         />
       )}
-      <div className="flex space-x-3 [&>*]:basis-1/2">
-        <Button
-          label="Randomise"
-          onClick={() => {
-            const boundingCurves = getRandomBoundingCurves(canvas)
-            setBoundingCurves(boundingCurves)
-          }}
-        />
-      </div>
     </div>
   )
 }

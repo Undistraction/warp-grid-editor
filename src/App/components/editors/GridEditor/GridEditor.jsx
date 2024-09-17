@@ -41,10 +41,14 @@ const GridEditor = ({
       <ControlGroup
         label="Advanced"
         labelIsAfter
+        htmlFor="grid-advanced-switch"
+        tooltipText="Use advanced grid settings that allow you to enter invividual comma-separated values for columns and rows"
+        labelClassName="min-w-24"
       >
         <Switch
           isSelected={isAdvanced}
           testId="grid-advanced-switch"
+          id="grid-advanced-switch"
           onChange={() =>
             setProjectConfigValue(
               [`grid`, `shouldUseComplexColumnsRows`],
@@ -54,25 +58,37 @@ const GridEditor = ({
         />
       </ControlGroup>
       {project.config.grid.shouldUseComplexColumnsRows && (
-        <div className="flex flex-col items-stretch space-y-2">
-          <TextInput
+        <div className="min-w- flex flex-col items-stretch space-y-2">
+          <ControlGroup
             label="Columns"
-            testId="grid-advanced-columns-input"
-            value={convertListIntoInputString(project.gridDefinition.columns)}
-            onChange={(columnsString) => {
-              const columns = stepsToInts(columnsString)
-              setGridDefinitionValue([`columns`], columns)
-            }}
-          />
-          <TextInput
+            htmlFor="grid-advanced-columns-input"
+            tooltipText="Enter a comma-separated list of values. Each value represents a single column."
+            labelClassName="min-w-14"
+          >
+            <TextInput
+              testId="grid-advanced-columns-input"
+              value={convertListIntoInputString(project.gridDefinition.columns)}
+              onChange={(columnsString) => {
+                const columns = stepsToInts(columnsString)
+                setGridDefinitionValue([`columns`], columns)
+              }}
+            />
+          </ControlGroup>
+          <ControlGroup
             label="Rows"
-            testId="grid-advanced-rows-input"
-            value={convertListIntoInputString(project.gridDefinition.rows)}
-            onChange={(rowsString) => {
-              const rows = stepsToInts(rowsString)
-              setGridDefinitionValue([`rows`], rows)
-            }}
-          />
+            htmlFor="grid-advanced-columns-input"
+            tooltipText="Enter a comma-separated list of values. Each value represents a single row."
+            labelClassName="min-w-14"
+          >
+            <TextInput
+              testId="grid-advanced-rows-input"
+              value={convertListIntoInputString(project.gridDefinition.rows)}
+              onChange={(rowsString) => {
+                const rows = stepsToInts(rowsString)
+                setGridDefinitionValue([`rows`], rows)
+              }}
+            />
+          </ControlGroup>
         </div>
       )}
 
@@ -81,6 +97,7 @@ const GridEditor = ({
           <ControlGroup
             direction="vertical"
             label="Columns"
+            tooltipText="The number of columns in the grid"
           >
             <NumericInput
               name="columns"
@@ -94,6 +111,7 @@ const GridEditor = ({
           <ControlGroup
             direction="vertical"
             label="Rows"
+            tooltipText="The number of rows in the grid"
           >
             <NumericInput
               name="rows"
@@ -110,6 +128,7 @@ const GridEditor = ({
         <ControlGroup
           label="Gutter horizontal"
           direction="vertical"
+          tooltipText="The size of the horizontal space between columns"
         >
           <NumericInput
             testId="grid-gutter-horizontal-input"
@@ -127,6 +146,7 @@ const GridEditor = ({
         <ControlGroup
           label="Gutter vertical"
           direction="vertical"
+          tooltipText="The size of the vertical space between rows"
         >
           <NumericInput
             testId="grid-gutter-vertical-input"
@@ -142,29 +162,34 @@ const GridEditor = ({
           />
         </ControlGroup>
       </div>
-      <div className="flex space-x-3 [&>*]:basis-1/2">
-        <EasingEditor
-          title="Easing horizontal"
-          testId="grid-easing-horizontal-group"
-          easing={project.gridDefinition.bezierEasing.xAxis}
-          setEasing={(easing) => {
-            setGridDefinitionValue([`bezierEasing`], {
-              xAxis: easing,
-              yAxis: project.gridDefinition.bezierEasing.yAxis,
-            })
-          }}
-        />
-        <EasingEditor
-          title="Easing vertical"
-          testId="grid-easing-vertical-group"
-          easing={project.gridDefinition.bezierEasing.yAxis}
-          setEasing={(easing) => {
-            setGridDefinitionValue([`bezierEasing`], {
-              xAxis: project.gridDefinition.bezierEasing.xAxis,
-              yAxis: easing,
-            })
-          }}
-        />
+      <div className="flex flex-col space-y-1">
+        <h4 className="text-base font-bold">Distribution</h4>
+        <div className="flex space-x-3 [&>*]:basis-1/2">
+          <EasingEditor
+            title="Horizontal"
+            testId="grid-easing-horizontal-group"
+            tooltipText="The shape of the beizer curve controls the distribution of columns along the X axis."
+            easing={project.gridDefinition.bezierEasing.xAxis}
+            setEasing={(easing) => {
+              setGridDefinitionValue([`bezierEasing`], {
+                xAxis: easing,
+                yAxis: project.gridDefinition.bezierEasing.yAxis,
+              })
+            }}
+          />
+          <EasingEditor
+            title="Vertical"
+            testId="grid-easing-vertical-group"
+            tooltipText="The shape of the beizer curve controls the distribution of rows along the Y axis."
+            easing={project.gridDefinition.bezierEasing.yAxis}
+            setEasing={(easing) => {
+              setGridDefinitionValue([`bezierEasing`], {
+                xAxis: project.gridDefinition.bezierEasing.xAxis,
+                yAxis: easing,
+              })
+            }}
+          />
+        </div>
       </div>
     </div>
   )

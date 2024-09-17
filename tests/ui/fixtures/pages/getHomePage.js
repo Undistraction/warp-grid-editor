@@ -74,6 +74,7 @@ const getHomePage = ({ page }) => {
   const exportProjectModalContent = page.getByTestId(
     `export-project-modal-content`
   )
+  const welcomeModalContent = page.getByTestId(`welcome-modal-content`)
   // Project loader
   const projectLoaderSelect = page.getByTestId(`project-loader-select`)
   const projectLoaderLoadButton = page.getByTestId(`project-loader-load-button`)
@@ -212,6 +213,8 @@ const getHomePage = ({ page }) => {
     exportCodeTab,
     exportSvgTab,
     copyCodeButton,
+    copySvgButton,
+    welcomeModalContent,
   }
 }
 

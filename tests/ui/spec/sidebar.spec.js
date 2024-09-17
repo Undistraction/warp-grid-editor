@@ -9,6 +9,8 @@ import { test } from '../fixtures'
 
 test(`Has link to Github`, async ({ homePage }) => {
   await homePage.goto(`/`)
+  // Close the welcome modal
+  await homePage.modalCloseButton.click()
   await expect(homePage.sidebarRepoLink).toHaveText(`Github`)
   await expect(homePage.sidebarRepoLink).toHaveAttribute(
     `href`,
@@ -18,6 +20,8 @@ test(`Has link to Github`, async ({ homePage }) => {
 
 test(`Has Credit`, async ({ homePage }) => {
   await homePage.goto(`/`)
+  // Close the welcome modal
+  await homePage.modalCloseButton.click()
   await expect(homePage.sidebarCredit).toHaveText(`Built by Undistraction`)
   await expect(homePage.sidebarCreditLink).toHaveAttribute(
     `href`,
@@ -28,6 +32,8 @@ test(`Has Credit`, async ({ homePage }) => {
 test.describe(`Opening and closing`, () => {
   test(`Can be closed and opened`, async ({ homePage }) => {
     await homePage.goto(`/`)
+    // Close the welcome modal
+    await homePage.modalCloseButton.click()
     await expect(homePage.sidebar).toBeVisible()
     await homePage.sidebarCloseButton.click()
     await expect(homePage.sidebar).toBeHidden()
@@ -40,6 +46,8 @@ test.describe(`Opening and closing`, () => {
     page,
   }) => {
     await homePage.goto(`/`)
+    // Close the welcome modal
+    await homePage.modalCloseButton.click()
     await homePage.sidebarCloseButton.click()
     await page.reload()
     await expect(homePage.sidebar).toBeHidden()
@@ -58,6 +66,8 @@ test.describe(`Sidebar sections`, () => {
         homePage,
       }) => {
         await homePage.goto(`/`)
+        // Close the welcome modal
+        await homePage.modalCloseButton.click()
         const group = await homePage.getSidebarGroup(groupId)
         const groupHeader = group.getByTestId(`sidebar-group-header`)
         const groupBody = group.getByTestId(`sidebar-group-body`)
@@ -75,6 +85,8 @@ test.describe(`Sidebar sections`, () => {
         homePage,
       }) => {
         await homePage.goto(`/`)
+        // Close the welcome modal
+        await homePage.modalCloseButton.click()
         const group = await homePage.getSidebarGroup(groupId)
         const groupHeader = group.getByTestId(`sidebar-group-header`)
         await groupHeader.click()

@@ -68,6 +68,9 @@ export const PROJECT_DEFAULT = {
 
 export const APP_CONFIG_DEFAULT = {
   ui: {
+    welcomeScreen: {
+      isHidden: false,
+    },
     sidebar: {
       isHidden: false,
       sections: {

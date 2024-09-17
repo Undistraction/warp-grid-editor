@@ -29,7 +29,6 @@ const CodeBlock = ({ codeString, language, testId = undefined }) => {
           testId="copy-code-button"
           label="Copy"
           onClick={() => {
-            console.log(`WROTE`)
             navigator.clipboard.writeText(codeString)
           }}
         />

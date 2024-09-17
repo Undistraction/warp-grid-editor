@@ -11,10 +11,10 @@ import NodeEditor from '../NodeEditor'
 // -----------------------------------------------------------------------------
 
 const NODES = [
-  { id: BOUNDS_POINT_IDS.TOP_LEFT, title: `Top left` },
-  { id: BOUNDS_POINT_IDS.TOP_RIGHT, title: `Top right` },
-  { id: BOUNDS_POINT_IDS.BOTTOM_LEFT, title: `Bottom left` },
-  { id: BOUNDS_POINT_IDS.BOTTOM_RIGHT, title: `Bottom right` },
+  { id: BOUNDS_POINT_IDS.TOP_LEFT, title: `Top left corner` },
+  { id: BOUNDS_POINT_IDS.TOP_RIGHT, title: `Top right corner` },
+  { id: BOUNDS_POINT_IDS.BOTTOM_LEFT, title: `Bottom left corner` },
+  { id: BOUNDS_POINT_IDS.BOTTOM_RIGHT, title: `Bottom right corner` },
 ]
 
 // -----------------------------------------------------------------------------
@@ -51,6 +51,7 @@ const getNode =
 const renderNodes = (updateBoundingCurvesNodePosition, getNodeWithData) =>
   map(({ id, title }) => {
     const node = getNodeWithData(id)
+
     return (
       <NodeEditor
         key={id}

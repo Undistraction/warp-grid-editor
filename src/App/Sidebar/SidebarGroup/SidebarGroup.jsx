@@ -26,7 +26,7 @@ const SidebarGroup = ({
         data-tid={`sidebar-group-header`}
       >
         <div className="flex cursor-pointer flex-row items-center justify-between">
-          <h2 className="text-base font-bold">{title}</h2>
+          <h2 className="text-lg font-bold">{title}</h2>
           <div className="h-[16px] w-[16px]">{icon}</div>
         </div>
         {hint && (

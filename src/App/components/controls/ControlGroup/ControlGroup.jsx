@@ -12,14 +12,21 @@ const ControlGroup = ({
   direction = `horizontal`,
   isEven = false,
   testId = undefined,
+  tooltipText = undefined,
+  htmlFor = undefined,
+  labelClassName = ``,
 }) => {
   const labelChild = (
-    <div
+    <label
       key="label"
-      className="text-sm"
+      data-tooltip-id="default"
+      data-tooltip-content={tooltipText}
+      data-tooltip-delay-show={500}
+      htmlFor={htmlFor}
+      className={`flex flex-row items-center justify-between space-x-1 ${labelClassName}`}
     >
-      {label}
-    </div>
+      <div className="text-sm">{label}</div>
+    </label>
   )
 
   const labelAndControl = labelIsAfter
@@ -48,6 +55,9 @@ ControlGroup.propTypes = {
   direction: PropTypes.string,
   isEven: PropTypes.bool,
   testId: PropTypes.string,
+  tooltipText: PropTypes.string,
+  htmlFor: PropTypes.string,
+  labelClassName: PropTypes.string,
 }
 
 export default ControlGroup

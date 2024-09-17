@@ -17,6 +17,7 @@ const Button = ({
   testId = ``,
   icon = undefined,
   iconSelected = undefined,
+  tooltipText = undefined,
 }) => {
   const classNamesUnmerged = cls(
     `rounded-md px-2 py-1 border flex flex-row space-x-2 items-center flex justify-center`,
@@ -36,6 +37,9 @@ const Button = ({
       className={classNamesMerged}
       onClick={onClick}
       data-tid={testId}
+      data-tooltip-id="default"
+      data-tooltip-content={tooltipText}
+      data-tooltip-delay-show={500}
     >
       {iconResolved && <div className="h-[16px] w-[16px]">{iconResolved}</div>}
       <div>{isSelected ? labelSelected : label}</div>
@@ -53,6 +57,7 @@ Button.propTypes = {
   testId: PropTypes.string,
   icon: PropTypes.node,
   iconSelected: PropTypes.node,
+  tooltipText: PropTypes.string,
 }
 
 export default Button

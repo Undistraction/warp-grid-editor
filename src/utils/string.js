@@ -5,3 +5,5 @@ import { join } from 'ramda'
 // -----------------------------------------------------------------------------
 
 export const joinWithPeriod = join(`.`)
+
+export const joinWithSpace = join(` `)

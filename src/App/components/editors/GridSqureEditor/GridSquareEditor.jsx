@@ -39,6 +39,7 @@ const GridSquareEditor = ({ project }) => {
       <ControlGroup
         label="Show grid square"
         labelIsAfter
+        tooltipText="Highlight the grid square at the specified column and row indexes"
       >
         <Switch
           isSelected={project.config.gridSquare.shouldShow}
@@ -49,6 +50,7 @@ const GridSquareEditor = ({ project }) => {
         <ControlGroup
           label="Across"
           direction="vertical"
+          tooltipText="The grid square's column index"
         >
           <SteppedInput
             name="across"
@@ -63,6 +65,7 @@ const GridSquareEditor = ({ project }) => {
         <ControlGroup
           label="Down"
           direction="vertical"
+          tooltipText="The grid square's row index"
         >
           <SteppedInput
             name="down"

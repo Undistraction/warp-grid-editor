@@ -19,6 +19,8 @@ const BUTTONS = [
 
 test.beforeEach(async ({ homePage }) => {
   await homePage.goto(`/`)
+  // Close the welcome modal
+  await homePage.modalCloseButton.click()
 })
 
 test.describe(`modals`, () => {

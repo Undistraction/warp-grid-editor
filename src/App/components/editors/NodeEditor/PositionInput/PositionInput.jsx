@@ -17,7 +17,11 @@ const PositionInput = ({ point, onChange }) => {
   return (
     <div className="flex max-w-full flex-row space-x-2">
       <div className="flex max-w-full flex-row space-x-2 [&>*]:basis-1/2">
-        <ControlGroup label="X">
+        <ControlGroup
+          label="X"
+          tooltipText="The position along the horizontal axis"
+          labelIsAfter
+        >
           <div className="">
             <NumericInput
               value={x}
@@ -27,7 +31,11 @@ const PositionInput = ({ point, onChange }) => {
             />
           </div>
         </ControlGroup>
-        <ControlGroup label="Y">
+        <ControlGroup
+          label="Y"
+          tooltipText="The position along the vertical axis"
+          labelIsAfter
+        >
           <div className="">
             <NumericInput
               value={y}

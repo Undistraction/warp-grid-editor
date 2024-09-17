@@ -1,13 +1,16 @@
 import { ChevronDoubleLeftIcon } from '@heroicons/react/16/solid'
 import { isNotNil } from 'ramda-adjunct'
 import React from 'react'
+import { Tooltip } from 'react-tooltip'
 import { useDebounce } from 'use-debounce'
 // eslint-disable-next-line import/no-unresolved
 import warpGrid from 'warp-grid'
 
+import useModal from '../hooks/useModal.jsx'
 import useAppStore from '../state/useAppStore'
 import { getDefaultBoundingCurves } from '../utils/boundingCurves'
 import ButtonLink from './components/ButtonLink'
+import WelcomeModalContent from './components/modals/content/WelcomeModalContent'
 import Header from './Header'
 import Sidebar from './Sidebar'
 import WorkArea from './WorkArea'
@@ -28,7 +31,7 @@ const App = () => {
     width: 0,
     height: 0,
   })
-  const [modalIsOpen, setModalIsOpen] = React.useState(false)
+  const { openModal, Modal, isOpen } = useModal()
 
   const canvasIsReady = isNotNil(canvas) && workAreaDimensions.width > 0
   // Create a random set of bounding curves on first render if no project is loaded
@@ -49,6 +52,17 @@ const App = () => {
     }
   }, [boundingCurvesDebounced, project.gridDefinition])
 
+  React.useEffect(() => {
+    if (!isOpen && !config.ui.welcomeScreen.isHidden) {
+      openModal({
+        Content: WelcomeModalContent,
+        onClose: () => {
+          setAppConfigValue([`ui`, `welcomeScreen`, `isHidden`], true)
+        },
+      })
+    }
+  }, [config, openModal, setAppConfigValue, isOpen])
+
   const { isHidden: sidebarIsHidden } = config.ui.sidebar
 
   return (
@@ -66,7 +80,7 @@ const App = () => {
           />
         </div>
         {!sidebarIsHidden && (
-          <div className="-my-5 w-[300px] flex-shrink-0 flex-grow-0 overflow-y-scroll">
+          <div className="absolute inset-0 flex-grow-0 overflow-y-scroll sm:relative sm:inset-auto sm:-my-5 sm:w-[300px] sm:flex-shrink-0 sm:pt-0">
             {canvas && project && (
               <Sidebar
                 canvas={canvas}
@@ -86,6 +100,11 @@ const App = () => {
           }
         />
       )}
+      <Tooltip
+        className="familysans max-w-[300px] bg-black"
+        id="default"
+      />
+      {Modal}
     </div>
   )
 }

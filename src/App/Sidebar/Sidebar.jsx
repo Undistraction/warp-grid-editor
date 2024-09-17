@@ -31,7 +31,7 @@ const Sidebar = ({ canvas, project }) => {
 
   return (
     <div
-      className={`flex flex-col space-y-3 divide-y-2 pr-5`}
+      className={`flex flex-col space-y-3 divide-y-2 bg-white pr-5`}
       data-tid="sidebar"
     >
       <SidebarHeader />

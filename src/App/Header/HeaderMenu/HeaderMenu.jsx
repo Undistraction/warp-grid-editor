@@ -21,6 +21,7 @@ const HeaderMenu = () => {
       <ButtonLink
         label="Open"
         testId="load-project-button"
+        tooltipText="Load a project from your browser's local storage"
         onClick={() => {
           openModal({ Content: LoadProjectModalContent, props: { project } })
         }}
@@ -28,8 +29,8 @@ const HeaderMenu = () => {
       <ButtonLink
         label="Save"
         testId="save-project-button"
+        tooltipText="Save the current project to your browser's local storage"
         onClick={() => {
-          console.log(project)
           if (project.meta.isSaved) {
             saveProject(project)
           } else {
@@ -43,6 +44,7 @@ const HeaderMenu = () => {
       <ButtonLink
         label="Save as"
         testId="save-project-as-button"
+        tooltipText="Save a copy of the current project to your browser's local storage"
         onClick={() =>
           openModal({
             Content: SaveProjectModalContent,
@@ -53,6 +55,7 @@ const HeaderMenu = () => {
       <ButtonLink
         label="Export"
         testId="export-project-button"
+        tooltipText="Export the current project's grid as either code or as and SVG"
         onClick={() => {
           openModal({ Content: ExportModalContent, props: { project } })
         }}

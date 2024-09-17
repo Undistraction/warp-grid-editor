@@ -1,3 +1,4 @@
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/16/solid'
 import PropTypes from 'prop-types'
 import React from 'react'
 
@@ -22,8 +23,7 @@ const NodeEditor = ({
   controlNodesAreMirrored,
 }) => {
   const [isMinimised, setIsMinised] = React.useState(true)
-
-  const icon = isMinimised ? `+` : `-`
+  const icon = isMinimised ? <ChevronDownIcon /> : <ChevronUpIcon />
 
   return (
     <div className="flex flex-col space-y-3 p-2">
@@ -31,27 +31,12 @@ const NodeEditor = ({
         onClick={() => setIsMinised(!isMinimised)}
         className="flex cursor-pointer flex-row items-center justify-between"
       >
-        <h2 className="text-sm font-bold">{title}</h2>
-        <div>{icon}</div>
+        <h2 className="font-bold">{title}</h2>
+        {icon && <div className="h-[16px] w-[16px]">{icon}</div>}
       </header>
-      <div className={`flex flex-col space-y-2 ${isMinimised && `hidden`}`}>
-        <div className={`flex flex-col space-y-2`}>
-          <PositionInput
-            label="Corner"
-            point={cornerPoint.point}
-            onChange={updateBoundingCurvesNodePosition(cornerPoint.id)}
-          />
-          <PositionInput
-            label="Ctrl 1"
-            point={controlPoint1.point}
-            onChange={updateBoundingCurvesNodePosition(controlPoint1.id)}
-          />
-          <PositionInput
-            label="Ctrl 2"
-            point={controlPoint2.point}
-            onChange={updateBoundingCurvesNodePosition(controlPoint2.id)}
-          />
-        </div>
+      <div
+        className={`flex flex-col space-y-2 pb-2 ${isMinimised && `hidden`}`}
+      >
         <ControlPointEditor
           zeroControlPoints={zeroControlPoints}
           linkControlPoints={linkControlPoints}
@@ -59,6 +44,32 @@ const NodeEditor = ({
           controlNodesAreLinked={controlNodesAreLinked}
           controlNodesAreMirrored={controlNodesAreMirrored}
         />
+        <div className={`flex flex-col space-y-2`}>
+          <div className="flex flex-col space-y-1">
+            <h4 className="text-sm">Corner point</h4>
+            <PositionInput
+              label="Corner"
+              point={cornerPoint.point}
+              onChange={updateBoundingCurvesNodePosition(cornerPoint.id)}
+            />
+          </div>
+          <div className="flex flex-col space-y-1">
+            <h4 className="text-sm">Control point 1</h4>
+            <PositionInput
+              label="Ctrl 1"
+              point={controlPoint1.point}
+              onChange={updateBoundingCurvesNodePosition(controlPoint1.id)}
+            />
+          </div>
+          <div className="flex flex-col space-y-1">
+            <h4 className="text-sm">Control point 2</h4>
+            <PositionInput
+              label="Ctrl 2"
+              point={controlPoint2.point}
+              onChange={updateBoundingCurvesNodePosition(controlPoint2.id)}
+            />
+          </div>
+        </div>
       </div>
     </div>
   )

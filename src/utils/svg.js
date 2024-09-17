@@ -4,12 +4,21 @@ import { flatten, map } from 'ramda'
 // Utils
 // -----------------------------------------------------------------------------
 
-const getMoveForPoint = ({ x, y }) => `M${x} ${y}`
+// -----------------------------------------------------------------------------
+// Exports
+// -----------------------------------------------------------------------------
 
-const getCubicBezierToPoint = ({ controlPoint1, controlPoint2, endPoint }) =>
-  `C${controlPoint1.x} ${controlPoint1.y} ${controlPoint2.x} ${controlPoint2.y} ${endPoint.x} ${endPoint.y}`
+export const getMoveForPoint = ({ x, y }) => `M${x} ${y}`
 
-const getPathForBounds = ({ top, bottom, left, right }) => {
+export const getCubicBezierToPoint = ({
+  controlPoint1,
+  controlPoint2,
+  endPoint,
+}) => {
+  return `C${controlPoint1.x} ${controlPoint1.y} ${controlPoint2.x} ${controlPoint2.y} ${endPoint.x} ${endPoint.y}`
+}
+
+export const getPathForBounds = ({ top, bottom, left, right }) => {
   const bottomReversed = {
     endPoint: bottom.startPoint,
     controlPoint1: bottom.controlPoint2,
@@ -24,10 +33,6 @@ const getPathForBounds = ({ top, bottom, left, right }) => {
 
   return `${getMoveForPoint(top.startPoint)} ${getCubicBezierToPoint(top)} ${getCubicBezierToPoint(right)} ${getCubicBezierToPoint(bottomReversed)} ${getCubicBezierToPoint(leftReversed)} Z`
 }
-
-// -----------------------------------------------------------------------------
-// Exports
-// -----------------------------------------------------------------------------
 
 // Run through each subcell, rendering the palette colours
 export const getSvgForGrid = (grid, { width, height }) => {

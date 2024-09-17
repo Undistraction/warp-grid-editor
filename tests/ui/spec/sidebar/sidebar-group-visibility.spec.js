@@ -27,6 +27,8 @@ const verifyCornerNodesAreHidden = async (homePage) => {
 
 test.beforeEach(async ({ homePage }) => {
   await homePage.goto(`/`)
+  // Close the welcome modal
+  await homePage.modalCloseButton.click()
   await expect(homePage.gridCanvas).toHaveScreenshot(`grid-default.png`)
   // Open the sidebar group
   const group = await homePage.getSidebarGroup(`visibility`)

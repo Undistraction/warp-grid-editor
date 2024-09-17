@@ -6,7 +6,7 @@ import React from 'react'
 // Exports
 // -----------------------------------------------------------------------------
 
-const TextInput = ({ value, label, onChange, testId = undefined }) => {
+const TextInput = ({ value, onChange, testId = undefined }) => {
   const [localValue, setLocalValue] = React.useState(null)
   const resolvedValue = !isNil(localValue) ? localValue : value
   return (
@@ -26,7 +26,6 @@ const TextInput = ({ value, label, onChange, testId = undefined }) => {
           }
         }}
       />
-      <div className="min-w-[70px]">{label}</div>
     </div>
   )
 }
