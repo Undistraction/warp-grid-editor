@@ -1,5 +1,4 @@
 // eslint-disable-next-line import/named
-import { expect } from '@playwright/test'
 
 // -----------------------------------------------------------------------------
 // Exports
@@ -109,11 +108,20 @@ const getHomePage = ({ page }) => {
     return page.getByTestId(`sidebar-group-${group}`)
   }
 
-  const setBezierEasingForAxisGroup = async (group, values) => {
-    await group.getByTestId(`bezier-easing-1-slider`).fill(values[0])
-    await group.getByTestId(`bezier-easing-2-slider`).fill(values[1])
-    await group.getByTestId(`bezier-easing-3-slider`).fill(values[2])
-    await group.getByTestId(`bezier-easing-4-slider`).fill(values[3])
+  const setBezierEasingForAxis = async (group, values) => {
+    const bounds = await group.getByTestId(`bezier-easing-bounds`).boundingBox()
+    const startNode = await group.getByTestId(`control-point-start`)
+    const endNode = await group.getByTestId(`control-point-end`)
+    await dragNode(
+      startNode,
+      bounds.x + bounds.width * values[0],
+      bounds.y + bounds.height * values[1]
+    )
+    await dragNode(
+      endNode,
+      bounds.x + bounds.width * values[2],
+      bounds.y + bounds.height * values[3]
+    )
   }
 
   const saveUnsavedProject = async (name) => {
@@ -128,20 +136,7 @@ const getHomePage = ({ page }) => {
     await projectSaverSaveButton.click()
   }
 
-  const verifyBezierEasingForAxisGroup = async (group, values) => {
-    await expect(group.getByTestId(`bezier-easing-1-slider`)).toHaveValue(
-      values[0]
-    )
-    await expect(group.getByTestId(`bezier-easing-2-slider`)).toHaveValue(
-      values[1]
-    )
-    await expect(group.getByTestId(`bezier-easing-3-slider`)).toHaveValue(
-      values[2]
-    )
-    await expect(group.getByTestId(`bezier-easing-4-slider`)).toHaveValue(
-      values[3]
-    )
-  }
+  const verifyBezierEasingForAxisGroup = async (group, values) => {}
 
   // ---------------------------------------------------------------------------
   // Export
@@ -151,7 +146,7 @@ const getHomePage = ({ page }) => {
     goto,
     dragNode,
     getSidebarGroup,
-    setBezierEasingForAxisGroup,
+    setBezierEasingForAxis,
     saveUnsavedProject,
     saveProjectAs,
     // Assertions

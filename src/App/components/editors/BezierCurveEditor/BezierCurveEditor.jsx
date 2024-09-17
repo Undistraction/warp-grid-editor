@@ -105,6 +105,7 @@ const BezierCurveEditor = ({ onChange, values }) => {
     <div
       className="relative w-[100%] pb-[100%]"
       ref={ref}
+      data-tid="bezier-easing-bounds"
     >
       <div className="absolute inset-0 border border-black" />
       {bounds && (

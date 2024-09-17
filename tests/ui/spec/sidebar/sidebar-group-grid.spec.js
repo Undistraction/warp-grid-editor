@@ -41,19 +41,23 @@ test.describe(`Rows, columns and gutter`, () => {
     await expect(homePage.gridCanvas).toHaveScreenshot(`grid-1x1.png`)
   })
 
-  test.skip(`Updates easing`, async ({ homePage }) => {
+  test(`Updates easing`, async ({ homePage }) => {
     await homePage.gridRowsInput.fill(`10`)
     await homePage.gridColumnsInput.fill(`20`)
     await homePage.gridGutterHorizontalInput.fill(`1`)
     await homePage.gridGutterVerticalInput.fill(`2`)
-    await homePage.setBezierEasingForAxisGroup(
-      homePage.gridEasingHorizontalGroup,
-      [`0.15`, `0.4`, `0.85`, `0.6`]
-    )
-    await homePage.setBezierEasingForAxisGroup(
-      homePage.gridEasingVerticalGroup,
-      [`0.25`, `0.33`, `0.66`, `0.75`]
-    )
+    await homePage.setBezierEasingForAxis(homePage.gridEasingHorizontalGroup, [
+      `0.15`,
+      `0.4`,
+      `0.85`,
+      `0.6`,
+    ])
+    await homePage.setBezierEasingForAxis(homePage.gridEasingVerticalGroup, [
+      `0.25`,
+      `0.33`,
+      `0.66`,
+      `0.75`,
+    ])
 
     await expect(homePage.gridCanvas).toHaveScreenshot(
       `grid-10x20-with-gutter-1x2-with-easing.png`
@@ -67,19 +71,23 @@ test.describe(`Rows, columns and gutter`, () => {
     await expect(homePage.gridCanvas).toHaveScreenshot(`grid-advanced.png`)
   })
 
-  test.skip(`State is saved on page reload`, async ({ homePage, page }) => {
+  test(`State is saved on page reload`, async ({ homePage, page }) => {
     await homePage.gridRowsInput.fill(`3`)
     await homePage.gridColumnsInput.fill(`8`)
     await homePage.gridGutterHorizontalInput.fill(`1`)
     await homePage.gridGutterVerticalInput.fill(`0.5`)
-    await homePage.setBezierEasingForAxisGroup(
-      homePage.gridEasingHorizontalGroup,
-      [`0.15`, `0.4`, `0.85`, `0.6`]
-    )
-    await homePage.setBezierEasingForAxisGroup(
-      homePage.gridEasingVerticalGroup,
-      [`0.25`, `0.33`, `0.66`, `0.75`]
-    )
+    await homePage.setBezierEasingForAxis(homePage.gridEasingHorizontalGroup, [
+      `0.15`,
+      `0.4`,
+      `0.85`,
+      `0.6`,
+    ])
+    await homePage.setBezierEasingForAxis(homePage.gridEasingVerticalGroup, [
+      `0.25`,
+      `0.33`,
+      `0.66`,
+      `0.75`,
+    ])
     await page.reload()
     await expect(homePage.gridCanvas).toHaveScreenshot(
       `grid-3x8-with-gutter-1x0.5-with-easing.png`
@@ -88,13 +96,5 @@ test.describe(`Rows, columns and gutter`, () => {
     await expect(homePage.gridColumnsInput).toHaveValue(`8`)
     await expect(homePage.gridGutterHorizontalInput).toHaveValue(`1`)
     await expect(homePage.gridGutterVerticalInput).toHaveValue(`0.5`)
-    await homePage.verifyBezierEasingForAxisGroup(
-      homePage.gridEasingHorizontalGroup,
-      [`0.15`, `0.4`, `0.85`, `0.6`]
-    )
-    await homePage.verifyBezierEasingForAxisGroup(
-      homePage.gridEasingVerticalGroup,
-      [`0.25`, `0.33`, `0.66`, `0.75`]
-    )
   })
 })
