@@ -75,8 +75,8 @@ importers:
         specifier: ^10.0.0
         version: 10.0.0
       warp-grid:
-        specifier: ^1.6.0
-        version: link:../warp-grid
+        specifier: ^2.0.1
+        version: 2.0.1
       zustand:
         specifier: ^4.5.4
         version: 4.5.4(@types/react@18.3.7)(react@18.3.1)
@@ -1716,6 +1716,9 @@ packages:
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
 
+  coons-patch@2.0.2:
+    resolution: {integrity: sha512-U6UxCAb9D3ap1JMRAgDV/vK4tbHREggD94VcPghci6nsft6chzXtB9sK1VCPcV7MaW9DIyrHyeDQ8ZoP8DG1vA==}
+
   core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
 
@@ -3268,6 +3271,9 @@ packages:
     engines: {node: '>= 18'}
     hasBin: true
 
+  matrix-js@1.7.1:
+    resolution: {integrity: sha512-1s2aiQeSqtD3UjLiL/V6Bxd4x/AjZ4E79vI2DQzaAFPV6bi66vk9URZb2T5ZklK9MnFAF00vlZO0qo+D07jdsg==}
+
   meow@12.1.1:
     resolution: {integrity: sha512-BhXM0Au22RwUneMPwSCnyhTOizdWoIEPU9sp0Aqa1PnDMR5Wv2FGXYDjuzJEIX+Eo2Rb8xuYe5jrnm5QowQFkw==}
     engines: {node: '>=16.10'}
@@ -4705,6 +4711,9 @@ packages:
 
   walker@1.0.8:
     resolution: {integrity: sha512-ts/8E8l5b7kY0vlWLewOkDXMmPdLcVV4GmOQLyxuSswIJsweeFZtAsMF7k1Nszz+TYBQrlYRmzOnr398y1JemQ==}
+
+  warp-grid@2.0.1:
+    resolution: {integrity: sha512-b1x6LoNb1+/3/+19UkNQB0VRHCh4I9R1TeZHxpGotDHpw6AyYfMmidE+RHwVoHsQTgRtW6bCgTF23CeYuFgsog==}
 
   webidl-conversions@7.0.0:
     resolution: {integrity: sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==}
@@ -6628,6 +6637,10 @@ snapshots:
   convert-hrtime@5.0.0: {}
 
   convert-source-map@2.0.0: {}
+
+  coons-patch@2.0.2:
+    dependencies:
+      fast-memoize: 2.5.2
 
   core-util-is@1.0.3: {}
 
@@ -8568,6 +8581,8 @@ snapshots:
 
   marked@12.0.2: {}
 
+  matrix-js@1.7.1: {}
+
   meow@12.1.1: {}
 
   meow@13.2.0: {}
@@ -9905,6 +9920,13 @@ snapshots:
   walker@1.0.8:
     dependencies:
       makeerror: 1.0.12
+
+  warp-grid@2.0.1:
+    dependencies:
+      bezier-easing: 2.1.0
+      coons-patch: 2.0.2
+      fast-memoize: 2.5.2
+      matrix-js: 1.7.1
 
   webidl-conversions@7.0.0: {}
 

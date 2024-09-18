@@ -42,19 +42,19 @@ const grid = warpGrid({
   "bottom": {
     "startPoint": {
       "x": 0,
-      "y": 534
+      "y": 533
     },
     "endPoint": {
       "x": 836,
-      "y": 534
+      "y": 533
     },
     "controlPoint1": {
       "x": 30,
-      "y": 564
+      "y": 563
     },
     "controlPoint2": {
       "x": 806,
-      "y": 564
+      "y": 563
     }
   },
   "left": {
@@ -64,7 +64,7 @@ const grid = warpGrid({
     },
     "endPoint": {
       "x": 0,
-      "y": 534
+      "y": 533
     },
     "controlPoint1": {
       "x": -30,
@@ -72,7 +72,7 @@ const grid = warpGrid({
     },
     "controlPoint2": {
       "x": -30,
-      "y": 504
+      "y": 503
     }
   },
   "right": {
@@ -82,7 +82,7 @@ const grid = warpGrid({
     },
     "endPoint": {
       "x": 836,
-      "y": 534
+      "y": 533
     },
     "controlPoint1": {
       "x": 866,
@@ -90,7 +90,7 @@ const grid = warpGrid({
     },
     "controlPoint2": {
       "x": 866,
-      "y": 504
+      "y": 503
     }
   }
 }, {

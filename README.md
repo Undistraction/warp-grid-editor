@@ -1,5 +1,7 @@
 # README
 
+![image](./src/images/screenshot.png)
+
 This is an editor / demo for [warp-grid](https://github.com/undistraction/warp-grid).
 
 You can use it [here](https://warp-grid-editor.undistraction.com).

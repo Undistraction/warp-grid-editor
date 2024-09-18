@@ -17,7 +17,7 @@ const HeaderMenu = () => {
   const { openModal, Modal } = useModal()
 
   return (
-    <div className="flex flex-row items-start space-x-3">
+    <div className="flex flex-row items-start space-x-2 sm:space-x-3">
       <ButtonLink
         label="Open"
         testId="load-project-button"
