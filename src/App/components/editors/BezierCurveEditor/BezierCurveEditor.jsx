@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import { map } from 'ramda'
 import React from 'react'
 
 import useObserveClientSize from '../../../../hooks/useObserveClientSize'
@@ -15,6 +16,7 @@ const CONTROL_POINT_NODE_SIZE_HALF = CONTROL_POINT_NODE_SIZE * 0.5
 // -----------------------------------------------------------------------------
 // Utils
 // -----------------------------------------------------------------------------
+const clampT = (t) => Math.min(Math.max(t, 0), 1)
 
 const getPositionFromValue = (v1, v2, width, height) => ({
   x: v1 * (width - CONTROL_POINT_NODE_SIZE) + CONTROL_POINT_NODE_SIZE_HALF,
@@ -24,10 +26,11 @@ const getPositionFromValue = (v1, v2, width, height) => ({
 })
 
 const getValuesFromPosition = ({ x, y }, { width, height }) => {
-  return [
-    (x - CONTROL_POINT_NODE_SIZE_HALF) / (width - CONTROL_POINT_NODE_SIZE),
-    1 - (y - CONTROL_POINT_NODE_SIZE_HALF) / (height - CONTROL_POINT_NODE_SIZE),
-  ]
+  const v1 =
+    (x - CONTROL_POINT_NODE_SIZE_HALF) / (width - CONTROL_POINT_NODE_SIZE)
+  const v2 =
+    1 - (y - CONTROL_POINT_NODE_SIZE_HALF) / (height - CONTROL_POINT_NODE_SIZE)
+  return map(clampT, [v1, v2])
 }
 
 const getPositionsFromValues = ([v1, v2, v3, v4], { width, height }) => ({
