@@ -41,12 +41,10 @@ export const CORNER_POINTS = [
 
 export const METRICS = {
   CONTROL_POINT: {
-    WIDTH: 12,
-    HEIGHT: 12,
+    SIZE: 12,
   },
   CORNER_POINT: {
-    WIDTH: 24,
-    HEIGHT: 24,
+    SIZE: 24,
   },
   CANVAS: {
     BORDER_WIDTH: 1,

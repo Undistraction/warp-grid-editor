@@ -10,7 +10,10 @@ import { typePoint } from '../../../../../prop-types'
 // Const
 // -----------------------------------------------------------------------------
 
-const { WIDTH, HEIGHT } = METRICS.CORNER_POINT
+const { SIZE } = METRICS.CORNER_POINT
+
+const SIZE_HALF = SIZE * 0.5
+const SIZE_QUARTER = SIZE * 0.25
 
 // -----------------------------------------------------------------------------
 // Exports
@@ -29,18 +32,22 @@ const CornerNode = ({ id, position, onDrag, onDoubleClick }) => {
       handle=".corner-handle"
     >
       <div
-        className="corner-handle group pointer-events-auto absolute -left-[12px] -top-[12px] cursor-move"
+        className="corner-handle group pointer-events-auto absolute cursor-move"
         ref={nodeRef}
         id={id}
         onDoubleClick={onDoubleClick(id)}
         data-tid={testId}
+        style={{
+          left: `-${SIZE_HALF}px`,
+          top: `-${SIZE_HALF}px`,
+        }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           overflow="visible"
-          viewBox={`${-WIDTH * 0.5} ${-HEIGHT * 0.5}  ${WIDTH} ${HEIGHT}`}
-          width={`${WIDTH}px`}
-          height={`${HEIGHT}px`}
+          viewBox={`${-SIZE_HALF} ${-SIZE_HALF}  ${SIZE} ${SIZE}`}
+          width={`${SIZE}px`}
+          height={`${SIZE}px`}
           className="scale-1 transition-transform hover:scale-125 group-[.react-draggable-dragging]:scale-125"
         >
           <circle
@@ -49,13 +56,13 @@ const CornerNode = ({ id, position, onDrag, onDoubleClick }) => {
             fill="white"
             cx="0"
             cy="0"
-            r={WIDTH * 0.5}
+            r={SIZE_HALF}
           />
           <circle
             fill="black"
             cx="0.25"
             cy="0.25"
-            r={WIDTH * 0.25}
+            r={SIZE_QUARTER}
           />
         </svg>
       </div>

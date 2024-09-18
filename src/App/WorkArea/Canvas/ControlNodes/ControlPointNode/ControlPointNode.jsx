@@ -10,7 +10,8 @@ import { typePoint } from '../../../../../prop-types'
 // Utils
 // -----------------------------------------------------------------------------
 
-const { WIDTH, HEIGHT } = METRICS.CONTROL_POINT
+const { SIZE } = METRICS.CONTROL_POINT
+const SIZE_HALF = SIZE * 0.5
 
 // -----------------------------------------------------------------------------
 // Exports
@@ -30,22 +31,26 @@ const ControlPointNode = ({ position, onDrag, id }) => {
       <div
         id={id}
         ref={nodeRef}
-        className={`control-point-handle group pointer-events-auto absolute -left-[${WIDTH * 0.5}px] -top-[${HEIGHT * 0.5}px] cursor-move`}
+        className={`control-point-handle group pointer-events-auto absolute cursor-move`}
         data-tid={testId}
+        style={{
+          left: `-${SIZE_HALF}px`,
+          top: `-${SIZE_HALF}px`,
+        }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           overflow="visible"
-          viewBox={`${-WIDTH * 0.5} ${-HEIGHT * 0.5} ${WIDTH} ${HEIGHT}`}
-          width={`${WIDTH}px`}
-          height={`${HEIGHT}px`}
+          viewBox={`${-SIZE_HALF} ${-SIZE_HALF} ${SIZE} ${SIZE}`}
+          width={`${SIZE}px`}
+          height={`${SIZE}px`}
           className="transition-transform hover:scale-125 group-[.react-draggable-dragging]:scale-125"
         >
           <circle
             fill="black"
             cx="0"
             cy="0"
-            r={WIDTH * 0.5}
+            r={SIZE_HALF}
           />
         </svg>
       </div>
