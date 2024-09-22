@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState } from 'react'
 
 // -----------------------------------------------------------------------------
 // Types
@@ -28,7 +28,7 @@ const NumericInput = ({
   testId = undefined,
   name = undefined,
 }: NumericInputProps) => {
-  const [localValue, setLocalValue] = React.useState<string | null>(null)
+  const [localValue, setLocalValue] = useState<string | null>(null)
   const resolvedValue = localValue === `` ? localValue : value
 
   return (

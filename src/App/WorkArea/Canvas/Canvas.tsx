@@ -1,4 +1,4 @@
-import React from 'react'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 
 // eslint-disable-next-line import/named
 import { GridSquareConfig, ProjectConfig, WarpGrid } from '../../../types'
@@ -29,15 +29,15 @@ const Canvas = ({
   gridSquareConfig,
   config,
 }: CanvasProps) => {
-  const ref = React.useRef<HTMLCanvasElement>(null)
+  const ref = useRef<HTMLCanvasElement>(null)
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (ref.current) {
       setCanvas(ref.current)
     }
   }, [setCanvas])
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (grid && ref.current) {
       const canvasContext = ref.current.getContext(`2d`)
 

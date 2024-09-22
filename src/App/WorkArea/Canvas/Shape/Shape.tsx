@@ -1,4 +1,4 @@
-import React from 'react'
+import { ReactNode, useLayoutEffect, useRef, useState } from 'react'
 import Draggable from 'react-draggable'
 
 // eslint-disable-next-line import/named
@@ -75,13 +75,13 @@ const renderPath = ({ top, left, bottom, right }: BoundingCurves) => {
 // Exports
 // -----------------------------------------------------------------------------
 
-const Shape = ({ boundingCurves, onDrag }: ShapeProps): React.ReactNode => {
-  const nodeRef = React.useRef(null)
-  const svgRef = React.useRef(null)
+const Shape = ({ boundingCurves, onDrag }: ShapeProps): ReactNode => {
+  const nodeRef = useRef(null)
+  const svgRef = useRef(null)
   const [{ width, height, x, y }, setCanvasBounds] =
-    React.useState(DEFAULT_CANVAS_SIZE)
+    useState(DEFAULT_CANVAS_SIZE)
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (svgRef.current) {
       const svgElement: SVGGraphicsElement = svgRef.current
       const boundingBox = svgElement.getBBox({ stroke: true })

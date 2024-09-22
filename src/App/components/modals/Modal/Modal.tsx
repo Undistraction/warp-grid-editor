@@ -1,4 +1,5 @@
 import { XMarkIcon } from '@heroicons/react/16/solid'
+import { MouseEvent, ReactNode } from 'react'
 
 import ButtonLink from '../../ButtonLink'
 
@@ -7,7 +8,7 @@ import ButtonLink from '../../ButtonLink'
 // -----------------------------------------------------------------------------
 
 interface ModalProps {
-  children: React.ReactNode
+  children: ReactNode
   onClose: () => void
 }
 
@@ -16,7 +17,7 @@ interface ModalProps {
 // -----------------------------------------------------------------------------
 
 const Modal = ({ children, onClose }: ModalProps) => {
-  const handleBackgroundClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleBackgroundClick = (event: MouseEvent<HTMLElement>) => {
     if (event.target === event.currentTarget) {
       onClose()
     }

@@ -1,5 +1,5 @@
 import { map } from 'ramda'
-import React from 'react'
+import React, { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { DraggableData, DraggableEvent } from 'react-draggable'
 
 import useObserveClientSize from '../../../../hooks/useObserveClientSize'
@@ -75,16 +75,16 @@ const BezierCurveEditor = ({
   onChange,
   values: bezierEasingParams,
 }: BezierCurveEditorProps) => {
-  const [bounds, setBounds] = React.useState<DOMRect | null>(null)
-  const [{ width, height }, setDimensions] = React.useState<Size>({
+  const [bounds, setBounds] = useState<DOMRect | null>(null)
+  const [{ width, height }, setDimensions] = useState<Size>({
     width: 0,
     height: 0,
   })
 
-  const ref = React.useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLDivElement>(null)
   useObserveClientSize(ref, setDimensions)
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (ref.current) {
       const newBounds = ref.current.getBoundingClientRect()
       if (width > 0) {
@@ -93,12 +93,12 @@ const BezierCurveEditor = ({
     }
   }, [width, height, ref])
 
-  const positions = React.useMemo(() => {
+  const positions = useMemo(() => {
     if (!bounds) return null
     return getPositionsFromValues(bezierEasingParams, bounds)
   }, [bezierEasingParams, bounds])
 
-  const boundsInset = React.useMemo(() => {
+  const boundsInset = useMemo(() => {
     if (!bounds) return null
     return {
       width: bounds.width - CONTROL_POINT_NODE_SIZE,
@@ -135,7 +135,7 @@ const BezierCurveEditor = ({
       onChange(valuesNew)
     }
 
-  const stemPoints: PointPairs | null = React.useMemo(() => {
+  const stemPoints: PointPairs | null = useMemo(() => {
     if (!positions || !boundsInset) return null
 
     return [
@@ -164,7 +164,7 @@ const BezierCurveEditor = ({
     >
       <div className="absolute inset-0 border border-black" />
       {boundsInset && stemPoints && positions && (
-        <React.Fragment>
+        <Fragment>
           <div className="absolute inset-[6px]">
             <BezierCurve
               bounds={boundsInset}
@@ -185,7 +185,7 @@ const BezierCurveEditor = ({
             onDrag={handleNodeDrag}
             position={positions.controlPointEnd}
           />
-        </React.Fragment>
+        </Fragment>
       )}
     </div>
   )

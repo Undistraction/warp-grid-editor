@@ -1,5 +1,5 @@
 import dasherize from 'dasherize'
-import React from 'react'
+import React, { ReactNode, useRef } from 'react'
 import Draggable, { DraggableData, DraggableEvent } from 'react-draggable'
 
 import { METRICS } from '../../../../../const'
@@ -35,8 +35,8 @@ const CornerNode = ({
   position,
   onDrag,
   onDoubleClick,
-}: CornerNodeProps): React.ReactNode => {
-  const nodeRef = React.useRef(null)
+}: CornerNodeProps): ReactNode => {
+  const nodeRef = useRef(null)
   const testId = dasherize(id)
 
   return (

@@ -1,5 +1,5 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/16/solid'
-import React from 'react'
+import { useState } from 'react'
 
 import {
   CornerNodePoint,
@@ -41,7 +41,7 @@ const NodeEditor = ({
   controlNodesAreLinked,
   controlNodesAreMirrored,
 }: NodeEditorProps) => {
-  const [isMinimised, setIsMinised] = React.useState(true)
+  const [isMinimised, setIsMinised] = useState(true)
   const icon = isMinimised ? <ChevronDownIcon /> : <ChevronUpIcon />
 
   return (

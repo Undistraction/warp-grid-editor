@@ -1,5 +1,5 @@
 import dasherize from 'dasherize'
-import React from 'react'
+import React, { ReactNode, useRef } from 'react'
 import Draggable, { DraggableData, DraggableEvent } from 'react-draggable'
 
 import { METRICS } from '../../../../../const'
@@ -31,8 +31,8 @@ const ControlPointNode = ({
   position,
   onDrag,
   id,
-}: ControlPointNodeProps): React.ReactNode => {
-  const nodeRef = React.useRef(null)
+}: ControlPointNodeProps): ReactNode => {
+  const nodeRef = useRef(null)
   const testId = dasherize(id)
   return (
     <Draggable

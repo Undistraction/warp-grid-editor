@@ -1,5 +1,5 @@
 import { isNil } from 'ramda'
-import React from 'react'
+import { useState } from 'react'
 
 // -----------------------------------------------------------------------------
 // Exports
@@ -16,7 +16,7 @@ type TextInputProps = {
 // -----------------------------------------------------------------------------
 
 const TextInput = ({ value, onChange, testId = undefined }: TextInputProps) => {
-  const [localValue, setLocalValue] = React.useState<string | null>(null)
+  const [localValue, setLocalValue] = useState<string | null>(null)
   const resolvedValue = !isNil(localValue) ? localValue : value
   return (
     <div className="flex cursor-pointer flex-row content-center items-center space-x-1">

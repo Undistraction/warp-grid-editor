@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment, ReactNode, useRef } from 'react'
 
 import useObserveClientSize from '../../hooks/useObserveClientSize'
 import useAppStore from '../../state/useAppStore'
@@ -73,8 +73,8 @@ const WorkArea = ({
   grid,
   dimensions,
   setDimensions,
-}: WorkAreaProps): React.ReactNode => {
-  const displayRef = React.useRef(null)
+}: WorkAreaProps): ReactNode => {
+  const displayRef = useRef(null)
 
   const project = useAppStore.use.project()
   const updateBoundingCurvesPosition =
@@ -117,21 +117,21 @@ const WorkArea = ({
             config={project.config}
           />
           {project.boundingCurves && (
-            <React.Fragment>
+            <Fragment>
               <Shape
                 boundingCurves={project.boundingCurves}
                 onDrag={updateBoundingCurvesPosition}
               />
               {project.config.bounds.shouldDrawCornerPoints && (
-                <React.Fragment>
+                <Fragment>
                   <ControlPointStems
                     boundingCurves={project.boundingCurves}
                     bounds={canvasBounds}
                   />
                   <ControlNodes boundingCurves={project.boundingCurves} />
-                </React.Fragment>
+                </Fragment>
               )}
-            </React.Fragment>
+            </Fragment>
           )}
         </div>
       </div>

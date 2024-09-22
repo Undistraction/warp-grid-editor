@@ -1,5 +1,5 @@
 import dasherize from 'dasherize'
-import React from 'react'
+import { useRef } from 'react'
 import Draggable, { DraggableData, DraggableEvent } from 'react-draggable'
 
 // eslint-disable-next-line import/named
@@ -27,7 +27,7 @@ const SIZE_HALF = 6
 // -----------------------------------------------------------------------------
 
 const ControlPointNode = ({ position, onDrag, id }: ControlPointNodeProps) => {
-  const nodeRef = React.useRef(null)
+  const nodeRef = useRef(null)
   const testId = dasherize(id)
   return (
     <Draggable

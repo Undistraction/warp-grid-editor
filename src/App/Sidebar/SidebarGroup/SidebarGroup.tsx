@@ -1,4 +1,5 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/16/solid'
+import { ReactNode } from 'react'
 
 // -----------------------------------------------------------------------------
 // Types
@@ -6,7 +7,7 @@ import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/16/solid'
 
 interface SidebarGroupProps {
   title: string
-  children?: React.ReactNode
+  children?: ReactNode
   hint?: string
   isMinimised?: boolean
   onToggleMinimise: (isMinimised: boolean) => void
@@ -24,7 +25,7 @@ const SidebarGroup = ({
   isMinimised = false,
   onToggleMinimise,
   testId = ``,
-}: SidebarGroupProps): React.ReactNode => {
+}: SidebarGroupProps): ReactNode => {
   const icon = isMinimised ? <ChevronDownIcon /> : <ChevronUpIcon />
 
   return (

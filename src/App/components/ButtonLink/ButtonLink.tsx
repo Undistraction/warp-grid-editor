@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 // -----------------------------------------------------------------------------
 // Types
@@ -12,8 +12,8 @@ interface ButtonLinkProps {
   isDisabled?: boolean
   className?: string
   testId?: string
-  icon?: React.ReactNode
-  iconSelected?: React.ReactNode
+  icon?: ReactNode
+  iconSelected?: ReactNode
   tooltipText?: string
 }
 

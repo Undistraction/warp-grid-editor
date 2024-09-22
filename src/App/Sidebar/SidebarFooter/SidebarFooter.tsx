@@ -1,10 +1,12 @@
+import { ReactNode } from 'react'
+
 import packageJson from '../../../../package.json'
 
 // -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
 
-const SidebarFooter = (): React.ReactNode => (
+const SidebarFooter = (): ReactNode => (
   <div className="flex flex-col items-center space-y-1 pb-4 pt-4">
     <p
       className="text-sm text-gray-500"

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
 import {
   InterpolationStrategy,
@@ -54,7 +54,7 @@ const renderCurvesConfig = (
   setGridDefinitionValue: SetGridDefinitionValue
 ) => {
   return (
-    <React.Fragment>
+    <Fragment>
       {project.gridDefinition.interpolationStrategy ===
         InterpolationStrategy.EVEN && (
         <ControlGroup
@@ -75,7 +75,7 @@ const renderCurvesConfig = (
           />
         </ControlGroup>
       )}
-    </React.Fragment>
+    </Fragment>
   )
 }
 

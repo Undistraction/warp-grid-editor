@@ -1,5 +1,5 @@
 import dasherize from 'dasherize'
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { DraggableData, DraggableEvent } from 'react-draggable'
 
 import useAppStore from '../../../../state/useAppStore'
@@ -30,7 +30,7 @@ type NodeFunc = ({
   onDoubleClick: (id: string) => () => void
   testId: string
   position: Point
-}) => React.ReactNode
+}) => ReactNode
 
 interface Node {
   id: string
@@ -91,9 +91,7 @@ const renderNodes = (
 // Exports
 // -----------------------------------------------------------------------------
 
-const ControlNodes = ({
-  boundingCurves,
-}: ControlNodesProps): React.ReactNode => {
+const ControlNodes = ({ boundingCurves }: ControlNodesProps): ReactNode => {
   const updateBoundingCurvesNodePosition =
     useAppStore.use.updateBoundingCurvesNodePosition()
 

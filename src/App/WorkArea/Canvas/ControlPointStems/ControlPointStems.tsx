@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 // eslint-disable-next-line import/named
 import { BoundingCurves, PointPair, PointPairs, Size } from '../../../../types'
@@ -38,7 +38,7 @@ const renderStems = (pointPairs: PointPairs) =>
 const ControlPointStems = ({
   boundingCurves,
   bounds: { width, height },
-}: ControlPointStemsProps): React.ReactNode => {
+}: ControlPointStemsProps): ReactNode => {
   const pointPairs: PointPairs = [
     [boundingCurves.top.startPoint, boundingCurves.top.controlPoint1],
     [boundingCurves.top.endPoint, boundingCurves.top.controlPoint2],

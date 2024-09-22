@@ -1,5 +1,5 @@
 import { isNotNil } from 'ramda-adjunct'
-import React, { ReactPortal } from 'react'
+import React, { ReactNode, ReactPortal, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import Modal from '../App/components/modals/Modal'
@@ -9,7 +9,7 @@ import Modal from '../App/components/modals/Modal'
 // -----------------------------------------------------------------------------
 
 interface OpenModalProps {
-  Content: ({ onClose }: { onClose: () => void }) => React.ReactNode
+  Content: ({ onClose }: { onClose: () => void }) => ReactNode
   props?: Record<string, unknown>
   onClose?: () => void
 }
@@ -19,7 +19,7 @@ interface OpenModalProps {
 // -----------------------------------------------------------------------------
 
 const useModal = () => {
-  const [modal, setModal] = React.useState<ReactPortal | null>(null)
+  const [modal, setModal] = useState<ReactPortal | null>(null)
 
   const openModal = ({
     Content,

@@ -1,6 +1,6 @@
 import { ChevronDoubleLeftIcon } from '@heroicons/react/16/solid'
 import { isNotNil } from 'ramda-adjunct'
-import React from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import { Tooltip } from 'react-tooltip'
 import { useDebounce } from 'use-debounce'
 import warpGrid from 'warp-grid'
@@ -21,14 +21,14 @@ import WorkArea from './WorkArea'
 // -----------------------------------------------------------------------------
 
 const App = () => {
-  const [canvas, setCanvas] = React.useState<HTMLCanvasElement | null>(null)
-  const [grid, setGrid] = React.useState<WarpGrid | null>(null)
+  const [canvas, setCanvas] = useState<HTMLCanvasElement | null>(null)
+  const [grid, setGrid] = useState<WarpGrid | null>(null)
   const { project } = useAppStore((state: AppSlice) => state)
   const [boundingCurvesDebounced] = useDebounce(project?.boundingCurves, 3)
   const setBoundingCurves = useAppStore.use.setBoundingCurves()
   const config = useAppStore.use.config()
   const setAppConfigValue = useAppStore.use.setAppConfigValue()
-  const [workAreaDimensions, setWorkAreaDimensions] = React.useState({
+  const [workAreaDimensions, setWorkAreaDimensions] = useState({
     width: 0,
     height: 0,
   })
@@ -36,21 +36,21 @@ const App = () => {
 
   const canvasIsReady = isNotNil(canvas) && workAreaDimensions.width > 0
   // Create a random set of bounding curves on first render if no project is loaded
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (canvasIsReady && !project.boundingCurves) {
       const boundingCurvesNew = getDefaultBoundingCurves(canvas)
       setBoundingCurves(boundingCurvesNew)
     }
   }, [canvas, setBoundingCurves, canvasIsReady, project.boundingCurves])
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (boundingCurvesDebounced) {
       const grid = warpGrid(boundingCurvesDebounced, project.gridDefinition)
       setGrid(grid)
     }
   }, [boundingCurvesDebounced, project.gridDefinition])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isOpen && !config.ui.welcomeScreen.isHidden) {
       openModal({
         Content: WelcomeModalContent,

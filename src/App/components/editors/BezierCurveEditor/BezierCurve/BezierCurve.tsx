@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 
 // eslint-disable-next-line import/named
 import { BezierEasingParams, Bounds } from '../../../../../types'
@@ -7,6 +7,7 @@ import {
   getCubicBezierToPoint,
   getMoveForPoint,
 } from '../../../../../utils/svg'
+
 // -----------------------------------------------------------------------------
 // Types
 // -----------------------------------------------------------------------------
@@ -24,7 +25,7 @@ const BezierCurve = ({
   values: [v1, v2, v3, v4],
   bounds: { width, height },
 }: BezierCurveProps) => {
-  const paths = React.useMemo(() => {
+  const paths = useMemo(() => {
     const curve = {
       startPoint: { x: 0, y: height },
       controlPoint1: {

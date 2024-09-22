@@ -1,4 +1,5 @@
 import cls from 'classnames'
+import { ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 // -----------------------------------------------------------------------------
@@ -13,8 +14,8 @@ interface ButtonProps {
   isDisabled?: boolean
   isSelected?: boolean
   testId?: string
-  icon?: React.ReactNode
-  iconSelected?: React.ReactNode
+  icon?: ReactNode
+  iconSelected?: ReactNode
   tooltipText?: string
 }
 

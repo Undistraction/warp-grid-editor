@@ -1,4 +1,4 @@
-import React, { RefObject } from 'react'
+import { RefObject, useEffect, useRef } from 'react'
 
 import { Size } from '../types'
 
@@ -13,9 +13,9 @@ const useObserveClientSize = (
   modify = { width: 0, height: 0 }
 ) => {
   // We don't wan to trigger state change
-  const size = React.useRef({ width: 0, height: 0 })
+  const size = useRef({ width: 0, height: 0 })
 
-  React.useEffect(() => {
+  useEffect(() => {
     const element = ref.current
 
     const resizeObserver = new ResizeObserver((event) => {

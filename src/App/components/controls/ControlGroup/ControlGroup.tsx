@@ -2,8 +2,10 @@
 // Exports
 // -----------------------------------------------------------------------------
 
+import { ReactNode } from 'react'
+
 interface ControlGroupProps {
-  children: React.ReactNode
+  children: ReactNode
   label: string
   labelIsAfter?: boolean
   direction?: string

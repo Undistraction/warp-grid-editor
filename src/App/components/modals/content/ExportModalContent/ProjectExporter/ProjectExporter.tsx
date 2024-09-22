@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState } from 'react'
 
 import useAppStore from '../../../../../../state/useAppStore'
 import Tab from '../../../../Tab'
@@ -11,7 +11,7 @@ import ExportSVG from './ExportSvg'
 
 const ProjectExporter = () => {
   const project = useAppStore.use.project()
-  const [selectedIdx, setSelectedIdx] = React.useState(0)
+  const [selectedIdx, setSelectedIdx] = useState(0)
   return (
     <div className="flex flex-col">
       <header className="z-10 flex flex-row">

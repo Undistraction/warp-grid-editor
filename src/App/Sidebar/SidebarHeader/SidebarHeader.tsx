@@ -1,4 +1,5 @@
 import { ChevronDoubleRightIcon } from '@heroicons/react/16/solid'
+import { ReactNode } from 'react'
 
 import useAppStore from '../../../state/useAppStore'
 import ButtonLink from '../../components/ButtonLink'
@@ -7,7 +8,7 @@ import ButtonLink from '../../components/ButtonLink'
 // Exports
 // -----------------------------------------------------------------------------
 
-const SidebarHeader = (): React.ReactNode => {
+const SidebarHeader = (): ReactNode => {
   const setAppConfigValue = useAppStore.use.setAppConfigValue()
   const project = useAppStore.use.project()
 

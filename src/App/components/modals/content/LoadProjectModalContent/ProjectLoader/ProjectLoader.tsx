@@ -1,5 +1,5 @@
 import { map } from 'ramda'
-import React from 'react'
+import { useState } from 'react'
 
 import useAppStore from '../../../../../../state/useAppStore'
 import { Projects } from '../../../../../../types'
@@ -41,7 +41,7 @@ const renderOptions = (options: Options) =>
 // -----------------------------------------------------------------------------
 
 const ProjectLoader = ({ onLoad }: ProjectLoaderProps) => {
-  const [uuid, setUuid] = React.useState<string>(``)
+  const [uuid, setUuid] = useState<string>(``)
   const loadProject = useAppStore.use.loadProject()
   const projects: Projects = useAppStore.use.projects()
 
