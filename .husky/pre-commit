@@ -4,4 +4,4 @@ pnpm exec lint-staged
 
 pnpm run test-unit
 
-pnpm run test-ui
+pnpm run test-e2e
