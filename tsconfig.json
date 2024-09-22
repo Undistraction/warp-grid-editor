@@ -6,7 +6,7 @@
   // Compiler options
   "compilerOptions": {
     // Allow js files to be included in the compilation
-    "allowJs": true,
+    "allowJs": false,
     // Enable all strict type-checking options
     "strict": true,
     // Choose the module system to use. Note that 'preserve' is not supported by

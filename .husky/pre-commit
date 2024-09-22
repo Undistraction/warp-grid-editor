@@ -3,3 +3,5 @@
 pnpm exec lint-staged
 
 pnpm run test-unit
+
+pnpm run tsc
