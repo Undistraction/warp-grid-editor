@@ -22,7 +22,7 @@
     "test-e2e-update-screenshots": "ACTIVE_ENV=test playwright test --update-snapshots",
     "lint": "pnpm run lint-prettier && pnpm run lint-eslint",
     "lint-prettier": "prettier . --write",
-    "lint-eslint": "eslint . --fix --ext .ts,.tsx",
+    "lint-eslint": "eslint . --fix --ext .ts,.tsx --debug",
     "dev": "vite --debug",
     "build": "vite build",
     "preview": "vite preview",
