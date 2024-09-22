@@ -130,6 +130,16 @@ module.exports = {
 
     // We don't need to add an import for React with TypeScript
     'react/react-in-jsx-scope': `off`,
+
+    // -------------------------------------------------------------------------
+    // Generic rules
+    // -------------------------------------------------------------------------
+
+    // Recommended to disable on TypeScript projects. See:
+    // https://typescript-eslint.io/troubleshooting/faqs/eslint/#i-get-errors-from-the-no-undef-rule-about-global-variables-not-being-defined-even-though-there-are-no-typescript-errors
+    rules: {
+      'no-undef': `off`,
+    },
   },
 
   // Use vitest when running on files in the tests directory
