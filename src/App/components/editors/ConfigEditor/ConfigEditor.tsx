@@ -1,11 +1,7 @@
 import React, { Fragment } from 'react'
 
-import {
-  InterpolationStrategy,
-  LineStrategy,
-  Project,
-  SetGridDefinitionValue,
-} from '../../../../types'
+import { InterpolationStrategy, LineStrategy } from '../../../../enums'
+import { Project, SetGridDefinitionValue } from '../../../../types'
 import ControlGroup from '../../controls/ControlGroup'
 import NumericInput from '../../controls/NumericInput'
 import SteppedInput from '../../controls/SteppedInput'

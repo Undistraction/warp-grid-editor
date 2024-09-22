@@ -2,8 +2,8 @@ import { times } from 'ramda'
 import pipe from 'ramda/src/pipe'
 import { isNumber } from 'ramda-adjunct'
 
-import useAppStore from '../../../../state/useAppStore' // eslint-disable-next-line import/named
-import { Project, StepDefinition } from '../../../../types'
+import useAppStore from '../../../../state/useAppStore'
+import type { Project, StepDefinition } from '../../../../types'
 import ControlGroup from '../../controls/ControlGroup'
 import SteppedInput from '../../controls/SteppedInput'
 import Switch from '../../controls/Switch'

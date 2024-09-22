@@ -3,11 +3,9 @@ import React, { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { DraggableData, DraggableEvent } from 'react-draggable'
 
 import useObserveClientSize from '../../../../hooks/useObserveClientSize'
-import {
+import type {
   BezierEasingPair,
-  // eslint-disable-next-line import/named
   BezierEasingParams,
-  // eslint-disable-next-line import/named
   Point,
   PointPairs,
   Size,

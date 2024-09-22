@@ -10,7 +10,7 @@ import {
 import { v4 } from 'uuid'
 import { StateCreator } from 'zustand'
 
-import { AppSlice, Project, ProjectsSlice } from '../../types'
+import type { AppSlice, Project, ProjectsSlice } from '../../types'
 
 // -----------------------------------------------------------------------------
 // Utils

@@ -3,8 +3,7 @@ import React, { ReactNode, useRef } from 'react'
 import Draggable, { DraggableData, DraggableEvent } from 'react-draggable'
 
 import { METRICS } from '../../../../../const'
-// eslint-disable-next-line import/named
-import { Point } from '../../../../../types'
+import type { Point } from '../../../../../types'
 
 // -----------------------------------------------------------------------------
 // Exports

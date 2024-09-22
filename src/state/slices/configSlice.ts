@@ -1,7 +1,7 @@
 import { curry } from 'ramda'
 import { StateCreator } from 'zustand'
 
-import { AppSlice, ConfigSlice } from '../../types'
+import type { AppSlice, ConfigSlice } from '../../types'
 import { updateIfItemExistsOrThrow } from '../../utils/slices'
 import { joinWithPeriod } from '../../utils/string'
 import { APP_CONFIG_DEFAULT } from '../defaults'

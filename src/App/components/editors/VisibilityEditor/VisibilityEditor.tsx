@@ -1,5 +1,5 @@
 import useAppStore from '../../../../state/useAppStore'
-import { Project } from '../../../../types'
+import type { Project } from '../../../../types'
 import ControlGroup from '../../controls/ControlGroup'
 import Switch from '../../controls/Switch'
 

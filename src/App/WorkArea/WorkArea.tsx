@@ -1,9 +1,8 @@
-import React, { Fragment, ReactNode, useRef } from 'react'
+import { Fragment, ReactNode, useRef } from 'react'
 
 import useObserveClientSize from '../../hooks/useObserveClientSize'
 import useAppStore from '../../state/useAppStore'
-// eslint-disable-next-line import/named
-import { BoundingCurves, Size, WarpGrid } from '../../types'
+import type { BoundingCurves, Size, WarpGrid } from '../../types'
 import { getBounds } from '../../utils/bezier'
 import { reduceMax } from '../../utils/math'
 import Canvas from './Canvas'

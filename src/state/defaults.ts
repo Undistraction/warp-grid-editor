@@ -2,16 +2,12 @@ import { v4 } from 'uuid'
 
 import { PROJECT_VERSION } from '../const'
 import {
-  Config,
   CornerPointId,
-  // eslint-disable-next-line import/named
-  GridDefinition,
   InterpolationStrategy,
   LineStrategy,
-  Project,
-  ProjectConfig,
   SidebarSectionId,
-} from '../types'
+} from '../enums'
+import type { Config, GridDefinition, Project, ProjectConfig } from '../types'
 
 // -----------------------------------------------------------------------------
 // Component

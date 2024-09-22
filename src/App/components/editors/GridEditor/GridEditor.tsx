@@ -1,7 +1,7 @@
 import { map, pipe } from 'ramda'
 import { isArray } from 'ramda-adjunct'
 
-import {
+import type {
   Project,
   SetGridDefinitionValue,
   SetProjectConfigValue,

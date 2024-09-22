@@ -1,7 +1,7 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/16/solid'
 import { useState } from 'react'
 
-import {
+import type {
   CornerNodePoint,
   UpdateBoundingCurvesNodePosition,
 } from '../../../../types'

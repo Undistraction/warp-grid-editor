@@ -2,7 +2,7 @@ import { map } from 'ramda'
 import { useState } from 'react'
 
 import useAppStore from '../../../../../../state/useAppStore'
-import { Projects } from '../../../../../../types'
+import type { Projects } from '../../../../../../types'
 import Button from '../../../../Button'
 
 // -----------------------------------------------------------------------------

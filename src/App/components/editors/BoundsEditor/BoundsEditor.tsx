@@ -1,9 +1,9 @@
 import { map } from 'ramda'
 
-import {
+import { CornerPointId } from '../../../../enums'
+import type {
   CornerNode,
   CornerNodeMap,
-  CornerPointId,
   ProjectConfig,
   UpdateBoundingCurvesNodePosition,
 } from '../../../../types'

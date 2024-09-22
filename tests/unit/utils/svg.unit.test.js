@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-unresolved
 import warpGrid from 'warp-grid'
 
 import { getSvgForGrid } from '../../../src/utils/svg'

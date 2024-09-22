@@ -1,5 +1,6 @@
+import { SidebarSectionId } from '../../enums'
 import useAppStore from '../../state/useAppStore'
-import { Project, SidebarSectionId } from '../../types'
+import type { Project } from '../../types'
 import ConfigEditor from '../components/editors/ConfigEditor'
 import GridEditor from '../components/editors/GridEditor'
 import GridSquareEditor from '../components/editors/GridSqureEditor'

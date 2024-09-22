@@ -1,7 +1,12 @@
 import { isArray } from 'ramda-adjunct'
 
-// eslint-disable-next-line import/named
-import { BoundingCurves, Curve, Point, StraightLine, WarpGrid } from '../types'
+import type {
+  BoundingCurves,
+  Curve,
+  Point,
+  StraightLine,
+  WarpGrid,
+} from '../types'
 
 // -----------------------------------------------------------------------------
 // Utils

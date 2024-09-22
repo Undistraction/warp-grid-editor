@@ -1,16 +1,10 @@
 import dasherize from 'dasherize'
-import React, { ReactNode } from 'react'
+import { ReactNode } from 'react'
 import { DraggableData, DraggableEvent } from 'react-draggable'
 
+import { ControlPointId, CornerPointId } from '../../../../enums'
 import useAppStore from '../../../../state/useAppStore'
-import {
-  // eslint-disable-next-line import/named
-  BoundingCurves,
-  ControlPointId,
-  CornerPointId,
-  // eslint-disable-next-line import/named
-  Point,
-} from '../../../../types'
+import type { BoundingCurves, Point } from '../../../../types'
 import ControlPointNode from './ControlPointNode'
 import CornerNode from './CornerNode'
 

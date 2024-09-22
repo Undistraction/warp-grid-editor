@@ -1,7 +1,6 @@
 import { useEffect, useLayoutEffect, useRef } from 'react'
 
-// eslint-disable-next-line import/named
-import { GridSquareConfig, ProjectConfig, WarpGrid } from '../../../types'
+import type { GridSquareConfig, ProjectConfig, WarpGrid } from '../../../types'
 import getCanvasApi from '../../../utils/getCanvasApi'
 
 // -----------------------------------------------------------------------------

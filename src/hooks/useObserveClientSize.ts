@@ -1,6 +1,6 @@
 import { RefObject, useEffect, useRef } from 'react'
 
-import { Size } from '../types'
+import type { Size } from '../types'
 
 // -----------------------------------------------------------------------------
 // Exports

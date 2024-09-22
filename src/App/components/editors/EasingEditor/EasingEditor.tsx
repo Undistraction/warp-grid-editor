@@ -1,8 +1,7 @@
 import React from 'react'
 import { useDebouncedCallback } from 'use-debounce'
 
-// eslint-disable-next-line import/named
-import { BezierEasingParams } from '../../../../types'
+import type { BezierEasingParams } from '../../../../types'
 import ControlGroup from '../../controls/ControlGroup'
 import BezierCurveEditor from '../BezierCurveEditor'
 

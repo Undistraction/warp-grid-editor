@@ -1,8 +1,7 @@
 import { curry } from 'ramda'
 import { isInteger } from 'ramda-adjunct'
 
-// eslint-disable-next-line import/named
-import { GridDefinition, GridSquare } from '../types'
+import type { GridDefinition, GridSquare } from '../types'
 import { clampNumberBetween } from './math'
 
 // -----------------------------------------------------------------------------

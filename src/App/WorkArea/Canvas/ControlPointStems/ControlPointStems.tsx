@@ -1,7 +1,11 @@
-import React, { ReactNode } from 'react'
+import { ReactNode } from 'react'
 
-// eslint-disable-next-line import/named
-import { BoundingCurves, PointPair, PointPairs, Size } from '../../../../types'
+import type {
+  BoundingCurves,
+  PointPair,
+  PointPairs,
+  Size,
+} from '../../../../types'
 
 // -----------------------------------------------------------------------------
 // Types

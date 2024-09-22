@@ -1,6 +1,6 @@
 import { StateCreator } from 'zustand'
 
-import { AppSlice, ResetSlice } from '../../types'
+import type { AppSlice, ResetSlice } from '../../types'
 import { APP_CONFIG_DEFAULT, PROJECT_DEFAULT } from '../defaults'
 
 // -----------------------------------------------------------------------------

@@ -9,12 +9,10 @@ import {
 } from 'ramda'
 import { StateCreator } from 'zustand'
 
-import {
+import type {
   AppSlice,
-  // eslint-disable-next-line import/named
   BoundingCurves,
   CornersConfig,
-  // eslint-disable-next-line import/named
   Point,
   Project,
   ProjectSlice,

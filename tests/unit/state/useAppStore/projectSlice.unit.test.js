@@ -2,9 +2,9 @@ import { act, renderHook } from '@testing-library/react'
 import { assocPath } from 'ramda'
 import { beforeEach, describe } from 'vitest'
 
+import { ControlPointId, CornerPointId } from '../../../../src/enums'
 import { PROJECT_DEFAULT } from '../../../../src/state/defaults'
 import useAppStore from '../../../../src/state/useAppStore'
-import { ControlPointId, CornerPointId } from '../../../../src/types'
 
 // -----------------------------------------------------------------------------
 // Const

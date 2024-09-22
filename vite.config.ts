@@ -1,6 +1,5 @@
 import react from '@vitejs/plugin-react'
 import tailwindcss from 'tailwindcss'
-// eslint-disable-next-line import/namespace
 import { defineConfig } from 'vite'
 
 // -----------------------------------------------------------------------------

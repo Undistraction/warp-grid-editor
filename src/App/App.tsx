@@ -7,8 +7,7 @@ import warpGrid from 'warp-grid'
 
 import useModal from '../hooks/useModal'
 import useAppStore from '../state/useAppStore'
-// eslint-disable-next-line import/named
-import { AppSlice, WarpGrid } from '../types'
+import type { AppSlice, WarpGrid } from '../types'
 import { getDefaultBoundingCurves } from '../utils/boundingCurves'
 import ButtonLink from './components/ButtonLink'
 import WelcomeModalContent from './components/modals/content/WelcomeModalContent'

@@ -1,6 +1,6 @@
 import { assocPath, curry, hasPath, pipe, unless } from 'ramda'
 
-import { AppSlice } from '../types'
+import type { AppSlice } from '../types'
 
 // -----------------------------------------------------------------------------
 // Exports

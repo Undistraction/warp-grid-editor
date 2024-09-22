@@ -1,8 +1,7 @@
 import { Bezier } from 'bezier-js'
 import { pipe, reduce } from 'ramda'
 
-// eslint-disable-next-line import/named
-import { Curve } from '../types'
+import type { Curve } from '../types'
 
 // -----------------------------------------------------------------------------
 // Types

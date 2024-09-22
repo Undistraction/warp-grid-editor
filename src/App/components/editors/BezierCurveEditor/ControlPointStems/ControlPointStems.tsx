@@ -1,4 +1,4 @@
-import { PointPairs, Size } from '../../../../../types'
+import type { PointPairs, Size } from '../../../../../types'
 
 // -----------------------------------------------------------------------------
 // Types

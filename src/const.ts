@@ -1,4 +1,5 @@
-import { CornerPointId, Corners } from './types'
+import { CornerPointId } from './enums'
+import type { Corners } from './types'
 
 // -----------------------------------------------------------------------------
 // Exports

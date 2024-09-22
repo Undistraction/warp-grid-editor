@@ -1,7 +1,6 @@
 import { flatten, map } from 'ramda'
 
-// eslint-disable-next-line import/named
-import { BoundingCurves, Curve, Point, Size, WarpGrid } from '../types'
+import type { BoundingCurves, Curve, Point, Size, WarpGrid } from '../types'
 
 // -----------------------------------------------------------------------------
 // Exports

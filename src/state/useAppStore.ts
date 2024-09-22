@@ -1,7 +1,12 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-import { ConfigSlice, ProjectSlice, ProjectsSlice, ResetSlice } from '../types'
+import type {
+  ConfigSlice,
+  ProjectSlice,
+  ProjectsSlice,
+  ResetSlice,
+} from '../types'
 import createSelectors from './createSelectors'
 import createConfigSlice from './slices/configSlice'
 import createProjectSlice from './slices/projectSlice'

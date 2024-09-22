@@ -1,5 +1,5 @@
 import useAppStore from '../../../../state/useAppStore'
-import { Project } from '../../../../types'
+import type { Project } from '../../../../types'
 import { getBoundingCurvesCorners } from '../../../../utils/boundingCurves'
 import BoundsEditor from '../BoundsEditor'
 import ControlPointEditor from '../ControlPointEditor'

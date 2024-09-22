@@ -1,8 +1,7 @@
 import { pipe } from 'ramda'
 import { isArray, isNumber, isPlainObj } from 'ramda-adjunct'
 
-// eslint-disable-next-line import/named
-import { Point } from '../types'
+import type { Point } from '../types'
 
 // -----------------------------------------------------------------------------
 // Types

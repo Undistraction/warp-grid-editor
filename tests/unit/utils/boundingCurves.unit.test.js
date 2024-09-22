@@ -2,7 +2,7 @@
 // Const
 // -----------------------------------------------------------------------------
 
-import { ControlPointId, CornerPointId } from '../../../src/types'
+import { ControlPointId, CornerPointId } from '../../../src/enums'
 import {
   expandAllBoundingCurvesControlPoints,
   expandBoundingCurvesCornerControlPoints,

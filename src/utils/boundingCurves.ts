@@ -1,17 +1,8 @@
 import { curry, pipe, reduce } from 'ramda'
 
 import { CORNER_POINTS } from '../const'
-import {
-  // eslint-disable-next-line import/named
-  BoundingCurves,
-  ControlPointId,
-  CornerPointId,
-  CurveId,
-  CurvePointId,
-  // eslint-disable-next-line import/named
-  Point,
-  ProjectConfig,
-} from '../types'
+import { ControlPointId, CornerPointId, CurveId, CurvePointId } from '../enums'
+import type { BoundingCurves, Point, ProjectConfig } from '../types'
 import {
   getAngleBetweenPoints,
   getDistanceBetweenPoints,

@@ -2,8 +2,7 @@ import dasherize from 'dasherize'
 import { useRef } from 'react'
 import Draggable, { DraggableData, DraggableEvent } from 'react-draggable'
 
-// eslint-disable-next-line import/named
-import { Point } from '../../../../../types'
+import type { Point } from '../../../../../types'
 
 // -----------------------------------------------------------------------------
 // Utils

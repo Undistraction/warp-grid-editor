@@ -1,8 +1,7 @@
 import { ReactNode, useLayoutEffect, useRef, useState } from 'react'
 import Draggable from 'react-draggable'
 
-// eslint-disable-next-line import/named
-import { BoundingCurves, Curve, Point } from '../../../../types'
+import type { BoundingCurves, Curve, Point } from '../../../../types'
 
 // -----------------------------------------------------------------------------
 // Const

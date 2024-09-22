@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react'
 
-// eslint-disable-next-line import/named
-import { BezierEasingParams, Bounds } from '../../../../../types'
+import type { BezierEasingParams, Bounds } from '../../../../../types'
 import { joinWithSpace } from '../../../../../utils/string'
 import {
   getCubicBezierToPoint,

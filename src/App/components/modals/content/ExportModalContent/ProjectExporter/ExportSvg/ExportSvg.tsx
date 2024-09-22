@@ -1,7 +1,7 @@
 import { mapObjIndexed } from 'ramda'
 import warpGrid from 'warp-grid'
 
-import { Project } from '../../../../../../../types'
+import type { Project } from '../../../../../../../types'
 import { getBounds } from '../../../../../../../utils/bezier'
 import {
   moveBoundingCurves,
