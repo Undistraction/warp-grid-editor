@@ -33,7 +33,7 @@ const Modal = ({ children, onClose }: ModalProps) => {
         onClick={handleBackgroundClick}
         data-tid="modal-overlay"
       >
-        <div className="fixed inset-3 flex flex-shrink-0 flex-col overflow-hidden rounded-md border border-black bg-white shadow-md">
+        <div className="fixed inset-3 flex shrink-0 flex-col overflow-hidden rounded-md border border-black bg-white shadow-md">
           <header className="flex justify-end border-b border-gray-300 p-3">
             <ButtonLink
               className="text-sm"
@@ -43,7 +43,7 @@ const Modal = ({ children, onClose }: ModalProps) => {
             />
           </header>
           <div className="overflow-y-auto">{children}</div>
-          <footer className="flex flex-shrink-0 justify-end border-t border-gray-300 p-3" />
+          <footer className="flex shrink-0 justify-end border-t border-gray-300 p-3" />
         </div>
       </div>
     </div>

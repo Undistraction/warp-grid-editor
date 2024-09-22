@@ -65,9 +65,9 @@ const App = () => {
   return (
     <div className="h-full w-screen">
       <div
-        className={`flex-shrink-1 relative flex h-full w-screen flex-row space-x-5 p-5 ${!sidebarIsHidden && `pr-0`}`}
+        className={`relative flex h-full w-screen flex-row space-x-5 p-5 ${!sidebarIsHidden && `pr-0`}`}
       >
-        <div className="flex-grow-2 flex w-full flex-col">
+        <div className="flex w-full flex-col">
           <Header />
           <WorkArea
             setCanvas={setCanvas}
@@ -77,7 +77,7 @@ const App = () => {
           />
         </div>
         {!sidebarIsHidden && (
-          <div className="absolute inset-0 flex-grow-0 overflow-y-scroll sm:relative sm:inset-auto sm:-my-5 sm:w-[300px] sm:flex-shrink-0 sm:pt-0">
+          <div className="absolute inset-0 grow-0 overflow-y-scroll sm:relative sm:inset-auto sm:-my-5 sm:w-[300px] sm:shrink-0 sm:pt-0">
             {canvas && project && <Sidebar project={project} />}
           </div>
         )}
@@ -93,7 +93,7 @@ const App = () => {
         />
       )}
       <Tooltip
-        className="familysans max-w-[300px] bg-black"
+        className="max-w-[300px] bg-black font-sans"
         id="default"
       />
       {Modal}

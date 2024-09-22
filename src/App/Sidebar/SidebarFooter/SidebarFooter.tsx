@@ -7,7 +7,7 @@ import packageJson from '../../../../package.json'
 // -----------------------------------------------------------------------------
 
 const SidebarFooter = (): ReactNode => (
-  <div className="flex flex-col items-center space-y-1 pb-4 pt-4">
+  <div className="flex flex-col items-center space-y-1 py-4">
     <p
       className="text-sm text-gray-500"
       data-tid="sidebar-credit"

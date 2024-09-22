@@ -156,7 +156,7 @@ const BezierCurveEditor = ({
 
   return (
     <div
-      className="relative w-[100%] pb-[100%]"
+      className="relative w-full pb-[100%]"
       ref={ref}
       data-tid="bezier-easing-bounds"
     >

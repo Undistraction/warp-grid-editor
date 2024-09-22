@@ -40,11 +40,11 @@ const SidebarGroup = ({
       >
         <div className="flex cursor-pointer flex-row items-center justify-between">
           <h2 className="text-lg font-bold">{title}</h2>
-          <div className="h-[16px] w-[16px]">{icon}</div>
+          <div className="size-[16px]">{icon}</div>
         </div>
         {hint && (
           <div
-            className={`-m2-2 ${!isMinimised && `hidden`} text-sm italic text-gray-500`}
+            className={`${!isMinimised && `hidden`} text-sm italic text-gray-500`}
           >
             {hint}
           </div>

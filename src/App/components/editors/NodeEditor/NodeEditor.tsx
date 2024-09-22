@@ -51,7 +51,7 @@ const NodeEditor = ({
         className="flex cursor-pointer flex-row items-center justify-between"
       >
         <h2 className="font-bold">{title}</h2>
-        {icon && <div className="h-[16px] w-[16px]">{icon}</div>}
+        {icon && <div className="size-[16px]">{icon}</div>}
       </header>
       <div
         className={`flex flex-col space-y-2 pb-2 ${isMinimised && `hidden`}`}

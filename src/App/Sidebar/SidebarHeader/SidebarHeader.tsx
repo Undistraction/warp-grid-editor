@@ -16,7 +16,7 @@ const SidebarHeader = (): ReactNode => {
     <header className="flex flex-row items-start justify-between pt-5">
       <h2
         data-tid="project-name"
-        className="Class Properties truncate text-lg font-bold"
+        className="truncate text-lg font-bold"
       >
         {project.meta.name}
       </h2>

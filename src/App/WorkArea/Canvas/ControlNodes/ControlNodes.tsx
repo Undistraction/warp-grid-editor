@@ -103,7 +103,7 @@ const ControlNodes = ({ boundingCurves }: ControlNodesProps): ReactNode => {
     }
 
   return (
-    <div className="pointer-events-none absolute bottom-0 left-0 right-0 top-0">
+    <div className="pointer-events-none absolute inset-0">
       {renderNodes({ handleNodeDrag, toggleZeroExpandControlPoints }, [
         {
           id: ControlPointId.TOP_LEFT_CONTROL_1,

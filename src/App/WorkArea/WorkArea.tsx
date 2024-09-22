@@ -99,11 +99,11 @@ const WorkArea = ({
 
   return (
     <div
-      className="width-full relative h-full min-w-0 flex-grow overflow-hidden rounded-lg border border-gray-300"
+      className="relative h-full min-w-0 grow overflow-hidden rounded-lg border border-gray-300"
       id="work-area"
       ref={displayRef}
     >
-      <div className="width-full height-full absolute inset-0 overflow-auto">
+      <div className="absolute inset-0 overflow-auto">
         <div
           id="scroll-inner"
           className="w-max"

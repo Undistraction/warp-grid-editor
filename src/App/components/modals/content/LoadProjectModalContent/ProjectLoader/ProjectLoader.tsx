@@ -60,7 +60,7 @@ const ProjectLoader = ({ onLoad }: ProjectLoaderProps) => {
         onChange={(event) => {
           setUuid(event.target.value)
         }}
-        className="min-w-14 flex-grow border border-black px-2 py-1"
+        className="min-w-14 grow border border-black px-2 py-1"
       >
         {renderOptions(options)}
       </select>

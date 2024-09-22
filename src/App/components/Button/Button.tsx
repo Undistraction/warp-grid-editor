@@ -57,7 +57,7 @@ const Button = ({
       data-tooltip-content={tooltipText}
       data-tooltip-delay-show={500}
     >
-      {iconResolved && <div className="h-[16px] w-[16px]">{iconResolved}</div>}
+      {iconResolved && <div className="size-[16px]">{iconResolved}</div>}
       <div>{isSelected ? labelSelected : label}</div>
     </button>
   )

@@ -63,7 +63,7 @@ const CornerNode = ({
           viewBox={`${-SIZE_HALF} ${-SIZE_HALF}  ${SIZE} ${SIZE}`}
           width={`${SIZE}px`}
           height={`${SIZE}px`}
-          className="scale-1 transition-transform hover:scale-125 group-[.react-draggable-dragging]:scale-125"
+          className="transition-transform hover:scale-125 group-[.react-draggable-dragging]:scale-125"
         >
           <circle
             stroke="black"

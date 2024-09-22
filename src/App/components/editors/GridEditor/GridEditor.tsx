@@ -74,7 +74,7 @@ const GridEditor = ({
         />
       </ControlGroup>
       {project.config.grid.shouldUseComplexColumnsRows && (
-        <div className="min-w- flex flex-col items-stretch space-y-2">
+        <div className="flex flex-col items-stretch space-y-2">
           <ControlGroup
             label="Columns"
             htmlFor="grid-advanced-columns-input"

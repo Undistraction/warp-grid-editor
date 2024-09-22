@@ -25,7 +25,7 @@ const Slider = ({
 }: SliderProps) => {
   return (
     <input
-      className="flex-grow"
+      className="grow"
       data-tid={testId}
       type="range"
       name={name}

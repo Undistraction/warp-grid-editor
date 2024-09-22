@@ -37,7 +37,7 @@ const ButtonLink = ({
 
   return (
     <button
-      className={`blockfont-bold space-x -2 flex flex-row items-center justify-center ${isDisabled ? `text-gray-300` : ``} ${className}`}
+      className={`flex flex-row items-center justify-center space-x-2 font-bold ${isDisabled ? `text-gray-300` : ``} ${className}`}
       onClick={() => {
         onClick(!isSelected)
       }}
@@ -47,7 +47,7 @@ const ButtonLink = ({
       data-tooltip-delay-show={500}
       disabled={isDisabled}
     >
-      {iconResolved && <div className="h-[16px] w-[16px]">{iconResolved}</div>}
+      {iconResolved && <div className="size-[16px]">{iconResolved}</div>}
       <div>{isSelected ? labelSelected : label}</div>
     </button>
   )

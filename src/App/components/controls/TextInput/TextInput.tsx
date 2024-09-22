@@ -21,7 +21,7 @@ const TextInput = ({ value, onChange, testId = undefined }: TextInputProps) => {
   return (
     <div className="flex cursor-pointer flex-row content-center items-center space-x-1">
       <input
-        className="min-w-12 flex-grow border border-black px-2 py-1 font-mono"
+        className="min-w-12 grow border border-black px-2 py-1 font-mono"
         type="text"
         value={resolvedValue}
         data-tid={testId}

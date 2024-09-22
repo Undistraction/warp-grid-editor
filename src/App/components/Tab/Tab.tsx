@@ -47,7 +47,7 @@ const Tab = ({
       onClick={onClick}
       data-tid={testId}
     >
-      {icon && <div className="h-[16px] w-[16px]">{icon}</div>}
+      {icon && <div className="size-[16px]">{icon}</div>}
       <div>{isSelected ? labelSelected : label}</div>
     </button>
   )

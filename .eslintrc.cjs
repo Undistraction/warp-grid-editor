@@ -8,21 +8,26 @@ module.exports = {
     es6: true,
     node: true,
   },
-
+  // Use the TypeScript parser
   parser: `@typescript-eslint/parser`,
   parserOptions: {
-    ecmaVersion: 2018,
+    // Allow up to ES2020 syntax (see 'target' in tsconfig.json)
+    ecmaVersion: 2020,
+    // Imports will be ESModule imports
     sourcetype: `module`,
   },
 
   settings: {
-    files: [`*.ts`, `*.tsx`],
+    // We have some js config files so include them
+    files: [`*.ts`, `*.tsx`, `*.js`],
+    // Tell the import plugin's parser which imports to parse
     'import/parsers': {
-      '@typescript-eslint/parser': [`.ts`, `.tsx`, `js`, `jsx`],
+      '@typescript-eslint/parser': [`.ts`, `.tsx`, `js`],
     },
+    // Configure the import plugin's TypeScript resolver
     'import/resolver': {
-      node: true,
       typescript: {
+        // Try to resolve typescript files from @types directory
         alwaysTryTypes: true,
       },
     },
@@ -30,10 +35,12 @@ module.exports = {
 
   extends: [
     `eslint:recommended`,
+    `plugin:@typescript-eslint/eslint-recommended`,
+    `plugin:@typescript-eslint/recommended`,
+    `plugin:tailwindcss/recommended`,
     `plugin:import/recommended`,
     `plugin:react/recommended`,
     `plugin:react-hooks/recommended`,
-    `plugin:@typescript-eslint/recommended`,
   ],
 
   plugins: [
@@ -44,14 +51,17 @@ module.exports = {
     `react-hooks`,
     `@typescript-eslint`,
     `unused-imports`,
+    `ramda`,
   ],
 
+  // Ignore these files and dirs
   ignorePatterns: [`**/coverage/*`, `/node_modules/*`, `/dist/`],
 
   rules: {
     // -------------------------------------------------------------------------
     // Generic
     // -------------------------------------------------------------------------
+
     quotes: [
       `error`,
       `backtick`,
@@ -82,6 +92,18 @@ module.exports = {
     'simple-import-sort/exports': `error`,
 
     // -------------------------------------------------------------------------
+    // Tailwind
+    // -------------------------------------------------------------------------
+
+    'tailwindcss/no-custom-classname': [
+      `error`,
+      {
+        // Allow these custom classnames
+        whitelist: [`corner-handle`, `shape-handle`, `control-point-handle`],
+      },
+    ],
+
+    // -------------------------------------------------------------------------
     // React
     // -------------------------------------------------------------------------
 
@@ -96,14 +118,8 @@ module.exports = {
     // Configure file extensions that will be treated as containing jsx
     'react/jsx-filename-extension': [1, { extensions: [`.ts`, `.tsx`] }],
 
-    // Disable buggy check of curly brackets (false positives)
-    'react/jsx-curly-brace-presence': `off`,
-
     // Allow full fragment syntax as it's more readable
     'react/jsx-fragments': `off`,
-
-    // Allow spreading (review this when time allows)
-    'react/jsx-props-no-spreading': `off`,
 
     // Use function keyword instead of arrow function for non-anonymous
     // components
@@ -119,15 +135,15 @@ module.exports = {
   // Use vitest when running on files in the tests directory
   overrides: [
     // -------------------------------------------------------------------------
-    // E2E tests
+    // Run these rules only in E2E tests
     // -------------------------------------------------------------------------
     {
       files: [`tests/ui/**/*.spec.js`],
-      plugins: [`playwright`, `unused-imports`],
       extends: `plugin:playwright/recommended`,
+      plugins: [`playwright`, `unused-imports`],
     },
     // -------------------------------------------------------------------------
-    // Unit tests
+    // Run these rules only in unit tests
     // -------------------------------------------------------------------------
     {
       env: {

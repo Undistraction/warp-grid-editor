@@ -72,7 +72,7 @@ const SteppedInput = ({
         onChange(value)
       }}
       value={value}
-      className="p-r-2 min-w-14 border border-black py-1 pl-1 font-mono"
+      className="min-w-14 border border-black py-1 pl-1 font-mono"
     >
       {renderOptions(options)}
     </select>

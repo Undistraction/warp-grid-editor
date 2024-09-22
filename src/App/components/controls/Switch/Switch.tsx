@@ -37,7 +37,7 @@ const Switch = ({
       <div
         className={`absolute top-0 h-full w-1/2 border bg-white ${isSelected ? `right-0 border-l-black` : `left-0 border-r-black`} flex flex-col items-center justify-center`}
       >
-        <div className="h-1/3 w-1/4 border border-l-black border-r-black"></div>
+        <div className="h-1/3 w-1/4 border border-x-black"></div>
       </div>
     </div>
   )
