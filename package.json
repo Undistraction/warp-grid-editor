@@ -23,7 +23,7 @@
     "lint": "pnpm run lint-prettier && pnpm run lint-eslint",
     "lint-prettier": "prettier . --write",
     "lint-eslint": "eslint . --fix --ext .ts,.tsx --debug",
-    "dev": "vite --debug",
+    "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "link": "pnpm link ../warp-grid && pnpm link ../coons-patch",
