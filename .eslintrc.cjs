@@ -18,11 +18,11 @@ module.exports = {
   },
 
   settings: {
-    // We have some js config files so include them
+    // We have some .js config files so include them
     files: [`*.ts`, `*.tsx`, `*.js`],
     // Tell the import plugin's parser which imports to parse
     'import/parsers': {
-      '@typescript-eslint/parser': [`.ts`, `.tsx`, `js`],
+      '@typescript-eslint/parser': [`.ts`, `.tsx`, `.js`],
     },
     // Configure the import plugin's TypeScript resolver
     'import/resolver': {
@@ -55,7 +55,7 @@ module.exports = {
   ],
 
   // Ignore these files and dirs
-  ignorePatterns: [`**/coverage/*`, `/node_modules/*`, `/dist/`],
+  ignorePatterns: [`/coverage/`, `/node_modules/`, `/dist/`],
 
   rules: {
     // -------------------------------------------------------------------------
@@ -67,6 +67,10 @@ module.exports = {
       `backtick`,
       { avoidEscape: true, allowTemplateLiterals: true },
     ],
+
+    // Recommended to disable on TypeScript projects. See:
+    // https://typescript-eslint.io/troubleshooting/faqs/eslint/#i-get-errors-from-the-no-undef-rule-about-global-variables-not-being-defined-even-though-there-are-no-typescript-errors
+    'no-undef': [`off`],
 
     // ---------------------------------------------------------------------
     // Unused imports
@@ -107,6 +111,16 @@ module.exports = {
     // React
     // -------------------------------------------------------------------------
 
+    // Don't allow arrow functions for components becacuse their name cannot be
+    // inferred.
+    'react/function-component-definition': [
+      `error`,
+      {
+        namedComponents: `function-declaration`,
+        unnamedComponents: `arrow-function`,
+      },
+    ],
+
     // Allow object and array as proptypes
     'react/forbid-prop-types': [
       `error`,
@@ -121,25 +135,11 @@ module.exports = {
     // Allow full fragment syntax as it's more readable
     'react/jsx-fragments': `off`,
 
-    // Use function keyword instead of arrow function for non-anonymous
-    // components
-    'react/function-component-definition': `off`,
-
     // We don't use prop-types with TypeScript
     'react/prop-types': `off`,
 
     // We don't need to add an import for React with TypeScript
     'react/react-in-jsx-scope': `off`,
-
-    // -------------------------------------------------------------------------
-    // Generic rules
-    // -------------------------------------------------------------------------
-
-    // Recommended to disable on TypeScript projects. See:
-    // https://typescript-eslint.io/troubleshooting/faqs/eslint/#i-get-errors-from-the-no-undef-rule-about-global-variables-not-being-defined-even-though-there-are-no-typescript-errors
-    rules: {
-      'no-undef': `off`,
-    },
   },
 
   // Use vitest when running on files in the tests directory
