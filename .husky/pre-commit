@@ -1,7 +1,10 @@
 #!/usr/bin/env sh
 
+# Lint all staged files
 pnpm exec lint-staged
 
+# Run all unit tests
 pnpm run test-unit
 
+# Run the TypeScript compiler to flag any errors
 pnpm run tsc
