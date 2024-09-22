@@ -36,6 +36,7 @@ import { PROJECT_DEFAULT } from '../defaults'
 // -----------------------------------------------------------------------------
 
 const modifySlice =
+  // These are diliberately loose as we don't know the type.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (pathToField: string[], f: (a: any) => any) => (projectSlice: ProjectSlice) =>
     modifyPath(pathToField, f, projectSlice) as ProjectSlice

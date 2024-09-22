@@ -6,14 +6,14 @@ import { test } from '../../fixtures'
 // Utils
 // -----------------------------------------------------------------------------
 
-const verifyCornerNodesAreVisible = async (homePage) => {
+const assertCornerNodesAreVisible = async (homePage) => {
   await expect(homePage.cornerPointTopLeft).toBeVisible()
   await expect(homePage.cornerPointTopRight).toBeVisible()
   await expect(homePage.cornerPointBottomLeft).toBeVisible()
   await expect(homePage.cornerPointBottomRight).toBeVisible()
 }
 
-const verifyCornerNodesAreHidden = async (homePage) => {
+const assertCornerNodesAreHidden = async (homePage) => {
   await expect(homePage.cornerPointTopLeft).toBeHidden()
   await expect(homePage.cornerPointTopRight).toBeHidden()
   await expect(homePage.cornerPointBottomLeft).toBeHidden()
@@ -59,27 +59,25 @@ test.describe(`Bounds`, () => {
 })
 
 test.describe(`Corner points`, () => {
-  // eslint-disable-next-line playwright/expect-expect
   test(`Hides/shows`, async ({ homePage }) => {
-    await verifyCornerNodesAreVisible(homePage)
+    await assertCornerNodesAreVisible(homePage)
     // Hide the corner points
     await homePage.showCornerPointsSwitch.click()
-    await verifyCornerNodesAreHidden(homePage)
+    await assertCornerNodesAreHidden(homePage)
     // Show the corner points
     await homePage.showCornerPointsSwitch.click()
-    await verifyCornerNodesAreVisible(homePage)
+    await assertCornerNodesAreVisible(homePage)
   })
 
-  // eslint-disable-next-line playwright/expect-expect
   test(`State is saved on page reload`, async ({ homePage, page }) => {
     // Hide the corner points
     await homePage.showCornerPointsSwitch.click()
     page.reload()
-    await verifyCornerNodesAreHidden(homePage)
+    await assertCornerNodesAreHidden(homePage)
     // Show the corner points
     await homePage.showCornerPointsSwitch.click()
     page.reload()
-    await verifyCornerNodesAreVisible(homePage)
+    await assertCornerNodesAreVisible(homePage)
   })
 })
 

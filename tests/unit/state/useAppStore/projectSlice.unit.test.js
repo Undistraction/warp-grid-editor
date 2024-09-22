@@ -250,7 +250,6 @@ describe(`useAppStore projectSlice`, () => {
     // -------------------------------------------------------------------------
 
     describe(`zeroControlPoints`, () => {
-      // eslint-disable-next-line
       it(`should zero out control points for supplied corner`, () => {
         const { result } = renderHook(() => useAppStore())
         act(() => result.current.setBoundingCurves(BOUNDING_CURVES))
@@ -262,7 +261,6 @@ describe(`useAppStore projectSlice`, () => {
     })
 
     describe(`expandControlPoints`, () => {
-      // eslint-disable-next-line
       it(`should expand control points for the supplied corner`, () => {
         const { result } = renderHook(() => useAppStore())
         act(() =>

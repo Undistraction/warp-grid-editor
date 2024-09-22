@@ -7,6 +7,7 @@ import { ControlPointId, CornerPointId, SidebarSectionId } from './enums'
 // -----------------------------------------------------------------------------
 
 export type SectionsConfig = {
+  // False positive so disabled
   // eslint-disable-next-line unused-imports/no-unused-vars
   [key in SidebarSectionId]?: SectionConfig
 }

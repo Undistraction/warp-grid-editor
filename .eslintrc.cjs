@@ -141,6 +141,17 @@ module.exports = {
       files: [`tests/ui/**/*.spec.js`],
       extends: `plugin:playwright/recommended`,
       plugins: [`playwright`, `unused-imports`],
+      rules: {
+        'playwright/expect-expect': [
+          `error`,
+          {
+            assertFunctionNames: [
+              `assertCornerNodesAreVisible`,
+              `assertCornerNodesAreHidden`,
+            ],
+          },
+        ],
+      },
     },
     // -------------------------------------------------------------------------
     // Run these rules only in unit tests
