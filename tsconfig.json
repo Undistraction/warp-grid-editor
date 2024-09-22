@@ -1,0 +1,54 @@
+{
+  // The files to include in the compilation
+  "include": ["src"],
+  // Files to exclude from the compilation
+  "exclude": ["node_modules/**/*"],
+  // Compiler options
+  "compilerOptions": {
+    // Allow js files to be included in the compilation
+    "allowJs": true,
+    // Enable all strict type-checking options
+    "strict": true,
+    // Choose the module system to use. Note that 'preserve' is not supported by
+    // vite-plugin-dts
+    "module": "ESNext",
+    // The module-resolution strategy to use. Using 'bundler' avoids issues with
+    // missing file-extensions in imported files.
+    "moduleResolution": "bundler",
+    // APIs to support
+    "lib": ["ESNext", "DOM"],
+    // The version of ES the code is compiled to. Note that no pollyfills are
+    // added during compilation.
+    "target": "ES2020",
+    // Should a sourcemap be generated for the compiled code?
+    "sourceMap": true,
+    // Improve compatability with ES module imports
+    "esModuleInterop": true,
+    // Ensure casings in import are consistent
+    "forceConsistentCasingInFileNames": true,
+    // Relax type-checking for third-party libraries
+    "skipLibCheck": true,
+    // Use 'unknown' for variables in catch clauses
+    "useUnknownInCatchVariables": false,
+
+    // Dirs to look in for type definitions
+    "typeRoots": [
+      // Types for third-party libs that we have added
+      "./src/@types",
+      // Types for third-party libs from DefinitelyTyped
+      "./node_modules/@types",
+      // Types from node_modules, e.g. vite/client
+      "./node_modules"
+    ], // Add additional types,
+    "types": ["vite/client"],
+    // Don't generate declaration files
+    "declaration": false,
+    // Throw if there is an error during build
+    "noEmitOnError": true,
+    // Don't emit files during build. Vite will override this but it means we
+    // can still run tsc for checking.
+    "noEmit": true,
+    // Transform jsx
+    "jsx": "react-jsx"
+  }
+}

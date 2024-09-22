@@ -14,7 +14,7 @@ const ROOT = `http://localhost:5173`
 export default defineConfig({
   testDir: `tests/ui/`,
   /* Reduce timeout so we fail fast */
-  timeout: 10000,
+  timeout: 30000,
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */

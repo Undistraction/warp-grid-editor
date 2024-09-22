@@ -136,7 +136,7 @@ const getHomePage = ({ page }) => {
     await projectSaverSaveButton.click()
   }
 
-  const verifyBezierEasingForAxisGroup = async (group, values) => {}
+  const verifyBezierEasingForAxisGroup = async () => {}
 
   // ---------------------------------------------------------------------------
   // Export

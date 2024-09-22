@@ -2,14 +2,14 @@
 // Const
 // -----------------------------------------------------------------------------
 
-import { BOUNDS_POINT_IDS } from '../../../src/const'
+import { ControlPointId, CornerPointId } from '../../../src/types'
 import {
   expandAllBoundingCurvesControlPoints,
   expandBoundingCurvesCornerControlPoints,
   getBoundingCurvesCorners,
   moveBoundingCurves,
+  moveBoundingCurvesNodePosition,
   moveBoundingCurvesToOrigin,
-  updateBoundingCurvesNodePosition,
   zeroAllBoundingCurvesControlPoints,
   zeroBoundingCurvesCornerControlPoints,
 } from '../../../src/utils/boundingCurves'
@@ -176,12 +176,12 @@ describe(`moveBoundingCurvesToOrigin`, () => {
   })
 })
 
-describe(`updateBoundingCurvesNodePosition`, () => {
+describe(`moveBoundingCurvesNodePosition`, () => {
   it(`updates the position of the corner point with the supplied ID along with its control zeroControlPoints`, () => {
     const CONFIG = {
       bounds: {
         corners: {
-          [BOUNDS_POINT_IDS.BOTTOM_RIGHT]: {
+          [CornerPointId.BOTTOM_RIGHT]: {
             isLinked: false,
             isMirrored: false,
           },
@@ -218,9 +218,9 @@ describe(`updateBoundingCurvesNodePosition`, () => {
     }
 
     expect(
-      updateBoundingCurvesNodePosition(
+      moveBoundingCurvesNodePosition(
         CONFIG,
-        BOUNDS_POINT_IDS.BOTTOM_RIGHT,
+        CornerPointId.BOTTOM_RIGHT,
         NEW_POINT,
         BOUNDING_CURVES
       )
@@ -231,7 +231,7 @@ describe(`updateBoundingCurvesNodePosition`, () => {
     const CONFIG = {
       bounds: {
         corners: {
-          [BOUNDS_POINT_IDS.TOP_RIGHT]: {
+          [CornerPointId.TOP_RIGHT]: {
             isLinked: false,
             isMirrored: false,
           },
@@ -253,9 +253,9 @@ describe(`updateBoundingCurvesNodePosition`, () => {
     }
 
     expect(
-      updateBoundingCurvesNodePosition(
+      moveBoundingCurvesNodePosition(
         CONFIG,
-        BOUNDS_POINT_IDS.TOP_RIGHT_CONTROL_1,
+        ControlPointId.TOP_RIGHT_CONTROL_1,
         NEW_POINT,
         BOUNDING_CURVES
       )
@@ -266,7 +266,7 @@ describe(`updateBoundingCurvesNodePosition`, () => {
     const CONFIG = {
       bounds: {
         corners: {
-          [BOUNDS_POINT_IDS.BOTTOM_LEFT]: {
+          [CornerPointId.BOTTOM_LEFT]: {
             isLinked: true,
             isMirrored: false,
           },
@@ -292,9 +292,9 @@ describe(`updateBoundingCurvesNodePosition`, () => {
     }
 
     expect(
-      updateBoundingCurvesNodePosition(
+      moveBoundingCurvesNodePosition(
         CONFIG,
-        BOUNDS_POINT_IDS.BOTTOM_LEFT_CONTROL_1,
+        ControlPointId.BOTTOM_LEFT_CONTROL_1,
         NEW_POINT,
         BOUNDING_CURVES
       )
@@ -305,7 +305,7 @@ describe(`updateBoundingCurvesNodePosition`, () => {
     const CONFIG = {
       bounds: {
         corners: {
-          [BOUNDS_POINT_IDS.BOTTOM_LEFT]: {
+          [CornerPointId.BOTTOM_LEFT]: {
             isLinked: true,
             isMirrored: true,
           },
@@ -331,9 +331,9 @@ describe(`updateBoundingCurvesNodePosition`, () => {
     }
 
     expect(
-      updateBoundingCurvesNodePosition(
+      moveBoundingCurvesNodePosition(
         CONFIG,
-        BOUNDS_POINT_IDS.BOTTOM_LEFT_CONTROL_1,
+        ControlPointId.BOTTOM_LEFT_CONTROL_1,
         NEW_POINT,
         BOUNDING_CURVES
       )
@@ -368,7 +368,7 @@ describe(`expandBoundingCurvesCornerControlPoints`, () => {
 
     expect(
       expandBoundingCurvesCornerControlPoints(
-        BOUNDS_POINT_IDS.BOTTOM_LEFT,
+        CornerPointId.BOTTOM_LEFT,
         BOUNDING_CURVES
       )
     ).toEqual(expected)
@@ -390,7 +390,7 @@ describe(`zeroBoundingCurvesCornerControlPoints`, () => {
     }
 
     const result = zeroBoundingCurvesCornerControlPoints(
-      BOUNDS_POINT_IDS.TOP_LEFT,
+      CornerPointId.TOP_LEFT,
       BOUNDING_CURVES
     )
 
@@ -411,7 +411,7 @@ describe(`zeroBoundingCurvesCornerControlPoints`, () => {
     }
 
     const result = zeroBoundingCurvesCornerControlPoints(
-      BOUNDS_POINT_IDS.BOTTOM_LEFT,
+      CornerPointId.BOTTOM_LEFT,
       BOUNDING_CURVES
     )
 
@@ -432,7 +432,7 @@ describe(`zeroBoundingCurvesCornerControlPoints`, () => {
     }
 
     const result = zeroBoundingCurvesCornerControlPoints(
-      BOUNDS_POINT_IDS.TOP_RIGHT,
+      CornerPointId.TOP_RIGHT,
       BOUNDING_CURVES
     )
 
@@ -453,7 +453,7 @@ describe(`zeroBoundingCurvesCornerControlPoints`, () => {
     }
 
     const result = zeroBoundingCurvesCornerControlPoints(
-      BOUNDS_POINT_IDS.BOTTOM_RIGHT,
+      CornerPointId.BOTTOM_RIGHT,
       BOUNDING_CURVES
     )
 

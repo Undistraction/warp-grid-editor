@@ -2,9 +2,9 @@ import { act, renderHook } from '@testing-library/react'
 import { assocPath } from 'ramda'
 import { beforeEach, describe } from 'vitest'
 
-import { BOUNDS_POINT_IDS } from '../../../../src/const'
 import { PROJECT_DEFAULT } from '../../../../src/state/defaults'
 import useAppStore from '../../../../src/state/useAppStore'
+import { ControlPointId, CornerPointId } from '../../../../src/types'
 
 // -----------------------------------------------------------------------------
 // Const
@@ -120,7 +120,7 @@ describe(`useAppStore projectSlice`, () => {
         const newPosition = { x: 50, y: 50 }
         act(() =>
           result.current.updateBoundingCurvesNodePosition(
-            BOUNDS_POINT_IDS.BOTTOM_LEFT,
+            CornerPointId.BOTTOM_LEFT,
             newPosition
           )
         )
@@ -139,7 +139,7 @@ describe(`useAppStore projectSlice`, () => {
         const newPosition = { x: 50, y: 50 }
         act(() =>
           result.current.updateBoundingCurvesNodePosition(
-            BOUNDS_POINT_IDS.BOTTOM_LEFT_CONTROL_1,
+            ControlPointId.BOTTOM_LEFT_CONTROL_1,
             newPosition
           )
         )
@@ -254,9 +254,7 @@ describe(`useAppStore projectSlice`, () => {
       it(`should zero out control points for supplied corner`, () => {
         const { result } = renderHook(() => useAppStore())
         act(() => result.current.setBoundingCurves(BOUNDING_CURVES))
-        act(() =>
-          result.current.zeroControlPoints(BOUNDS_POINT_IDS.TOP_RIGHT)()
-        )
+        act(() => result.current.zeroControlPoints(CornerPointId.TOP_RIGHT)())
         const { top, right } = result.current.project.boundingCurves
         expect(top.controlPoint2).toEqual(top.endPoint)
         expect(right.controlPoint1).toEqual(right.startPoint)
@@ -284,9 +282,7 @@ describe(`useAppStore projectSlice`, () => {
             },
           })
         )
-        act(() =>
-          result.current.expandControlPoints(BOUNDS_POINT_IDS.TOP_LEFT)()
-        )
+        act(() => result.current.expandControlPoints(CornerPointId.TOP_LEFT)())
         const { top, left } = result.current.project.boundingCurves
         expect(top.controlPoint2).toEqual({ x: 90, y: -10 })
         expect(left.controlPoint1).toEqual({ x: -30, y: 30 })
@@ -298,10 +294,10 @@ describe(`useAppStore projectSlice`, () => {
         const { result } = renderHook(() => useAppStore())
         act(() => result.current.setBoundingCurves(BOUNDING_CURVES))
         act(() =>
-          result.current.linkControlPoints(BOUNDS_POINT_IDS.BOTTOM_LEFT, false)
+          result.current.linkControlPoints(CornerPointId.BOTTOM_LEFT, false)
         )
         act(() =>
-          result.current.linkControlPoints(BOUNDS_POINT_IDS.BOTTOM_LEFT, `ccc`)
+          result.current.linkControlPoints(CornerPointId.BOTTOM_LEFT, `ccc`)
         )
         const { cornerBottomRight } =
           result.current.project.config.bounds.corners
@@ -312,7 +308,7 @@ describe(`useAppStore projectSlice`, () => {
         const { result } = renderHook(() => useAppStore())
         act(() => result.current.setBoundingCurves(BOUNDING_CURVES))
         act(() =>
-          result.current.linkControlPoints(BOUNDS_POINT_IDS.BOTTOM_LEFT, false)
+          result.current.linkControlPoints(CornerPointId.BOTTOM_LEFT, false)
         )
         const { cornerBottomLeft } =
           result.current.project.config.bounds.corners

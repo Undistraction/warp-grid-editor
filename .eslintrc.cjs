@@ -9,15 +9,22 @@ module.exports = {
     node: true,
   },
 
+  parser: `@typescript-eslint/parser`,
   parserOptions: {
-    ecmaVersion: 2020,
-    sourceType: `module`,
+    ecmaVersion: 2018,
+    sourcetype: `module`,
   },
 
   settings: {
-    'import/extensions': [`.js`, `.jsx`, `.cjs`, `.mjs`],
-    react: {
-      version: `18`,
+    files: [`*.ts`, `*.tsx`],
+    'import/parsers': {
+      '@typescript-eslint/parser': [`.ts`, `.tsx`, `js`, `jsx`],
+    },
+    'import/resolver': {
+      node: true,
+      typescript: {
+        alwaysTryTypes: true,
+      },
     },
   },
 
@@ -26,9 +33,18 @@ module.exports = {
     `plugin:import/recommended`,
     `plugin:react/recommended`,
     `plugin:react-hooks/recommended`,
+    `plugin:@typescript-eslint/recommended`,
   ],
 
-  plugins: [`simple-import-sort`, `import`, `tailwind`, `react`, `react-hooks`],
+  plugins: [
+    `simple-import-sort`,
+    `import`,
+    `tailwind`,
+    `react`,
+    `react-hooks`,
+    `@typescript-eslint`,
+    `unused-imports`,
+  ],
 
   ignorePatterns: [`**/coverage/*`, `/node_modules/*`, `/dist/`],
 
@@ -46,7 +62,7 @@ module.exports = {
     // Unused imports
     // ---------------------------------------------------------------------
 
-    'no-unused-vars': `off`,
+    '@typescript-eslint/no-unused-vars': `off`,
     'unused-imports/no-unused-imports': `error`,
     'unused-imports/no-unused-vars': [
       `warn`,
@@ -78,7 +94,7 @@ module.exports = {
     ],
 
     // Configure file extensions that will be treated as containing jsx
-    'react/jsx-filename-extension': [1, { extensions: [`.js`, `.jsx`] }],
+    'react/jsx-filename-extension': [1, { extensions: [`.ts`, `.tsx`] }],
 
     // Disable buggy check of curly brackets (false positives)
     'react/jsx-curly-brace-presence': `off`,
@@ -92,6 +108,12 @@ module.exports = {
     // Use function keyword instead of arrow function for non-anonymous
     // components
     'react/function-component-definition': `off`,
+
+    // We don't use prop-types with TypeScript
+    'react/prop-types': `off`,
+
+    // We don't need to add an import for React with TypeScript
+    'react/react-in-jsx-scope': `off`,
   },
 
   // Use vitest when running on files in the tests directory
