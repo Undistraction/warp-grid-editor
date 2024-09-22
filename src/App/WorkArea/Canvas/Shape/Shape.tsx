@@ -1,4 +1,5 @@
-import { ReactNode, useLayoutEffect, useRef, useState } from 'react'
+import type { ReactNode } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import Draggable from 'react-draggable'
 
 import type { BoundingCurves, Curve, Point } from '../../../../types'

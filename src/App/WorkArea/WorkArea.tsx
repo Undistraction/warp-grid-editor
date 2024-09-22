@@ -1,4 +1,5 @@
-import { Fragment, ReactNode, useRef } from 'react'
+import type { ReactNode } from 'react'
+import { Fragment, useRef } from 'react'
 
 import useObserveClientSize from '../../hooks/useObserveClientSize'
 import useAppStore from '../../state/useAppStore'

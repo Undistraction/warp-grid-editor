@@ -1,5 +1,5 @@
 import dasherize from 'dasherize'
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { DraggableData, DraggableEvent } from 'react-draggable'
 
 import { ControlPointId, CornerPointId } from '../../../../enums'

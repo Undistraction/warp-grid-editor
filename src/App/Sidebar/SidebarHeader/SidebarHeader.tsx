@@ -1,5 +1,5 @@
 import { ChevronDoubleRightIcon } from '@heroicons/react/16/solid'
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 
 import useAppStore from '../../../state/useAppStore'
 import ButtonLink from '../../components/ButtonLink'

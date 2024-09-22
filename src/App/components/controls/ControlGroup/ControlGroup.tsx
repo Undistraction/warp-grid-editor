@@ -2,7 +2,7 @@
 // Exports
 // -----------------------------------------------------------------------------
 
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 
 interface ControlGroupProps {
   children: ReactNode

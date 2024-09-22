@@ -1,5 +1,5 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/16/solid'
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 
 // -----------------------------------------------------------------------------
 // Types
