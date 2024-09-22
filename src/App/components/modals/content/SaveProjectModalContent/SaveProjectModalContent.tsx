@@ -12,7 +12,9 @@ export interface SaveProjectModalContentProps {
 // Exports
 // -----------------------------------------------------------------------------
 
-const SaveProjectModalContent = ({ onClose }: SaveProjectModalContentProps) => {
+export default function SaveProjectModalContent({
+  onClose,
+}: SaveProjectModalContentProps) {
   return (
     <div
       className="p-5"
@@ -22,5 +24,3 @@ const SaveProjectModalContent = ({ onClose }: SaveProjectModalContentProps) => {
     </div>
   )
 }
-
-export default SaveProjectModalContent

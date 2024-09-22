@@ -68,12 +68,12 @@ const getDimensionsSumamry = ({ width, height }: Size) =>
 // Exports
 // -----------------------------------------------------------------------------
 
-const WorkArea = ({
+export default function WorkArea({
   setCanvas,
   grid,
   dimensions,
   setDimensions,
-}: WorkAreaProps): ReactNode => {
+}: WorkAreaProps): ReactNode {
   const displayRef = useRef(null)
 
   const project = useAppStore.use.project()
@@ -141,5 +141,3 @@ const WorkArea = ({
     </div>
   )
 }
-
-export default WorkArea

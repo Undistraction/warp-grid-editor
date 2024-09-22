@@ -12,7 +12,9 @@ export interface LoadProjectModalContentProps {
 // Exports
 // -----------------------------------------------------------------------------
 
-const LoadProjectModalContent = ({ onClose }: LoadProjectModalContentProps) => {
+export default function LoadProjectModalContent({
+  onClose,
+}: LoadProjectModalContentProps) {
   return (
     <div
       className="p-5"
@@ -22,5 +24,3 @@ const LoadProjectModalContent = ({ onClose }: LoadProjectModalContentProps) => {
     </div>
   )
 }
-
-export default LoadProjectModalContent

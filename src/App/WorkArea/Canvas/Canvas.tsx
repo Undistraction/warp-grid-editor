@@ -20,14 +20,14 @@ interface CanvasProps {
 // Exports
 // -----------------------------------------------------------------------------
 
-const Canvas = ({
+export default function Canvas({
   setCanvas,
   width,
   height,
   grid,
   gridSquareConfig,
   config,
-}: CanvasProps) => {
+}: CanvasProps) {
   const ref = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
@@ -73,5 +73,3 @@ const Canvas = ({
     />
   )
 }
-
-export default Canvas

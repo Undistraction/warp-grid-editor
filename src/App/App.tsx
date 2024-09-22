@@ -19,7 +19,7 @@ import WorkArea from './WorkArea'
 // Exports
 // -----------------------------------------------------------------------------
 
-const App = () => {
+function App() {
   const [canvas, setCanvas] = useState<HTMLCanvasElement | null>(null)
   const [grid, setGrid] = useState<WarpGrid | null>(null)
   const { project } = useAppStore((state: AppSlice) => state)

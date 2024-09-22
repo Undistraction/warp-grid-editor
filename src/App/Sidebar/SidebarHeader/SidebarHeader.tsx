@@ -8,7 +8,7 @@ import ButtonLink from '../../components/ButtonLink'
 // Exports
 // -----------------------------------------------------------------------------
 
-const SidebarHeader = (): ReactNode => {
+export default function SidebarHeader(): ReactNode {
   const setAppConfigValue = useAppStore.use.setAppConfigValue()
   const project = useAppStore.use.project()
 
@@ -29,5 +29,3 @@ const SidebarHeader = (): ReactNode => {
     </header>
   )
 }
-
-export default SidebarHeader

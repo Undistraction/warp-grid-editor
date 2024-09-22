@@ -15,7 +15,11 @@ type TextInputProps = {
 // Exports
 // -----------------------------------------------------------------------------
 
-const TextInput = ({ value, onChange, testId = undefined }: TextInputProps) => {
+export default function TextInput({
+  value,
+  onChange,
+  testId = undefined,
+}: TextInputProps) {
   const [localValue, setLocalValue] = useState<string | null>(null)
   const resolvedValue = !isNil(localValue) ? localValue : value
   return (
@@ -38,5 +42,3 @@ const TextInput = ({ value, onChange, testId = undefined }: TextInputProps) => {
     </div>
   )
 }
-
-export default TextInput

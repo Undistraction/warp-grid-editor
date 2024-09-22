@@ -55,13 +55,13 @@ const renderOptions = (options: Option[]) => {
 // Exports
 // -----------------------------------------------------------------------------
 
-const SteppedInput = ({
+export default function SteppedInput({
   onChange,
   value = undefined,
   options,
   name,
   testId = undefined,
-}: SteppedInputProps) => {
+}: SteppedInputProps) {
   return (
     <select
       data-tid={testId}
@@ -78,5 +78,3 @@ const SteppedInput = ({
     </select>
   )
 }
-
-export default SteppedInput

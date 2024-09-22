@@ -20,7 +20,7 @@ interface ControlGroupProps {
 // Exports
 // -----------------------------------------------------------------------------
 
-const ControlGroup = ({
+export default function ControlGroup({
   children,
   label,
   labelIsAfter = false,
@@ -30,7 +30,7 @@ const ControlGroup = ({
   tooltipText = undefined,
   htmlFor = undefined,
   labelClassName = ``,
-}: ControlGroupProps) => {
+}: ControlGroupProps) {
   const labelChild = (
     <label
       key="label"
@@ -62,5 +62,3 @@ const ControlGroup = ({
     </div>
   )
 }
-
-export default ControlGroup

@@ -98,14 +98,14 @@ const renderNodes = (
 // Exports
 // -----------------------------------------------------------------------------
 
-const BoundsEditor = ({
+export default function BoundsEditor({
   updateBoundingCurvesNodePosition,
   corners,
   zeroControlPoints,
   linkControlPoints,
   mirrorControlPoints,
   config,
-}: BoundsEditorProps) => {
+}: BoundsEditorProps) {
   const getNodeWithData: GetNodeWithData = getNode(
     zeroControlPoints,
     linkControlPoints,
@@ -120,5 +120,3 @@ const BoundsEditor = ({
     </div>
   )
 }
-
-export default BoundsEditor

@@ -13,7 +13,7 @@ export interface ProjectSaverProps {
 // Exports
 // -----------------------------------------------------------------------------
 
-const ProjectSaver = ({ onSave }: ProjectSaverProps) => {
+export default function ProjectSaver({ onSave }: ProjectSaverProps) {
   const saveProjectAs = useAppStore.use.saveProjectAs()
   const setName = useAppStore.use.setName()
   const project = useAppStore.use.project()
@@ -42,5 +42,3 @@ const ProjectSaver = ({ onSave }: ProjectSaverProps) => {
     </div>
   )
 }
-
-export default ProjectSaver

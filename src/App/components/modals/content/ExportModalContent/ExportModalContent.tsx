@@ -4,7 +4,7 @@ import ProjectExporter from './ProjectExporter'
 // Exports
 // -----------------------------------------------------------------------------
 
-const ExportModalContent = () => {
+export default function ExportModalContent() {
   return (
     <div
       className="p-5"
@@ -14,5 +14,3 @@ const ExportModalContent = () => {
     </div>
   )
 }
-
-export default ExportModalContent

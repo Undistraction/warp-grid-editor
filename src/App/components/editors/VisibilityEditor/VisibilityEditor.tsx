@@ -15,7 +15,7 @@ interface VisibilityEditorProps {
 // Exports
 // -----------------------------------------------------------------------------
 
-const VisibilityEditor = ({ project }: VisibilityEditorProps) => {
+export default function VisibilityEditor({ project }: VisibilityEditorProps) {
   const setProjectConfigValue = useAppStore.use.setProjectConfigValue()
   return (
     <div className="flex flex-col space-y-3">
@@ -66,5 +66,3 @@ const VisibilityEditor = ({ project }: VisibilityEditorProps) => {
     </div>
   )
 }
-
-export default VisibilityEditor

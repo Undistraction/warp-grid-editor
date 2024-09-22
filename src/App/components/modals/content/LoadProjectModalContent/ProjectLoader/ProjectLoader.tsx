@@ -40,7 +40,7 @@ const renderOptions = (options: Options) =>
 // Exports
 // -----------------------------------------------------------------------------
 
-const ProjectLoader = ({ onLoad }: ProjectLoaderProps) => {
+export default function ProjectLoader({ onLoad }: ProjectLoaderProps) {
   const [uuid, setUuid] = useState<string>(``)
   const loadProject = useAppStore.use.loadProject()
   const projects: Projects = useAppStore.use.projects()
@@ -78,5 +78,3 @@ const ProjectLoader = ({ onLoad }: ProjectLoaderProps) => {
     </div>
   )
 }
-
-export default ProjectLoader

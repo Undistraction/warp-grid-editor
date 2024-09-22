@@ -9,7 +9,7 @@ import SaveProjectModalContent from '../../components/modals/content/SaveProject
 // Exports
 // -----------------------------------------------------------------------------
 
-const HeaderMenu = () => {
+export default function HeaderMenu() {
   const project = useAppStore.use.project()
   const saveProject = useAppStore.use.saveProject()
   const { openModal, Modal } = useModal()
@@ -62,5 +62,3 @@ const HeaderMenu = () => {
     </div>
   )
 }
-
-export default HeaderMenu

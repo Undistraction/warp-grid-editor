@@ -20,10 +20,10 @@ interface BezierCurveProps {
 // Exports
 // -----------------------------------------------------------------------------
 
-const BezierCurve = ({
+export default function BezierCurve({
   values: [v1, v2, v3, v4],
   bounds: { width, height },
-}: BezierCurveProps) => {
+}: BezierCurveProps) {
   const paths = useMemo(() => {
     const curve = {
       startPoint: { x: 0, y: height },
@@ -59,5 +59,3 @@ const BezierCurve = ({
     </div>
   )
 }
-
-export default BezierCurve

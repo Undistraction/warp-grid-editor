@@ -85,7 +85,9 @@ const renderNodes = (
 // Exports
 // -----------------------------------------------------------------------------
 
-const ControlNodes = ({ boundingCurves }: ControlNodesProps): ReactNode => {
+export default function ControlNodes({
+  boundingCurves,
+}: ControlNodesProps): ReactNode {
   const updateBoundingCurvesNodePosition =
     useAppStore.use.updateBoundingCurvesNodePosition()
 
@@ -170,5 +172,3 @@ const ControlNodes = ({ boundingCurves }: ControlNodesProps): ReactNode => {
     </div>
   )
 }
-
-export default ControlNodes

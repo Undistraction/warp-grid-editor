@@ -9,7 +9,7 @@ import ExportSVG from './ExportSvg'
 // Exports
 // -----------------------------------------------------------------------------
 
-const ProjectExporter = () => {
+export default function ProjectExporter() {
   const project = useAppStore.use.project()
   const [selectedIdx, setSelectedIdx] = useState(0)
   return (
@@ -35,5 +35,3 @@ const ProjectExporter = () => {
     </div>
   )
 }
-
-export default ProjectExporter

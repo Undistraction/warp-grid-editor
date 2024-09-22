@@ -29,7 +29,7 @@ interface NodeEditorProps {
 // Exports
 // -----------------------------------------------------------------------------
 
-const NodeEditor = ({
+export default function NodeEditor({
   title,
   cornerPoint,
   controlPoint1,
@@ -40,7 +40,7 @@ const NodeEditor = ({
   linkControlPoints,
   controlNodesAreLinked,
   controlNodesAreMirrored,
-}: NodeEditorProps) => {
+}: NodeEditorProps) {
   const [isMinimised, setIsMinised] = useState(true)
   const icon = isMinimised ? <ChevronDownIcon /> : <ChevronUpIcon />
 
@@ -90,5 +90,3 @@ const NodeEditor = ({
     </div>
   )
 }
-
-export default NodeEditor

@@ -21,7 +21,7 @@ interface TabProps {
 // Exports
 // -----------------------------------------------------------------------------
 
-const Tab = ({
+export default function Tab({
   label = undefined,
   labelSelected = label,
   onClick,
@@ -30,7 +30,7 @@ const Tab = ({
   isSelected = false,
   testId = ``,
   icon = undefined,
-}: TabProps) => {
+}: TabProps) {
   const classNamesUnmerged = cls(
     `rounded-t-xl px-4 py-2 border border-b-transparent text-white flex flex-row space-x-2 items-center bg-white text-black flex justify-center relative -bottom-[1px]`,
     {
@@ -52,5 +52,3 @@ const Tab = ({
     </button>
   )
 }
-
-export default Tab

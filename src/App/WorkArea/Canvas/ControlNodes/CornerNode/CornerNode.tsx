@@ -29,12 +29,12 @@ const SIZE_QUARTER = SIZE * 0.25
 // Exports
 // -----------------------------------------------------------------------------
 
-const CornerNode = ({
+export default function CornerNode({
   id,
   position,
   onDrag,
   onDoubleClick,
-}: CornerNodeProps): ReactNode => {
+}: CornerNodeProps): ReactNode {
   const nodeRef = useRef(null)
   const testId = dasherize(id)
 
@@ -84,5 +84,3 @@ const CornerNode = ({
     </Draggable>
   )
 }
-
-export default CornerNode

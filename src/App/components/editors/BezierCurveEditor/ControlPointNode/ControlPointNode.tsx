@@ -25,7 +25,11 @@ const SIZE_HALF = 6
 // Exports
 // -----------------------------------------------------------------------------
 
-const ControlPointNode = ({ position, onDrag, id }: ControlPointNodeProps) => {
+export default function ControlPointNode({
+  position,
+  onDrag,
+  id,
+}: ControlPointNodeProps) {
   const nodeRef = useRef(null)
   const testId = dasherize(id)
   return (
@@ -65,5 +69,3 @@ const ControlPointNode = ({ position, onDrag, id }: ControlPointNodeProps) => {
     </Draggable>
   )
 }
-
-export default ControlPointNode

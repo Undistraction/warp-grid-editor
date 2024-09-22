@@ -23,7 +23,7 @@ interface ButtonProps {
 // Exports
 // -----------------------------------------------------------------------------
 
-const Button = ({
+export default function Button({
   label = undefined,
   labelSelected = label,
   onClick,
@@ -34,7 +34,7 @@ const Button = ({
   icon = undefined,
   iconSelected = undefined,
   tooltipText = undefined,
-}: ButtonProps) => {
+}: ButtonProps) {
   const classNamesUnmerged = cls(
     `rounded-md px-2 py-1 border flex flex-row space-x-2 items-center flex justify-center`,
     {
@@ -62,5 +62,3 @@ const Button = ({
     </button>
   )
 }
-
-export default Button

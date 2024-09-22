@@ -34,7 +34,7 @@ const getCode = (project: Project) => {
 // Exports
 // -----------------------------------------------------------------------------
 
-const ExportCode = ({ project }: ExportCodeProps) => {
+export default function ExportCode({ project }: ExportCodeProps) {
   const codeString = getCode(project)
   return (
     <div className="flex flex-col space-y-3">
@@ -50,5 +50,3 @@ const ExportCode = ({ project }: ExportCodeProps) => {
     </div>
   )
 }
-
-export default ExportCode

@@ -18,14 +18,14 @@ interface SidebarGroupProps {
 // Exports
 // -----------------------------------------------------------------------------
 
-const SidebarGroup = ({
+export default function SidebarGroup({
   title,
   children = undefined,
   hint,
   isMinimised = false,
   onToggleMinimise,
   testId = ``,
-}: SidebarGroupProps): ReactNode => {
+}: SidebarGroupProps): ReactNode {
   const icon = isMinimised ? <ChevronDownIcon /> : <ChevronUpIcon />
 
   return (
@@ -61,5 +61,3 @@ const SidebarGroup = ({
     </div>
   )
 }
-
-export default SidebarGroup

@@ -21,7 +21,7 @@ interface ButtonLinkProps {
 // Exports
 // -----------------------------------------------------------------------------
 
-const ButtonLink = ({
+export default function ButtonLink({
   label = undefined,
   labelSelected = label,
   isSelected = false,
@@ -32,7 +32,7 @@ const ButtonLink = ({
   icon = undefined,
   iconSelected = undefined,
   tooltipText = undefined,
-}: ButtonLinkProps) => {
+}: ButtonLinkProps) {
   const iconResolved = isSelected ? iconSelected : icon
 
   return (
@@ -52,5 +52,3 @@ const ButtonLink = ({
     </button>
   )
 }
-
-export default ButtonLink

@@ -31,10 +31,10 @@ const renderStems = (points: PointPairs) =>
 // Exports
 // -----------------------------------------------------------------------------
 
-const ControlPointStems = ({
+export default function ControlPointStems({
   bounds: { width, height } = { width: 0, height: 0 },
   points,
-}: ControlPointStemsProps) => {
+}: ControlPointStemsProps) {
   return (
     <div className={`pointer-events-none absolute inset-0`}>
       <svg
@@ -51,5 +51,3 @@ const ControlPointStems = ({
     </div>
   )
 }
-
-export default ControlPointStems

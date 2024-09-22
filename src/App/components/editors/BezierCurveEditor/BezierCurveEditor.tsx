@@ -69,10 +69,10 @@ const getPositionsFromValues = (
 // Exports
 // -----------------------------------------------------------------------------
 
-const BezierCurveEditor = ({
+export default function BezierCurveEditor({
   onChange,
   values: bezierEasingParams,
-}: BezierCurveEditorProps) => {
+}: BezierCurveEditorProps) {
   const [bounds, setBounds] = useState<DOMRect | null>(null)
   const [{ width, height }, setDimensions] = useState<Size>({
     width: 0,
@@ -188,5 +188,3 @@ const BezierCurveEditor = ({
     </div>
   )
 }
-
-export default BezierCurveEditor

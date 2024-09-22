@@ -79,10 +79,10 @@ const renderCurvesConfig = (
 // Exports
 // -----------------------------------------------------------------------------
 
-const ConfigEditor = ({
+export default function ConfigEditor({
   project,
   setGridDefinitionValue,
-}: ConfigEditorProps) => {
+}: ConfigEditorProps) {
   return (
     <div className="flex flex-col items-stretch space-y-3">
       <ControlGroup
@@ -127,5 +127,3 @@ const ConfigEditor = ({
     </div>
   )
 }
-
-export default ConfigEditor

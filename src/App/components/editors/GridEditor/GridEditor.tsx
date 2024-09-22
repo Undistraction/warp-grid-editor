@@ -42,11 +42,11 @@ const stepsToInts = pipe(getItemsFromString, map(parseFloat))
 // Exports
 // -----------------------------------------------------------------------------
 
-const GridEditor = ({
+export default function GridEditor({
   project,
   setGridDefinitionValue,
   setProjectConfigValue,
-}: GridEditorProps) => {
+}: GridEditorProps) {
   const isAdvanced = project.config.grid.shouldUseComplexColumnsRows
 
   const gutter = project.gridDefinition.gutter as [number, number]
@@ -208,5 +208,3 @@ const GridEditor = ({
     </div>
   )
 }
-
-export default GridEditor

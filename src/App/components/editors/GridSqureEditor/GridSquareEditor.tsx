@@ -42,7 +42,7 @@ const getGridSquareOptions = (
 // Exports
 // -----------------------------------------------------------------------------
 
-const GridSquareEditor = ({ project }: GridSquareEditorProps) => {
+export default function GridSquareEditor({ project }: GridSquareEditorProps) {
   const setProjectConfigValue = useAppStore.use.setProjectConfigValue()
 
   return (
@@ -92,5 +92,3 @@ const GridSquareEditor = ({ project }: GridSquareEditorProps) => {
     </div>
   )
 }
-
-export default GridSquareEditor

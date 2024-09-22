@@ -16,7 +16,7 @@ interface ModalProps {
 // Exports
 // -----------------------------------------------------------------------------
 
-const Modal = ({ children, onClose }: ModalProps) => {
+export default function Modal({ children, onClose }: ModalProps) {
   const handleBackgroundClick = (event: MouseEvent<HTMLElement>) => {
     if (event.target === event.currentTarget) {
       onClose()
@@ -49,5 +49,3 @@ const Modal = ({ children, onClose }: ModalProps) => {
     </div>
   )
 }
-
-export default Modal

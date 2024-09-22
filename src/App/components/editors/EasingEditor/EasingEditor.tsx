@@ -21,13 +21,13 @@ interface EasingEditorProps {
 // Exports
 // -----------------------------------------------------------------------------
 
-const EasingEditor = ({
+export default function EasingEditor({
   title,
   easing,
   setEasing,
   testId = undefined,
   tooltipText,
-}: EasingEditorProps) => {
+}: EasingEditorProps) {
   const handleChange = useDebouncedCallback(setEasing, 15)
 
   return (
@@ -46,5 +46,3 @@ const EasingEditor = ({
     </ControlGroup>
   )
 }
-
-export default EasingEditor

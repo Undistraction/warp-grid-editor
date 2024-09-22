@@ -13,12 +13,12 @@ type SwitchProps = {
 // Exports
 // -----------------------------------------------------------------------------
 
-const Switch = ({
+export default function Switch({
   isSelected,
   onChange,
   testId = undefined,
   id = undefined,
-}: SwitchProps) => {
+}: SwitchProps) {
   return (
     <div
       className="relative h-8 w-16 cursor-pointer border border-black"
@@ -42,5 +42,3 @@ const Switch = ({
     </div>
   )
 }
-
-export default Switch

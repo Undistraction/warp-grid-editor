@@ -52,7 +52,7 @@ const getSVG = (project: Project) => {
 // Exports
 // -----------------------------------------------------------------------------
 
-const ExportSVG = ({ project }: ExportSVGProps) => {
+export default function ExportSVG({ project }: ExportSVGProps) {
   const codeString = getSVG(project)
   return (
     <div className="flex flex-col space-y-3">
@@ -63,5 +63,3 @@ const ExportSVG = ({ project }: ExportSVGProps) => {
     </div>
   )
 }
-
-export default ExportSVG

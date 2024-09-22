@@ -18,11 +18,11 @@ interface CodeBlockProps {
 // Exports
 // -----------------------------------------------------------------------------
 
-const CodeBlock = ({
+export default function CodeBlock({
   codeString,
   language,
   testId = undefined,
-}: CodeBlockProps) => {
+}: CodeBlockProps) {
   return (
     <div
       className="relative"
@@ -48,5 +48,3 @@ const CodeBlock = ({
     </div>
   )
 }
-
-export default CodeBlock

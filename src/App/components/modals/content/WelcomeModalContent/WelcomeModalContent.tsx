@@ -8,7 +8,7 @@ const SCREENSHOT_URL = `/screenshot/screenshot.png`
 // Exports
 // -----------------------------------------------------------------------------
 
-const LoadProjectModalContent = () => {
+export default function LoadProjectModalContent() {
   return (
     <div
       className="p-5"
@@ -50,5 +50,3 @@ const LoadProjectModalContent = () => {
     </div>
   )
 }
-
-export default LoadProjectModalContent

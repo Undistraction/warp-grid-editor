@@ -25,13 +25,13 @@ interface ControlPointEditorProps {
 // Exports
 // -----------------------------------------------------------------------------
 
-const ControlPointEditor = ({
+export default function ControlPointEditor({
   zeroControlPoints,
   linkControlPoints,
   mirrorControlPoints,
   controlNodesAreLinked,
   controlNodesAreMirrored,
-}: ControlPointEditorProps) => {
+}: ControlPointEditorProps) {
   return (
     <div className="flex flex-row items-start space-x-2">
       <ButtonLink
@@ -57,5 +57,3 @@ const ControlPointEditor = ({
     </div>
   )
 }
-
-export default ControlPointEditor

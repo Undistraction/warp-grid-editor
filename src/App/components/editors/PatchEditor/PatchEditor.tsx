@@ -16,7 +16,7 @@ interface PatchEditorProps {
 // Exports
 // -----------------------------------------------------------------------------
 
-const PatchEditor = ({ project }: PatchEditorProps) => {
+export default function PatchEditor({ project }: PatchEditorProps) {
   const zeroControlPoints = useAppStore.use.zeroControlPoints()
   const linkControlPoints = useAppStore.use.linkControlPoints()
   const mirrorControlPoints = useAppStore.use.mirrorControlPoints()
@@ -52,5 +52,3 @@ const PatchEditor = ({ project }: PatchEditorProps) => {
     </div>
   )
 }
-
-export default PatchEditor

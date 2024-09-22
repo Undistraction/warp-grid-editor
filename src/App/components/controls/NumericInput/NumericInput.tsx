@@ -19,7 +19,7 @@ interface NumericInputProps {
 // Exports
 // -----------------------------------------------------------------------------
 
-const NumericInput = ({
+export default function NumericInput({
   value = undefined,
   onChange,
   step = 1,
@@ -27,7 +27,7 @@ const NumericInput = ({
   max = undefined,
   testId = undefined,
   name = undefined,
-}: NumericInputProps) => {
+}: NumericInputProps) {
   const [localValue, setLocalValue] = useState<string | null>(null)
   const resolvedValue = localValue === `` ? localValue : value
 
@@ -54,5 +54,3 @@ const NumericInput = ({
     />
   )
 }
-
-export default NumericInput

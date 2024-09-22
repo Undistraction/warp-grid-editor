@@ -15,14 +15,14 @@ interface SliderProps {
 // Exports
 // -----------------------------------------------------------------------------
 
-const Slider = ({
+export default function Slider({
   value,
   name,
   min = 0,
   max = 1,
   onChange,
   testId = undefined,
-}: SliderProps) => {
+}: SliderProps) {
   return (
     <input
       className="grow"
@@ -37,5 +37,3 @@ const Slider = ({
     />
   )
 }
-
-export default Slider

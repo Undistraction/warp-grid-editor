@@ -75,7 +75,10 @@ const renderPath = ({ top, left, bottom, right }: BoundingCurves) => {
 // Exports
 // -----------------------------------------------------------------------------
 
-const Shape = ({ boundingCurves, onDrag }: ShapeProps): ReactNode => {
+export default function Shape({
+  boundingCurves,
+  onDrag,
+}: ShapeProps): ReactNode {
   const nodeRef = useRef(null)
   const svgRef = useRef(null)
   const [{ width, height, x, y }, setCanvasBounds] =
@@ -126,5 +129,3 @@ const Shape = ({ boundingCurves, onDrag }: ShapeProps): ReactNode => {
     </Draggable>
   )
 }
-
-export default Shape

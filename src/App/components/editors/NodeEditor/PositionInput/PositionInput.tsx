@@ -17,7 +17,7 @@ interface PositionInputProps {
 // Exports
 // -----------------------------------------------------------------------------
 
-const PositionInput = ({ point, onChange }: PositionInputProps) => {
+export default function PositionInput({ point, onChange }: PositionInputProps) {
   const x = isNumber(point?.x) ? roundToTwoPlaces(point?.x) : 0
   const y = isNumber(point?.y) ? roundToTwoPlaces(point?.y) : 0
   return (
@@ -53,5 +53,3 @@ const PositionInput = ({ point, onChange }: PositionInputProps) => {
     </div>
   )
 }
-
-export default PositionInput

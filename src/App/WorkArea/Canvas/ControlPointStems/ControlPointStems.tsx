@@ -39,10 +39,10 @@ const renderStems = (pointPairs: PointPairs) =>
 // Exports
 // -----------------------------------------------------------------------------
 
-const ControlPointStems = ({
+export default function ControlPointStems({
   boundingCurves,
   bounds: { width, height },
-}: ControlPointStemsProps): ReactNode => {
+}: ControlPointStemsProps): ReactNode {
   const pointPairs: PointPairs = [
     [boundingCurves.top.startPoint, boundingCurves.top.controlPoint1],
     [boundingCurves.top.endPoint, boundingCurves.top.controlPoint2],
@@ -69,5 +69,3 @@ const ControlPointStems = ({
     </div>
   )
 }
-
-export default ControlPointStems

@@ -22,7 +22,7 @@ interface SidebarProps {
 // Exports
 // -----------------------------------------------------------------------------
 
-const Sidebar = ({ project }: SidebarProps) => {
+export default function Sidebar({ project }: SidebarProps) {
   const setGridDefinitionValue = useAppStore.use.setGridDefinitionValue()
   const setProjectConfigValue = useAppStore.use.setProjectConfigValue()
   const setAppConfigValue = useAppStore.use.setAppConfigValue()
@@ -114,5 +114,3 @@ const Sidebar = ({ project }: SidebarProps) => {
     </div>
   )
 }
-
-export default Sidebar

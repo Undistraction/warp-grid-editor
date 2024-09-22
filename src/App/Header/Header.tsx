@@ -11,7 +11,7 @@ const LOGO_W_ONLY_URL = `/logo/Logo-v2_Logo-w-only.svg`
 // Exports
 // -----------------------------------------------------------------------------
 
-const Header = () => {
+export default function Header() {
   return (
     <header className="flex flex-row items-start space-x-2 pb-3 sm:space-x-3">
       <h1
@@ -33,5 +33,3 @@ const Header = () => {
     </header>
   )
 }
-
-export default Header
