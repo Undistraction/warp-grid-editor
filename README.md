@@ -1,12 +1,18 @@
 # README
 
-![image](./public/screenshot/screenshot.png)
+<p align="center">
+  <img src="./public/screenshot/screenshot.png" width="300" alt="Logo for T3">
+</p>
 
-This is an editor / demo for [warp-grid](https://github.com/undistraction/warp-grid).
+<h1 align="center">
+  Warp Grid Editor
+</h1>
 
-You can use it [here](https://warp-grid-editor.undistraction.com).
+This is package provides an editor for [warp-grid](https://github.com/undistraction/warp-grid).
 
-Projects can be saved-to and loade-from your browser's local storage.
+You can use it at [warp-grid-editor.undistraction.com](https://warp-grid-editor.undistraction.com).
+
+Projects can be saved-to and loaded-from your browser's local storage.
 
 You can export config for `warp-grid` or export the grid as an SVG.
 
