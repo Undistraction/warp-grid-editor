@@ -6,7 +6,6 @@ import { defineConfig } from 'vite'
 // Exports
 // -----------------------------------------------------------------------------
 
-// https://vitejs.dev/config/
 export default defineConfig(() => {
   return {
     plugins: [react()],

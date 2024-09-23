@@ -1,4 +1,12 @@
-/** @type {import('tailwindcss').Config} */
+/// @type {import('tailwindcss').Config}
+
+import aspectRatioPlugin from '@tailwindcss/aspect-ratio'
+import typographyPlugin from '@tailwindcss/typography'
+
+// -----------------------------------------------------------------------------
+// Exports
+// -----------------------------------------------------------------------------
+
 export default {
   content: [`./**/*.{ts,tsx,js,jsx,html}`, `!./node_modules/`],
   theme: {
@@ -10,8 +18,5 @@ export default {
       },
     },
   },
-  plugins: [
-    require(`@tailwindcss/typography`),
-    require(`@tailwindcss/aspect-ratio`),
-  ],
+  plugins: [typographyPlugin, aspectRatioPlugin],
 }

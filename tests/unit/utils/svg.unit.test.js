@@ -40,9 +40,6 @@ const BOUNDING_CURVES = {
 describe(`getSvgForGrid`, () => {
   it(`returns an svg document for the supplied grid`, () => {
     const grid = warpGrid(BOUNDING_CURVES, { columns: 3, rows: 5 })
-    console.dir(getSvgForGrid(grid, { width: 110, height: 110 }), {
-      depth: 9999,
-    })
     expect(getSvgForGrid(grid, { width: 110, height: 110 })).toBe(
       `<svg\n` +
         `  xmlns="http://www.w3.org/2000/svg"\n` +

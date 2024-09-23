@@ -8,6 +8,7 @@ module.exports = {
     es6: true,
     node: true,
   },
+
   // Use the TypeScript parser
   parser: `@typescript-eslint/parser`,
   parserOptions: {
@@ -55,7 +56,7 @@ module.exports = {
   ],
 
   // Ignore these files and dirs
-  ignorePatterns: [`/coverage/`, `/node_modules/`, `/dist/`],
+  ignorePatterns: [`coverage/`, `node_modules/`, `dist/`],
 
   rules: {
     // -------------------------------------------------------------------------

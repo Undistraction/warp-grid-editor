@@ -7,6 +7,10 @@ import process from 'process'
 
 const ROOT = `http://localhost:5173`
 
+// -----------------------------------------------------------------------------
+// Exports
+// -----------------------------------------------------------------------------
+
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
