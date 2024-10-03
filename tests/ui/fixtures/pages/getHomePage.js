@@ -61,6 +61,7 @@ const getHomePage = ({ page }) => {
   const controlPointBottomRight1 = page.getByTestId(`control-bottom-right1`)
   const controlPointBottomRight2 = page.getByTestId(`control-bottom-right2`)
   // Header menu
+  const newProjectButton = page.getByTestId(`new-project-button`)
   const saveProjectButton = page.getByTestId(`save-project-button`)
   const saveProjectAsButton = page.getByTestId(`save-project-as-button`)
   const loadProjectButton = page.getByTestId(`load-project-button`)
@@ -89,6 +90,10 @@ const getHomePage = ({ page }) => {
   const modal = page.getByTestId(`modal`)
   const modalOverlay = page.getByTestId(`modal-overlay`)
   const modalCloseButton = page.getByTestId(`modal-close-button`)
+  // Yes / No Dialog
+  const yesNoDialogue = page.getByTestId(`yes-no-dialogue`)
+  const yesNoDialogueYesButton = page.getByTestId(`yes-no-dialogue-yes-button`)
+  const yesNoDialogueNoButton = page.getByTestId(`yes-no-dialogue-no-button`)
 
   // ---------------------------------------------------------------------------
   // Actions
@@ -208,6 +213,10 @@ const getHomePage = ({ page }) => {
     copyCodeButton,
     copySvgButton,
     welcomeModalContent,
+    newProjectButton,
+    yesNoDialogue,
+    yesNoDialogueYesButton,
+    yesNoDialogueNoButton,
   }
 }
 
