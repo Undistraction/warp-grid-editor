@@ -1,7 +1,5 @@
-# README
-
 <p align="center">
-  <img src="./public/screenshot/screenshot.png" width="300" alt="Logo for T3">
+  <img src="readme/warp-grid-editor-title-image.png" width="300" alt="Logo for T3">
 </p>
 
 <h1 align="center">
