@@ -93,10 +93,14 @@ export interface ProjectConfig {
 
 export interface ProjectDefault {}
 
+// Make all the props required so we don't need to keep checking. We know they
+// will all be present.
+export type GridDefinitionAllRequired = Required<GridDefinition>
+
 export interface Project {
   meta: ProjectMeta
   config: ProjectConfig
-  gridDefinition: GridDefinition
+  gridDefinition: GridDefinitionAllRequired
   boundingCurves?: BoundingCurves
 }
 

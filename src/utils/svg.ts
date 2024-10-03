@@ -6,14 +6,14 @@ import type { BoundingCurves, Curve, Point, Size, WarpGrid } from '../types'
 // Exports
 // -----------------------------------------------------------------------------
 
-export const getMoveForPoint = ({ x, y }: Point) => `M${x} ${y}`
+export const getMoveForPoint = ({ x, y }: Point) => `M ${x} ${y}`
 
 export const getCubicBezierToPoint = ({
   controlPoint1,
   controlPoint2,
   endPoint,
 }: Curve) => {
-  return `C${controlPoint1.x} ${controlPoint1.y} ${controlPoint2.x} ${controlPoint2.y} ${endPoint.x} ${endPoint.y}`
+  return `C ${controlPoint1.x} ${controlPoint1.y} ${controlPoint2.x} ${controlPoint2.y} ${endPoint.x} ${endPoint.y}`
 }
 
 export const getPathForBounds = ({

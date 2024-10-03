@@ -7,13 +7,18 @@ import {
   LineStrategy,
   SidebarSectionId,
 } from '../enums'
-import type { Config, GridDefinition, Project, ProjectConfig } from '../types'
+import type {
+  Config,
+  GridDefinitionAllRequired,
+  Project,
+  ProjectConfig,
+} from '../types'
 
 // -----------------------------------------------------------------------------
 // Component
 // -----------------------------------------------------------------------------
 
-const GRID_DEFINITION_DEFAULT: GridDefinition = {
+const GRID_DEFINITION_DEFAULT: GridDefinitionAllRequired = {
   columns: 25,
   rows: 25,
   gutter: [0, 0],

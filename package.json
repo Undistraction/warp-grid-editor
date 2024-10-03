@@ -16,10 +16,11 @@
     "prepare": "husky",
     "test-unit": "vitest run",
     "test-unit-watch": "vitest",
-    "test-coverage": "vitest --coverage",
+    "test-unit-coverage": "vitest --coverage",
+    "test-unit-snapshot": "vitest run -u",
     "test-e2e": "ACTIVE_ENV=test playwright test",
     "test-e2e-ui": "ACTIVE_ENV=test playwright test --ui",
-    "test-e2e-update-screenshots": "ACTIVE_ENV=test playwright test --update-snapshots",
+    "test-e2e-snapshot": "ACTIVE_ENV=test playwright test --update-snapshots",
     "lint": "pnpm run lint-prettier && pnpm run lint-eslint",
     "lint-prettier": "prettier . --write",
     "lint-eslint": "eslint . --fix --ext .ts,.tsx --debug",
@@ -115,7 +116,7 @@
     "tailwind-merge": "^2.5.0",
     "use-debounce": "^10.0.1",
     "uuid": "^10.0.0",
-    "warp-grid": "^2.1.0",
+    "warp-grid": "^2.2.0",
     "zustand": "^4.5.4"
   }
 }

@@ -50,7 +50,10 @@ pnpm run lint-eslint
 #### Unit tests (Vitest)
 
 ```
-pnpm run test
+pnpm run test-unit
+pnpm run test-unit-watch # Run tests and watch for changes
+pnpm run test-unit-snapshot # Regenerate snapshots
+pnpm run test-unit-coverage # Run tests and display coverage
 ```
 
 #### E2E (Playwright)
@@ -58,11 +61,7 @@ pnpm run test
 Run the tests in the command-line
 
 ```
-pnpm run test-e2e
-```
-
-Run the tests with a GUI
-
-```
-pnpm run test-e2e-ui
+pnpm run test-e2e # Run tests on command-line
+pnpm run test-e2e-ui # Run tests with a GUI
+pnpm run test-e2e-snapshot # Regenerate snapshots
 ```
