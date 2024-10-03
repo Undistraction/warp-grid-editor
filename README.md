@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="readme/warp-grid-editor-title-image.png" width="300" alt="Logo for T3">
-</p>
+![Screenshot of warp-grid-editor UI](readme/warp-grid-editor-title-image.png)
 
 <h1 align="center">
   Warp Grid Editor
