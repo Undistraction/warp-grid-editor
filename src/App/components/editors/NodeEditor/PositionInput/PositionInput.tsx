@@ -26,7 +26,6 @@ export default function PositionInput({ point, onChange }: PositionInputProps) {
         <ControlGroup
           label="X"
           tooltipText="The position along the horizontal axis"
-          labelIsAfter
         >
           <div className="">
             <NumericInput
@@ -40,7 +39,6 @@ export default function PositionInput({ point, onChange }: PositionInputProps) {
         <ControlGroup
           label="Y"
           tooltipText="The position along the vertical axis"
-          labelIsAfter
         >
           <div className="">
             <NumericInput
