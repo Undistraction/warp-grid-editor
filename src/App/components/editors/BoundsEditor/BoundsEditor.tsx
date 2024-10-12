@@ -61,9 +61,8 @@ const getNode =
     config: ProjectConfig
   ) =>
   (pointId: CornerPointId) => {
-    const id = CornerPointId.TOP_LEFT
     return {
-      corners: corners[id],
+      corners: corners[pointId],
       pointIsLinked: pointIsLinked(pointId, config),
       pointIsMirrored: pointIsMirrored(pointId, config),
       zeroControlPoints: zeroControlPoints(pointId),
@@ -77,7 +76,9 @@ const renderNodes = (
   getNodeWithData: GetNodeWithData
 ) =>
   map(({ id, title }) => {
+    console.log(`ID`, id)
     const node = getNodeWithData(id)
+    console.log(`NODE`, node)
 
     return (
       <NodeEditor
