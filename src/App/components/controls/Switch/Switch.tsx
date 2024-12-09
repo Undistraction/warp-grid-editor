@@ -2,7 +2,7 @@
 // Types
 // -----------------------------------------------------------------------------
 
-type SwitchProps = {
+interface SwitchProps {
   isSelected: boolean
   onChange: (value: boolean) => void
   testId?: string

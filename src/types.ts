@@ -6,11 +6,7 @@ import { ControlPointId, CornerPointId, SidebarSectionId } from './enums'
 // Types
 // -----------------------------------------------------------------------------
 
-export type SectionsConfig = {
-  // False positive so disabled
-  // eslint-disable-next-line unused-imports/no-unused-vars
-  [key in SidebarSectionId]?: SectionConfig
-}
+export type SectionsConfig = Partial<Record<SidebarSectionId, SectionConfig>>
 
 export type Projects = Project[]
 
@@ -73,9 +69,7 @@ export interface CornerConfig {
   isMirrored: boolean
 }
 
-export interface CornersConfig {
-  [key: string]: CornerConfig
-}
+export type CornersConfig = Record<string, CornerConfig>
 
 export interface BoundsConfig {
   shouldDrawBounds: boolean
@@ -90,8 +84,6 @@ export interface ProjectConfig {
   grid: GridConfig
   bounds: BoundsConfig
 }
-
-export interface ProjectDefault {}
 
 // Make all the props required so we don't need to keep checking. We know they
 // will all be present.
@@ -142,18 +134,18 @@ export interface Bounds {
   y: number
 }
 
-export type CornerNodePoint = {
+export interface CornerNodePoint {
   point: Point
   id: ControlPointId | CornerPointId
 }
 
-export type CornerNode = {
+export interface CornerNode {
   cornerPoint: CornerNodePoint
   controlPoint1: CornerNodePoint
   controlPoint2: CornerNodePoint
 }
 
-export type CornerNodeMap = {
+export interface CornerNodeMap {
   [CornerPointId.TOP_LEFT]: CornerNode
   [CornerPointId.TOP_RIGHT]: CornerNode
   [CornerPointId.BOTTOM_LEFT]: CornerNode
@@ -179,7 +171,7 @@ export type SetGridDefinitionValue = (path: string[], value: unknown) => void
 
 export type SetProjectConfigValue = (path: string[], value: unknown) => void
 
-export type StraightLine = {
+export interface StraightLine {
   startPoint: Point
   endPoint: Point
 }

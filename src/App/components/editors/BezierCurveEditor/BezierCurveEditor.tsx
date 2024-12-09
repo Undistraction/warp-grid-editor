@@ -1,5 +1,5 @@
 import { map } from 'ramda'
-import React, { Fragment, useEffect, useMemo, useRef, useState } from 'react'
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { DraggableData, DraggableEvent } from 'react-draggable'
 
 import useObserveClientSize from '../../../../hooks/useObserveClientSize'

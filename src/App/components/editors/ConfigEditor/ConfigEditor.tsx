@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 
 import { InterpolationStrategy, LineStrategy } from '../../../../enums'
 import { Project, SetGridDefinitionValue } from '../../../../types'

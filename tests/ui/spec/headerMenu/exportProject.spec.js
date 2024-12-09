@@ -126,7 +126,7 @@ const grid = warpGrid({
       async () => await navigator.clipboard.readText()
     )
 
-    await expect(clipboardText).toEqual(EXPECTED)
+    expect(clipboardText).toEqual(EXPECTED)
   })
 
   test(`should allow an svg representation of the grid to be copied to the clipboard`, async ({

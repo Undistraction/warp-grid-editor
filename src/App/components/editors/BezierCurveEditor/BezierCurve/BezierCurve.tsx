@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 
 import type { BezierEasingParams, Bounds } from '../../../../../types'
 import { joinWithSpace } from '../../../../../utils/string'

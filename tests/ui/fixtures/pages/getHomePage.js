@@ -139,8 +139,6 @@ const getHomePage = ({ page }) => {
     await projectSaverSaveButton.click()
   }
 
-  const verifyBezierEasingForAxisGroup = async () => {}
-
   // ---------------------------------------------------------------------------
   // Export
   // ---------------------------------------------------------------------------
@@ -152,8 +150,6 @@ const getHomePage = ({ page }) => {
     setBezierEasingForAxis,
     saveUnsavedProject,
     saveProjectAs,
-    // Assertions
-    verifyBezierEasingForAxisGroup,
     // Elements
     headerTitle,
     sidebar,

@@ -1,4 +1,3 @@
-import React from 'react'
 import { useDebouncedCallback } from 'use-debounce'
 
 import type { BezierEasingParams } from '../../../../types'

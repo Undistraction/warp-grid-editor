@@ -1,5 +1,5 @@
 import dasherize from 'dasherize'
-import React, { ReactNode, useRef } from 'react'
+import { ReactNode, useRef } from 'react'
 import Draggable, { DraggableData, DraggableEvent } from 'react-draggable'
 
 import { METRICS } from '../../../../../const'

@@ -7,7 +7,7 @@ import type { Curve } from '../types'
 // Types
 // -----------------------------------------------------------------------------
 
-type Bounds = {
+interface Bounds {
   xMax: number
   yMax: number
   xMin: number

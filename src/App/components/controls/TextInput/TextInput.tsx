@@ -5,7 +5,7 @@ import { useState } from 'react'
 // Exports
 // -----------------------------------------------------------------------------
 
-type TextInputProps = {
+interface TextInputProps {
   value: string | number
   onChange: (value: string) => void
   testId?: string

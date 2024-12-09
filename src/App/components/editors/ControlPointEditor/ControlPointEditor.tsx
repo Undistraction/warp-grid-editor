@@ -5,7 +5,6 @@ import {
   LinkSlashIcon,
   SlashIcon,
 } from '@heroicons/react/16/solid'
-import React from 'react'
 
 import ButtonLink from '../../ButtonLink'
 

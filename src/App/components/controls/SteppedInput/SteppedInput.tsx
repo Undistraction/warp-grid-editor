@@ -9,7 +9,7 @@ type OptionObj = string | number | { value: number | string; label: string }
 interface SteppedInputProps {
   onChange: (value: string) => void
   value?: number | string
-  options: Array<string | OptionObj>
+  options: (string | OptionObj)[]
   name: string
   testId?: string
 }
