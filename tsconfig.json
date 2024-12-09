@@ -17,12 +17,12 @@
     "moduleResolution": "bundler",
     // APIs to support
     "lib": ["ESNext", "DOM"],
-    // The version of ES the code is compiled to. Note that no pollyfills are
+    // The version of ES the code is compiled to. Note that no polyfills are
     // added during compilation.
     "target": "ES2020",
     // Should a sourcemap be generated for the compiled code?
     "sourceMap": true,
-    // Improve compatability with ES module imports
+    // Improve compatibility with ES module imports
     "esModuleInterop": true,
     // Ensure casings in import are consistent
     "forceConsistentCasingInFileNames": true,
@@ -30,7 +30,6 @@
     "skipLibCheck": true,
     // Use 'unknown' for variables in catch clauses
     "useUnknownInCatchVariables": false,
-
     // Dirs to look in for type definitions
     "typeRoots": [
       // Types for third-party libs that we have added
