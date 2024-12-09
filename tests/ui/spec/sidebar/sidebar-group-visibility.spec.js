@@ -47,13 +47,13 @@ test.describe(`Bounds`, () => {
 
   test(`State is saved on page reload`, async ({ homePage, page }) => {
     await homePage.showBoundsSwitch.click()
-    await page.reload()
+    await await page.reload()
     await expect(homePage.gridCanvas).toHaveScreenshot(
       `grid-default-bounds-hidden.png`
     )
 
     await homePage.showBoundsSwitch.click()
-    await page.reload()
+    await await page.reload()
     await expect(homePage.gridCanvas).toHaveScreenshot(`grid-default.png`)
   })
 })
@@ -72,11 +72,11 @@ test.describe(`Corner points`, () => {
   test(`State is saved on page reload`, async ({ homePage, page }) => {
     // Hide the corner points
     await homePage.showCornerPointsSwitch.click()
-    page.reload()
+    await page.reload()
     await assertCornerNodesAreHidden(homePage)
     // Show the corner points
     await homePage.showCornerPointsSwitch.click()
-    page.reload()
+    await page.reload()
     await assertCornerNodesAreVisible(homePage)
   })
 })
@@ -93,12 +93,12 @@ test.describe(`Intersections`, () => {
 
   test(`State is saved on page reload`, async ({ homePage, page }) => {
     await homePage.showIntersectionsSwitch.click()
-    await page.reload()
+    await await page.reload()
     await expect(homePage.gridCanvas).toHaveScreenshot(
       `grid-default-intersections-hidden.png`
     )
     await homePage.showIntersectionsSwitch.click()
-    await page.reload()
+    await await page.reload()
     await expect(homePage.gridCanvas).toHaveScreenshot(`grid-default.png`)
   })
 })
@@ -115,12 +115,12 @@ test.describe(`Grid`, () => {
 
   test(`State is saved on page reload`, async ({ homePage, page }) => {
     await homePage.showGridSwitch.click()
-    await page.reload()
+    await await page.reload()
     await expect(homePage.gridCanvas).toHaveScreenshot(
       `grid-default-grid-hidden.png`
     )
     await homePage.showGridSwitch.click()
-    await page.reload()
+    await await page.reload()
     await expect(homePage.gridCanvas).toHaveScreenshot(`grid-default.png`)
   })
 })

@@ -31,13 +31,13 @@ test.describe(`Line-type`, () => {
 
   test(`State is saved on page reload`, async ({ homePage, page }) => {
     await homePage.lineTypeSelect.selectOption({ label: `Straight` })
-    page.reload()
+    await page.reload()
     await expect(homePage.gridCanvas).toHaveScreenshot(
       `grid-line-type-straight.png`
     )
     await expect(homePage.lineTypeSelect).toHaveValue(`straightLines`)
     await homePage.lineTypeSelect.selectOption({ label: `Curves` })
-    page.reload()
+    await page.reload()
     await expect(homePage.gridCanvas).toHaveScreenshot(`grid-default.png`)
     await expect(homePage.lineTypeSelect).toHaveValue(`curves`)
   })
@@ -57,13 +57,13 @@ test.describe(`Interpolation-type`, () => {
 
   test(`State is saved on page reload`, async ({ homePage, page }) => {
     await homePage.interpolationTypeSelect.selectOption({ label: `Linear` })
-    page.reload()
+    await page.reload()
     await expect(homePage.gridCanvas).toHaveScreenshot(
       `grid-interpolation-type-linear.png`
     )
     await expect(homePage.interpolationTypeSelect).toHaveValue(`linear`)
     await homePage.interpolationTypeSelect.selectOption({ label: `Even` })
-    page.reload()
+    await page.reload()
     await expect(homePage.gridCanvas).toHaveScreenshot(`grid-default.png`)
     await expect(homePage.interpolationTypeSelect).toHaveValue(`even`)
   })
@@ -80,11 +80,11 @@ test.describe(`Precision`, () => {
 
   test(`State is saved on page reload`, async ({ homePage, page }) => {
     await homePage.precisionInput.fill(`5`)
-    page.reload()
+    await page.reload()
     await expect(homePage.gridCanvas).toHaveScreenshot(`grid-precision-5.png`)
     await expect(homePage.precisionInput).toHaveValue(`5`)
     await homePage.precisionInput.fill(`20`)
-    page.reload()
+    await page.reload()
     await expect(homePage.gridCanvas).toHaveScreenshot(`grid-default.png`)
     await expect(homePage.interpolationTypeSelect).toHaveValue(`even`)
     await expect(homePage.precisionInput).toHaveValue(`20`)
