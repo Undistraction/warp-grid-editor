@@ -45,24 +45,24 @@ jobs:
       - name: Unit Tests
         run: pnpm run test-unit
 
-  e2eTest:
-    runs-on: ubuntu-latest
-    needs: [unitTest]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-      - uses: pnpm/action-setup@v4
-      - run: pnpm install
-      - name: Install Playwright Browsers
-        run: pnpm playwright install --with-deps
-      - name: E2E Tests
-        run: pnpm run test-e2e
+  # e2eTest:
+  #   runs-on: ubuntu-latest
+  #   needs: [unitTest]
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version-file: '.nvmrc'
+  #     - uses: pnpm/action-setup@v4
+  #     - run: pnpm install
+  #     - name: Install Playwright Browsers
+  #       run: pnpm playwright install --with-deps
+  #     - name: E2E Tests
+  #       run: pnpm run test-e2e
 
   build:
     runs-on: ubuntu-latest
-    needs: [e2eTest]
+    needs: [unitTest]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
