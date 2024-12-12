@@ -71,10 +71,10 @@ importers:
         version: 1.2.1(@types/react@18.3.14)(react@18.3.1)(typescript@5.5.4)
       tailwind-merge:
         specifier: ^2.5.0
-        version: 2.5.0
+        version: 2.5.5
       use-debounce:
         specifier: ^10.0.1
-        version: 10.0.2(react@18.3.1)
+        version: 10.0.4(react@18.3.1)
       uuid:
         specifier: ^10.0.0
         version: 10.0.0
@@ -83,7 +83,7 @@ importers:
         version: 2.2.0
       zustand:
         specifier: ^4.5.4
-        version: 4.5.4(@types/react@18.3.14)(react@18.3.1)
+        version: 4.5.5(@types/react@18.3.14)(react@18.3.1)
     devDependencies:
       '@commitlint/config-conventional':
         specifier: ^19.2.2
@@ -4222,8 +4222,8 @@ packages:
     resolution: {integrity: sha512-7gr8p9TQP6RAHusBOSLs46F4564ZrjV8xFmw5zCmgmhGUcw2hxsShhJ6CEiHQMgPDwAQ1fWHPM0ypc4RMAig4A==}
     engines: {node: ^14.18.0 || >=16.0.0}
 
-  tailwind-merge@2.5.0:
-    resolution: {integrity: sha512-a6Q/isR5XAo9IR7Hjh80BQDkn8PG9ONJpSO/U3vGzdKyKG125lPHNXdiPfeQ5X0EOG0qKlS/0qnxdBYkLlD6tA==}
+  tailwind-merge@2.5.5:
+    resolution: {integrity: sha512-0LXunzzAZzo0tEPxV3I297ffKZPlKDrjj7NXphC8V5ak9yHC5zRmxnOe2m/Rd/7ivsOMJe3JZ2JVocoDdQTRBA==}
 
   tailwindcss@3.4.16:
     resolution: {integrity: sha512-TI4Cyx7gDiZ6r44ewaJmt0o6BrMCT5aK5e0rmJ/G9Xq3w7CX/5VXl/zIPEJZFUK5VEqwByyhqNPycPlvcK4ZNw==}
@@ -4452,14 +4452,14 @@ packages:
   url-parse@1.5.10:
     resolution: {integrity: sha512-WypcfiRhfeUP9vvF0j6rw0J3hrWrw6iZv3+22h6iRMJ/8z1Tj6XfLP4DsUix5MhMPnXpiHDoKyoZ/bdCkwBCiQ==}
 
-  use-debounce@10.0.2:
-    resolution: {integrity: sha512-MwBiJK2dk+2qhMDVDCPRPeLuIekKfH2t1UYMnrW9pwcJJGFDbTLliSMBz2UKGmE1PJs8l3XoMqbIU1MemMAJ8g==}
+  use-debounce@10.0.4:
+    resolution: {integrity: sha512-6Cf7Yr7Wk7Kdv77nnJMf6de4HuDE4dTxKij+RqE9rufDsI6zsbjyAxcH5y2ueJCQAnfgKbzXbZHYlkFwmBlWkw==}
     engines: {node: '>= 16.0.0'}
     peerDependencies:
-      react: '>=16.8.0'
+      react: '*'
 
-  use-sync-external-store@1.2.0:
-    resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
+  use-sync-external-store@1.2.2:
+    resolution: {integrity: sha512-PElTlVMwpblvbNqQ82d2n6RjStvdSoNe9FG28kNfz3WiXilJm4DdNkEzRhCZuIDwY8U08WVihhGR5iRqAwfDiw==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
 
@@ -4680,8 +4680,8 @@ packages:
     resolution: {integrity: sha512-GQHQqAopRhwU8Kt1DDM8NjibDXHC8eoh1erhGAJPEyveY9qqVeXvVikNKrDz69sHowPMorbPUrH/mx8c50eiBQ==}
     engines: {node: '>=18'}
 
-  zustand@4.5.4:
-    resolution: {integrity: sha512-/BPMyLKJPtFEvVL0E9E9BTUM63MNyhPGlvxk1XjrfWTUlV+BR8jufjsovHzrtR6YNcBEcL7cMHovL1n9xHawEg==}
+  zustand@4.5.5:
+    resolution: {integrity: sha512-+0PALYNJNgK6hldkgDq2vLrw5f6g/jCInz52n9RTpropGgeAf/ioFUCdtsjCqu4gNhW9D01rUQBROoRjdzyn2Q==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
       '@types/react': '>=16.8'
@@ -9167,7 +9167,7 @@ snapshots:
       '@pkgr/core': 0.1.1
       tslib: 2.6.3
 
-  tailwind-merge@2.5.0: {}
+  tailwind-merge@2.5.5: {}
 
   tailwindcss@3.4.16:
     dependencies:
@@ -9401,11 +9401,11 @@ snapshots:
       querystringify: 2.2.0
       requires-port: 1.0.0
 
-  use-debounce@10.0.2(react@18.3.1):
+  use-debounce@10.0.4(react@18.3.1):
     dependencies:
       react: 18.3.1
 
-  use-sync-external-store@1.2.0(react@18.3.1):
+  use-sync-external-store@1.2.2(react@18.3.1):
     dependencies:
       react: 18.3.1
 
@@ -9633,9 +9633,9 @@ snapshots:
 
   yoctocolors@2.1.1: {}
 
-  zustand@4.5.4(@types/react@18.3.14)(react@18.3.1):
+  zustand@4.5.5(@types/react@18.3.14)(react@18.3.1):
     dependencies:
-      use-sync-external-store: 1.2.0(react@18.3.1)
+      use-sync-external-store: 1.2.2(react@18.3.1)
     optionalDependencies:
       '@types/react': 18.3.14
       react: 18.3.1
