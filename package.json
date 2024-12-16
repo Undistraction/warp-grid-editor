@@ -113,7 +113,7 @@
     "use-debounce": "^10.0.1",
     "uuid": "^11.0.0",
     "warp-grid": "^2.2.0",
-    "zustand": "^4.5.4"
+    "zustand": "^5.0.0"
   },
   "pnpm": {
     "overrides": {
