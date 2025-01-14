@@ -34,7 +34,7 @@ function App() {
   const { openModal, Modal, isOpen } = useModal()
 
   const canvasIsReady = isNotNil(canvas) && workAreaDimensions.width > 0
-  // Create a random set of bounding curves on first render if no project is loaded
+
   useLayoutEffect(() => {
     if (canvasIsReady && !project.boundingCurves) {
       const boundingCurvesNew = getDefaultBoundingCurves(canvas)
@@ -44,7 +44,9 @@ function App() {
 
   useLayoutEffect(() => {
     if (boundingCurvesDebounced) {
-      const grid = warpGrid(boundingCurvesDebounced, project.gridDefinition)
+      const grid = warpGrid(boundingCurvesDebounced, {
+        ...project.gridDefinition,
+      })
       setGrid(grid)
     }
   }, [boundingCurvesDebounced, project.gridDefinition])

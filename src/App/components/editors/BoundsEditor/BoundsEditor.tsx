@@ -76,9 +76,7 @@ const renderNodes = (
   getNodeWithData: GetNodeWithData
 ) =>
   map(({ id, title }) => {
-    console.log(`ID`, id)
     const node = getNodeWithData(id)
-    console.log(`NODE`, node)
 
     return (
       <NodeEditor
