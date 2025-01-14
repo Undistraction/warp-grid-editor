@@ -79,8 +79,8 @@ importers:
         specifier: ^11.0.0
         version: 11.0.5
       warp-grid:
-        specifier: ^2.2.0
-        version: 2.4.4
+        specifier: 3.0.2
+        version: 3.0.2
       zustand:
         specifier: ^5.0.0
         version: 5.0.3(@types/react@18.3.18)(react@18.3.1)
@@ -1716,8 +1716,8 @@ packages:
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
 
-  coons-patch@2.0.5:
-    resolution: {integrity: sha512-3hE0ya+b+A6cQ1nR43MXOY7DTWbJ83xXI675fz+VAMhztagjGQk/6l8dfzdlxchqwc8ay3P2ftLSXBIfDzvnFg==}
+  coons-patch@3.0.0:
+    resolution: {integrity: sha512-xgj+qFqOWWq6t08fzqriSae8tvr2cGFRyDpKDFxtpEWbREiRRxQgMtXB5gDswlXzjn20HfxWf0SEgOglDM/uPg==}
 
   core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
@@ -4530,8 +4530,8 @@ packages:
   walker@1.0.8:
     resolution: {integrity: sha512-ts/8E8l5b7kY0vlWLewOkDXMmPdLcVV4GmOQLyxuSswIJsweeFZtAsMF7k1Nszz+TYBQrlYRmzOnr398y1JemQ==}
 
-  warp-grid@2.4.4:
-    resolution: {integrity: sha512-YmFujRE4+rVJ8iFTQ5PA4oau+0l0m6v19OoZtZR7/7kJArHYa32waDATm9iyN0+DEFIo78AaICNPPR4QHknS0g==}
+  warp-grid@3.0.2:
+    resolution: {integrity: sha512-+1oTLiKsKohwixcrGVe0EcIfzjdCi68+RYQL5iNoHHoJrFCWRX+cMBTknIx6/iH4Qg0cdP0tVNpvcHFSaZRHKg==}
 
   webidl-conversions@7.0.0:
     resolution: {integrity: sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==}
@@ -6409,7 +6409,7 @@ snapshots:
 
   convert-source-map@2.0.0: {}
 
-  coons-patch@2.0.5:
+  coons-patch@3.0.0:
     dependencies:
       fast-memoize: 2.5.2
 
@@ -9492,10 +9492,12 @@ snapshots:
     dependencies:
       makeerror: 1.0.12
 
-  warp-grid@2.4.4:
+  warp-grid@3.0.2:
     dependencies:
+      '@types/bezier-js': 4.1.3
       bezier-easing: 2.1.0
-      coons-patch: 2.0.5
+      bezier-js: 6.1.4
+      coons-patch: 3.0.0
       fast-memoize: 2.5.2
       matrix-js: 1.7.1
 

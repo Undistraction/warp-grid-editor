@@ -27,8 +27,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "link": "pnpm link ../warp-grid && pnpm link ../coons-patch",
-    "unlink": "pnpm unlink ../warp-grid && pnpm unlink ../coons-patch",
+    "link": "pnpm link ../warp-grid",
+    "unlink": "pnpm unlink ../warp-grid",
     "tsc": "tsc",
     "audit-npm-packages": "audit-ci --config ./audit-ci.jsonc --skip-dev"
   },
@@ -112,7 +112,7 @@
     "tailwind-merge": "^2.5.0",
     "use-debounce": "^10.0.1",
     "uuid": "^11.0.0",
-    "warp-grid": "^2.2.0",
+    "warp-grid": "3.0.2",
     "zustand": "^5.0.0"
   },
   "pnpm": {
