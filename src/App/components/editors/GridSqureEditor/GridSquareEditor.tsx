@@ -3,7 +3,7 @@ import pipe from 'ramda/src/pipe'
 import { isNumber } from 'ramda-adjunct'
 
 import useAppStore from '../../../../state/useAppStore'
-import type { Project, StepDefinition } from '../../../../types'
+import type { Project, StepDefinition, WarpGrid } from '../../../../types'
 import ControlGroup from '../../controls/ControlGroup'
 import SteppedInput from '../../controls/SteppedInput'
 import Switch from '../../controls/Switch'
@@ -14,6 +14,7 @@ import Switch from '../../controls/Switch'
 
 interface GridSquareEditorProps {
   project: Project
+  grid: WarpGrid
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +43,10 @@ const getGridSquareOptions = (
 // Exports
 // -----------------------------------------------------------------------------
 
-export default function GridSquareEditor({ project }: GridSquareEditorProps) {
+export default function GridSquareEditor({
+  project,
+  grid,
+}: GridSquareEditorProps) {
   const setProjectConfigValue = useAppStore.use.setProjectConfigValue()
 
   return (
@@ -65,8 +69,8 @@ export default function GridSquareEditor({ project }: GridSquareEditorProps) {
         >
           <SteppedInput
             name="across"
-            value={project.config.gridSquare.value.rowIdx}
-            options={getGridSquareOptions(0, project.gridDefinition.columns)}
+            value={project.config.gridSquare.value.columnIdx}
+            options={getGridSquareOptions(0, grid.model.columnsNonGutter)}
             onChange={pipe(
               parseInt,
               setProjectConfigValue([`gridSquare`, `value`, `columnIdx`])
@@ -80,8 +84,8 @@ export default function GridSquareEditor({ project }: GridSquareEditorProps) {
         >
           <SteppedInput
             name="down"
-            value={project.config.gridSquare.value.columnIdx}
-            options={getGridSquareOptions(0, project.gridDefinition.rows)}
+            value={project.config.gridSquare.value.rowIdx}
+            options={getGridSquareOptions(0, grid.model.rowsNonGutter)}
             onChange={pipe(
               parseInt,
               setProjectConfigValue([`gridSquare`, `value`, `rowIdx`])

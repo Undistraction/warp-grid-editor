@@ -44,9 +44,7 @@ function App() {
 
   useLayoutEffect(() => {
     if (boundingCurvesDebounced) {
-      const grid = warpGrid(boundingCurvesDebounced, {
-        ...project.gridDefinition,
-      })
+      const grid = warpGrid(boundingCurvesDebounced, project.gridDefinition)
       setGrid(grid)
     }
   }, [boundingCurvesDebounced, project.gridDefinition])
@@ -80,7 +78,12 @@ function App() {
         </div>
         {!sidebarIsHidden && (
           <div className="absolute inset-0 grow-0 overflow-y-scroll sm:relative sm:inset-auto sm:-my-5 sm:w-[300px] sm:shrink-0 sm:pt-0">
-            {canvas && project && <Sidebar project={project} />}
+            {canvas && project && grid && (
+              <Sidebar
+                project={project}
+                grid={grid}
+              />
+            )}
           </div>
         )}
       </div>

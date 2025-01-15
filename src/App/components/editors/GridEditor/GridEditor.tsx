@@ -1,16 +1,18 @@
-import { map, pipe } from 'ramda'
-import { isArray } from 'ramda-adjunct'
+import { isArray, isNumber } from 'ramda-adjunct'
 
 import type {
   Project,
   SetGridDefinitionValue,
   SetProjectConfigValue,
+  Step,
+  StepDefinition,
 } from '../../../../types'
 import ControlGroup from '../../controls/ControlGroup'
 import NumericInput from '../../controls/NumericInput'
 import Switch from '../../controls/Switch'
-import TextInput from '../../controls/TextInput'
 import EasingEditor from '../EasingEditor'
+import StepsAdvancedEditor from '../StepsAdvancedEditor'
+import { times } from 'ramda'
 
 // -----------------------------------------------------------------------------
 // Types
@@ -26,17 +28,30 @@ interface GridEditorProps {
 // Utils
 // -----------------------------------------------------------------------------
 
-const getItemsFromString = (string: string) => {
-  const list = string.split(`,`)
-  const trimmed = list.map((value) => value.trim())
-  return trimmed.filter(Number)
+// Make sure we are using Steps
+const ensureAdvancedStepValue = (value: StepDefinition): Step[] => {
+  if (isNumber(value)) {
+    return times<Step>(
+      () => ({
+        value: 1,
+      }),
+      value
+    )
+  }
+  // It will never be an array of numbers, so we can safely cast
+  return value as Step[]
 }
 
-const convertListIntoInputString = (listOrNumber: number[] | number) => {
-  return isArray(listOrNumber) ? listOrNumber.join(`, `) : listOrNumber
-}
+const ensureSimpleStepValue = (value: StepDefinition) => {
+  if (isArray(value)) {
+    // Count the number of steps that aren't gutters
+    return (value as Step[]).reduce((acc: number, step: Step) => {
+      return step.isGutter ? acc : acc + 1
+    }, 0)
+  }
 
-const stepsToInts = pipe(getItemsFromString, map(parseFloat))
+  return value as number
+}
 
 // -----------------------------------------------------------------------------
 // Exports
@@ -58,53 +73,73 @@ export default function GridEditor({
         label="Advanced"
         labelIsAfter
         htmlFor="grid-advanced-switch"
-        tooltipText="Use advanced grid settings that allow you to enter invividual comma-separated values for columns and rows"
+        tooltipText="Use advanced grid settings that allow you to enter individual comma-separated values for columns and rows"
         labelClassName="min-w-24"
       >
         <Switch
           isSelected={isAdvanced}
           testId="grid-advanced-switch"
           id="grid-advanced-switch"
-          onChange={() =>
+          onChange={() => {
+            const isAdvancedNew = !isAdvanced
             setProjectConfigValue(
               [`grid`, `shouldUseComplexColumnsRows`],
-              !isAdvanced
+              isAdvancedNew
             )
-          }
+            if (isAdvancedNew) {
+              setGridDefinitionValue(
+                [`columns`],
+                ensureAdvancedStepValue(project.gridDefinition.columns)
+              )
+              setGridDefinitionValue(
+                [`rows`],
+                ensureAdvancedStepValue(project.gridDefinition.columns)
+              )
+            } else {
+              setGridDefinitionValue(
+                [`columns`],
+                ensureSimpleStepValue(project.gridDefinition.columns)
+              )
+              setGridDefinitionValue(
+                [`rows`],
+                ensureSimpleStepValue(project.gridDefinition.rows)
+              )
+            }
+            setProjectConfigValue([`gridSquare`, `value`, `rowIdx`], 0)
+            setProjectConfigValue([`gridSquare`, `value`, `columnIdx`], 0)
+          }}
         />
       </ControlGroup>
       {project.config.grid.shouldUseComplexColumnsRows && (
         <div className="flex flex-col items-stretch space-y-2">
           <ControlGroup
             label="Columns"
+            direction="vertical"
             htmlFor="grid-advanced-columns-input"
             tooltipText="Enter a comma-separated list of values. Each value represents a single column."
             labelClassName="min-w-14"
           >
-            <TextInput
+            <StepsAdvancedEditor
               testId="grid-advanced-columns-input"
-              value={convertListIntoInputString(
-                project.gridDefinition.columns as number[]
-              )}
-              onChange={(columnsString) => {
-                const columns = stepsToInts(columnsString)
+              name="Column"
+              value={ensureAdvancedStepValue(project.gridDefinition.columns)}
+              onChange={(columns: Step[]) => {
                 setGridDefinitionValue([`columns`], columns)
               }}
             />
           </ControlGroup>
           <ControlGroup
             label="Rows"
+            direction="vertical"
             htmlFor="grid-advanced-columns-input"
             tooltipText="Enter a comma-separated list of values. Each value represents a single row."
             labelClassName="min-w-14"
           >
-            <TextInput
+            <StepsAdvancedEditor
               testId="grid-advanced-rows-input"
-              value={convertListIntoInputString(
-                project.gridDefinition.rows as number[]
-              )}
-              onChange={(rowsString) => {
-                const rows = stepsToInts(rowsString)
+              name="Row"
+              value={ensureAdvancedStepValue(project.gridDefinition.rows)}
+              onChange={(rows: Step[]) => {
                 setGridDefinitionValue([`rows`], rows)
               }}
             />
@@ -122,7 +157,7 @@ export default function GridEditor({
             <NumericInput
               name="columns"
               testId="grid-columns-input"
-              value={project.gridDefinition.columns as number}
+              value={ensureSimpleStepValue(project.gridDefinition.columns)}
               onChange={(columns) => {
                 setGridDefinitionValue([`columns`], columns)
               }}
@@ -136,7 +171,7 @@ export default function GridEditor({
             <NumericInput
               name="rows"
               testId="grid-rows-input"
-              value={project.gridDefinition.rows as number}
+              value={ensureSimpleStepValue(project.gridDefinition.rows)}
               onChange={(rows) => {
                 setGridDefinitionValue([`rows`], rows)
               }}

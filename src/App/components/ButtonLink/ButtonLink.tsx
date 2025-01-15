@@ -34,6 +34,7 @@ export default function ButtonLink({
   tooltipText = undefined,
 }: ButtonLinkProps) {
   const iconResolved = isSelected ? iconSelected : icon
+  const labelResolved = isSelected ? labelSelected : label
 
   return (
     <button
@@ -48,7 +49,7 @@ export default function ButtonLink({
       disabled={isDisabled}
     >
       {iconResolved && <div className="size-[16px]">{iconResolved}</div>}
-      <div>{isSelected ? labelSelected : label}</div>
+      {labelResolved && <div>{labelResolved}</div>}
     </button>
   )
 }

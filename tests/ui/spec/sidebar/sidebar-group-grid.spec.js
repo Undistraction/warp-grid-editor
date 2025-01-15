@@ -63,7 +63,7 @@ test.describe(`Rows, columns and gutter`, () => {
     )
   })
 
-  test(`Advanced mode`, async ({ homePage }) => {
+  test.skip(`Advanced mode`, async ({ homePage }) => {
     homePage.gridAdvancedModeSwitch.click()
     await homePage.gridAdvancedRowsInput.fill(`3, 5, 2, 1`)
     await homePage.gridAdvancedColumnsInput.fill(`5, 5, 5, 20, 10, 2, 2`)

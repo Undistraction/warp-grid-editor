@@ -61,7 +61,7 @@ const calculateCanvasDimensions = (
   }
 }
 
-const getDimensionsSumamry = ({ width, height }: Size) =>
+const getDimensionsSummary = ({ width, height }: Size) =>
   `${Math.round(width)}×${Math.round(height)}`
 
 // -----------------------------------------------------------------------------
@@ -90,7 +90,7 @@ export default function WorkArea({
   const { width: canvasWidth, height: canvasHeight } =
     calculateCanvasDimensions(project.boundingCurves, dimensions)
 
-  const dimensionsSummary = getDimensionsSumamry(dimensions)
+  const dimensionsSummary = getDimensionsSummary(dimensions)
 
   const canvasBounds = {
     width: canvasWidth,

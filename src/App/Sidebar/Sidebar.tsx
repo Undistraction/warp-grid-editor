@@ -1,6 +1,6 @@
 import { SidebarSectionId } from '../../enums'
 import useAppStore from '../../state/useAppStore'
-import type { Project } from '../../types'
+import type { Project, WarpGrid } from '../../types'
 import ConfigEditor from '../components/editors/ConfigEditor'
 import GridEditor from '../components/editors/GridEditor'
 import GridSquareEditor from '../components/editors/GridSqureEditor'
@@ -16,13 +16,14 @@ import SidebarHeader from './SidebarHeader'
 
 interface SidebarProps {
   project: Project
+  grid: WarpGrid
 }
 
 // -----------------------------------------------------------------------------
 // Exports
 // -----------------------------------------------------------------------------
 
-export default function Sidebar({ project }: SidebarProps) {
+export default function Sidebar({ project, grid }: SidebarProps) {
   const setGridDefinitionValue = useAppStore.use.setGridDefinitionValue()
   const setProjectConfigValue = useAppStore.use.setProjectConfigValue()
   const setAppConfigValue = useAppStore.use.setAppConfigValue()
@@ -107,7 +108,10 @@ export default function Sidebar({ project }: SidebarProps) {
           SidebarSectionId.GRID_SQUARE
         )}
       >
-        <GridSquareEditor project={project} />
+        <GridSquareEditor
+          project={project}
+          grid={grid}
+        />
       </SidebarGroup>
 
       <SidebarFooter />

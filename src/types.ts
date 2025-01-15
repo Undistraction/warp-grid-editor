@@ -189,10 +189,8 @@ export type {
   GridDefinition,
   GridModel,
   InterpolatePointOnCurveFactory,
-  Lines,
   Point,
-  StepCurves,
   StepDefinition,
-  Steps,
+  Step,
   WarpGrid,
 } from 'warp-grid'
