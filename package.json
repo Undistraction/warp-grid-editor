@@ -1,7 +1,7 @@
 {
   "name": "warp-grid-editor",
   "version": "1.1.0",
-  "packageManager": "pnpm@9.15.0+sha512.76e2379760a4328ec4415815bcd6628dee727af3779aaa4c914e3944156c4299921a89f976381ee107d41f12cfa4b66681ca9c718f0668fa0831ed4c6d8ba56c",
+  "packageManager": "pnpm@9.15.8+sha512.4a64c3cd524cb562bfdad4572820776816e6f98afadbf2283a860f8497d9767f68419918e099791be8c116a1fa218f1379250d97bb706831227859b7d598122c",
   "description": "Editor/demo for warp-grid",
   "homepage": "https://warp-grid.undistraction.com",
   "repository": {
